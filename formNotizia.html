@@ -4,7 +4,7 @@
 <head>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>tmp</title>
+    <title>Form Nuova Notizia</title>
 <!-- 
     <meta name="title" content="Videogames" />
     <meta name="description" content="" />
@@ -19,10 +19,11 @@
     <link rel="stylesheet" type="text/css" href="style/mini.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />    
     <link rel="stylesheet" type="text/css" href="style/print.css" media="print" />
 -->
+    <script type="text/javascript" src="checkForm.js"></script>
 
 </head>
 
-<body>
+<body onload="caricamento();">
 
 <div id="header">
     <a class="aiutiNascosti" href="#menu"> Vai al menù </a>
@@ -38,16 +39,53 @@
 
 <div id="menu">
     <ul>
-        <li xml:lang="en" id="currentLink">Home</li>
+        <li xml:lang="en"><a href="tmp.html">Home</a></li>
         <li><a href="formGioco.html">Form Nuovo Gioco</a></li>
         <li><a href="formNotizia.html">Form Nuova Notizia</a></li>
     </ul>
 </div>
 
+<!--ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo-->
+
 <div class="contenutoGenerale">
-    <h1 id="titol">Titolo</h1>
-    <p>testooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo</p>
+
+
+<form method="post" action="nuovoGioco.php" onsubmit="return validateForm();">
+
+    <messaggiForm />
+    
+    <fieldset>
+        <label for="titoloNews">Titolo: </label>
+        <span><input type="text" id="titoloNews" name="titoloNews" value="<valoreTitolo />" /></span><br />
+
+        <label for="data">Data: </label>
+        <span><input type="date" id="data" name="data" value="<valoreData />" /></span><br />
+
+        <label for="tipologia">Tipologia</label>
+        <select name="tipologia" id="tipologia">
+            <option>Eventi</option>
+            <option>Console</option>
+            <option>Giochi</option>
+        </select>
+    </fieldset>
+
+    <fieldset>
+        <label for="testo">Testo: </label>
+        <span><textarea id="testo" name="testo" rows="15" cols="50"><valoreTesto /></textarea></span>
+    </fieldset>
+
+    <fieldset>
+        <button type="submit" name="submit">Conferma Modifiche</button>
+        <button type="button" name="annullaModifiche">Annulla Modifiche</button>
+        <button type="button" name="elimina">Elimina Notizia</button>
+    </fieldset>
+
+</form>
+
+
 </div>
+
+<!--ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo-->
 
 <div id="footer">
     <img id="imgValidCode" src="images/valid-xhtml10.png" alt="XHTML valido" />
