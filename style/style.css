@@ -12,8 +12,8 @@ html {
 body {
     max-width: 1024px;
     margin: auto;                       /* centra il body */
-    background-color: #FFF;
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    background-color: #f5f5f5;
+    font-family: "Roboto", Arial, sans-serif;
     border: 1px solid #DDD;
 }
 
@@ -24,27 +24,70 @@ SEZIONE HEADER
 */
 
 #header {
+    background-color: #600000;
     padding: 1.0em;
-    text-align: center;
-    min-height: 9em;
+    min-height: 2em;
+    max-height: 5em;
 }
 
-#logo {
-    float: left;
-    width: 15%;         /* 15% del padre */
-    max-width: 9em;
-}
-
-#header h1 {
-    color: blue;
+/*
+=========================
+SEZIONE TITOLO
+=========================
+*/
+#titolo1 {
+    padding-left: 2em;
+    color: #fff;
     font-size: 3.5em;
 }
 
-#header h2 {
-    font-size: 1.3em;
-    font-style: italic;
-    font-weight: normal;
+#titolo2{
+  padding-left: 5.5em;
+  color: #fff;
+  font-size: 1.3em;
+  font-style: italic;
+  font-weight: normal;
 }
+
+/*
+=========================
+SEZIONE LOGIN
+=========================
+*/
+
+#login{
+  display: block;
+}
+
+div.loginblock a{
+  color: white;
+}
+
+div.loginblock {
+    color: white;
+    margin-top: -90px;
+    float: right;
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+}
+#loginPic{
+  width: 50%;
+  max-width: 9em;
+}
+
+
+
+
+
+#logo {
+    margin-top: -0.5em;
+    float: left;
+    width: 10%;         /* 15% del padre */
+    max-width: 9em;
+}
+
 
 #breadcrumb {
     background-color: blue;
@@ -55,22 +98,152 @@ SEZIONE HEADER
     border-bottom: 1px solid #ddd;
 }
 
+/*
+=========================
+SEZIONE MENU
+=========================
+*/
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+
+.topnav a {
+    color: #fff;
+    font-weight: bold;
+    line-height: 30px;
+    text-decoration: none;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    background-color: #1b365d;
+    border-bottom: 5px solid #54BAE2;
+    display: block;
+    margin: 2px;
+    float: left; /* elementi su singola riga */
+}
+
+.topnav a.active, .topnav a:hover {
+    background-color: #600000;
+    border-bottom: 5px solid #1b365d;
+}
+
+.topnav::after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
+@media screen and (max-width: 1000px) {
+  .topnav a {display: none;}
+  .topnav a.icon {
+    width: 150px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+  }
+}
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+@media screen and (max-width: 1000px) {
+  .topnav.responsive a.icon {
+    float: right;
+    width: 150px;
+    text-align: center;
+  }
+  .topnav.responsive a {
+    width:100%;
+    display: block;
+    text-align: center;
+  }
+}
+
 #menu {
+    background-color: #2c2c2c;
+    position: sticky;
+    top: 0;
+    display: block;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    margin-left: : 0px;
+    padding-bottom: 1.5px;
+    list-style: none;
+}
+
+
+/*
+=========================
+SEZIONE BARRA DI RICERCA
+=========================
+*/
+::placeholder{
+  color: #fff
+}
+.searchbox{
+  float: right;
+  margin-right: 0.5em;
+}
+
+.searchbar, .searchbutton{
+  color: white;
+  background-color: #1b365d;
+  width: 150px;
+  height: 30px;
+  margin: 2px;
+}
+
+.searchbutton{
+  width: 50px;
+  margin-top: 0.3em;
+}
+
+@media screen and (max-width: 1000px) {
+  .searchbox{
     float: left;
-    width: 20%;
-    padding: 0.8em;
-    font-size: 1.1em;
+    width: 100%;
+  }
+  .searchbutton{
+    float: left;
+  }
+  .searchbar{
+    float: left;
+    width: 70%;
+  }
+}
+/*
+=========================
+SEZIONE NEWS
+=========================
+*/
+
+
+#news {
+  margin-top: 2.8em;
+	font-size: 1.1em;
+  border-radius: 25px;
+  border: 1px solid #000;
+  padding: 0.5em;
 }
 
-#menu ul {
-    list-style-type: none;
+#news li{
+	margin-left: 1em;
 }
 
-#menu ul li {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
+#random {
+  margin-top: 1em;
+	font-size: 1.1em;
+  border-radius: 25px;
+  border: 1px solid #000;
+  padding: 0.5em;
 }
-
 
 /*
 =========================
@@ -78,11 +251,34 @@ SEZIONE CONTENUTO
 =========================
 */
 
+.leftcolumn{
+  float: left;
+  width: 64%;
+}
+.rightcolumn{
+  margin-right: 0.5em;
+  padding-left:20px;
+  float: left;
+  width:33%;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media only screen and (max-width: 1000px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+
 .contenutoGenerale {
-    margin-left: 20%;
-    width: 70%;
-    padding: 1.5em 1.0em 3.0em 2em;
-    border-left: 1px solid #ddd;
+    margin-top: 1em;
+    margin-left: 1em;
 }
 
 .contenutoGenerale h1 {
@@ -95,8 +291,24 @@ SEZIONE CONTENUTO
     font-size: 1.2em;
 }
 
+.contenutoGenerale h3 {
+    font-family: "Courier",cursive,sans-serif;
+    padding: 0.2em;
+    display: inline;
+    color: #fff;
+    background-color: #252525;
+    font-size: 1.2em;
+}
+
 .contenutoGenerale p {
-    margin-left: 1.0em;
+    column-count: 3;
+    column-rule: 1px solid #ccccb3;
+    border-radius: 25px;
+    border: 1px solid #000;
+    background-color:#f5f5f5;
+    text-align: left;
+    padding: 1em;
+    margin-top: 1em;
     margin-bottom: 1em;
 }
 
@@ -104,27 +316,40 @@ SEZIONE CONTENUTO
     text-align: center;
 }
 
-#titol {
-    text-align: center;
-}
+
+
+/*
+=========================
+SEZIONE FOOTER
+=========================
+*/
 
 #footer {
+    position: relative;
     text-align: center;
     font-size: 0.7em;
-    padding: 0.5em;
+    padding: 1.5em;
     padding-top: 1.3em;
     font-style: italic;
     border-top: 1px solid #ddd;
 }
 
 #imgValidCode {
+    margin-top: -0.5em;
     float: left;
 }
 
 #imgValidCSS {
-    float: right;
+  margin-top: -0.5em;
+  float: right;
 }
 
+
+.structural {
+position:absolute;
+left:-9999px;
+}
+/*
 .aiutiNascosti {
     position: absolute;
     height: 1px;
@@ -132,3 +357,4 @@ SEZIONE CONTENUTO
     overflow: hidden;
     clip: rect(1px,1px,1px,1px);
 }
+*/
