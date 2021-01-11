@@ -285,7 +285,6 @@ SEZIONE CONTENUTO
     font-family: "Courier",cursive,sans-serif;
     padding: 0.2em;
     color: #fff;
-    background-color: #252525;
     border-radius: 5px;
     font-size: 1.2em;
     margin-top: 0.5em;
@@ -353,9 +352,9 @@ p.autore{
   opacity: 0.5;
 }
 a.titolo_news{
-  display: inline-block;
-  color: white;
-  background-color: black;
+  font-weight: bold;
+  font-size: larger;
+  color: black;
 }
 
 a.active.titolo_news, a:hover.titolo_news{
@@ -363,7 +362,7 @@ a.active.titolo_news, a:hover.titolo_news{
     background-color: #313131;
 }
 a:visited.titolo_news{
-  color: yellow;
+  color: #676767;
 }
 
 /*
