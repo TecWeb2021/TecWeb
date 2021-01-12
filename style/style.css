@@ -519,3 +519,19 @@ SEZIONE LETTERE
   display: block;
   margin: 2px;
 }
+.letters a:hover{
+  background: green;
+}
+
+.a-z_list{
+  padding: 0.1em;
+  min-height: 50px;
+}
+/* AZ list */
+.letters li{
+  list-style-type: none;
+}
+.btn-letter{
+  float: left;
+  display: inline-block;
+}
