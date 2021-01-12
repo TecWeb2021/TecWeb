@@ -65,8 +65,8 @@
             <a href="#">Puzzle</a>
           </div>
         </div>
+        <p>Dall'anno:</p>
         <div class="dropdown">
-          <p>Dall'anno:</p>
           <button class="dropbtn" onclick="OpenAnnoIN()">...
             <i class="fa fa-caret-down"></i>
           </button>
@@ -78,8 +78,8 @@
             <a href="#">2016</a>
           </div>
         </div>
+        <p>All'anno:</p>
         <div class="dropdown">
-          <p>All'anno:</p>
           <button class="dropbtn" onclick="OpenAnnoFIN()">...
             <i class="fa fa-caret-down"></i>
           </button>
@@ -89,6 +89,16 @@
             <a href="#">2018</a>
             <a href="#">2017</a>
             <a href="#">2016</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn" onclick="OpenOrdine()">...
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content" id="ordine">
+            <a href="#">più recenti</a>
+            <a href="#">più vecchi</a>
+            <a href="#">più apprezzati</a>
           </div>
         </div>
     </div>
@@ -125,6 +135,10 @@ function OpenAnnoFIN() {
 
 function OpenAnnoIN() {
   document.getElementById("annoin").classList.toggle("show");
+}
+
+function OpenOrdine) {
+  document.getElementById("ordine).classList.toggle("show");
 }
 
 window.onclick = function(event) {
