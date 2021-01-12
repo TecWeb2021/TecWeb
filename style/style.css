@@ -365,9 +365,9 @@ SEZIONE FILTRI
 */
 
 
-.filters {
+/*.filters {
   position: absolute;
-}
+}*/
 
 .dropbtn {
   background-color: #3498DB;
@@ -411,9 +411,9 @@ SEZIONE LETTERE
 */
 
 
-.a-z_list{
+/*.a-z_list{
   position: relative;
-}
+}*/
 
 
 .letters a {
