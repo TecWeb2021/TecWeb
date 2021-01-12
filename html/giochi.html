@@ -42,7 +42,7 @@
 <div class="container" id="body-container">
     <div id="advance filter">
         <div class="dropdown">
-          <button class="dropbtn" onclick="Open()">Console
+          <button class="dropbtn" onclick="OpenConsole()">Console
             <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content" id="console">
@@ -54,7 +54,7 @@
           </div>
         </div>
         <div class="dropdown">
-          <button class="dropbtn" onclick="Open()">Generi
+          <button class="dropbtn" onclick="OpenGeneri()">Generi
             <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content" id="generi">
@@ -67,10 +67,10 @@
         </div>
         <div class="dropdown">
           <p>Dall'anno:</p>
-          <button class="dropbtn" onclick="Open()">Console
+          <button class="dropbtn" onclick="OpenAnnoIN()">...
             <i class="fa fa-caret-down"></i>
           </button>
-          <div class="dropdown-content" id="console">
+          <div class="dropdown-content" id="annoin">
             <a href="#">2020</a>
             <a href="#">2019</a>
             <a href="#">2018</a>
@@ -80,10 +80,10 @@
         </div>
         <div class="dropdown">
           <p>All'anno:</p>
-          <button class="dropbtn" onclick="Open()">Console
+          <button class="dropbtn" onclick="OpenAnnoFIN()">...
             <i class="fa fa-caret-down"></i>
           </button>
-          <div class="dropdown-content" id="console">
+          <div class="dropdown-content" id="annofin">
             <a href="#">2020</a>
             <a href="#">2019</a>
             <a href="#">2018</a>
@@ -111,8 +111,20 @@ function myFunction() {
   }
 }
 
-function Open() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function OpenConsole() {
+  document.getElementById("console").classList.toggle("show");
+}
+
+function OpenGeneri() {
+  document.getElementById("generi").classList.toggle("show");
+}
+
+function OpenAnnoFIN() {
+  document.getElementById("annoin").classList.toggle("show");
+}
+
+function OpenAnnoIN() {
+  document.getElementById("annofin").classList.toggle("show");
 }
 
 window.onclick = function(event) {
