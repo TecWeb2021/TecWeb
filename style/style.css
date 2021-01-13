@@ -128,6 +128,7 @@ div.loginblock {
 }
 
 #logo {
+    background: transparent;
     margin-top: -0.5em;
     float: left;
     width: 10%;         /* 15% del padre */
@@ -518,4 +519,46 @@ SEZIONE LETTERE
   background-color: #1b365d;
   display: block;
   margin: 2px;
+}
+.letters a:hover{
+  background: green;
+}
+
+.a-z_list{
+  min-height: 50px;
+}
+/* AZ list */
+.letters li{
+  list-style-type: none;
+}
+.btn-letter{
+  float: left;
+  display: inline-block;
+}
+.filters{
+  display: inline-block;
+  padding: 0.1em;
+  float: left;
+  width:52%;
+}
+.a-z_list{
+  float: right;
+  width:47.5%;
+}
+@media screen and (max-width: 1000px) {
+  .filters{
+    width: 100%;
+  }
+  .a-z_list{
+    padding: 0.1em;
+    float: left;
+    width: 100%;
+  }
+}
+
+/* Clear floats after the columns */
+#advance_filter:after {
+  content: "";
+  display: table;
+  clear: both;
 }
