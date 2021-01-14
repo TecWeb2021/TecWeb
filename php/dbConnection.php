@@ -88,6 +88,10 @@ class DBAccess {
             //mysqli_fetch_assoc (in maniera associativa)
             while ($riga = mysqli_fetch_assoc($queryResult)) {
                 $singoloPersonaggio = array(
+                    "Id" => $riga['Id'],
+                    "Game_Name" => $riga['Game_Name'],
+                    "User_Nickname" => $riga['User_Nickname'],
+                    "Date_time" => $riga['Date_time'],
                     "Title" => $riga['Title'],
                     "Text" => $riga['Text'],
                 );
