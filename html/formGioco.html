@@ -2,53 +2,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
 
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Form Nuovo Gioco</title>
-<!-- 
-    <meta name="title" content="Videogames" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
 
-    <mata name="author" content="" />
+    <title>Inserisci Notizia - NomeSito</title>
+    <meta name="title" content="Inserisci notizia - NomeSito" />
+    <meta name="description" content="Pagina per l'inserimento di nuovi giochi" />
+    <meta name="keywords" content="videogiochi, giochi, nuovi" />
+
+    <meta name="author" content="NomeGruppo" />
     <meta name="language" content="italian it" />
--->
-    <link rel="stylesheet" type="text/css" href="style/style.css" media="screen" />
-<!--
-    <link rel="stylesheet" type="text/css" href="style/small.css" media="handheld, screen and (max-width: 640px), only screen and (max-device-width: 640px)" />
-    <link rel="stylesheet" type="text/css" href="style/mini.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />    
-    <link rel="stylesheet" type="text/css" href="style/print.css" media="print" />
--->
-    <script type="text/javascript" src="checkForm.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="../style/style.css" media="screen" />
+
+    <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
 <body onload="caricamento();">
 
 <div id="header">
-    <a class="aiutiNascosti" href="#menu"> Vai al menù </a>
-    <a class="aiutiNascosti" href="#contentPagina"> Vai al contenuto </a>
-
-    <img id="logo" src="images/joystick.png" alt="" />
-    <h1 xml:lang="en">Sito Bello</h1>
+    <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
+	<h1 id="titolo1"> Recensioni </h1>
+	<h2 id="titolo2"> Videogiochi </h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+    </div>
 </div>
 
 <div id="breadcrumb">
-    <p>Ti trovi in: <span xml:lang="en">Home</span></p>
+    <p>Ti trovi in: <span xml:lang="en">Home</span> >> Form Giochi</p>
 </div>
 
 <div id="menu">
     <ul>
-        <li xml:lang="en"><a href="tmp.html">Home</a></li>
         <li><a href="formGioco.html">Form Nuovo Gioco</a></li>
         <li><a href="formNotizia.html">Form Nuova Notizia</a></li>
     </ul>
 </div>
 
-<!--ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo-->
-
 <div class="contenutoGenerale">
-
 
 <form method="post" action="nuovoGioco.php"  onsubmit="return validateForm();">
 
@@ -72,13 +64,13 @@
 
     <fieldset>
         <legend>Console:</legend>
-        <input type="checkbox" name="console[]" value="PS4" id="PS4" [valoreCheckedPS4] />
+        <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4 /> />
         <label for="PS4">PS4</label>
-        <input type="checkbox" name="console[]" value="PS5" id="PS5" [valoreCheckedPS5] />
+        <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5 /> />
         <label for="PS5">PS5</label>
-        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" [valoreCheckedXboxOne] />
+        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne /> />
         <label for="XboxOne">Xbox One</label>
-        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" [valoreCheckedXboxSeriesX] />
+        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX /> />
         <label for="XboxSeriesX">Xbox Series X</label>
     </fieldset>
 
@@ -105,15 +97,12 @@
 
 </form>
 
-
 </div>
 
-<!--ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo-->
-
 <div id="footer">
-    <img id="imgValidCode" src="images/valid-xhtml10.png" alt="XHTML valido" />
-    <img id="imgValidCSS" src="images/vcss-blue.gif" alt="CSS valido" />
-    <p>Il sito è stato creato per un esercizio nell'ambito del corso di Teconologie Web.</p>
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
 
 </body>
