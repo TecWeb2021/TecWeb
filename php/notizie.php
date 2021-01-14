@@ -10,9 +10,6 @@ $homePage=replace($homePage);
 
 
 
-
-
-
 function createListItem($news_date, $news_url, $news_title, $news_author, $img_path, $img_alt, $news_content){
 	$item=file_get_contents("../html/newsListItemTemplate.html");
 	
@@ -40,7 +37,7 @@ function createNewsList($list){
 	return $newsList;
 }
 
-$list=$dbAccess->getNewsList();
+$list=$dbAccess->getTableList("news");
 $newsListString=createNewsList($list);
 $homePage=preg_replace("/\<news_list_ph\/\>/",$newsListString,$homePage);
 

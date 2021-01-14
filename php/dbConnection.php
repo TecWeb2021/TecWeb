@@ -26,23 +26,39 @@ class DBAccess {
         //restituisce un numero corrispondente all'errore, oppure 0 se è andata a buon fine
     }
 
+    public function getResult($query){
+        $querySelect ="SELECT * FROM $query";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        /*echo "query result: ".$queryResult;*/
+        
+        if($queryResult==false || mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $resultList = array();
+
+            //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
+            //mysqli_fetch_assoc (in maniera associativa)
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                array_push($resultList, $row);
+            }
+
+            return $resultList;
+        }
+
+    }
+
     public function getUserList($name=null) {
         if($name==null){
             $querySelect ="SELECT * FROM users ORDER BY Nickname ASC";
         }else{
             $querySelect ="SELECT * FROM users WHERE name='$name' ORDER BY Nickname ASC";
         }
-        //questa funz restituisce false se c'è un problema. Se funziona ma nella query non c'è un select, viene restituito true. Per tutte le altre query viene restituito un oggetto ... , che è sostanzialmente una tabella contenente i risultati. 
         $queryResult = mysqli_query($this->connection, $querySelect);
-        /*echo "query result: ".$queryResult;*/
         
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $listaPersonaggi = array();
-
-            //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
-            //mysqli_fetch_assoc (in maniera associativa)
             while ($riga = mysqli_fetch_assoc($queryResult)) {
                 $singoloPersonaggio = array(
                     "Name" => $riga['Name'],
@@ -75,31 +91,35 @@ class DBAccess {
         }else{
             $querySelect ="SELECT * FROM news WHERE Title='$name' ";
         }
-        //questa funz restituisce false se c'è un problema. Se funziona ma nella query non c'è un select, viene restituito true. Per tutte le altre query viene restituito un oggetto ... , che è sostanzialmente una tabella contenente i risultati. 
         $queryResult = mysqli_query($this->connection, $querySelect);
-        /*echo "query result: ".$queryResult;*/
         
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
-            $listaPersonaggi = array();
-
-            //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
-            //mysqli_fetch_assoc (in maniera associativa)
-            while ($riga = mysqli_fetch_assoc($queryResult)) {
-                $singoloPersonaggio = array(
-                    "Id" => $riga['Id'],
-                    "Game_Name" => $riga['Game_Name'],
-                    "User_Nickname" => $riga['User_Nickname'],
-                    "Date_time" => $riga['Date_time'],
-                    "Title" => $riga['Title'],
-                    "Text" => $riga['Text'],
-                );
-                array_push($listaPersonaggi, $singoloPersonaggio);
+            $newsList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                array_push($newsList, $row);
             }
 
-            return $listaPersonaggi;
+            return $newsList;
         }
+    }
+
+    public function getTableList($name){
+        $name=preg_replace("/[^a-zA-Z0-9_]/","",$name);
+        $querySelect ="SELECT * FROM $name";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        /*
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $list = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                array_push($list, $row);
+            }
+*/
+            return $queryResult;
+        #}
     }
 }
 ?>
