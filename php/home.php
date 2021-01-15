@@ -9,11 +9,11 @@ include "dbConnection.php";
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
-$homePage=file_get_contents("../html/homeTemplate.html");
+$homePage=file_get_contents("../html/templates/homeTemplate.html");
 $homePage=replace($homePage);
 
 function createListItem($news_url, $news_title, $news_content){
-	$item=file_get_contents("../html/homeNewsListItemTemplate.html");
+	$item=file_get_contents("../html/templates/homeNewsListItemTemplate.html");
 	
 	$item=preg_replace("/\<news_url_ph\/\>/",$news_url,$item);
 	$item=preg_replace("/\<news_title_ph\/\>/",$news_title,$item);
@@ -26,11 +26,11 @@ function createListItem($news_url, $news_title, $news_content){
 function createNewsList($list){
 	$stringsArray=array();
 	foreach($list as $entry){
-		$s=createListItem("no_data", $entry['Title'], $entry['Text']);
+		$s=createListItem("notizia.php?id_notizia=".$entry['Id'], $entry['Title'], $entry['Text']);
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
-	$newsListTemplate=file_get_contents("../html/homeNewsListTemplate.html");
+	$newsListTemplate=file_get_contents("../html/templates/homeNewsListTemplate.html");
 	$newsList=preg_replace("/\<news_list_items_ph\/\>/", $joinedItems, $newsListTemplate);
 	return $newsList;
 }

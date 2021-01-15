@@ -26,8 +26,10 @@ class DBAccess {
         //restituisce un numero corrispondente all'errore, oppure 0 se è andata a buon fine
     }
 
+    #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
+    #altrimenti la sicurezza può essere compromessa
     public function getResult($query){
-        $querySelect ="SELECT * FROM $query";
+        $querySelect ="$query";
         $queryResult = mysqli_query($this->connection, $querySelect);
         /*echo "query result: ".$queryResult;*/
         
@@ -41,7 +43,7 @@ class DBAccess {
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 array_push($resultList, $row);
             }
-
+            #restituisce un array di array. Gli array contenutivi sono le righe del database.
             return $resultList;
         }
 
@@ -107,19 +109,26 @@ class DBAccess {
 
     public function getTableList($name){
         $name=preg_replace("/[^a-zA-Z0-9_]/","",$name);
-        $querySelect ="SELECT * FROM $name";
-        $queryResult = mysqli_query($this->connection, $querySelect);
-        /*
-        if(mysqli_num_rows($queryResult) == 0) {
-            return null;
-        }else {
-            $list = array();
-            while ($row = mysqli_fetch_assoc($queryResult)) {
-                array_push($list, $row);
-            }
-*/
-            return $queryResult;
-        #}
+        $query ="SELECT * FROM $name";
+        $result=$this->getResult($query);
+        return $result;
     }
+
+
+    public function getNewsWithImages(){
+        $query="SELECT * FROM news, images WHERE news.image=images.id";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    public function getNews($id){
+        #sanitize
+        $query="SELECT * FROM news WHERE Id=$id";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    #public function getGame($name)
+
 }
 ?>

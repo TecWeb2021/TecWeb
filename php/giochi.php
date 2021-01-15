@@ -7,11 +7,11 @@ include "dbConnection.php";
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
-$homePage=file_get_contents("../html/giochiTemplate.html");
+$homePage=file_get_contents("../html/templates/giochiTemplate.html");
 $homePage=replace($homePage);
 
 function createListItem($game_year, $game_url, $game_name, $img_path, $img_alt, $game_content){
-	$item=file_get_contents("../html/gamesListItemTemplate.html");
+	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
 	$item=preg_replace("/\<game_year_ph\/\>/",$game_year,$item);
 	$item=preg_replace("/\<game_url_ph\/\>/",$game_url,$item);
@@ -27,11 +27,11 @@ function createListItem($game_year, $game_url, $game_name, $img_path, $img_alt, 
 function createNewsList($list){
 	$stringsArray=array();
 	foreach($list as $entry){
-		$s=createListItem($entry['Year'], "no_data", $entry['Name'], "no_data", "no_data", "no_data");
+		$s=createListItem($entry['Year'], "gioco.php?gioco=".$entry['Name'], $entry['Name'], "no_data", "no_data", "no_data");
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
-	$newsListTemplate=file_get_contents("../html/gamesListTemplate.html");
+	$newsListTemplate=file_get_contents("../html/templates/gamesListTemplate.html");
 	$newsList=preg_replace("/\<games_list_items_ph\/\>/", $joinedItems, $newsListTemplate);
 	return $newsList;
 }
