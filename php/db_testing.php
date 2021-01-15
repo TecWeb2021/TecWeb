@@ -25,7 +25,7 @@ if(isset($_GET['query'])){
 	}
 }
 
-$htmlPage= file_get_contents("../html/queryForm.html");
+$htmlPage= file_get_contents("../html/templates/db_testing_QueryForm.html");
 
 echo $htmlPage
 

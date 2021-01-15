@@ -1,0 +1,2 @@
+questa cartella contiene i file html utilizzati dagli script php.
+Nella maggior parte dei casi sono uguali ai file contenuti in /html ma alcune parti sono sostituite da dei place holder (<..._..._ph/>) in modo che il php sappai dove mettere il testo dinamico, tipo le liste di notizie o di giochi.
