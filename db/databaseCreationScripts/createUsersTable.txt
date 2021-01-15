@@ -1,9 +1,0 @@
-CREATE TABLE `Users` (
-	`Nickname` VARCHAR(20) NOT NULL,
-	`Name` VARCHAR(20) NOT NULL,
-	`Surname` VARCHAR(20) NOT NULL,
-	`E-mail` VARCHAR(30) NOT NULL,
-	`Hash` VARCHAR(32) NOT NULL,
-	`IsAdmin` BOOLEAN NOT NULL,
-	PRIMARY KEY (`Nickname`)
-) ENGINE = InnoDB;

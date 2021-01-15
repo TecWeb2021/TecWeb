@@ -1,5 +1,0 @@
-CREATE TABLE `Reviews` (
-	`Text` TEXT(400) NOT NULL,
-	`Game_Name` VARCHAR(20) NOT NULL,
-	PRIMARY KEY (`Game_Name`)
-) ENGINE=InnoDB;

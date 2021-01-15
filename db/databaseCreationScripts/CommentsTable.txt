@@ -1,7 +1,0 @@
-CREATE TABLE `Comments` (
-	`Id` INT(10) NOT NULL,
-	`Game_Name` VARCHAR(20) NOT NULL,
-	`User_Nickname` VARCHAR(20) NOT NULL,
-	`Date_time` DATETIME(6) NOT NULL,
-	PRIMARY KEY (`Id`)
-) ENGINE=InnoDB;

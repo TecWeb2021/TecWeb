@@ -1,6 +1,0 @@
-CREATE TABLE `Games` (
-	`Name` VARCHAR(20) NOT NULL,
-	`Year` YEAR(4) NOT NULL,
-	`Image` VARCHAR(100) NOT NULL,
-	PRIMARY KEY (`Name`)
-) ENGINE=InnoDB;
