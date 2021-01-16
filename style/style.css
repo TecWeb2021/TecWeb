@@ -322,7 +322,7 @@ SEZIONE CONTENUTO
   padding: 0.5em;
   margin-bottom: 0.2em;
 }
-.contenutoGenerale {
+.contenutoGenerale{
     background-color: #414141;
     padding: 0.2em;
 }
@@ -510,6 +510,7 @@ SEZIONE LETTERE
 }*/
 
 
+
 .letters a {
   color: #fff;
   text-decoration: none;
@@ -539,11 +540,11 @@ SEZIONE LETTERE
   display: inline-block;
   padding: 0.1em;
   float: left;
-  width:52%;
+  width:54%%;
 }
 .a-z_list{
   float: right;
-  width:47.5%;
+  width:45%;
 }
 @media screen and (max-width: 1000px) {
   .filters{
@@ -561,4 +562,53 @@ SEZIONE LETTERE
   content: "";
   display: table;
   clear: both;
+}
+
+
+p.sinossi {
+  width: 90%;
+  column-count: 3;
+  column-rule: 1px solid #ccccb3;
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  text-align: left;
+  padding: 1em;
+  max-height: 180px;
+}
+
+.game{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  display: flex;
+  text-align: justify;
+}
+/*
+.game-image{
+  float: left;
+  width: 35%;
+}
+
+.game-description{
+  float: right;
+  width: 60%;
+}
+
+@media screen and (max-width: 1000px) {
+  .game-image{
+    width: 100%;
+  }
+  .game-description{
+    padding: 0.1em;
+    float: left;
+    width: 100%;
+  }
+}*/
+
+.container {
+    background-color: #414141;
+    padding: 0.2em;
 }
