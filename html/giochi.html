@@ -43,17 +43,22 @@
   </div>
 <div class="container">
     <div id="advance_filter">
-        <div class="filters">
+        <form class="filters" id="filtri" action="/action_page.php">
           <div class="dropdown">
             <button class="dropbtn" onclick="OpenConsole()">Console
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="console">
-              <a href="#">Xbox One</a>
-              <a href="#">Xbox Serie X/S</a>
-              <a href="#">PS4</a>
-              <a href="#">PS5</a>
-              <a href="#">Nintendo Switch</a>
+              <input type="checkbox" id="console1" name="console1" value="PS5" onclick="">
+              <label for="console1">PS5</label><br>
+              <input type="checkbox" id="console2" name="console2" value="PS4" onclick="">
+              <label for="console2">PS4</label><br>
+              <input type="checkbox" id="console3" name="console3" value="XboxOne" onclick="">
+              <label for="console3">Xbox One</label><br>
+              <input type="checkbox" id="console4" name="console4" value="XboxSeries" onclick="">
+              <label for="console4">Xbox Series</label><br>
+              <input type="checkbox" id="console5" name="console5" value="Switch" onclick="">
+              <label for="console5">Nintendo Switch</label><br>
             </div>
           </div>
           <div class="dropdown">
@@ -61,11 +66,16 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="generi">
-              <a href="#">FPS</a>
-              <a href="#">Azione</a>
-              <a href="#">Avventura</a>
-              <a href="#">GDR</a>
-              <a href="#">Puzzle</a>
+              <input type="checkbox" id="genere1" name="genere1" value="FPS" onclick="">
+              <label for="genere1">FPS</label><br>
+              <input type="checkbox" id="genere2" name="genere2" value="GDR" onclick="">
+              <label for="genere2">GDR</label><br>
+              <input type="checkbox" id="genere3" name="genere3" value="Puzzle" onclick="">
+              <label for="genere3">Puzzle</label><br>
+              <input type="checkbox" id="genere4" name="genere4" value="Avventura" onclick="">
+              <label for="genere4">Avventura</label><br>
+              <input type="checkbox" id="genere5" name="genere5" value="Horror" onclick="">
+              <label for="genere5">Horror</label><br>
             </div>
           </div>
           <div class="dropdown">
@@ -73,11 +83,11 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="annoin">
-              <a href="#">2020</a>
-              <a href="#">2019</a>
-              <a href="#">2018</a>
-              <a href="#">2017</a>
-              <a href="#">2016</a>
+              <input type="button" value="2020" onclick="">
+              <input type="button" value="2019" onclick="">
+              <input type="button" value="2018" onclick="">
+              <input type="button" value="2017" onclick="">
+              <input type="button" value="2016" onclick="">
             </div>
           </div>
           <div class="dropdown">
@@ -85,24 +95,15 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="annofin">
-              <a href="#">2020</a>
-              <a href="#">2019</a>
-              <a href="#">2018</a>
-              <a href="#">2017</a>
-              <a href="#">2016</a>
+              <input type="button" value="2020" onclick="">
+              <input type="button" value="2019" onclick="">
+              <input type="button" value="2018" onclick="">
+              <input type="button" value="2017" onclick="">
+              <input type="button" value="2016" onclick="">
             </div>
           </div>
-          <div class="dropdown">
-            <button class="dropbtn" onclick="OpenOrdine()">Ordine
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="ordine">
-              <a href="#">più recenti</a>
-              <a href="#">più vecchi</a>
-              <a href="#">più apprezzati</a>
-            </div>
-          </div>
-        </div>
+          <button class="searchbutton" type="submit">Submit</button>
+        </form>
         <div class="a-z_list">
           <ul class="letters">
             <li>
@@ -190,6 +191,15 @@
               <a class="btn-letter" href="#">Z</a>
             </li>
           </ul>
+        </div>
+        <div class="dropdown" id="Ordine">
+          <button class="dropbtn" onclick="OpenOrdine()">Ordine
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content" id="ordine">
+            <input type="button" value="più votati" onclick="">
+            <input type="button" value="più recenti" onclick="">
+          </div>
         </div>
     </div>
     <div id="games">
