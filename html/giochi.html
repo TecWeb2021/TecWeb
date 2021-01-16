@@ -6,23 +6,25 @@
 
 <title>Giochi</title>
 <meta name="title" content="Sito Recensioni Videogiochi" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Home Page del sito di Recensioni">
-<meta keywords="Videogiochi games gaming recensioni">
-<meta language="italian it" />
-<meta author="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Home Page del sito di Recensioni" />
+<meta name="keywords" content="Videogiochi games gaming recensioni" />
+
+<meta name="author" content="NomeGruppo" />
+<meta name="language" content="italian it" />
+
 <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 </head>
 
 <body>
   <div id="header">
-    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png"></a>
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
     <h1 id="titolo1"> Recensioni </h1>
     <h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png"></a>
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
       <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
     </div>
   </div>
@@ -31,9 +33,11 @@
       <i class="fa fa-bars"></i>
     </a>
     <form class="searchbox" id="barra_di_ricerca" action="/action_page.php">
-      <label for="searchbar" class="structural">Barra di ricerca:</label>
-      <input class="searchbar" type="text" placeholder="Cerca..." name="search">
-      <button class="searchbutton" type="submit">Submit</button>
+      <div>
+        <label for="searchbar" class="structural">Barra di ricerca:</label>
+        <input id="searchbar" class="searchbar" type="text" name="search" />
+        <button class="searchbutton" type="submit">Submit</button>
+      </div>
     </form>
         <a href="Home.html"><span xml:lang="en">Home</span></a>
         <a class="active" href="Giochi.html">Giochi</a>
@@ -50,16 +54,16 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="console">
-              <input type="checkbox" id="console1" name="console1" value="PS5" onclick="">
-              <label for="console1">PS5</label><br>
-              <input type="checkbox" id="console2" name="console2" value="PS4" onclick="">
-              <label for="console2">PS4</label><br>
-              <input type="checkbox" id="console3" name="console3" value="XboxOne" onclick="">
-              <label for="console3">Xbox One</label><br>
-              <input type="checkbox" id="console4" name="console4" value="XboxSeries" onclick="">
-              <label for="console4">Xbox Series</label><br>
-              <input type="checkbox" id="console5" name="console5" value="Switch" onclick="">
-              <label for="console5">Nintendo Switch</label><br>
+              <input type="checkbox" id="console1" name="console1" value="PS5" onclick="" />
+              <label for="console1">PS5</label><br />
+              <input type="checkbox" id="console2" name="console2" value="PS4" onclick="" />
+              <label for="console2">PS4</label><br />
+              <input type="checkbox" id="console3" name="console3" value="XboxOne" onclick="" />
+              <label for="console3">Xbox One</label><br />
+              <input type="checkbox" id="console4" name="console4" value="XboxSeries" onclick="" />
+              <label for="console4">Xbox Series</label><br />
+              <input type="checkbox" id="console5" name="console5" value="Switch" onclick="" />
+              <label for="console5">Nintendo Switch</label><br />
             </div>
           </div>
           <div class="dropdown">
@@ -67,16 +71,16 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="generi">
-              <input type="checkbox" id="genere1" name="genere1" value="FPS" onclick="">
-              <label for="genere1">FPS</label><br>
-              <input type="checkbox" id="genere2" name="genere2" value="GDR" onclick="">
-              <label for="genere2">GDR</label><br>
-              <input type="checkbox" id="genere3" name="genere3" value="Puzzle" onclick="">
-              <label for="genere3">Puzzle</label><br>
-              <input type="checkbox" id="genere4" name="genere4" value="Avventura" onclick="">
-              <label for="genere4">Avventura</label><br>
-              <input type="checkbox" id="genere5" name="genere5" value="Horror" onclick="">
-              <label for="genere5">Horror</label><br>
+              <input type="checkbox" id="genere1" name="genere1" value="FPS" onclick="" />
+              <label for="genere1">FPS</label><br />
+              <input type="checkbox" id="genere2" name="genere2" value="GDR" onclick="" />
+              <label for="genere2">GDR</label><br />
+              <input type="checkbox" id="genere3" name="genere3" value="Puzzle" onclick="" />
+              <label for="genere3">Puzzle</label><br />
+              <input type="checkbox" id="genere4" name="genere4" value="Avventura" onclick="" />
+              <label for="genere4">Avventura</label><br />
+              <input type="checkbox" id="genere5" name="genere5" value="Horror" onclick="" />
+              <label for="genere5">Horror</label><br />
             </div>
           </div>
           <div class="dropdown">
@@ -84,16 +88,16 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="annoin">
-              <input type="radio" id="2020" name="year" value="2020">
-              <label for="2020">2020</label><br>
-              <input type="radio" id="2019" name="year" value="2019">
-              <label for="2019">2019</label><br>
-              <input type="radio" id="2018" name="year" value="2018">
-              <label for="2018">2018</label><br>
-              <input type="radio" id="2017" name="year" value="2017">
-              <label for="2017">2017</label><br>
-              <input type="radio" id="2016" name="year" value="2016">
-              <label for="2016">2016</label><br>
+              <input type="radio" id="da2020" name="year" value="2020" />
+              <label for="da2020">2020</label><br />
+              <input type="radio" id="da2019" name="year" value="2019" />
+              <label for="da2019">2019</label><br />
+              <input type="radio" id="da2018" name="year" value="2018" />
+              <label for="da2018">2018</label><br />
+              <input type="radio" id="da2017" name="year" value="2017" />
+              <label for="da2017">2017</label><br />
+              <input type="radio" id="da2016" name="year" value="2016" />
+              <label for="da2016">2016</label><br />
             </div>
           </div>
           <div class="dropdown">
@@ -101,19 +105,19 @@
               <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content" id="annofin">
-              <input type="radio" id="2020" name="year" value="2020">
-              <label for="2020">2020</label><br>
-              <input type="radio" id="2019" name="year" value="2019">
-              <label for="2019">2019</label><br>
-              <input type="radio" id="2018" name="year" value="2018">
-              <label for="2018">2018</label><br>
-              <input type="radio" id="2017" name="year" value="2017">
-              <label for="2017">2017</label><br>
-              <input type="radio" id="2016" name="year" value="2016">
-              <label for="2016">2016</label><br>
+              <input type="radio" id="a2020" name="year" value="2020" />
+              <label for="a2020">2020</label><br />
+              <input type="radio" id="a2019" name="year" value="2019" />
+              <label for="a2019">2019</label><br />
+              <input type="radio" id="a2018" name="year" value="2018" />
+              <label for="a2018">2018</label><br />
+              <input type="radio" id="a2017" name="year" value="2017" />
+              <label for="a2017">2017</label><br />
+              <input type="radio" id="a2016" name="year" value="2016" />
+              <label for="a2016">2016</label><br />
             </div>
           </div>
-          <button class="searchbutton" type="submit">Submit</button>
+          <button class="searchbutton" type="submit">Submit</button> 
         </form>
         <div class="a-z_list">
           <ul class="letters">
@@ -208,15 +212,15 @@
             <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content" id="ordine">
-            <input type="button" value="più votati" onclick="">
-            <input type="button" value="più recenti" onclick="">
+            <input type="button" value="più votati" onclick="" />
+            <input type="button" value="più recenti" onclick="" />
           </div>
         </div>
     </div>
     <div id="games">
       <div class="game">
         <div class="game-image">
-          <a href="DarkSouls3_scheda.html"><img class="img_cover" src="../images/darksouls3.png" alt=""></a>
+          <a href="DarkSouls3_scheda.html"><img class="img_cover" src="../images/darksouls3.png" alt="" /></a>
         </div>
         <div class="game-description">
           <h3><a href="DarkSouls3_scheda.html" class="name">Dark Souls 3</a></h3>
@@ -230,7 +234,7 @@
       </div>
       <div class="game">
         <div class="game-image">
-          <a href="GodOfWar_scheda.html"><img class="img_cover" src="../images/godofwar.png" alt=""></a>
+          <a href="GodOfWar_scheda.html"><img class="img_cover" src="../images/godofwar.png" alt="" /></a>
         </div>
         <div class="game-description">
           <h3><a href="GodOfWar_scheda.html" class="name">God Of War</a></h3>
@@ -245,7 +249,7 @@
       </div>
       <div class="game">
         <div class="game-image">
-          <a href="BreathOfTheWild_scheda.html"><img class="img_cover" src="../images/zelda.jpg" alt=""></a>
+          <a href="BreathOfTheWild_scheda.html"><img class="img_cover" src="../images/zelda.jpg" alt="" /></a>
         </div>
         <div class="game-description">
           <h3><a href="BreathOfTheWild_scheda.html" class="name">The Legend Of Zelda: Breath Of The Wild</a></h3>
@@ -260,7 +264,7 @@
       </div>
       <div class="game">
         <div class="game-image">
-          <a href="DOOM_scheda.html"><img class="img_cover" src="../images/doom.png" alt=""></a>
+          <a href="DOOM_scheda.html"><img class="img_cover" src="../images/doom.png" alt="" /></a>
         </div>
         <div class="game-description">
           <h3><a href="DOOM_scheda.html" class="name">DOOM Eternal</a></h3>
@@ -275,12 +279,14 @@
       </div>
     </div>
 </div>
+
 <div id="footer">
-	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png">
-	<em> Noi quattro - All rights Reserved </em>
-	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
-<script>
+
+<script type="text/javascript">
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function myFunction() {
   var x = document.getElementById("menu");

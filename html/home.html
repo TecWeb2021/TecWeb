@@ -6,23 +6,25 @@
 
 <title>Sito Home</title>
 <meta name="title" content="Sito Recensioni Videogiochi" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Home Page del sito di Recensioni">
-<meta keywords="Videogiochi games gaming recensioni">
-<meta language="italian it" />
-<meta author="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Home Page del sito di Recensioni" />
+<meta name="keywords" content="Videogiochi games gaming recensioni" />
+
+<meta name="author" content="NomeGruppo" />
+<meta name="language" content="italian it" />
+
 <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 </head>
 
 <body>
   <div id="header">
-    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png"></a>
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
 		<h1 id="titolo1"> Recensioni </h1>
 		<h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png"></a>
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
       <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
     </div>
   </div>
@@ -31,9 +33,11 @@
       <i class="fa fa-bars"></i>
     </a>
     <form class="searchbox" id="barra_di_ricerca" action="/action_page.php">
-      <label for="searchbar" class="structural">Barra di ricerca:</label>
-      <input class="searchbar" type="text" placeholder="Cerca..." name="search">
-      <button class="searchbutton" type="submit">Submit</button>
+      <div>
+        <label for="searchbar" class="structural">Barra di ricerca:</label>
+        <input id="searchbar" class="searchbar" type="text" name="search" />
+        <button class="searchbutton" type="submit">Submit</button>
+      </div>
     </form>
         <a class="active" href="Home.html"><span xml:lang="en">Home</span></a>
   			<a href="Giochi.html">Giochi</a>
@@ -86,12 +90,14 @@
     </div>
   </div>
 </div>
+
 <div id="footer">
-	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png">
-	<em> Noi quattro - All rights Reserved </em>
-	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
-<script>
+
+<script type="text/javascript">
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function myFunction() {
   var x = document.getElementById("menu");
