@@ -67,15 +67,11 @@ SEZIONE DROPDOWN FILTRI
 }
 
 /* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
+
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
-  position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -123,6 +119,7 @@ div.loginblock {
     width: 120px;
 }
 #loginPic{
+  border-radius: 50%;
   width: 50%;
   max-width: 9em;
 }
@@ -261,9 +258,6 @@ SEZIONE BARRA DI RICERCA
   .searchbox{
     float: left;
     width: 82%;
-  }
-  .searchbutton{
-    float: left;
   }
   .searchbar{
     float: left;
@@ -474,7 +468,14 @@ SEZIONE FILTRI
 
 
 .dropdown {
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> b1717dc3951c06f92ae3e6d7280ef8d5adc56804
+>>>>>>> Stashed changes
   display: inline-block;
 }
 
