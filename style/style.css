@@ -585,12 +585,11 @@ p.sinossi {
   display: flex;
   text-align: justify;
 }
-/*
-.game-image{
-  float: left;
-  width: 35%;
-}
 
+.game-image{
+  padding-right: 2em;
+}
+/*
 .game-description{
   float: right;
   width: 60%;
