@@ -44,15 +44,15 @@
 
 <form method="post" action="nuovoGioco.php"  onsubmit="return validateForm();">
 
-    <messaggiForm />
-    
+    <messaggiForm_ph />
+
     <fieldset>
         <legend>Campi obbligatori</legend>
         <label for="titolo">Titolo: </label>
-        <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo />" /></span><br />
+        <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" /></span><br />
 
         <label for="anno">Anno: </label>
-        <span><input type="text" id="anno" name="anno" value="<valoreAnno />" /></span><br />
+        <span><input type="text" id="anno" name="anno" value="<valoreAnno_ph />" /></span><br />
 
         <label for="categoria">Categoria:</label>
         <select name="categoria" id="categoria">
@@ -64,29 +64,32 @@
 
     <fieldset>
         <legend>Console:</legend>
-        <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4 /> />
+        <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
         <label for="PS4">PS4</label>
-        <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5 /> />
+        <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
         <label for="PS5">PS5</label>
-        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne /> />
+        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne_ph /> />
         <label for="XboxOne">Xbox One</label>
-        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX /> />
+        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
         <label for="XboxSeriesX">Xbox Series X</label>
     </fieldset>
 
     <fieldset>
         <label for="immagine">Immagine: </label>
-        <input type="file" id="immagine" name="immagine" />
+        <input type="file" id="immagine" name="immagine" /><br />
+
+        <label for="alternativo">Alt immagine: </label>
+        <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" /></span>
     </fieldset>
 
     <fieldset>
         <label for="descrizione">Descrizione: </label>
-        <span><textarea id="descrizione" name="descrizione" rows="10" cols="50"><valoreDescrizione /></textarea></span>
+        <span><textarea id="descrizione" name="descrizione" rows="10" cols="50"><valoreDescrizione_ph /></textarea></span>
     </fieldset>
 
     <fieldset>
         <label for="recensione">Recensione: </label>
-        <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione /></textarea></span>
+        <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione_ph /></textarea></span>
     </fieldset>
 
     <fieldset>

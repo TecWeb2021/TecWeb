@@ -221,7 +221,7 @@ SEZIONE MENU
     display: block;
     font-family: Verdana, sans-serif;
     font-size: 14px;
-    margin-left: : 0px;
+    margin-left: 0px;
     padding-bottom: 1.5px;
     list-style: none;
 }
@@ -232,16 +232,17 @@ SEZIONE MENU
 SEZIONE BARRA DI RICERCA
 =========================
 */
-::placeholder{
-  color: #fff
-}
+
 .searchbox{
   float: right;
   margin-right: 0.5em;
 }
+
 .searchbar, .searchbutton{
-  color: white;
-  background-color: #1b365d;
+  /*color: white;
+  background-color: #1b365d;*/
+  color: black;
+  background-color: white;
   width: 150px;
   height: 30px;
   margin: 2px;
@@ -249,6 +250,8 @@ SEZIONE BARRA DI RICERCA
 }
 
 .searchbutton{
+  color: white;
+  background-color: #1b365d;
   width: 50px;
   margin-top: 0.3em;
 }
@@ -539,7 +542,7 @@ SEZIONE LETTERE
   display: inline-block;
   padding: 0.1em;
   float: left;
-  width:54%%;
+  width: 54%;
 }
 .a-z_list{
   float: right;
