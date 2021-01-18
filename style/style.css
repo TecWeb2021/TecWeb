@@ -186,6 +186,14 @@ SEZIONE MENU
    clear: both;
 }
 
+/*   ICON   */
+
+#hamburger {
+    width: 12%;         /* 15% del padre */
+    max-width: 13em;
+    margin-top: 6px;
+}
+
 .topnav .icon {
   display: none;
 }
@@ -287,6 +295,11 @@ SEZIONE BARRA DI RICERCA
   top: 100%;
   left: 0;
   right: 0;
+}
+
+/* ridimensiona i suggerimenti per non farli apparire sotto la label che viene mostrata (nella searchbar normale viene nascosta) */
+#formNotizie .autocomplete-items {
+  left: 40%;
 }
 
 .autocomplete-items div {
