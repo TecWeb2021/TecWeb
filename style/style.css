@@ -796,19 +796,22 @@ p.trama{
     border-radius: 10px;
     padding: 0.5em;
     margin-bottom: 0.2em;
-    display: flex;
-    text-align: justify;
 }
 
 .title1{
   display: inline-block;
 }
 .title2{
-  display:inline-block;
+  display: inline-block;
+}
+
+.voto{
+  float: right;
 }
 
 p.testo{
-  width: 90%;
+  width: 95%;
+  column-count: 2;
   column-rule: 1px solid #ccccb3;
   border-radius: 25px;
   border: 1px solid #000;
@@ -827,4 +830,8 @@ FORM VARIE
 /* non funziona in searchbar per specificita' */
 .deftext {
   color: grey;
+}
+
+.textbox{
+
 }
