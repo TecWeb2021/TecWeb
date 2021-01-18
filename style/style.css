@@ -631,6 +631,8 @@ p.sinossi {
   display:inline-block;
   background-color: #333;
   overflow: hidden;
+  position: sticky;
+  top: 0;
 }
 
 .leftnav a.active, .leftnav a:hover {
@@ -659,6 +661,35 @@ p.sinossi {
 }
 
 p.trama{
+  width: 90%;
+  column-count: 2;
+  column-rule: 1px solid #ccccb3;
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  text-align: left;
+  padding: 1em;
+  max-height: auto;
+}
+
+.recensione{
+    background-color: #f5f5f5;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 0.5em;
+    margin-bottom: 0.2em;
+    display: flex;
+    text-align: justify;
+}
+
+.title1{
+  display: inline-block;
+}
+.title2{
+  display:inline-block;
+}
+
+p.testo{
   width: 90%;
   column-rule: 1px solid #ccccb3;
   border-radius: 25px;
