@@ -292,20 +292,20 @@ SEZIONE BARRA DI RICERCA
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
 }
 
 /*quando vai in hover*/
 .autocomplete-items div:hover {
-  background-color: #e9e9e9; 
+  background-color: #e9e9e9;
 }
 
 /*quando ti muovi usando le frecce
 (scritto cosi per avere specificita piu alta):*/
 .autocomplete-items .autocomplete-active {
-  background-color: DodgerBlue ; 
-  color: #ffffff; 
+  background-color: DodgerBlue ;
+  color: #ffffff;
 }
 
 @media screen and (max-width: 1000px) {
@@ -329,14 +329,48 @@ SEZIONE BARRA DI RICERCA
 SEZIONE RIGHT COLUMN
 =========================
 */
-
-#random {
+#titolo_gioco_della_settimana{
+  text-align: center;
+}
+.sidebox {
   background-color: #f5f5f5;
   border-radius: 10px;
   border: 1px solid #000;
   padding: 0.5em;
 }
-
+.sidebox h4{
+  text-align: center;
+}
+.top5_title{
+  text-align: center;
+  font-size: inherit;
+}
+a.linktop{
+  height: 5rem;
+}
+li.giocotop{
+  height: 5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+}
+img.sfondo_giocotop{
+    width: 100%;
+    border-radius: 10px;
+    height: inherit;
+    top: 0;
+    left: 0;
+}
+.sfondo_giocotop:hover{
+  opacity: 0.8;
+}
+img.cover_gioco_della_settimana{
+    width: 100%;
+    height: inherit;
+    top: 0;
+    left: 0;
+}
 /*
 =========================
 SEZIONE CONTENUTO
@@ -363,8 +397,18 @@ SEZIONE CONTENUTO
 }
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media only screen and (max-width: 1000px) {
-  .leftcolumn, .rightcolumn {
+  .leftcolumn, .rightcolumn{
     width: 100%;
+    padding: 0;
+  }
+  #top5{
+    float: right;
+    width: 30%;
+    padding: 0;
+  }
+  #gioco_della_settimana{
+    float: left;
+    width: 69%;
     padding: 0;
   }
 }
@@ -382,11 +426,8 @@ SEZIONE CONTENUTO
 }
 
 .notizia h3 {
-    max-width: 80%;
     float: left;
-    font-family: "Courier",cursive,sans-serif;
     padding: 0.2em;
-    color: #fff;
     border-radius: 5px;
     font-size: 1.2em;
     margin-top: 0.5em;
@@ -395,6 +436,7 @@ SEZIONE CONTENUTO
 
 p.data{
   float: right;
+  font-size: smaller;
 }
 p.descrizione {
     width: 80%;
@@ -407,15 +449,6 @@ p.descrizione {
     text-align: left;
     padding: 1em;
     max-height: 180px;
-}
-p.descrizione_home {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    width: 100%;
-    column-count: 3;
-    column-rule: 1px solid #ccccb3;
-    background-color:#f5f5f5;
-    text-align: left;
 }
 
 p.autore{
@@ -451,9 +484,10 @@ p.autore{
   margin-left: 0.5em;
 }
 .img_cover:hover{
-  opacity: 0.5;
+  opacity: 0.8;
 }
 a.titolo_news{
+  max-width: 80%;
   font-weight: bold;
   font-size: larger;
   color: black;
@@ -466,7 +500,37 @@ a.active.titolo_news, a:hover.titolo_news{
 a:visited.titolo_news{
   color: #676767;
 }
-
+.wrapper{
+  width: 80%;
+  float: right;
+}
+p.descrizione_home {
+    width: 75%;
+    float: right;
+    column-count: 3;
+    column-rule: 1px solid #ccccb3;
+    border-radius: 25px;
+    border: 1px solid #000;
+    background-color:#f5f5f5;
+    text-align: left;
+    padding: 1em;
+    max-height: 180px;
+    overflow: hidden;
+}
+@media only screen and (max-width: 1000px) {
+  p.descrizione_home {
+      width: 80%;
+      float: right;
+      column-count: 3;
+      column-rule: 1px solid #ccccb3;
+      border-radius: 25px;
+      border: 1px solid #000;
+      background-color:#f5f5f5;
+      text-align: left;
+      padding: 1em;
+      max-height: 180px;
+  }
+}
 /*
 =========================
 SEZIONE FOOTER
