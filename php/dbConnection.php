@@ -32,8 +32,7 @@ class DBAccess {
         $querySelect ="$query";
         $queryResult = mysqli_query($this->connection, $querySelect);
         /*echo "query result: ".$queryResult;*/
-        
-        if($queryResult==false || mysqli_num_rows($queryResult) == 0) {
+        if($queryResult==null || $queryResult==true || $queryResult==false || mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $resultList = array();
@@ -116,7 +115,7 @@ class DBAccess {
 
 
     public function getNewsWithImages(){
-        $query="SELECT * FROM news, images WHERE news.image=images.id";
+        $query="SELECT * FROM news LEFT JOIN images on news.image=images.path";
         $result=$this->getResult($query);
         return $result;
     }
@@ -126,6 +125,25 @@ class DBAccess {
         $query="SELECT * FROM news WHERE Id=$id";
         $result=$this->getResult($query);
         return $result;
+    }
+
+    public function getGamesWithImages(){
+        $query="SELECT * FROM games LEFT JOIN images ON games.image=images.path";
+        $result = $this->getResult($query);
+        return $result;
+    }
+
+    public function getUserByHash($hashValue){
+        $query="SELECT * FROM users WHERE hash=\"$hashValue\"";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    public function addUser($username, $password){
+        $hashValue=hash("md5",$username.$password);
+        $query="INSERT INTO users VALUES (\'$username\',\'$hashValue\');";
+        $this->getResult($query);
+
     }
 
     #public function getGame($name)

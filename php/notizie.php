@@ -26,16 +26,12 @@ function createListItem($news_date, $news_url, $news_title, $news_author, $img_p
 
 
 function createNewsList($list){
-	$stringsArray=array();
-	/*
-	echo "pre<br/>";
-	foreach($list as $paramName => $value){
-  		echo $paramName ."-".$value."-". "<br>";
+	if(!$list){
+		return "";
 	}
-	echo "post<br/>";
-	*/
+	$stringsArray=array();
 	foreach($list as $entry){
-		$s=createListItem("no data", "notizia.php?id_notizia=".$entry['Id'], $entry['Title'], "no data", "../".$entry['Path'], $entry['Alt'] , $entry['Text']);
+		$s=createListItem("no data", "notizia.php?id_notizia=".$entry['Id'], $entry['Title'], "no data", "../".$entry['Path'], $entry['Alt'] , $entry['Content']);
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);

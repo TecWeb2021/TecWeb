@@ -24,9 +24,12 @@ function createListItem($news_url, $news_title, $news_content){
 
 
 function createNewsList($list){
+	if(!$list){
+		return "";
+	}
 	$stringsArray=array();
 	foreach($list as $entry){
-		$s=createListItem("notizia.php?id_notizia=".$entry['Id'], $entry['Title'], $entry['Text']);
+		$s=createListItem("notizia.php?id_notizia=".$entry['Id'], $entry['Title'], $entry['Content']);
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
