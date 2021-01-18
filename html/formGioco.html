@@ -4,8 +4,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>Inserisci Notizia - NomeSito</title>
-    <meta name="title" content="Inserisci notizia - NomeSito" />
+    <title>Inserisci Gioco - NomeSito</title>
+    <meta name="title" content="Inserisci gioco - NomeSito" />
     <meta name="description" content="Pagina per l'inserimento di nuovi giochi" />
     <meta name="keywords" content="videogiochi, giochi, nuovi" />
 
@@ -15,9 +15,10 @@
     <link rel="stylesheet" type="text/css" href="../style/style.css" media="screen" />
 
     <script type="text/javascript" src="../checkForm.js"></script>
+
 </head>
 
-<body onload="caricamento();">
+<body onload="carica_placeholder();">
 
 <div id="header">
     <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
@@ -42,7 +43,7 @@
 
 <div class="contenutoGenerale">
 
-<form method="post" action="nuovoGioco.php"  onsubmit="return validateForm();">
+<form method="post" action="formGioco.php" enctype="multipart/form-data">
 
     <messaggiForm_ph />
 
@@ -93,9 +94,9 @@
     </fieldset>
 
     <fieldset>
-        <button type="submit" name="submit">Conferma Modifiche</button>
-        <button type="button" name="annullaModifiche">Annulla Modifiche</button>
-        <button type="button" name="elimina">Elimina Gioco</button>
+        <button type="submit" name="action" value="conferma" onclick="return validateForm();">Conferma Modifiche</button>
+        <button type="submit" name="action" value="annulla">Annulla Modifiche</button>
+        <button type="submit" name="action" value="elimina">Elimina Gioco</button>
     </fieldset>
 
 </form>

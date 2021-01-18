@@ -186,6 +186,14 @@ SEZIONE MENU
    clear: both;
 }
 
+/*   ICON   */
+
+#hamburger {
+    width: 12%;         /* 15% del padre */
+    max-width: 13em;
+    margin-top: 6px;
+}
+
 .topnav .icon {
   display: none;
 }
@@ -289,6 +297,11 @@ SEZIONE BARRA DI RICERCA
   right: 0;
 }
 
+/* ridimensiona i suggerimenti per non farli apparire sotto la label che viene mostrata (nella searchbar normale viene nascosta) */
+#formNotizie .autocomplete-items {
+  left: 40%;
+}
+
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;
@@ -366,10 +379,16 @@ img.sfondo_giocotop{
   opacity: 0.8;
 }
 img.cover_gioco_della_settimana{
+    border-radius: 10px;
     width: 100%;
     height: inherit;
     top: 0;
     left: 0;
+}
+@media only screen and (max-width: 1000px) {
+  img.cover_gioco_della_settimana{
+    border-radius: inherit;
+  }
 }
 /*
 =========================

@@ -1,3 +1,4 @@
+/*
 var placeholder = {
   "searchbar": ["Cerca gioco..."],
   "searchnews": ["Cerca notizia..."]
@@ -22,10 +23,10 @@ function backToDefault(input) {
       campoDefault(input);
   }
 }
+*/
+function carica_placeholder() {
 
-function carica() {
-
-  for (var key in placeholder) {
+  for (var key in dettagli_form) {
       var input = document.getElementById(key);
       if (input) {
           campoDefault(input);
@@ -40,7 +41,7 @@ function carica() {
 
 
 function caricamento(elementi) {
-    carica();
+    carica_placeholder();
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("searchbar"), elementi);
 }
