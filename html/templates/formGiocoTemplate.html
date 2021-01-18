@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>Inserisci Notizia - NomeSito</title>
+    <meta name="title" content="Inserisci notizia - NomeSito" />
+    <meta name="description" content="Pagina per l'inserimento di nuovi giochi" />
+    <meta name="keywords" content="videogiochi, giochi, nuovi" />
+
+    <meta name="author" content="NomeGruppo" />
+    <meta name="language" content="italian it" />
+
+    <link rel="stylesheet" type="text/css" href="../style/style.css" media="screen" />
+
+    <script type="text/javascript" src="../checkForm.js"></script>
+</head>
+
+<body onload="caricamento();">
+
+<div id="header">
+    <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
+	<h1 id="titolo1"> Recensioni </h1>
+	<h2 id="titolo2"> Videogiochi </h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+    </div>
+</div>
+
+<div id="breadcrumb">
+    <p>Ti trovi in: <span xml:lang="en">Home</span> >> Form Giochi</p>
+</div>
+
+<div id="menu">
+    <ul>
+        <li><a href="formGioco.html">Form Nuovo Gioco</a></li>
+        <li><a href="formNotizia.html">Form Nuova Notizia</a></li>
+    </ul>
+</div>
+
+<div class="contenutoGenerale">
+
+<form method="post" action="nuovoGioco.php"  onsubmit="return validateForm();">
+
+    <messaggiForm_ph />
+
+    <fieldset>
+        <legend>Campi obbligatori</legend>
+        <label for="titolo">Titolo: </label>
+        <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" /></span><br />
+
+        <label for="anno">Anno: </label>
+        <span><input type="text" id="anno" name="anno" value="<valoreAnno_ph />" /></span><br />
+
+        <label for="categoria">Categoria:</label>
+        <select name="categoria" id="categoria">
+            <option>Boh</option>
+            <option>Non</option>
+            <option>So</option>
+        </select>
+    </fieldset>
+
+    <fieldset>
+        <legend>Console:</legend>
+        <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
+        <label for="PS4">PS4</label>
+        <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
+        <label for="PS5">PS5</label>
+        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne_ph /> />
+        <label for="XboxOne">Xbox One</label>
+        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
+        <label for="XboxSeriesX">Xbox Series X</label>
+    </fieldset>
+
+    <fieldset>
+        <label for="immagine">Immagine: </label>
+        <input type="file" id="immagine" name="immagine" /><br />
+
+        <label for="alternativo">Alt immagine: </label>
+        <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" /></span>
+    </fieldset>
+
+    <fieldset>
+        <label for="descrizione">Descrizione: </label>
+        <span><textarea id="descrizione" name="descrizione" rows="10" cols="50"><valoreDescrizione_ph /></textarea></span>
+    </fieldset>
+
+    <fieldset>
+        <label for="recensione">Recensione: </label>
+        <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione_ph /></textarea></span>
+    </fieldset>
+
+    <fieldset>
+        <button type="submit" name="submit">Conferma Modifiche</button>
+        <button type="button" name="annullaModifiche">Annulla Modifiche</button>
+        <button type="button" name="elimina">Elimina Gioco</button>
+    </fieldset>
+
+</form>
+
+</div>
+
+<div id="footer">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+</div>
+
+</body>
+</html>
