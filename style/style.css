@@ -30,8 +30,6 @@ SEZIONE HEADER
     background-color: #600000;
     padding: 1.0em;
     min-height: 2em;
-    bac
-    max-height: 5em;
 }
 
 /*
@@ -748,6 +746,18 @@ p.sinossi {
     padding: 0.2em;
 }
 
+#submenu {
+    background-color: #2c2c2c;
+    position: sticky;
+    top:40px;
+    display: block;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    margin-left: 0px;
+    padding-bottom: 1.5px;
+    list-style: none;
+}
+
 .leftnav a {
     color: #fff;
     font-weight: bold;
@@ -756,7 +766,7 @@ p.sinossi {
     width: 150px;
     height: 30px;
     text-align: center;
-    background-color: #1b365d;
+    background-color: red;
     border-bottom: 5px solid #54BAE2;
     border-radius: 10px;
     display: block;
@@ -768,8 +778,6 @@ p.sinossi {
   display:inline-block;
   background-color: #333;
   overflow: hidden;
-  position: sticky;
-  top: 0;
 }
 
 .leftnav a.active, .leftnav a:hover {
@@ -824,8 +832,8 @@ p.trama{
   display: inline-block;
 }
 
-.voto{
-  float: right;
+.vote{
+
 }
 
 p.testo{
@@ -852,5 +860,24 @@ FORM VARIE
 }
 
 .textbox{
+  width: 90%;
+  height: 50px;
+  padding-left:2em;
+  float: left;
+  display: inline-block;
 
+}
+
+.insertcomment{
+  width: 5%;
+  height: 50px;
+  float: right;
+}
+
+.sfondo_rec{
+    width: 100%;
+    border-radius: 10px;
+    height: inherit;
+    top: 0;
+    left: 0;
 }
