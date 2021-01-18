@@ -10,38 +10,41 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 $homePage=replace($homePage);
 
-function createListItem($game_year, $game_url, $game_name, $img_path, $img_alt, $game_content){
+function createListItem($game_scheda_url, $img_path, $img_alt, $game_name, $game_date, $game_vote, $game_sinossi){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
-	$item=preg_replace("/\<game_year_ph\/\>/",$game_year,$item);
-	$item=preg_replace("/\<game_url_ph\/\>/",$game_url,$item);
-	$item=preg_replace("/\<game_name_ph\/\>/",$game_name,$item);
+	$item=preg_replace("/\<game_scheda_url_ph\/\>/",$game_scheda_url,$item);
 	$item=preg_replace("/\<img_path_ph\/\>/",$img_path,$item);
 	$item=preg_replace("/\<img_alt_ph\/\>/",$img_alt,$item);
-	$item=preg_replace("/\<game_content_ph\/\>/",$game_content,$item);
+	$item=preg_replace("/\<game_name_ph\/\>/",$game_name,$item);
+	$item=preg_replace("/\<game_date_ph\/\>/",$game_date,$item);
+	$item=preg_replace("/\<game_vote_ph\/\>/",$game_vote,$item);
+	$item=preg_replace("/\<game_sinossi_ph\/\>/",$game_sinossi,$item);
+	
 	return $item;
 }
 
 
 
-function createNewsList($list){
+function createGamesDivs($list){
+	if(!$list){
+		return "";
+	}
 	$stringsArray=array();
 	foreach($list as $entry){
-		$s=createListItem($entry['Year'], "gioco.php?gioco=".$entry['Name'], $entry['Name'], "no_data", "no_data", "no_data");
+		$s=createListItem("gioco.php?gioco=".$entry['Name'], "../".$entry['Path'], $entry['Alt'], $entry['Name'], "no_data", "no_data", "no_data");
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
-	$newsListTemplate=file_get_contents("../html/templates/gamesListTemplate.html");
-	$newsList=preg_replace("/\<games_list_items_ph\/\>/", $joinedItems, $newsListTemplate);
-	return $newsList;
+	return $joinedItems;
 }
 
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getTableList("games");
+$list=$dbAccess->getGamesWithImages();
 # Unisco le notizie in una lista html 
-$newsListString=createNewsList($list);
+$gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder
-$homePage=preg_replace("/\<games_list_ph\/\>/",$newsListString,$homePage);
+$homePage=preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
 
 
 

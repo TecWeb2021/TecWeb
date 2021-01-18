@@ -3,6 +3,7 @@ var dettagli_form = {
     "anno": ["Anno di Rilascio", /^(19|20)\d{2}$/, "Inserire l'anno di rilascio del gioco"],
     "descrizione": ["Descrizione del gioco", /.{25,}/, "Inserire la descrizione"],
     "recensione": ["Recensione del gioco", /.{25,}/, "Inserire la recensione"],
+    "alternativo": ["testo alternativo", /^([\w\s]){0,50}$/, "Inserire il testo alternativo dell'immagine"],
 
     "titoloNews": ["Titolo", /^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": ["Testo della notizia", /.{25,}/, "Inserire il testo della notizia"]

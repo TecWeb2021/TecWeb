@@ -31,6 +31,30 @@
       <p>Ti trovi in: <span xml:lang="en">Home</span> >> Registrati</p>
   </div>
   
+  <div class="contenutoGenerale">
+    <form method="post" action="registration.php">
+
+    <messaggiForm_ph />
+
+    <fieldset>
+        <legend>Campi obbligatori</legend>
+        <label for="nome_utente">Nome utente: </label>
+        <span><input type="text" id="nome_utente" name="nome_utente" value="<valoreTitolo_ph />" /></span><br />
+
+        <label for="password">Password: </label>
+        <span><input type="text" id="password" name="password" value="<valoreAnno_ph />" /></span><br />
+    </fieldset>
+
+    <fieldset>
+        <button type="submit" name="submit">Conferma Modifiche</button>
+        <button type="button" name="annullaModifiche">Annulla Modifiche</button>
+        <button type="button" name="elimina">Elimina Gioco</button>
+    </fieldset>
+
+</form>
+
+</div>
+  </div>
   
   <div id="footer">
     <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />

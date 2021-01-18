@@ -32,15 +32,20 @@ class DBAccess {
         $querySelect ="$query";
         $queryResult = mysqli_query($this->connection, $querySelect);
         /*echo "query result: ".$queryResult;*/
-        
-        if($queryResult==false || mysqli_num_rows($queryResult) == 0) {
+        if($queryResult==true){
+            return $queryResult;
+        }
+        if($queryResult==null || $queryResult==false || mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $resultList = array();
 
             //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
             //mysqli_fetch_assoc (in maniera associativa)
-            while ($row = mysqli_fetch_assoc($queryResult)) {
+            while ($row = $queryResult->fetch_row()) {
+                $item=array(
+                    
+                )
                 array_push($resultList, $row);
             }
             #restituisce un array di array. Gli array contenutivi sono le righe del database.
@@ -116,7 +121,7 @@ class DBAccess {
 
 
     public function getNewsWithImages(){
-        $query="SELECT * FROM news, images WHERE news.image=images.id";
+        $query="SELECT * FROM news LEFT JOIN images on news.image=images.path";
         $result=$this->getResult($query);
         return $result;
     }
@@ -126,6 +131,30 @@ class DBAccess {
         $query="SELECT * FROM news WHERE Id=$id";
         $result=$this->getResult($query);
         return $result;
+    }
+
+    public function getGamesWithImages(){
+        $query="SELECT * FROM games LEFT JOIN images ON games.image=images.path";
+        $result = $this->getResult($query);
+        return $result;
+    }
+
+    public function getUserByHash($hashValue){
+        $query="SELECT * FROM users WHERE hash=\"$hashValue\"";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    public function addUser($username, $password,$is_admin){
+        $hashValue=hash("md5",$username.$password);
+        $query="INSERT INTO users VALUES ('$username','$hashValue',$is_admin);";
+        echo "query: ".$query;
+        $result=$this->getResult($query);
+        if($result==null){
+            $result="null";
+        }
+        echo "addUser_result: ".$result;
+
     }
 
     #public function getGame($name)
