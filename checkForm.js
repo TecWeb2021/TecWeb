@@ -105,7 +105,24 @@ function carica_placeholder() {
     
 }
 
+
+function handleClick() {
+    var radio = document.getElementById("handler");
+    var barraDiRicerca = document.getElementById("cercaTitolo");
+
+    if (radio) {
+        radio.onclick = function(event) {
+            if(event.target.value == "Giochi") 
+                barraDiRicerca.className = "visibile";
+            else 
+                barraDiRicerca.className = "invisibile";
+        }
+    }
+}
+
+
 function caricamento(elementi) {
+    handleClick();
     carica_placeholder();
     /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("searchbar"), elementi);

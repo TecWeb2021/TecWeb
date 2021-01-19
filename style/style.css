@@ -244,10 +244,8 @@ SEZIONE BARRA DI RICERCA
   margin-right: 0.5em;
 }
 
-/*la classe viene modificata via javascript e crea un conflitto*/
-.searchbar, .searchbutton{
-  /*color: white;
-  background-color: #1b365d;*/
+/*se selezionata come classe viene modificata via javascript (placeholder) e crea un conflitto*/
+#searchbar {
   color: black;
   background-color: white;
   width: 150px;
@@ -256,20 +254,13 @@ SEZIONE BARRA DI RICERCA
   border-radius: 5px;
 }
 
-#searchbar {
-  /*color: white;
-  background-color: #1b365d;*/
-  color: black;
-  background-color: white;
-  height: 30px;
-  margin: 2px;
-  border-radius: 5px;
-}
-
 .searchbutton{
   color: white;
   background-color: #1b365d;
-  width: 50px;
+  width: 60px;
+  height: 30px;
+  margin: 2px;
+  border-radius: 5px;
   margin-top: 0.3em;
   cursor: pointer;
 }
@@ -292,11 +283,6 @@ SEZIONE BARRA DI RICERCA
   top: 100%;
   left: 0;
   right: 0;
-}
-
-/* ridimensiona i suggerimenti per non farli apparire sotto la label che viene mostrata (nella searchbar normale viene nascosta) */
-#formNotizie .autocomplete-items {
-  left: 40%;
 }
 
 .autocomplete-items div {
@@ -850,10 +836,52 @@ FORM VARIE
 =========================
 */
 
+/* ridimensiona i suggerimenti per non farli apparire sotto la label che viene mostrata (nella searchbar normale viene nascosta) */
+#formNotizia .autocomplete-items {
+  left: 40%;
+}
+
 /* non funziona in searchbar per specificita' */
 .deftext {
   color: grey;
 }
+
+.invisibile {
+  display: none;
+}
+
+.visibile {
+  display: block;
+}
+
+.bottone {
+  color: white;
+  background-color: #1b365d;
+  font-size: 1em;
+  padding: 0.1em;
+  margin: 2px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#modifica {
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  font-family: sans-serif;
+  padding: 5px;
+  text-decoration: none;
+}
+
+#bottoniOpzionali {
+  display: inline;
+}
+
+#corto {
+  width: 16%;
+}
+
+/*======================================*/
 
 .textbox{
   width: 90%;

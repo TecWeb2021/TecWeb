@@ -43,7 +43,7 @@
 
 <div class="contenutoGenerale">
 
-<form method="post" action="formGioco.php" enctype="multipart/form-data">
+<form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
     <messaggiForm_ph />
 
@@ -93,13 +93,20 @@
         <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione_ph /></textarea></span>
     </fieldset>
 
-    <fieldset>
-        <button type="submit" name="action" value="conferma" onclick="return validateForm();">Conferma Modifiche</button>
-        <button type="submit" name="action" value="annulla">Annulla Modifiche</button>
-        <button type="submit" name="action" value="elimina">Elimina Gioco</button>
+    <fieldset id="corto">
+        <button type="submit" name="submit" class="bottone">Salva Modifiche</button>
     </fieldset>
 
 </form>
+
+<div id="bottoniOpzionali">
+
+    <form method="post" action="eliminaNotizia.php">
+        <a id="modifica" class="bottone" href="amministratore.html">Annulla Modifiche</a>
+        <button class="bottone" type="submit" value="<gioco_ph />">Elimina Gioco</button>
+    </form>
+    
+</div>
 
 </div>
 

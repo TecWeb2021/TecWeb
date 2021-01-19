@@ -51,26 +51,29 @@
 
 <div class="contenutoGenerale">
 
-<form id="formNotizie" method="post" action="formNotizia.php" enctype="multipart/form-data" >
+<form id="formNotizia" method="post" action="formNotizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
     <messaggiForm_ph />
     
     <fieldset>
         <label for="titoloNews">Titolo: </label>
         <span><input type="text" id="titoloNews" name="titoloNews" value="<valoreTitolo_ph />" /></span><br />
-
-        <label for="data">Data: </label>
-        <span><input type="date" id="data" name="data" value="<valoreData_ph />" /></span><br />
-
-        <label for="tipologia">Tipologia</label>
-        <select name="tipologia" id="tipologia">
-            <option>Eventi</option>
-            <option>Giochi</option>
-            <option xml:lang="en">Hardware</option>
-        </select>
     </fieldset>
 
-    <fieldset>
+    <fieldset id="handler">
+        <p>Tipologia: </p>
+
+        <input type="radio" id="Eventi" name="tipologia" value="Eventi">
+        <label for="Eventi">Eventi</label>
+
+        <input type="radio" id="Giochi" name="tipologia" value="Giochi">
+        <label for="Giochi">Giochi</label>
+
+        <input type="radio" id="Hardware" name="tipologia" value="Hardware">
+        <label for="Hardware">Hardware</label>
+    </fieldset>
+
+    <fieldset id="cercaTitolo" class="invisibile">
         <div class="autocomplete">
           <label for="searchbar">Gioco trattato:</label>
           <input id="searchbar" class="searchbar" type="text" name="searchbar" />
@@ -90,13 +93,20 @@
         <span><textarea id="testo" name="testo" rows="15" cols="50"><valoreTesto_ph /></textarea></span>
     </fieldset>
 
-    <fieldset>
-        <button type="submit" name="action" value="conferma" onclick="return validateForm();">Conferma Modifiche</button>
-        <button type="submit" name="action" value="annulla">Annulla Modifiche</button>
-        <button type="submit" name="action" value="elimina">Elimina Notizia</button>
+    <fieldset id="corto">
+        <button type="submit" name="submit" class="bottone">Salva Modifiche</button>
     </fieldset>
 
 </form>
+
+<div id="bottoniOpzionali">
+
+    <form method="post" action="eliminaNotizia.php">
+        <a id="modifica" class="bottone" href="amministratore.html">Annulla Modifiche</a>
+        <button class="bottone" type="submit" value="<titolo_ph />">Elimina Notizia</button>
+    </form>
+
+</div>
 
 </div>
 
