@@ -20,7 +20,7 @@
 
 </head>
 
-<body onload="caricamento(elementi);">
+<body onload="caricamento();">
 
   <div id="header">
     <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
@@ -37,7 +37,7 @@
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
 
-    <form class="searchbox" action="action_page.php">
+    <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
         <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
@@ -48,7 +48,7 @@
           <option value="Dark Souls">Dark Souls</option>
           <option value="Pippo">Pippo</option>
         </datalist>
-        <input type="submit" class="searchbutton" value="Cerca" />
+        <button type="submit" class="searchbutton">Cerca</button>
       </fieldset>
     </form>
 
