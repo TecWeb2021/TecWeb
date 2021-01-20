@@ -18,36 +18,42 @@
     <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body onload="caricamento(elementi);">
+<body onload="caricamento();">
 
-<script type="text/javascript">  
-    /* Array contenente gli elementi da cercare, riempito tramite php */
-    var elementi = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
-</script>
-
-<div id="header">
-    <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
-	<h1 id="titolo1"> Recensioni </h1>
-	<h2 id="titolo2"> Videogiochi </h2>
-    <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
-    </div>
-</div>
-
-
-<div id="breadcrumb">
-    <p>Ti trovi in: <span xml:lang="en">Home</span> >> Form Notizie</p>
-</div>
-
-
-<div id="menu">
-    <ul>
-        <li><a href="formGioco.html">Form Nuovo Gioco</a></li>
-        <li><a href="formNotizia.html">Form Nuova Notizia</a></li>
-    </ul>
-</div>
-
+    <div id="header">
+        <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
+            <h1 id="titolo1"> Recensioni </h1>
+            <h2 id="titolo2"> Videogiochi </h2>
+        <div class="loginblock">
+          <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+          <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+        </div>
+      </div>
+    
+      <div class="topnav" id="menu">
+        <a  class="icon" onclick="myFunction()">
+          <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+        </a>
+    
+        <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
+          <fieldset>
+            <label for="searchbar" class="structural">Cerca gioco:</label>
+            <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
+            <datalist id="titleInput" class="formText">
+              <opzioni_ph />
+            </datalist>
+            <button type="submit" class="searchbutton">Cerca</button>
+          </fieldset>
+        </form>
+    
+        <a class="active" href="Home.html"><span xml:lang="en">Home</span></a>
+          <a href="Giochi.html">Giochi</a>
+          <a href="Notizie.html">Notizie</a>
+      </div>
+    
+      <div id="breadcrumb">
+          <p>Ti trovi in: <span xml:lang="en">Home</span></p>
+      </div>
 
 <div class="contenutoGenerale">
 
@@ -78,6 +84,14 @@
           <label for="searchbar">Gioco trattato:</label>
           <input id="searchbar" class="searchbar" type="text" name="searchbar" />
         </div>
+    </fieldset>
+
+    <fieldset  class="invisibile">
+        <label for="searchbar">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_form_ph />
+        </datalist>
     </fieldset>
 
     <fieldset>

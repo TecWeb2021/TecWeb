@@ -20,26 +20,44 @@
 
 <body onload="carica_placeholder();">
 
-<div id="header">
-    <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
-	<h1 id="titolo1"> Recensioni </h1>
-	<h2 id="titolo2"> Videogiochi </h2>
-    <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
-    </div>
-</div>
-
-<div id="breadcrumb">
-    <p>Ti trovi in: <span xml:lang="en">Home</span> >> Form Giochi</p>
-</div>
-
-<div id="menu">
-    <ul>
-        <li><a href="formGioco.html">Form Nuovo Gioco</a></li>
-        <li><a href="formNotizia.html">Form Nuova Notizia</a></li>
-    </ul>
-</div>
+    <div id="header">
+        <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
+            <h1 id="titolo1"> Recensioni </h1>
+            <h2 id="titolo2"> Videogiochi </h2>
+        <div class="loginblock">
+          <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+          <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+        </div>
+      </div>
+    
+      <div class="topnav" id="menu">
+        <a  class="icon" onclick="myFunction()">
+          <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+        </a>
+    
+        <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
+          <fieldset>
+            <label for="searchbar" class="structural">Cerca gioco:</label>
+            <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
+            <datalist id="titleInput" class="formText">
+              <opzioni_ph />
+              <option value="Doom">Doom</option>
+              <option value="Zelda">Zelda</option>
+              <option value="Dark Souls">Dark Souls</option>
+              <option value="Pippo">Pippo</option>
+            </datalist>
+            <button type="submit" class="searchbutton">Cerca</button>
+          </fieldset>
+        </form>
+    
+        <a class="active" href="Home.html"><span xml:lang="en">Home</span></a>
+          <a href="Giochi.html">Giochi</a>
+          <a href="Notizie.html">Notizie</a>
+      </div>
+    
+      <div id="breadcrumb">
+          <p>Ti trovi in: <span xml:lang="en">Home</span></p>
+      </div>
 
 <div class="contenutoGenerale">
 
