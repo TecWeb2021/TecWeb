@@ -1,5 +1,7 @@
 <?php
 
+require_once("news.php");
+require_once("game.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -42,10 +44,7 @@ class DBAccess {
 
             //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
             //mysqli_fetch_assoc (in maniera associativa)
-            while ($row = $queryResult->fetch_row()) {
-                $item=array(
-                    
-                )
+            while ($row = mysql_fetch_assoc($resultList)) {
                 array_push($resultList, $row);
             }
             #restituisce un array di array. Gli array contenutivi sono le righe del database.
@@ -105,7 +104,8 @@ class DBAccess {
         }else {
             $newsList = array();
             while ($row = mysqli_fetch_assoc($queryResult)) {
-                array_push($newsList, $row);
+                $news=new News($row['Title'], $row['Content'], $row['User'],$row['Last_edit_date'],$row['Category']);
+                array_push($newsList, $news);
             }
 
             return $newsList;
@@ -137,6 +137,23 @@ class DBAccess {
         $query="SELECT * FROM games LEFT JOIN images ON games.image=images.path";
         $result = $this->getResult($query);
         return $result;
+    }
+
+    public function getGames(){
+        $querySelect ="SELECT * FROM games";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $gamesList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range']);
+                array_push($gamesList, $game);
+            }
+
+            return $gamesList;
+        }
     }
 
     public function getUserByHash($hashValue){

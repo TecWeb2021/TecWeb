@@ -18,7 +18,11 @@ if(isset($_POST['nomeLogin']) && isset($_POST['pw'])){
 	echo "<hr>";
 	$user=$dbAccess->getUserByHash($hashValue);
 	if($user){
-		$username=$user[0]['Username'];
+		$username="";
+		foreach($user as $entry){
+			$username=$entry['Username'];
+		}
+		
 		echo "Benvenuto ".$username;
 		setcookie("login",$hashValue);
 	}else{

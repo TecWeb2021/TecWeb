@@ -10,29 +10,26 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 $homePage=replace($homePage);
 
-function createListItem($game_scheda_url, $img_path, $img_alt, $game_name, $game_date, $game_vote, $game_sinossi){
+function createGameHTMLItem($game){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
-	$item=preg_replace("/\<game_scheda_url_ph\/\>/",$game_scheda_url,$item);
-	$item=preg_replace("/\<img_path_ph\/\>/",$img_path,$item);
-	$item=preg_replace("/\<img_alt_ph\/\>/",$img_alt,$item);
-	$item=preg_replace("/\<game_name_ph\/\>/",$game_name,$item);
-	$item=preg_replace("/\<game_date_ph\/\>/",$game_date,$item);
-	$item=preg_replace("/\<game_vote_ph\/\>/",$game_vote,$item);
-	$item=preg_replace("/\<game_sinossi_ph\/\>/",$game_sinossi,$item);
+	$item=preg_replace("/\<game_name_ph\/\>/",$game->getName(),$item);
+	$item=preg_replace("/\<game_date_ph\/\>/",$game->getPublicationDate(),$item);
+	$item=preg_replace("/\<game_vote_ph\/\>/",$game->getVote(),$item);
+	$item=preg_replace("/\<game_sinossi_ph\/\>/",$game->getSinopsis(),$item);
 	
 	return $item;
 }
 
 
 
-function createGamesDivs($list){
-	if(!$list){
+function createGamesDivs($gamesList){
+	if(!$gamesList){
 		return "";
 	}
 	$stringsArray=array();
-	foreach($list as $entry){
-		$s=createListItem("gioco.php?gioco=".$entry['Name'], "../".$entry['Path'], $entry['Alt'], $entry['Name'], "no_data", "no_data", "no_data");
+	foreach($gamesList as $entry){
+		$s=createGameHTMLItem($entry);
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
@@ -40,7 +37,7 @@ function createGamesDivs($list){
 }
 
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getGamesWithImages();
+$list=$dbAccess->getGames();
 # Unisco le notizie in una lista html 
 $gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder
