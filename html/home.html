@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+<link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
 <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 </head>
 
@@ -26,7 +27,7 @@
 		<h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
       <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
     </div>
   </div>
   <div class="topnav" id="menu">
@@ -34,7 +35,7 @@
       <i class="fa fa-bars"></i>
     </a>
     <form class="searchbox" action="/action_page.php">
-      <div>
+      <div class="search_container">
         <label for="searchbar" class="structural">Barra di ricerca:</label>
         <input id="searchbar" class="searchbar" type="text" name="search" />
         <button class="searchbutton" type="submit">Submit</button>
