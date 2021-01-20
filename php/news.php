@@ -17,12 +17,12 @@ class News{
 	private $image;
 	private $category;
 
-	function __construct($_title, $_content, $_author, $_last_edit_date_time, /*$_image,*/ $_category){
+	function __construct($_title, $_content, $_author, $_last_edit_date_time, $_image, $_category){
 		$this->title=$_title;
 		$this->content=$_content;
 		$this->author=$_author;
 		$this->last_edit_date_time=$_last_edit_date_time;
-		//$this->image=$_image;
+		$this->image=$_image;
 		$this->category=$_category;
 	}
 

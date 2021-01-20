@@ -18,9 +18,9 @@ function createNewsHTMLItem($news){
 	$item=preg_replace("/\<news_date_ph\/\>/",$news->getLastEditDateTime(),$item);
 	$item=preg_replace("/\<news_url_ph\/\>/","no_data",$item);
 	$item=preg_replace("/\<news_title_ph\/\>/",$news->getTitle(),$item);
-	$item=preg_replace("/\<news_author_ph\/\>/",$news->getAuthor(),$item);
-	$item=preg_replace("/\<img_path_ph\/\>/","no_data",$item);
-	$item=preg_replace("/\<img_alt_ph\/\>/","no_data",$item);
+	$item=preg_replace("/\<news_author_ph\/\>/",$news->getAuthor()->getUsername(),$item);
+	$item=preg_replace("/\<img_path_ph\/\>/","../".$news->getImage()->getPath(),$item);
+	$item=preg_replace("/\<img_alt_ph\/\>/",$news->getImage()->getAlt(),$item);
 	$item=preg_replace("/\<news_content_ph\/\>/",$news->getContent(),$item);
 	return $item;
 }

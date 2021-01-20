@@ -3,6 +3,7 @@
 require_once("news.php");
 require_once("game.php");
 require_once("image.php");
+require_once("user.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -92,23 +93,20 @@ class DBAccess {
         $queryResult = mysqli_query($this->connection, $querySelect);
     }
 
-    public function getNewsList($name=null) {
-        if($name==null){
-            $querySelect ="SELECT * FROM news";
-        }else{
-            $querySelect ="SELECT * FROM news WHERE Title='$name' ";
-        }
-        $queryResult = mysqli_query($this->connection, $querySelect);
-        
-        if(mysqli_num_rows($queryResult) == 0) {
+    public function getNewsList() {
+        $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
+        $result=mysqli_query($this->connection, $query);
+
+        if(mysqli_num_rows($result) ==0){
             return null;
-        }else {
-            $newsList = array();
-            while ($row = mysqli_fetch_assoc($queryResult)) {
-                $news=new News($row['Title'], $row['Content'], $row['User'],$row['Last_edit_date'],$row['Category']);
+        }else{
+            $newsList=array();
+            while($row=mysqli_fetch_assoc($result)){
+                $image=new Image($row['Path'], $row['Alt']);
+                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin']);
+                $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category']);
                 array_push($newsList, $news);
             }
-
             return $newsList;
         }
     }
@@ -116,20 +114,6 @@ class DBAccess {
     public function getTableList($name){
         $name=preg_replace("/[^a-zA-Z0-9_]/","",$name);
         $query ="SELECT * FROM $name";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-
-    public function getNewsWithImages(){
-        $query="SELECT * FROM news LEFT JOIN images on news.image=images.path";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-    public function getNews($id){
-        #sanitize
-        $query="SELECT * FROM news WHERE Id=$id";
         $result=$this->getResult($query);
         return $result;
     }
