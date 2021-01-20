@@ -136,6 +136,21 @@ class DBAccess {
         }
     }
 
+    public function getGame($name){
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path AND games.Name='$name' ";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult);
+            $image=new Image($row['Path'],$row['Alt']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
+
+        return $game;
+        }
+    }
+
     public function getUserByHash($hashValue){
         $query="SELECT * FROM users WHERE hash=\"$hashValue\"";
         $result=$this->getResult($query);

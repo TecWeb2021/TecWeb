@@ -1,2 +1,204 @@
-<h1>Scheda gioco</h1>
-<game_name_ph/>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>Giochi</title>
+<meta name="title" content="Sito Recensioni Videogiochi" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Home Page del sito di Recensioni">
+<meta keywords="Videogiochi games gaming recensioni">
+<meta language="italian it" />
+<meta author="" />
+<link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div id="header">
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png"></a>
+    <h1 id="titolo1"> Recensioni </h1>
+    <h2 id="titolo2"> Videogiochi </h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png"></a>
+      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+    </div>
+  </div>
+  <div class="topnav" id="menu">
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+    <form class="searchbox" id="barra_di_ricerca" action="giochi.php">
+      <label for="searchbar" class="structural">Barra di ricerca:</label>
+      <input class="searchbar" type="text" placeholder="Cerca..." name="search">
+      <button class="searchbutton" type="submit">Submit</button>
+    </form>
+        <a href="Home.html"><span xml:lang="en">Home</span></a>
+        <a href="Giochi.html">Giochi</a>
+        <a href="Notizie.html">Notizie</a>
+  </div>
+  <div id="breadcrumb">
+      <p>Ti trovi in: Giochi</p>
+  </div>
+<div class="container">
+  <div class="leftnav" id="submenu">
+    <a class="active" href="DarkSouls3_scheda.html"><span xml:lang="en">Scheda Gioco</span></a>
+    <a href="DarkSouls3_recensione.html">Recensione Gioco</a>
+    <a href="DarkSouls3_notizie.html">Notizie Gioco</a>
+  </div>
+  <div class="gioco">
+    <div class="info_gioco">
+      <img class="img_cover" src="<img_path_ph/>" alt="<img_alt_ph/>">
+      <table class="info">
+        <tr>
+          <th style>
+            <h5>Piattaforma:</h5>
+          </th>
+          <td class style>
+            <p>PS4,Xbox One,PC</p>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Data pubblicazione:</h5>
+          </th>
+          <td class style>
+            <p><publication_date_ph/></p>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Genere:</h5>
+          </th>
+          <td class style>
+            <p>Action,RPG</p>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Sviluppo:</h5>
+          </th>
+          <td class style>
+            <p>FromSoftware</p>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Pubblicazione:</h5>
+          </th>
+          <td class style>
+            <p>FromSoftware,Bandai Namco</p>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Fascia di età:</h5>
+          </th>
+          <td class style>
+            <p><age_range/></p>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Espansioni:</h5>
+          </th>
+          <td class style>
+            <ul class="expansion">
+              <li>
+                <a href="DS3ariandel.html">Ashes of Ariandel</a>
+              </li>
+              <li>
+                <a href="DS3ringedcity.html">The Ringed City</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Prequel:</h5>
+          </th>
+          <td class style>
+            <ul class="serie">
+              <li>
+                <a href="DS2.html">Dark Souls 2</a>
+              </li>
+              <li>
+                <a href="DS1.html">Dark Souls</a>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th style>
+            <h5>Sequel:</h5>
+          </th>
+          <td class style>
+            <ul class="serie">
+              <li>
+                <p>Nessuno</p>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="trama_gioco">
+      <h3><game_name_ph/></h3>
+      <p class="trama">
+        <sinopsis_ph/>
+      </p>
+    </div>
+  </div>
+</div>
+<div id="footer">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png">
+	<em> Noi quattro - All rights Reserved </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif">
+</div>
+<script>
+/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+function myFunction() {
+  var x = document.getElementById("menu");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+function OpenConsole() {
+  document.getElementById("console").classList.toggle("show");
+}
+
+function OpenGeneri() {
+  document.getElementById("generi").classList.toggle("show");
+}
+
+function OpenAnnoFIN() {
+  document.getElementById("annofin").classList.toggle("show");
+}
+
+function OpenAnnoIN() {
+  document.getElementById("annoin").classList.toggle("show");
+}
+
+function OpenOrdine() {
+  document.getElementById("ordine").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+</body>
+</html>
