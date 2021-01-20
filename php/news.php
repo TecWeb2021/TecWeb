@@ -22,7 +22,7 @@ class News{
 		$this->content=$_content;
 		$this->author=$_author;
 		$this->last_edit_date_time=$_last_edit_date_time;
-		$this->image=$_image;
+		//$this->image=$_image;
 		$this->category=$_category;
 	}
 
