@@ -17,10 +17,10 @@ if(isset($_GET['id_notizia'])){
 	$news_id=$_GET['id_notizia'];
 	#sanitize
 
-	$news=$dbAccess->getNews($news_id);
+	$news=$dbAccess->getNewsList($news_id);
 
 	if($news){
-		$newsSubpage=$news[0]['Title']."<br/>".$news[0]['Text'];
+		$newsSubpage=$news[0]->getTitle()."<br/>".$news[0]->getContent();
 	}else{
 
 		$newsSubpage="non esiste una notizia con questo Id";
