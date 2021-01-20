@@ -196,29 +196,6 @@ SEZIONE MENU
   display: none;
 }
 
-/* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
-@media screen and (max-width: 1000px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    width: 150px;
-    float: right;
-    display: block;
-  }
-}
-
-/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: 1000px) {
-  .topnav.responsive a.icon {
-    float: right;
-    width: 150px;
-    text-align: center;
-  }
-  .topnav.responsive a {
-    width:100%;
-    display: block;
-    text-align: center;
-  }
-}
 
 #menu {
     background-color: #2c2c2c;
@@ -269,12 +246,7 @@ button {
   width: 23%;
 }
 
-@media screen and (max-width: 1000px) {
-  .searchbox{
-    float: left;
-    width: 55%;
-  }
-}
+
 /*
 =========================
 SEZIONE RIGHT COLUMN
@@ -323,11 +295,7 @@ img.cover_gioco_della_settimana{
     top: 0;
     left: 0;
 }
-@media only screen and (max-width: 1000px) {
-  img.cover_gioco_della_settimana{
-    border-radius: inherit;
-  }
-}
+
 /*
 =========================
 SEZIONE CONTENUTO
@@ -352,23 +320,7 @@ SEZIONE CONTENUTO
   background-color: #414141;
   padding: 0.2em;
 }
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-@media only screen and (max-width: 1000px) {
-  .leftcolumn, .rightcolumn{
-    width: 100%;
-    padding: 0;
-  }
-  #top5{
-    float: right;
-    width: 30%;
-    padding: 0;
-  }
-  #gioco_della_settimana{
-    float: left;
-    width: 69%;
-    padding: 0;
-  }
-}
+
 
 .notizia{
   background-color: #f5f5f5;
@@ -419,11 +371,7 @@ p.autore{
   margin: 1.1em 1em 0 0;
   text-align: right;
 }
-@media only screen and (max-width: 1000px) {
-  .aiutoTornaSu{
-    margin-top: 3em;
-  }
-}
+
 .keep_reading{
   display: inline-block;
 }
@@ -474,20 +422,7 @@ p.descrizione_home {
     max-height: 180px;
     overflow: hidden;
 }
-@media only screen and (max-width: 1000px) {
-  p.descrizione_home {
-      width: 80%;
-      float: right;
-      column-count: 3;
-      column-rule: 1px solid #ccccb3;
-      border-radius: 25px;
-      border: 1px solid #000;
-      background-color:#f5f5f5;
-      text-align: left;
-      padding: 1em;
-      max-height: 180px;
-  }
-}
+
 /*
 =========================
 SEZIONE FOOTER
@@ -620,16 +555,7 @@ SEZIONE LETTERE
   float: right;
   width:45%;
 }
-@media screen and (max-width: 1000px) {
-  .filters{
-    width: 100%;
-  }
-  .a-z_list{
-    padding: 0.1em;
-    float: left;
-    width: 100%;
-  }
-}
+
 
 /* Clear floats after the columns */
 #advance_filter:after {

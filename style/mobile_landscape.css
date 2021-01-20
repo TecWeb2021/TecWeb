@@ -1,0 +1,67 @@
+.topnav a {display: none;}
+.topnav a.icon {
+  width: 150px;
+  float: right;
+  display: block;
+}
+
+.topnav.responsive a.icon {
+  float: right;
+  width: 150px;
+  text-align: center;
+}
+.topnav.responsive a {
+  width:100%;
+  display: block;
+  text-align: center;
+}
+
+.searchbox{
+  float: left;
+  width: 55%;
+}
+
+img.cover_gioco_della_settimana{
+  border-radius: inherit;
+}
+
+.leftcolumn, .rightcolumn{
+  width: 100%;
+  padding: 0;
+}
+#top5{
+  float: right;
+  width: 30%;
+  padding: 0;
+}
+#gioco_della_settimana{
+  float: left;
+  width: 69%;
+  padding: 0;
+}
+
+.aiutoTornaSu{
+  margin-top: 3em;
+}
+
+p.descrizione_home {
+    width: 80%;
+    float: right;
+    column-count: 3;
+    column-rule: 1px solid #ccccb3;
+    border-radius: 25px;
+    border: 1px solid #000;
+    background-color:#f5f5f5;
+    text-align: left;
+    padding: 1em;
+    max-height: 180px;
+}
+
+.filters{
+  width: 100%;
+}
+.a-z_list{
+  padding: 0.1em;
+  float: left;
+  width: 100%;
+}
