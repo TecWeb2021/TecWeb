@@ -807,29 +807,6 @@ FORM VARIE
   display: block;
 }
 
-.bottone {
-  color: white;
-  background-color: #1b365d;
-  font-size: 1em;
-  padding: 0.1em;
-  margin: 2px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#modifica {
-  border-style: solid;
-  border-color: white;
-  border-width: 2px;
-  font-family: sans-serif;
-  padding: 5px;
-  text-decoration: none;
-}
-
-#bottoniOpzionali {
-  display: inline;
-}
-
 #corto {
   width: 16%;
 }
