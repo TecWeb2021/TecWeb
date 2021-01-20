@@ -20,8 +20,10 @@ class DBAccess {
         //questa funzione restituisce la connessione oppure false
         $this->connection = mysqli_connect(DBAccess::HOST_DB, DBAccess::USERNAME, DBAccess::PASSWORD, DBAccess::DATABASE_NAME);
         if (!$this->connection) {
+            echo "connection failed";
             return false;
         }else {
+            echo "connection accomplished";
             return true;
         }
 
