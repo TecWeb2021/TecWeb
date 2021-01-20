@@ -17,6 +17,9 @@ function createGameHTMLItem($game){
 	$item=preg_replace("/\<game_date_ph\/\>/",$game->getPublicationDate(),$item);
 	$item=preg_replace("/\<game_vote_ph\/\>/",$game->getVote(),$item);
 	$item=preg_replace("/\<game_sinossi_ph\/\>/",$game->getSinopsis(),$item);
+	$item=preg_replace("/\<img_path_ph\/\>/","../".$game->getImage()->getPath(),$item);
+	echo "ciao: ".$game->getImage()->getAlt();
+	$item=preg_replace("/\<img_alt_ph\/\>/",$game->getImage()->getAlt(),$item);
 	
 	return $item;
 }
@@ -32,12 +35,12 @@ function createGamesDivs($gamesList){
 		$s=createGameHTMLItem($entry);
 		array_push($stringsArray, $s);
 	}
-	$joinedItems=implode( " ", $stringsArray);
+	$joinedItems=implode(" ", $stringsArray);
 	return $joinedItems;
 }
 
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getGames();
+$list=$dbAccess->getGamesWithImages();
 # Unisco le notizie in una lista html 
 $gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder

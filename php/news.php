@@ -14,13 +14,15 @@ class News{
 	private $content;
 	private $author;
 	private $last_edit_date_time;
+	private $image;
 	private $category;
 
-	function __construct($_title, $_content, $_author, $_last_edit_date_time, $_category){
+	function __construct($_title, $_content, $_author, $_last_edit_date_time, /*$_image,*/ $_category){
 		$this->title=$_title;
 		$this->content=$_content;
 		$this->author=$_author;
 		$this->last_edit_date_time=$_last_edit_date_time;
+		$this->image=$_image;
 		$this->category=$_category;
 	}
 
@@ -38,6 +40,10 @@ class News{
 
 	function getLastEditDateTime(){
 		return $this->last_edit_date_time;
+	}
+
+	function getImage(){
+		return $this->image;
 	}
 
 	function getCategory(){
