@@ -1,9 +1,9 @@
 <?php
 
-require_once("news.php");
-require_once("game.php");
-require_once("image.php");
-require_once("user.php");
+require_once("./classes/news.php");
+require_once("./classes/game.php");
+require_once("./classes/image.php");
+require_once("./classes/user.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -118,7 +118,7 @@ class DBAccess {
         return $result;
     }
 
-    public function getGamesWithImages(){
+    public function getGamesList(){
         $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
@@ -128,24 +128,7 @@ class DBAccess {
             $gamesList = array();
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 $image=new Image($row['Path'],$row['Alt']);
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'],$image);
-                array_push($gamesList, $game);
-            }
-
-            return $gamesList;
-        }
-    }
-
-    public function getGames(){
-        $querySelect ="SELECT * FROM games";
-        $queryResult = mysqli_query($this->connection, $querySelect);
-        
-        if(mysqli_num_rows($queryResult) == 0) {
-            return null;
-        }else {
-            $gamesList = array();
-            while ($row = mysqli_fetch_assoc($queryResult)) {
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range']);
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
                 array_push($gamesList, $game);
             }
 
@@ -170,8 +153,6 @@ class DBAccess {
         echo "addUser_result: ".$result;
 
     }
-
-    #public function getGame($name)
 
 }
 ?>

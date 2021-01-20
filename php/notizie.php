@@ -1,7 +1,7 @@
 <?php
 include "replacer.php";
 include "dbConnection.php";
-require_once("news.php");
+require_once("./classes/news.php");
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
