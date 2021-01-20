@@ -1,56 +1,45 @@
 <?php
 
 include "replacer.php";
-include "dbConnection.php";
+require_once("dbConnection.php");
 
 # Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
-$homePage=file_get_contents("../html/templates/giocoTemplate.html");
+$homePage=file_get_contents("../html/templates/giocoNotizieTemplate.html");
 $homePage=replace($homePage);
 
-$sottopagine=array('scheda','recensione','notizie','extra');
-if(isset($_GET['gioco'])){
-	
-	
-	$sottopagina="scheda";
-	if(isset($_GET['sottopagina'])){
-		$tmp=$_GET['sottopagina'];		
-		if(in_array($tmp, $sottopagine)){
-			$sottopagina=$tmp;
-		}
+function replacePH($game){
+	global $homePage;
+
+	$homePage=str_replace("<gioco_scheda_ph/>", "gioco_scheda.php?game=".strtolower($game->getName()),$homePage);
+	$homePage=str_replace("<gioco_recensione_ph/>", "gioco_recensione.php?game=".strtolower($game->getName()),$homePage);
+	$homePage=str_replace("<gioco_notizie_ph/>", "gioco_notizie.php?game=".strtolower($game->getName()),$homePage);
+	/*$homePage=str_replace("</>", $game->,$homePage);
+	$homePage=str_replace("</>", $game->,$homePage);
+	$homePage=str_replace("</>", $game->,$homePage);
+	$homePage=str_replace("</>", $game->,$homePage);
+	$homePage=str_replace("</>", $game->,$homePage);*/
+}
+
+if(isset($_REQUEST['game'])){
+	$gameName=$_REQUEST['game'];
+	#sanitize;
+	$game=$dbAccess->getGame($gameName);
+	if($game==null){
+		echo "il gioco specificato non è stato trovato";
+	}else{
+		replacePH($game);
 	}
-
-
-	$subpage="";
-
-	switch ($sottopagina) {
-    	case "scheda":
-			$subpage=file_get_contents("../html/templates/giocoSchedaTemplate.html");
-			$subpage=preg_replace("/\<game_name_ph\/\>/", , subject)    
-        	break;
-    	case "recensione":
-        
-        	break;
-    	case "notizie":
-        
-	        break;
-	    case "extra":
-    	
-    		break;
-	}
-
-$homePage=preg_replace("/\<game_subpage_ph\/\>/",$subpage,$homePage);
-
-
-
 }else{
-	$homePage="specificare un gioco";
+	echo "non è specificato un gioco";
 }
 
 
+
 echo $homePage;
+
 
 ?>
