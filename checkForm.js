@@ -30,7 +30,7 @@ function campoPerInput(input) {
 }
 
 function backToDefault(input) {
-    if (!input.value.search(/^$/)) {
+    if (!input.value.search(/^\s*$/)) {
         campoDefault(input);
     }
 }
@@ -97,7 +97,7 @@ function handleClick() {
     var barraDiRicerca = document.getElementById("cercaTitolo");
 
     if (radio) {
-        radio.onclick = function(event) {
+        radio.onchange = function(event) {
             if(event.target.value == "Giochi") 
                 barraDiRicerca.className = "visibile";
             else 
@@ -111,6 +111,15 @@ function caricamento() {
     carica_placeholder();
 }
 
+function checkNotEmpty() {
+    var input = document.getElementById("searchbar");
+    if (!input.value.search(/^\s*$/)) {
+        campoDefault(input);
+        return false;
+    }
+    else
+        return true;
+}
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
 function myFunction() {

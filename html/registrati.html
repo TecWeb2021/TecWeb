@@ -58,6 +58,37 @@
   <p>Ti trovi in: <span xml:lang="en">Home >> Registrati</span></p>
 </div>
 
+
+<div>
+  <h1>Crea il tuo account NomeSito</h1>
+     <form action="registrazione.php" method="post" enctype="multipart/form-data" class="registrazione">
+        <fieldset>
+           <legend>Dati personali</legend>
+           <p class="required">I campi marcati con * sono obbligatori</p>
+           <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+           <label for="email">*Email</label>
+           <input type="email" name="email" id="email" class="required" />
+           <label for="nome">*Nome</label>
+           <input type="text" name="nome" id="nome" class="required" />
+           <label for="cognome">*Cognome</label>
+           <input type="text" name="cel" id="cel" class="required" />
+           <label for="nascita">*Data di nascita</label>
+           <input type="date" name="nascita" id="nascita" class="required">
+           <label for="fileToUpload">Profile Pic</label>
+           <input type="file" name="fileToUpload" id="fileToUpload">
+        </fieldset>
+        <fieldset>
+           <label for="password">*Password</label>
+           <input type="password" name="password" id="password" class="required" />
+           <label for="repeatpassword">*Ripeti password</label>
+           <input type="password" name="repeatpassword" id="repeatpassword" />
+           <input type="submit" id="registerSubmit" value="Registrati" />
+        </fieldset>
+     </form>
+</div>
+
+
+
   <div id="footer">
     <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
     <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>

@@ -19,6 +19,9 @@
   <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 
   <script type="text/javascript" src="../checkForm.js"></script>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=registrati.html" />
+  </noscript>
 </head>
 
 <body>
@@ -38,10 +41,10 @@
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
 
-    <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
-        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" aria-label="Campo per la ricerca di giochi" />
         <datalist id="titleInput" class="formText">
           <opzioni_ph />
         </datalist>
