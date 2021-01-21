@@ -623,7 +623,7 @@ p.sinossi {
 #submenu {
     background-color: #2c2c2c;
     position: sticky;
-    top:42px;
+    top:41px;
     display: block;
     font-family: Verdana, sans-serif;
     font-size: 14px;
@@ -807,11 +807,4 @@ FORM VARIE
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.2em;
-}
-
-.notizia_singola{
-  border-radius: 25px;
-  border: 1px solid #000;
-  background-color:#f5f5f5;
-  max-height: auto;
 }
