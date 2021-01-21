@@ -1,7 +1,7 @@
 body{
   max-width: 1024px;
-  /*min-width: 870px;*/
 }
+
 .topnav a {display: none;}
 .topnav a.icon {
   width: 150px;
@@ -21,10 +21,11 @@ body{
 }
 
 .searchbox{
-  float: left;
+  float: none;
   width: 80%;
 }
 .searchbutton {
+    float: none;
     width: 10%;
 }
 

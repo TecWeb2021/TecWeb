@@ -126,12 +126,12 @@ div.loginblock {
   width: 50%;
   max-width: 9em;
 }
-
+h1{
+  width: 50%;
+}
 #logo {
-    background: transparent;
-    margin-top: -0.5em;
     float: left;
-    width: 10%;         /* 15% del padre */
+    width: 6em;         /* 15% del padre */
     max-width: 9em;
 }
 
@@ -202,7 +202,7 @@ SEZIONE MENU
 #menu {
     background-color: #2c2c2c;
     position: sticky;
-    top: 0;
+    top: 0px;
     display: block;
     font-family: Verdana, sans-serif;
     font-size: 14px;
@@ -339,6 +339,7 @@ SEZIONE CONTENUTO
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.2em;
+  overflow: auto;
 }
 .contenutoGenerale{
     background-color: #414141;
@@ -359,8 +360,6 @@ p.data{
   font-size: smaller;
 }
 p.descrizione {
-    width: 80%;
-    float: right;
     column-count: 3;
     column-rule: 1px solid #ccccb3;
     border-radius: 25px;
@@ -368,7 +367,6 @@ p.descrizione {
     background-color:#f5f5f5;
     text-align: left;
     padding: 1em;
-    max-height: 180px;
 }
 
 p.autore{
@@ -397,7 +395,8 @@ p.autore{
   min-height: 191.02px;
   width: 126.61px;
   height: auto;
-  margin-left: 0.5em;
+  margin-right: 0.5em;
+  float: left;
 }
 .img_cover:hover{
   opacity: 0.8;
