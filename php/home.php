@@ -69,6 +69,9 @@ function createTop5Games($list){
 $newsList=$dbAccess->getNewsList();
 $top5GamesList=$dbAccess->getTop5Games();
 $topGame=$dbAccess->getTopGame();
+
+#$gameList=$dbAccess->getGamesList();
+
 # Unisco le notizie in una lista html 
 $newsListString=createNewsList($newsList);
 $top5GamesString=createTop5Games($top5GamesList);
@@ -92,7 +95,7 @@ $homePage=preg_replace("/\<top_game_age_range_ph\/\>/",$topGame->getAgeRange(),$
 
 #opzioni
 
-#$homePage=str_replace("<opzioni_ph/>","ciao",$homePage);
+$homePage=preg_replace("/\<opzioni_ph\/\>/","<option value=\"Edge\">",$homePage);
 
 
 
