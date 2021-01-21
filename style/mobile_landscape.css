@@ -26,7 +26,6 @@ body{
 }
 .searchbutton {
     float: none;
-    width: 10%;
 }
 
 img.cover_gioco_della_settimana{
@@ -52,9 +51,9 @@ img.cover_gioco_della_settimana{
   margin-top: 3em;
 }
 
+
+
 p.descrizione_home {
-    width: 80%;
-    float: right;
     column-count: 3;
     column-rule: 1px solid #ccccb3;
     border-radius: 25px;
@@ -62,7 +61,6 @@ p.descrizione_home {
     background-color:#f5f5f5;
     text-align: left;
     padding: 1em;
-    max-height: 180px;
 }
 
 .filters{

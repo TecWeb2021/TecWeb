@@ -58,7 +58,7 @@ div.loginblock{
   width: 65%;
 }
 .searchbutton {
-    width: 15%;
+    width: 4em;
 }
 
 .notizia h3{
@@ -72,6 +72,8 @@ p.autore{
   margin-left: 0em;
 }
 p.descrizione_home{
+  overflow: hidden;
+  max-height: 10em;
   width: 57%;
   column-count: 1;
   column-rule: 0px;
@@ -84,6 +86,13 @@ p.descrizione_home{
 }
 
 p.descrizione{
+ position: relative;
+ line-height: 1.2em;
+max-height: 3.6em;
+text-align: justify;
+ margin-right: -1em;
+ padding-right: 1em;
+  max-height: 10em;
   width: 57%;
   overflow: hidden;
   column-count: 1;
