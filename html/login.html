@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -8,13 +8,17 @@
   <meta name="title" content="Login - NomeSito" />
   <meta name="description" content="Pagina di Login"/>
   <meta name="keywords" content="videogiochi, login, profilo" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="author" content="NomeGruppo" />
   <meta name="language" content="italian it" />
 
-<link rel="stylesheet" type="text/css" href="../style/style.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
-<link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
+  <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
+
+  <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
 <body>
@@ -29,19 +33,25 @@
       </div>
   </div>
 
-
   <div class="topnav" id="menu">
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
+    <a  class="icon" onclick="myFunction()">
+      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
-    <form class="searchbox" id="barra_di_ricerca" action="/action_page.php">
-      <label for="searchbar" class="structural">Barra di ricerca:</label>
-      <input class="searchbar" type="text" placeholder="Cerca..." name="search">
-      <button class="searchbutton" type="submit">Submit</button>
+
+    <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph />
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
     </form>
-        <a href="Home.html"><span xml:lang="en">Home</span></a>
-  			<a href="Giochi.html">Giochi</a>
-  		  <a href="Notizie.html">Notizie</a>
+
+      <a href="Home.html"><span xml:lang="en">Home</span></a>
+  		<a href="Giochi.html">Giochi</a>
+  		<a href="Notizie.html">Notizie</a>
   </div>
 
 
@@ -66,8 +76,6 @@
       </fieldset>
     </form>
   </div>
-
-
 
   <div id="footer">
     <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />

@@ -13,7 +13,10 @@
     <meta name="author" content="Federico Chiarello" />
     <meta name="language" content="italian it" />
 
-    <link rel="stylesheet" type="text/css" href="../style/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+    <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
+    <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 
     <script type="text/javascript" src="../checkForm.js"></script>
 </head>
@@ -41,10 +44,6 @@
             <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
             <datalist id="titleInput" class="formText">
               <opzioni_ph />
-              <option value="Doom">Doom</option>
-              <option value="Zelda">Zelda</option>
-              <option value="Dark Souls">Dark Souls</option>
-              <option value="Pippo">Pippo</option>
             </datalist>
             <button type="submit" class="searchbutton">Cerca</button>
           </fieldset>
