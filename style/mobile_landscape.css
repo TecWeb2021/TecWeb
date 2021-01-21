@@ -1,7 +1,7 @@
 body{
   max-width: 1024px;
-  min-width: 870px;
 }
+
 .topnav a {display: none;}
 .topnav a.icon {
   width: 150px;
@@ -21,11 +21,11 @@ body{
 }
 
 .searchbox{
-  float: left;
+  float: none;
   width: 80%;
 }
 .searchbutton {
-    width: 10%;
+    float: none;
 }
 
 img.cover_gioco_della_settimana{
@@ -51,9 +51,9 @@ img.cover_gioco_della_settimana{
   margin-top: 3em;
 }
 
+
+
 p.descrizione_home {
-    width: 80%;
-    float: right;
     column-count: 3;
     column-rule: 1px solid #ccccb3;
     border-radius: 25px;
@@ -61,7 +61,6 @@ p.descrizione_home {
     background-color:#f5f5f5;
     text-align: left;
     padding: 1em;
-    max-height: 180px;
 }
 
 .filters{

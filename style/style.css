@@ -40,13 +40,13 @@ SEZIONE TITOLO
 =========================
 */
 #titolo1 {
-    padding-left: 2em;
+    margin-left: 2.2em;
     color: #fff;
-    font-size: 3.5em;
+    font-size: 3em;
 }
 
 #titolo2{
-  padding-left: 5.5em;
+  margin-left: 5.2em;
   color: #fff;
   font-size: 1.3em;
   font-style: italic;
@@ -126,12 +126,9 @@ div.loginblock {
   width: 50%;
   max-width: 9em;
 }
-
 #logo {
-    background: transparent;
-    margin-top: -0.5em;
     float: left;
-    width: 10%;         /* 15% del padre */
+    width: 6em;         /* 15% del padre */
     max-width: 9em;
 }
 
@@ -202,7 +199,7 @@ SEZIONE MENU
 #menu {
     background-color: #2c2c2c;
     position: sticky;
-    top: 0;
+    top: 0px;
     display: block;
     font-family: Verdana, sans-serif;
     font-size: 14px;
@@ -247,7 +244,7 @@ button {
 }
 
 .searchbutton{
-  width: 23%;
+  width: 5em;
   height: 2.5em;
 }
 .applicafiltri{
@@ -338,6 +335,7 @@ SEZIONE CONTENUTO
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.2em;
+  overflow: auto;
 }
 .contenutoGenerale{
     background-color: #414141;
@@ -358,8 +356,6 @@ p.data{
   font-size: smaller;
 }
 p.descrizione {
-    width: 80%;
-    float: right;
     column-count: 3;
     column-rule: 1px solid #ccccb3;
     border-radius: 25px;
@@ -367,7 +363,6 @@ p.descrizione {
     background-color:#f5f5f5;
     text-align: left;
     padding: 1em;
-    max-height: 180px;
 }
 
 p.autore{
@@ -396,7 +391,8 @@ p.autore{
   min-height: 191.02px;
   width: 126.61px;
   height: auto;
-  margin-left: 0.5em;
+  margin-right: 0.5em;
+  float: left;
 }
 .img_cover:hover{
   opacity: 0.8;
@@ -420,8 +416,6 @@ a:visited.titolo_news{
   float: right;
 }
 p.descrizione_home {
-    width: 75%;
-    float: right;
     column-count: 3;
     column-rule: 1px solid #ccccb3;
     border-radius: 25px;
@@ -429,9 +423,6 @@ p.descrizione_home {
     background-color:#f5f5f5;
     text-align: left;
     padding: 1em;
-    max-height: 180px;
-    overflow: hidden;
-
 }
 
 /*
@@ -578,14 +569,14 @@ SEZIONE LETTERE
 
 p.sinossi {
   width: 90%;
-  column-count: 3;
-  column-rule: 1px solid #ccccb3;
+  /*column-count: 3;
+  column-rule: 1px solid #ccccb3;*/
   border-radius: 25px;
   border: 1px solid #000;
   background-color:#f5f5f5;
   text-align: left;
   padding: 1em;
-  max-height: 180px;
+  /*max-height: 180px;*/
 }
 
 .game{
@@ -672,6 +663,17 @@ p.sinossi {
    clear: both;
 }
 
+.gioco_cover{  /* COVER Giochi */
+  border-radius: 10px;
+  min-width: 126.61px;
+  min-height: 191.02px;
+  width: 126.61px;
+  height: auto;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+}
+
+
 .gioco{
     background-color: #f5f5f5;
     border: 1px solid #000;
@@ -751,21 +753,6 @@ FORM VARIE
 }
 
 /*======================================*/
-/*
-.textbox{
-  width: 90%;
-  height: 50px;
-  padding-left:2em;
-  float: left;
-  display: inline-block;
-
-}
-
-.insertcomment{
-  width: 5%;
-  height: 50px;
-  float: right;
-}*/
 
 .sfondo_rec{
     width: 100%;
@@ -773,6 +760,21 @@ FORM VARIE
     height: inherit;
     top: 0;
     left: 0;
+}
+
+
+.textbox{
+  width: 88%;
+  min-height: 40px;
+}
+
+.insertcomment{
+  width: 10%;
+  min-height: 40px;
+}
+
+.miocommento{
+  margin-bottom: 0.5em;
 }
 
 .commenti{
@@ -796,9 +798,12 @@ FORM VARIE
   border: 1px solid #000;
   background-color:#f5f5f5;
   max-height: auto;
+  padding:1em;
+  margin-bottom: 0.4em;
 }
-.autore{
-  float: left;
+.commentatore{
+  display: inline-block;
+  width:30%;
 }
 .datapubb{
   float: right;
