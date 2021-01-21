@@ -18,6 +18,9 @@ body {
     background-color: #f5f5f5;
     font-family: "Roboto", Arial, sans-serif;
 }
+fieldset{
+  border: 0px;
+}
 
 /*
 =========================
@@ -236,7 +239,7 @@ SEZIONE BARRA DI RICERCA
 button {
   color: white;
   background-color: #1b365d;
-  height: 30px;
+  height: 3.5em;
   margin: 2px;
   border-radius: 5px;
   margin-top: 0.3em;
@@ -245,6 +248,10 @@ button {
 
 .searchbutton{
   width: 23%;
+  height: 2.5em;
+}
+.applicafiltri{
+  width: 13%;
 }
 
 
@@ -616,7 +623,7 @@ p.sinossi {
 #submenu {
     background-color: #2c2c2c;
     position: sticky;
-    top:40px;
+    top:41px;
     display: block;
     font-family: Verdana, sans-serif;
     font-size: 14px;
@@ -700,7 +707,9 @@ p.trama{
 }
 
 .vote{
-
+ float: right;
+ padding-right: 1.5em;
+ padding-top: 1em;
 }
 
 p.testo{
@@ -739,7 +748,7 @@ FORM VARIE
 }
 
 /*======================================*/
-
+/*
 .textbox{
   width: 90%;
   height: 50px;
@@ -753,7 +762,7 @@ FORM VARIE
   width: 5%;
   height: 50px;
   float: right;
-}
+}*/
 
 .sfondo_rec{
     width: 100%;
@@ -761,4 +770,41 @@ FORM VARIE
     height: inherit;
     top: 0;
     left: 0;
+}
+
+.commenti{
+    background-color: #f5f5f5;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+.lista_commenti{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.commento_singolo{
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  max-height: auto;
+}
+.autore{
+  float: left;
+}
+.datapubb{
+  float: right;
+}
+
+.lista_notizie{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
 }
