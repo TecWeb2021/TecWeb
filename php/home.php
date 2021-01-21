@@ -65,12 +65,27 @@ function createTop5Games($list){
 	return $joinedItems;
 }
 
+function createGamesNamesListStrings($list){
+	if(!$list){
+		return "";
+	}
+	$stringsArray=array();
+	foreach ($list as $game) {
+		$singleString="<option value=\"".$game->getName()."\"/>";
+		array_push($stringsArray, $singleString);
+	}
+	$joinedItems=implode("", $stringsArray);
+	return $joinedItems;
+}
+
 # Chiedo al server una lista delle notizie
 $newsList=$dbAccess->getNewsList();
+
 $top5GamesList=$dbAccess->getTop5Games();
 $topGame=$dbAccess->getTopGame();
 
-#$gameList=$dbAccess->getGamesList();
+$gamesList=$dbAccess->getGamesList();
+$optionsListString=createGamesNamesListStrings($gamesList);
 
 # Unisco le notizie in una lista html 
 $newsListString=createNewsList($newsList);
@@ -95,7 +110,7 @@ $homePage=preg_replace("/\<top_game_age_range_ph\/\>/",$topGame->getAgeRange(),$
 
 #opzioni
 
-$homePage=preg_replace("/\<opzioni_ph\/\>/","<option value=\"Edge\">",$homePage);
+$homePage=preg_replace("/\<opzioni_ph\/\>/","$optionsListString",$homePage);
 
 
 

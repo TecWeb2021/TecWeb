@@ -10,6 +10,8 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 $homePage=replace($homePage);
 
+
+
 function createGameHTMLItem($game){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
@@ -39,8 +41,13 @@ function createGamesDivs($gamesList){
 	return $joinedItems;
 }
 
+$gameName=null;
+if(isset($_REQUEST['searchbar'])){
+	$gameName=$_REQUEST['searchbar'];
+	#sanitize
+}
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getGamesList();
+$list=$dbAccess->getGamesList($gameName);
 # Unisco le notizie in una lista html 
 $gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder

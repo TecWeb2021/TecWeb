@@ -42,7 +42,13 @@ class DBAccess {
         if($queryResult==true){
             return $queryResult;
         }
-        if($queryResult==null || $queryResult==false || mysqli_num_rows($queryResult) == 0) {
+
+        if($queryResult==false){
+            echo mysqli_error($this->connection);
+            return null;
+        }
+
+        if($queryResult==null || mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $resultList = array();
@@ -121,10 +127,20 @@ class DBAccess {
         return $result;
     }
 
-    public function getGamesList(){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id";
+    public function getGamesList($gameName=null){
+        if($gameName==null){
+            $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id";
+        }else{
+            $querySelect ="SELECT * FROM (games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id) WHERE games.Name='$gameName' ";
+        }
+
         $queryResult = mysqli_query($this->connection, $querySelect);
         
+        if($queryResult==false){
+            echo mysqli_error($this->connection);
+            return null;
+        }
+
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
