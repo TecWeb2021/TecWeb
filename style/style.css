@@ -224,6 +224,7 @@ SEZIONE BARRA DI RICERCA
   float: right;
   width: 30%;
   margin-right: 0.5em;
+  display: inline-block;
 }
 
 /*se selezionata come classe viene modificata via javascript (placeholder) e crea un conflitto*/
@@ -577,14 +578,14 @@ SEZIONE LETTERE
 
 p.sinossi {
   width: 90%;
-  column-count: 3;
-  column-rule: 1px solid #ccccb3;
+  /*column-count: 3;
+  column-rule: 1px solid #ccccb3;*/
   border-radius: 25px;
   border: 1px solid #000;
   background-color:#f5f5f5;
   text-align: left;
   padding: 1em;
-  max-height: 180px;
+  /*max-height: 180px;*/
 }
 
 .game{
@@ -678,11 +679,9 @@ p.sinossi {
   width: 126.61px;
   height: auto;
   margin-left: 0.5em;
-  padding-top: 0.5em;
+  margin-top: 0.5em;
 }
-.gioco_cover:hover{
-  opacity: 0.8;
-}
+
 
 .gioco{
     background-color: #f5f5f5;
@@ -763,21 +762,6 @@ FORM VARIE
 }
 
 /*======================================*/
-/*
-.textbox{
-  width: 90%;
-  height: 50px;
-  padding-left:2em;
-  float: left;
-  display: inline-block;
-
-}
-
-.insertcomment{
-  width: 5%;
-  height: 50px;
-  float: right;
-}*/
 
 .sfondo_rec{
     width: 100%;
@@ -785,6 +769,21 @@ FORM VARIE
     height: inherit;
     top: 0;
     left: 0;
+}
+
+
+.textbox{
+  width: 88%;
+  min-height: 40px;
+}
+
+.insertcomment{
+  width: 10%;
+  min-height: 40px;
+}
+
+.miocommento{
+  margin-bottom: 0.5em;
 }
 
 .commenti{
@@ -808,9 +807,12 @@ FORM VARIE
   border: 1px solid #000;
   background-color:#f5f5f5;
   max-height: auto;
+  padding:1em;
+  margin-bottom: 0.4em;
 }
-.autore{
-  float: left;
+.commentatore{
+  display: inline-block;
+  width:30%;
 }
 .datapubb{
   float: right;

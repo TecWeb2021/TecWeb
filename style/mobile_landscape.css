@@ -1,6 +1,6 @@
 body{
   max-width: 1024px;
-  min-width: 870px;
+  /*min-width: 870px;*/
 }
 .topnav a {display: none;}
 .topnav a.icon {
