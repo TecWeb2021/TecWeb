@@ -32,12 +32,12 @@
           <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
         </div>
       </div>
-    
+
       <div class="topnav" id="menu">
         <a  class="icon" onclick="myFunction()">
           <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
         </a>
-    
+
         <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
           <fieldset>
             <label for="searchbar" class="structural">Cerca gioco:</label>
@@ -48,12 +48,13 @@
             <button type="submit" class="searchbutton">Cerca</button>
           </fieldset>
         </form>
-    
-        <a class="active" href="Home.html"><span xml:lang="en">Home</span></a>
-          <a href="Giochi.html">Giochi</a>
-          <a href="Notizie.html">Notizie</a>
+        <ul class="menu">
+            <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+            <li><a href="Giochi.html">Giochi</a></li>
+            <li><a href="Notizie.html">Notizie</a></li>
+        </ul>
       </div>
-    
+
       <div id="breadcrumb">
           <p>Ti trovi in: <span xml:lang="en">Home</span></p>
       </div>
@@ -63,7 +64,7 @@
 <form id="formNotizia" method="post" action="formNotizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
     <messaggiForm_ph />
-    
+
     <fieldset>
         <label for="titoloNews">Titolo: </label>
         <span><input type="text" id="titoloNews" name="titoloNews" value="<valoreTitolo_ph />" /></span><br />
@@ -83,6 +84,13 @@
     </fieldset>
 
     <fieldset id="cercaTitolo" class="invisibile">
+        <div class="autocomplete">
+          <label for="searchbar">Gioco trattato:</label>
+          <input id="searchbar" class="searchbar" type="text" name="searchbar" />
+        </div>
+    </fieldset>
+
+    <fieldset  class="invisibile">
         <label for="searchbar">Cerca gioco:</label>
         <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
         <datalist id="titleInput" class="formText">
