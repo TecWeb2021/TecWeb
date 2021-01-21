@@ -22,17 +22,22 @@
     <h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
       <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png"></a>
-      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
     </div>
   </div>
   <div class="topnav" id="menu">
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
-    <form class="searchbox" id="barra_di_ricerca" action="/action_page.php">
-      <label for="searchbar" class="structural">Barra di ricerca:</label>
-      <input class="searchbar" type="text" placeholder="Cerca..." name="search">
-      <button class="searchbutton" type="submit">Submit</button>
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph/>
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
     </form>
         <a href="Home.html"><span xml:lang="en">Home</span></a>
         <a class="active" href="Giochi.html">Giochi</a>

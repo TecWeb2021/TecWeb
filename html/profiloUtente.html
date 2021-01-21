@@ -4,10 +4,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title>Login - NomeSito</title>
-  <meta name="title" content="Login - NomeSito" />
-  <meta name="description" content="Pagina di Login"/>
-  <meta name="keywords" content="videogiochi, login, profilo" />
+  <title><nomeProfilo_ph /> | NomeSito</title>
+  <meta name="title" content="<nomeProfilo_ph />" />
+  <meta name="description" content="Pagina profilo utente" />
+  <meta name="keywords" content="Videogiochi games gaming recensioni profilo utente" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="author" content="NomeGruppo" />
@@ -22,15 +22,14 @@
 </head>
 
 <body>
-
   <div id="header">
-      <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
-    <h1 id="titolo1"> Recensioni </h1>
-    <h2 id="titolo2"> Videogiochi </h2>
-      <div class="loginblock">
-        <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-        <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
-      </div>
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
+		<h1 id="titolo1"> Recensioni </h1>
+		<h2 id="titolo2"> Videogiochi </h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
+    </div>
   </div>
 
   <div class="topnav" id="menu">
@@ -50,41 +49,32 @@
     </form>
 
     <ul class="menu">
-        <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a class="active" href="Home.html"><span xml:lang="en">Home</span></a></li>
         <li><a href="Giochi.html">Giochi</a></li>
         <li><a href="Notizie.html">Notizie</a></li>
     </ul>
   </div>
 
-
   <div id="breadcrumb">
-    <p>Ti trovi in: <span xml:lang="en">Home >> Login</span></p>
+      <p>Ti trovi in: <span xml:lang="en">Home</span></p>
   </div>
 
-  <div class="main">
-    <h1>Accedi al tuo account NomeSito</h1>
-    <form id="loginForm" action="login.php" method="post" onsubmit="return validateForm();">
-      <fieldset>
+<div class="contenutoGenerale">
+    <div class="notizia">
+        <h1>Profilo personale</h1>
+        <form action="ModificaProfilo.php">
+            <fieldset>
+                <button type="submit">Modifica profilo</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
 
-        <erroreLogin />
-
-        <label for="nomeLogin">Nome:</label>
-        <span><input type="text" id="nomeLogin"  name="nomeLogin" value="<valoreNome />" /></span><br />
-
-        <label for="pw">Password:</label>
-        <span><input type="password" id="pw" name="pw" value="<valorePassword />" /></span><br />
-
-        <input type="submit" value="Login" />
-      </fieldset>
-    </form>
-  </div>
-
-  <div id="footer">
-    <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-    <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
-    <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
-  </div>
+<div id="footer">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+</div>
 
 </body>
-
 </html>

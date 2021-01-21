@@ -17,11 +17,8 @@
   <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
   <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
   <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
-
+  
   <script type="text/javascript" src="../checkForm.js"></script>
-  <noscript>
-    <meta http-equiv="refresh" content="0; url=registrati.html" />
-  </noscript>
 </head>
 
 <body>
@@ -44,13 +41,14 @@
     <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
-        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" aria-label="Campo per la ricerca di giochi" />
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
         <datalist id="titleInput" class="formText">
           <opzioni_ph/>
         </datalist>
         <button type="submit" class="searchbutton">Cerca</button>
       </fieldset>
     </form>
+
     <ul class="menu">
         <li><a class="active" href="Home.html"><span xml:lang="en">Home</span></a></li>
         <li><a href="Giochi.html">Giochi</a></li>

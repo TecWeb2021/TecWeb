@@ -6,15 +6,8 @@ var dettagli_form = {
     "alternativo": ["testo alternativo", /^([\w\s]){0,50}$/, "Inserire il testo alternativo dell'immagine"],
 
     "titoloNews": ["Titolo", /^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
-    "testo": ["Testo della notizia", /.{25,}/, "Inserire il testo della notizia"],
-    "searchbar": ["Cerca gioco...", /./, ""],
-    "searchnews": ["Cerca notizia...", /./, ""]
+    "testo": ["Testo della notizia", /.{25,}/, "Inserire il testo della notizia"]
 };
-
-var buttons = [
-    "annullaModifiche",
-    "elimina"
-];
 
 function campoDefault(input) {
     input.className = "deftext";
@@ -57,7 +50,6 @@ function validazioneCampo(input) {
     if (text.search(regex) != 0) { 
         // -1 se non trova il match, 0 se lo trova, 6 (es) se trova il match dalla posizione 6
         mostraErrore(input);
-        
         return false;
     }
     else {
@@ -75,7 +67,6 @@ function validateForm() {
             corretto = corretto && risultato;
         }
     }
-
     return corretto;
 }
 
@@ -89,13 +80,12 @@ function carica_placeholder() {
             input.onblur = function() {backToDefault(this);};
         }
     }
-    
 }
 
 function handleClick() {
+
     var radio = document.getElementById("handler");
     var barraDiRicerca = document.getElementById("cercaTitolo");
-
     if (radio) {
         radio.onchange = function(event) {
             if(event.target.value == "Giochi") 
@@ -111,12 +101,11 @@ function caricamento() {
     carica_placeholder();
 }
 
+/* Controlla che l'input della searchbar non sia vuoto o composto da spazi */
 function checkNotEmpty() {
     var input = document.getElementById("searchbar");
-    if (!input.value.search(/^\s*$/)) {
-        campoDefault(input);
+    if (!input.value.search(/^\s*$/))
         return false;
-    }
     else
         return true;
 }
@@ -129,4 +118,4 @@ function myFunction() {
     } else {
       x.className = "topnav";
     }
-  }
+}

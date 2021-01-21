@@ -29,7 +29,7 @@
     <h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
       <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png"></a>
-      <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
+      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
     </div>
   </div>
 
@@ -38,16 +38,17 @@
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
 
-    <form class="searchbox" action="action_page.php" onsubmit="checkNotEmpty();">
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
-        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
         <datalist id="titleInput" class="formText">
-          <opzioni_ph />
+          <opzioni_ph/>
         </datalist>
         <button type="submit" class="searchbutton">Cerca</button>
       </fieldset>
     </form>
+
     <ul class="menu">
         <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
         <li><a href="Giochi.html">Giochi</a></li>
