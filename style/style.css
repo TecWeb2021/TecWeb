@@ -616,7 +616,7 @@ p.sinossi {
 #submenu {
     background-color: #2c2c2c;
     position: sticky;
-    top:40px;
+    top:42px;
     display: block;
     font-family: Verdana, sans-serif;
     font-size: 14px;
@@ -700,7 +700,9 @@ p.trama{
 }
 
 .vote{
-
+ float: right;
+ padding-right: 1.5em;
+ padding-top: 1em;
 }
 
 p.testo{
@@ -739,7 +741,7 @@ FORM VARIE
 }
 
 /*======================================*/
-
+/*
 .textbox{
   width: 90%;
   height: 50px;
@@ -753,7 +755,7 @@ FORM VARIE
   width: 5%;
   height: 50px;
   float: right;
-}
+}*/
 
 .sfondo_rec{
     width: 100%;
@@ -761,4 +763,48 @@ FORM VARIE
     height: inherit;
     top: 0;
     left: 0;
+}
+
+.commenti{
+    background-color: #f5f5f5;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+.lista_commenti{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.commento_singolo{
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  max-height: auto;
+}
+.autore{
+  float: left;
+}
+.datapubb{
+  float: right;
+}
+
+.lista_notizie{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.notizia_singola{
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  max-height: auto;
 }
