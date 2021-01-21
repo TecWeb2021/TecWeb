@@ -90,6 +90,11 @@ $homePage=preg_replace("/\<top_game_age_range_ph\/\>/",$topGame->getAgeRange(),$
 ;
 
 
+#opzioni
+
+#$homePage=str_replace("<opzioni_ph/>","ciao",$homePage);
+
+
 
 echo $homePage;
 
