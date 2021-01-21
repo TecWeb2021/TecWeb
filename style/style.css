@@ -254,7 +254,9 @@ button {
   width: 13%;
 }
 
-
+.menu{
+  list-style-type: none;
+}
 /*
 =========================
 SEZIONE RIGHT COLUMN
