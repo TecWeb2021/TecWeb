@@ -157,6 +157,42 @@ class DBAccess {
         }
     }
 
+    public function getTopGame(){
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id ORDER BY games.Vote DESC LIMIT 1";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult);
+            $image=new Image($row['Path'],$row['Alt']);
+            $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review, $image);
+
+        return $game;
+        }
+    }
+
+    public function getTop5Games(){
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id ORDER BY games.Vote DESC LIMIT 5";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $gamesList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                $image=new Image($row['Path'],$row['Alt']);
+                $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
+
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review,$image);
+                array_push($gamesList, $game);
+            }
+
+            return $gamesList;
+        }
+    }
+
     public function getUserByHash($hashValue){
         $query="SELECT * FROM users WHERE hash=\"$hashValue\"";
         $result=$this->getResult($query);
