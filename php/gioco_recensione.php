@@ -18,7 +18,7 @@ function replacePH($game){
 	$homePage=str_replace("<gioco_notizie_ph/>", "gioco_notizie.php?game=".strtolower($game->getName()),$homePage);
 	$homePage=str_replace("<img_path_ph/>", "../".$game->getImage()->getPath(),$homePage);
 	$homePage=str_replace("<img_alt_ph/>", $game->getImage()->getAlt(),$homePage);
-	$homePage=str_replace("<review_content_ph/>", $game->getReview(),$homePage);
+	$homePage=str_replace("<review_content_ph/>", $game->getReview()->getContent(),$homePage);
 	$homePage=str_replace("<game_vote_ph/>", $game->getVote(),$homePage);
 	/*$homePage=str_replace("</>", $game->,$homePage);
 	$homePage=str_replace("</>", $game->,$homePage);

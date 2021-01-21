@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 20, 2021 at 04:41 PM
+-- Generation Time: Jan 20, 2021 at 08:54 PM
 -- Server version: 10.2.36-MariaDB
 -- PHP Version: 7.2.34
 
@@ -94,7 +94,9 @@ INSERT INTO `news` (`Id`, `Title`, `User`, `Last_edit_date`, `Content`, `Image`,
 
 CREATE TABLE `reviews` (
   `Id` int(11) NOT NULL,
-  `Content` varchar(10000) NOT NULL
+  `Content` varchar(10000) NOT NULL,
+  `Author` varchar(50) NOT NULL,
+  `Last_edit_date_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

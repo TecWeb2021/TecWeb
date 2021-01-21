@@ -4,9 +4,12 @@ require_once("./classes/news.php");
 require_once("./classes/game.php");
 require_once("./classes/image.php");
 require_once("./classes/user.php");
+require_once("./classes/review.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
+
+//pwd_db_2020-21.txt : ni4vanaogh1Hai1O
 class DBAccess {
     private const HOST_DB = "localhost";
     private const USERNAME ="root";
@@ -119,7 +122,7 @@ class DBAccess {
     }
 
     public function getGamesList(){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path";
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -128,7 +131,9 @@ class DBAccess {
             $gamesList = array();
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 $image=new Image($row['Path'],$row['Alt']);
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
+                $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
+
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review,$image);
                 array_push($gamesList, $game);
             }
 
@@ -137,7 +142,7 @@ class DBAccess {
     }
 
     public function getGame($name){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path AND games.Name='$name' ";
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path AND games.Name='$name' LEFT JOIN reviews ON games.Review=reviews.Id";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -145,7 +150,8 @@ class DBAccess {
         }else {
             $row = mysqli_fetch_assoc($queryResult);
             $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
+            $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review, $image);
 
         return $game;
         }
