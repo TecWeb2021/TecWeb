@@ -46,8 +46,14 @@ $list=$dbAccess->getNewsList();
 $newsListString=createNewsList($list);
 $homePage=preg_replace("/\<news_list_ph\/\>/",$newsListString,$homePage);
 
+$user=null;
+if(isset($_COOKIE['login'])){
+	$hash=$_COOKIE['login'];
+	#sanitize
+	$user=$dbAccess->getUserByHash($hash);
+}
 
-$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","notizie",null);
+$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","notizie",$user);
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);

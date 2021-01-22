@@ -1,173 +1,126 @@
-
 <div class="container">
-    <div id="advance_filter">
-        <form class="filters" id="filtri" action="/action_page.php">
-          <div class="dropdown">
-            <button type="button" class="dropbtn" onclick="OpenConsole()">Console
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="console">
-              <input type="checkbox" id="console1" name="console1" value="PS5" onclick="" />
-              <label for="console1">PS5</label><br />
-              <input type="checkbox" id="console2" name="console2" value="PS4" onclick="" />
-              <label for="console2">PS4</label><br />
-              <input type="checkbox" id="console3" name="console3" value="XboxOne" onclick="" />
-              <label for="console3">Xbox One</label><br />
-              <input type="checkbox" id="console4" name="console4" value="XboxSeries" onclick="" />
-              <label for="console4">Xbox Series</label><br />
-              <input type="checkbox" id="console5" name="console5" value="Switch" onclick="" />
-              <label for="console5">Nintendo Switch</label><br />
+    <div class="advance_filter">
+        <div class="filtri_categorie">
+          <p class="tipo_categorie">Filtri Ricerca: |</p>
+          <form class="filters" id="filtri" action="/action_page.php">
+            <div class="dropdown">
+              <button type="button" class="dropbtn" onclick="OpenConsole()">Console
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-filter" id="console">
+                <label class="customLabel" for="console1">PlayStation 4
+                  <input type="checkbox" id="console1" name="console1" value="PS4" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="console2">PlayStation 5
+                  <input type="checkbox" id="console2" name="console2" value="PS5" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="console3">Xbox One
+                  <input type="checkbox" id="console3" name="console3" value="Xbox One" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="console4">Xbox Series X/S
+                  <input type="checkbox" id="console4" name="console4" value="Xbox Series X/S" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="console5">Nintendo Switch
+                  <input type="checkbox" id="console5" name="console5" value="Nintendo Switch" />
+                  <span class="checkmark"></span>
+                </label><br />
+              </div>
             </div>
-          </div>
-          <div class="dropdown">
-            <button type="button" class="dropbtn" onclick="OpenGeneri()">Generi
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="generi">
-              <input type="checkbox" id="genere1" name="genere1" value="FPS" onclick="" />
-              <label for="genere1">FPS</label><br />
-              <input type="checkbox" id="genere2" name="genere2" value="GDR" onclick="" />
-              <label for="genere2">GDR</label><br />
-              <input type="checkbox" id="genere3" name="genere3" value="Puzzle" onclick="" />
-              <label for="genere3">Puzzle</label><br />
-              <input type="checkbox" id="genere4" name="genere4" value="Avventura" onclick="" />
-              <label for="genere4">Avventura</label><br />
-              <input type="checkbox" id="genere5" name="genere5" value="Horror" onclick="" />
-              <label for="genere5">Horror</label><br />
+            <div class="dropdown">
+              <button type="button" class="dropbtn" onclick="OpenGeneri()">Generi
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-filter" id="generi">
+                <label class="customLabel" for="genere1">FPS
+                  <input type="checkbox" id="genere1" name="genere1" value="FPS" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="genere2">Horror
+                  <input type="checkbox" id="genere2" name="genere2" value="Horror" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="genere3">GDR
+                  <input type="checkbox" id="genere3" name="genere3" value="GDR" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="genere4">Avventura
+                  <input type="checkbox" id="genere4" name="genere4" value="Avventura" />
+                  <span class="checkmark"></span>
+                </label><br />
+                <label class="customLabel" for="genere5">Puzzle
+                  <input type="checkbox" id="genere5" name="genere5" value="Puzzle" />
+                  <span class="checkmark"></span>
+                </label><br />
+              </div>
             </div>
-          </div>
-          <div class="dropdown">
-            <button type="button" class="dropbtn" onclick="OpenAnnoIN()">Dall'anno:
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="annoin">
-              <input type="radio" id="da2020" name="year" value="2020" />
-              <label for="da2020">2020</label><br />
-              <input type="radio" id="da2019" name="year" value="2019" />
-              <label for="da2019">2019</label><br />
-              <input type="radio" id="da2018" name="year" value="2018" />
-              <label for="da2018">2018</label><br />
-              <input type="radio" id="da2017" name="year" value="2017" />
-              <label for="da2017">2017</label><br />
-              <input type="radio" id="da2016" name="year" value="2016" />
-              <label for="da2016">2016</label><br />
+            <div class="dropdown">
+              <button type="button" class="dropbtn" onclick="OpenAnnoIN()">Dall'anno:
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-filter" id="annoin">
+                <label class="customLabel" for="da2020">2020
+                  <input type="radio" id="da2020" name="year" value="2020" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="da2019">2019
+                  <input type="radio" id="da2019" name="year" value="2019" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="da2018">2018
+                  <input type="radio" id="da2018" name="year" value="2018" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="da2017">2017
+                  <input type="radio" id="da2017" name="year" value="2017" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="da2016">2016
+                  <input type="radio" id="da2016" name="year" value="2016" />
+                  <span class="radiomark"></span>
+                </label><br />
+              </div>
             </div>
-          </div>
-          <div class="dropdown">
-            <button type="button" class="dropbtn" onclick="OpenAnnoFIN()">All'anno:
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="annofin">
-              <input type="radio" id="a2020" name="year" value="2020" />
-              <label for="a2020">2020</label><br />
-              <input type="radio" id="a2019" name="year" value="2019" />
-              <label for="a2019">2019</label><br />
-              <input type="radio" id="a2018" name="year" value="2018" />
-              <label for="a2018">2018</label><br />
-              <input type="radio" id="a2017" name="year" value="2017" />
-              <label for="a2017">2017</label><br />
-              <input type="radio" id="a2016" name="year" value="2016" />
-              <label for="a2016">2016</label><br />
+            <div class="dropdown">
+              <button type="button" class="dropbtn" onclick="OpenAnnoFIN()">All'anno:
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-filter" id="annofin">
+                <label class="customLabel" for="a2020">2020
+                  <input type="radio" id="a2020" name="year2" value="2020" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="a2019">2019
+                  <input type="radio" id="a2019" name="year2" value="2019" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="a2018">2018
+                  <input type="radio" id="a2018" name="year2" value="2018" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="a2017">2017
+                  <input type="radio" id="a2017" name="year2" value="2017" />
+                  <span class="radiomark"></span>
+                </label><br />
+                <label class="customLabel" for="a2016">2016
+                  <input type="radio" id="a2016" name="year2" value="2016" />
+                  <span class="radiomark"></span>
+                </label><br />
+              </div>
             </div>
-          </div>
-          <button class="searchbutton" type="submit">Submit</button> 
-        </form>
-        <div class="a-z_list">
-          <ul class="letters">
-            <li>
-              <a class="btn-letter" href="#">Tutti</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">0-9</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">A</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">B</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">C</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">D</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">E</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">F</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">G</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">H</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">I</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">J</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">K</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">L</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">M</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">N</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">O</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">P</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">Q</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">R</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">S</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">T</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">U</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">V</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">W</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">X</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">Y</a>
-            </li>
-            <li>
-              <a class="btn-letter" href="#">Z</a>
-            </li>
-          </ul>
+            <button class="applicafiltri" type="submit">Submit</button>
+          </form>
         </div>
-        <div class="dropdown" id="Ordine">
-          <button class="dropbtn" onclick="OpenOrdine()">Ordine
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content" id="ordine">
-            <input type="button" value="più votati" onclick="" />
-            <input type="button" value="più recenti" onclick="" />
-          </div>
+        <div class="filtri_ordine">
+          <p class="tipo_ordine">Ordine: |</p>
+          <form class="bottoniOrdine" action="/action_page.php">
+            <button type="button" class="ordine_btn" value="Alfabetico">Alfabetico</button>
+            <button type="button" class="ordine_btn" value="Voto >=4">Voto >=4</button>
+            <button type="button" class="ordine_btn" value="Ultimi usciti">Ultimi usciti</button>
+          </form>
         </div>
     </div>
     <div id="games">
