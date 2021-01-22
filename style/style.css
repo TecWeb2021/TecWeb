@@ -506,9 +506,7 @@ SEZIONE FILTRI
 }
 
 
-.dropdown:hover .dropdown-filter {display: block;}
-
-.show {display:block;}
+.dropdown:hover .dropdown-filter, .show {display: block;}
 
 /*
 =========================
@@ -719,9 +717,14 @@ FORM
 =========================
 */
 
-/* non funziona in searchbar per specificita' */
-.schedaForm .deftext {
-  color: grey;
+
+label, input {
+  display: inline-block;
+}
+
+.schedaForm label {
+  width: 30%;
+  text-align: right;
 }
 
 .invisibile {
