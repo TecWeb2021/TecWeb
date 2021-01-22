@@ -20,76 +20,77 @@
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body>
+<body onload="caricamento();">
 
   <div id="header">
     <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
-  <h1 id="titolo1"> Recensioni </h1>
-  <h2 id="titolo2"> Videogiochi </h2>
+    <h1 id="titolo1"> Recensioni </h1>
+    <h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
       <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
+      <span id="login"><a href="login.html">Login</a> | Registrati</span>
     </div>
-</div>
+  </div>
 
-<div class="topnav" id="menu">
-  <a  class="icon" onclick="myFunction()">
-    <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
-  </a>
+  <div class="topnav" id="menu">
+    <a  class="icon" onclick="myFunction()">
+      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+    </a>
 
-  <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
-    <fieldset>
-      <label for="searchbar" class="structural">Cerca gioco:</label>
-      <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
-      <datalist id="titleInput" class="formText">
-        <opzioni_ph/>
-      </datalist>
-      <button type="submit" class="searchbutton">Cerca</button>
-    </fieldset>
-  </form>
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph/>
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
+    </form>
 
-  <ul class="menu">
-      <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
-      <li><a href="Giochi.html">Giochi</a></li>
-      <li><a href="Notizie.html">Notizie</a></li>
-  </ul>
-</div>
+    <ul class="menu">
+        <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a href="Notizie.html">Notizie</a></li>
+    </ul>
+  </div>
+
+  <div id="breadcrumb">
+    <p>Ti trovi in: <span xml:lang="en">Home >> Registrati</span></p>
+  </div>
 
 
-<div id="breadcrumb">
-  <p>Ti trovi in: <span xml:lang="en">Home >> Registrati</span></p>
-</div>
-
-
-<div>
-  <h1>Crea il tuo account NomeSito</h1>
-     <form action="registrazione.php" method="post" enctype="multipart/form-data" class="registrazione">
+  <div class="contenutoGenerale">
+    <div class="schedaForm">
+      <h1>Crea il tuo account NomeSito</h1>
+      <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
         <fieldset>
-           <legend>Dati personali</legend>
-           <p class="required">I campi marcati con * sono obbligatori</p>
-           <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
-           <label for="email">*Email</label>
-           <input type="email" name="email" id="email" class="required" />
-           <label for="nome">*Nome</label>
-           <input type="text" name="nome" id="nome" class="required" />
-           <label for="cognome">*Cognome</label>
-           <input type="text" name="cel" id="cel" class="required" />
-           <label for="nascita">*Data di nascita</label>
-           <input type="date" name="nascita" id="nascita" class="required">
-           <label for="fileToUpload">Profile Pic</label>
-           <input type="file" name="fileToUpload" id="fileToUpload">
+          <h2>Dati personali</h2>
+          <p class="required">I campi marcati con * sono obbligatori</p>
+          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+
+          <label for="mail">*Email</label>
+          <input type="mail" name="email" id="email" class="required" /><br />
+
+          <label for="nickname">*Nickname</label>
+          <input type="text" name="nickname" id="nickname" class="required" /><br />
+
+          <label for="imgPerProfilo">Immagine profilo</label>
+          <input type="file" name="imgPerProfilo" id="imgPerProfilo" /><br />
         </fieldset>
+
         <fieldset>
-           <label for="password">*Password</label>
-           <input type="password" name="password" id="password" class="required" />
-           <label for="repeatpassword">*Ripeti password</label>
-           <input type="password" name="repeatpassword" id="repeatpassword" />
-           <input type="submit" id="registerSubmit" value="Registrati" />
+          <label for="password">*Password</label>
+          <input type="password" name="password" id="password" class="required" /><br />
+
+          <label for="repeatpassword">*Ripeti password</label>
+          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
+
+          <button type="submit" name="registrati">Registrati</button>
         </fieldset>
-     </form>
-</div>
-
-
+      </form>
+    </div>
+  </div>
 
   <div id="footer">
     <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
@@ -98,5 +99,4 @@
   </div>
 
 </body>
-
 </html>

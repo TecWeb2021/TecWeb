@@ -8,7 +8,11 @@ var dettagli_form = {
     "alternativo": ["testo alternativo", /^([\w\s]){0,50}$/, "Inserire il testo alternativo dell'immagine"],
 
     "titolo": ["Titolo", /^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
-    "testo": ["Testo della notizia", /.{25,}/, "Inserire il testo della notizia"]
+    "testo": ["Testo della notizia", /.{25,}/, "Inserire il testo della notizia"],
+
+    "nickname": ["Nickname", /^([\w\s]){5,20}$/, "Inserire il nickname"],
+    "pw": ["", /^([\w]){8,16}$/, "Inserire la password"],
+    "mail": ["Mail", /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, "Inserire la mail"]
 };
 
 /*-----------------------------------------------------------------------------------*/
