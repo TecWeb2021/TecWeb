@@ -7,17 +7,31 @@ include "dbConnection.php";
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
-$profilo=file_get_contents("../html/templates/profilo_utenteTemplate.html");
 
-#sistema qua sotto: controllare se l'utente è admin
+$user=null;
+
+$user=null;
+$homePage="<p>Non sei autenticato</p>";
+
 if(isset($_COOKIE['login'])){
-	$admin=file_get_contents("../html/templates/adminTemplate.html");
-	$profilo=str_replace("<admin_placeholder_ph/>", $admin, $profilo);
+	$hash=$_COOKIE['login'];
+	#sanitize
+	$user=$dbAccess->getUserByHash($hash);
 }
 
-$profilo=replace($profilo);
+if($user){
+	$homePage=file_get_contents("../html/templates/profilo_utenteTemplate.html");
+	if($user->isAdmin()){
+		$admin=file_get_contents("../html/templates/adminTemplate.html");
+	$homePage=str_replace("<admin_placeholder_ph/>", $admin, $homePage);
+	}	
+}
 
 
 
+$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html",null,$user);
+$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
-echo $profilo;
+$basePage=replace($basePage);
+
+echo $basePage;

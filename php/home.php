@@ -114,12 +114,25 @@ $homePage=preg_replace("/\<top_game_age_range_ph\/\>/",$topGame->getAgeRange(),$
 
 $homePage=preg_replace("/\<opzioni_ph\/\>/","$optionsListString",$homePage);
 
+
+if(isset($_REQUEST['logout'])){
+	$logout=$_REQUEST['logout'];
+	#sanitize;
+	if($logout='true' && isset($_COOKIE['login'])){
+		setcookie("login","");
+		echo "cookie unset";
+		header("Refresh:0");
+	}
+}
+
 $user=null;
 if(isset($_COOKIE['login'])){
 	$hash=$_COOKIE['login'];
 	#sanitize
 	$user=$dbAccess->getUserByHash($hash);
 }
+
+
 
 $basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","home",$user);
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);

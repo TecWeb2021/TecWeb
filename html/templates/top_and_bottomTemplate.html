@@ -27,9 +27,9 @@
     <h1 id="titolo1"> Recensioni </h1>
     <h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="<user_img_path_ph/>" /></a>
+      <a href="profilo.php"><img id="loginPic" alt="foto profilo utente" src="<user_img_path_ph/>" /></a>
       <not_logged_in><span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span></not_logged_in>
-      <logged_in><span id="login"><username_ph/> | <a href="../php/logout.php">Logout</a></span></logged_in>
+      <logged_in><span id="login"><username_ph/> | <a href="?logout=true">Logout</a></span></logged_in>
     </div>
   </div>
 
@@ -39,7 +39,7 @@
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
 
-    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+    <form class="searchbox" action="giochi.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
         <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
