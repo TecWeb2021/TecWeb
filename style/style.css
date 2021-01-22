@@ -560,14 +560,23 @@ p.sinossi {
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.4em;
-  display: flex;
-  text-align: justify;
+  display: inline-flex;
 }
 
 .game-image{
   padding-right: 2em;
 }
 
+.intestazione{
+  display: inline-block;
+  margin-bottom: 1em;
+}
+.titolo_e_data{
+  float:left;
+}
+p.valutazione{
+  float: right;
+}
 .games{
   margin-top: 1em;
 }
@@ -1036,4 +1045,19 @@ PROFILO
   height: 7px;
   border-radius: 50%;
   background: white;
+}
+
+a.name{
+  max-width: 80%;
+  font-weight: bold;
+  font-size: larger;
+  color: black;
+}
+
+a.active.name, a:hover.name{
+    color: white;
+    background-color: #313131;
+}
+a:visited.name{
+  color: #676767;
 }
