@@ -1,63 +1,4 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-  <title>Home - NomeSito</title>
-  <meta name="title" content="Sito Recensioni Videogiochi" />
-  <meta name="description" content="Home Page del sito di Recensioni" />
-  <meta name="keywords" content="Videogiochi games gaming recensioni" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <meta name="author" content="NomeGruppo" />
-  <meta name="language" content="italian it" />
-
-  <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
-  <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
-  <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
-  <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
-
-  <script type="text/javascript" src="../checkForm.js"></script>
-</head>
-
-<body>
-  <div id="header">
-    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
-		<h1 id="titolo1"> Recensioni </h1>
-		<h2 id="titolo2"> Videogiochi </h2>
-    <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
-    </div>
-  </div>
-
-  <div class="topnav" id="menu">
-
-    <a  class="icon" onclick="myFunction()">
-      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
-    </a>
-
-    <form class="searchbox" action="giochi.php" onsubmit="checkNotEmpty();">
-      <fieldset>
-        <label for="searchbar" class="structural">Cerca gioco:</label>
-        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" />
-        <datalist id="titleInput" class="formText">
-          <opzioni_ph/>
-        </datalist>
-        <button type="submit" class="searchbutton">Cerca</button>
-      </fieldset>
-    </form>
-
-      <a class="active" href="Home.html"><span xml:lang="en">Home</span></a>
-  		<a href="Giochi.html">Giochi</a>
-      <a href="Notizie.html">Notizie</a>
-        
-  </div>
-
-  <div id="breadcrumb">
-      <p>Ti trovi in: <span xml:lang="en">Home</span></p>
-  </div>
 
 <div class="row">
   <div class="leftcolumn">
@@ -173,12 +114,3 @@
     </div>
   </div>
 </div>
-
-<div id="footer">
-	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
-	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
-</div>
-
-</body>
-</html>

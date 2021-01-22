@@ -1,13 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title>Registrati - NomeSito</title>
-  <meta name="title" content="Registrati - NomeSito" />
-  <meta name="description" content="Pagina di registrazione al sito"/>
-  <meta name="keywords" content="videogiochi, registrazione, profilo" />
+  <title><nomeProfilo_ph /> | NomeSito</title>
+  <meta name="title" content="<nomeProfilo_ph />" />
+  <meta name="description" content="Profilo di <nomeProfilo_ph />" />
+  <meta name="keywords" content="videogiochi, profilo, utente" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="author" content="NomeGruppo" />
   <meta name="language" content="italian it" />
@@ -20,15 +21,14 @@
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body onload="caricamento();">
-
+<body>
   <div id="header">
     <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
-    <h1 id="titolo1"> Recensioni </h1>
-    <h2 id="titolo2"> Videogiochi </h2>
+		<h1 id="titolo1"> Recensioni </h1>
+		<h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a> | Registrati</span>
+      <img id="loginPic" alt="foto profilo utente" src="../images/login.png" />
+      <span id="login"><nomeProfilo_ph /> | <a href="../php/logout.php">Logout</a></span>
     </div>
   </div>
 
@@ -56,40 +56,32 @@
   </div>
 
   <div id="breadcrumb">
-    <p>Ti trovi in: <span xml:lang="en">Home >> Registrati</span></p>
+      <p>Ti trovi in: <span xml:lang="en">Home</span> >> <nomeProfilo_ph /> </p>
   </div>
 
-
   <div class="contenutoGenerale">
-    <div class="schedaForm">
-      <h1>Crea il tuo account NomeSito</h1>
-      <form action="../php/registrati.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
-        <fieldset>
-          <h2>Dati personali</h2>
-          <p class="required">I campi marcati con * sono obbligatori</p>
-          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
-
-          <label for="mail">*Email</label>
-          <input type="mail" name="email" id="email" class="required" /><br />
-
-          <label for="nickname">*Nickname</label>
-          <input type="text" name="nickname" id="nickname" class="required" /><br />
-
-          <label for="imgPerProfilo">Immagine profilo</label>
-          <input type="file" name="imgPerProfilo" id="imgPerProfilo" /><br />
-        </fieldset>
-
-        <fieldset>
-          <label for="password">*Password</label>
-          <input type="password" name="password" id="password" class="required" /><br />
-
-          <label for="repeatpassword">*Ripeti password</label>
-          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
-
-          <button type="submit" name="registrati">Registrati</button>
-        </fieldset>
-      </form>
+    <div class="schedaAdmin">
+      <h2>Profilo personale:</h2>
+      <div>
+        <img id="imgProfilo" alt="immagine profilo utente" src="<immagineProfilo_ph />" />
+        <div class="infoUtente">
+          <dl>
+            <dt xml:lang="en">Nickname:</dt>
+            <dd><nomeProfilo_ph /></dd>
+            <dt>Email:</dt>
+            <dd><mailProfilo_ph /></dd>
+          </dl>
+          <form action="../php/modificaProfilo.php">
+              <fieldset>
+                  <button type="submit">Modifica profilo</button>
+              </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
+  
+    <admin_placeholder_ph/>
+  
   </div>
 
   <div id="footer">

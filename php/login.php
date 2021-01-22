@@ -3,7 +3,7 @@
 include "replacer.php";
 include "dbConnection.php";
 
-# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
+# Nei vari template ph è acronimo di placeholder, cioè una cosa che tiene il posto per un altra.
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
@@ -18,13 +18,11 @@ if(isset($_POST['nomeLogin']) && isset($_POST['pw'])){
 	echo "<hr>";
 	$user=$dbAccess->getUserByHash($hashValue);
 	if($user){
-		$username="";
-		foreach($user as $entry){
-			$username=$entry['Username'];
-		}
+		$username=$user->getUsername();
 		
 		echo "Benvenuto ".$username;
 		setcookie("login",$hashValue);
+		header('Location: home.php');
 	}else{
 		echo "Nome utente o password non corretti";
 	}
