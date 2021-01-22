@@ -382,7 +382,7 @@ p.autore{
 
 .aiutoTornaSu{
   margin: 1.1em 1em 0 0;
-  text-align: right;
+  float: right;
 }
 
 .keep_reading{
