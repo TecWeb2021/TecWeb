@@ -717,10 +717,28 @@ FORM
 =========================
 */
 
-/* non funziona in searchbar per specificita' */
-.schedaForm .deftext {
-  color: grey;
+
+label, input {
+  display: inline-block;
 }
+
+label {
+  width: 30%;
+  text-align: right;
+}
+
+label+span {
+  width: 50%;
+  margin: 0 50% 0 5%;
+}
+
+input+label{
+  display: inline;
+  width: 20%;
+  text-align: left;
+}
+
+
 
 .invisibile {
   display: none;
@@ -764,6 +782,14 @@ input[type=text], textarea {
 
 .errori {
   margin-left: 1em;
+}
+
+.erroriBox {
+  border: 2px solid red;
+}
+
+.correttiBox {
+  border: 2px solid green;
 }
 
 /*======================================*/
