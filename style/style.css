@@ -206,6 +206,7 @@ SEZIONE MENU
     margin-left: 0px;
     padding-bottom: 1.5px;
     list-style: none;
+    z-index: 1;
 }
 
 
@@ -824,7 +825,7 @@ Profilo
 #subContent .AdminBox {
   max-width:100%;
   border:0em;
-  
+
 }
 
 .schedaAdmin>div {
@@ -837,10 +838,10 @@ Profilo
   float: left;
   text-align: center;
   font-weight: bolder;
-} 
+}
 
 .AdminImage {
-  width: 55%;   
+  width: 55%;
   height: 55%;
 }
 
