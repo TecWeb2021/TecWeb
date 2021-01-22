@@ -500,6 +500,8 @@ SEZIONE FILTRI
   position: absolute;
   background-color: #f1f1f1;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding-right: 0.7em;
+  padding-left: 0.4em;
   z-index: 1;
 }
 
@@ -567,7 +569,7 @@ p.sinossi {
 p.valutazione{
   float: right;
 }
-.games{
+.spazio_contenuto{
   margin-top: 1em;
 }
 /*
@@ -717,28 +719,10 @@ FORM
 =========================
 */
 
-
-label, input {
-  display: inline-block;
+/* non funziona in searchbar per specificita' */
+.schedaForm .deftext {
+  color: grey;
 }
-
-label {
-  width: 30%;
-  text-align: right;
-}
-
-label+span {
-  width: 50%;
-  margin: 0 50% 0 5%;
-}
-
-input+label{
-  display: inline;
-  width: 20%;
-  text-align: left;
-}
-
-
 
 .invisibile {
   display: none;
@@ -782,14 +766,6 @@ input[type=text], textarea {
 
 .errori {
   margin-left: 1em;
-}
-
-.erroriBox {
-  border: 2px solid red;
-}
-
-.correttiBox {
-  border: 2px solid green;
 }
 
 /*======================================*/
@@ -961,7 +937,9 @@ PROFILO
 .customLabel {
   display: block;
   position: relative;
-  padding: 0.2em 1em 0.4em 1.7em;
+  padding-left: 1.4em;
+  padding-top: 0.2em;
+  padding-bottom: 0.4em;
   margin-bottom: -1.5em;
   cursor: pointer;
   font-size: 16px;
@@ -976,15 +954,12 @@ PROFILO
   height: 0;
   width: 0;
 }
-.customLabel:hover{
-  background-color: #ccc;
-}
 
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 6px;
-  left: 5px;
+  left: 0;
   height: 13px;
   width: 13px;
   background-color: #eee;
@@ -1028,7 +1003,7 @@ PROFILO
 .radiomark {
   position: absolute;
   top: 6px;
-  left: 5px;
+  left: 0;
   height: 13px;
   width: 13px;
   background-color: #eee;
