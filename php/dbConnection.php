@@ -117,7 +117,7 @@ class DBAccess {
             $newsList=array();
             while($row=mysqli_fetch_assoc($result)){
                 $image=new Image($row['Path'], $row['Alt']);
-                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin']);
+                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null);
                 $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category']);
                 array_push($newsList, $news);
             }

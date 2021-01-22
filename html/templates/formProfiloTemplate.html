@@ -1,0 +1,36 @@
+
+
+
+  <div class="contenutoGenerale">
+    <div class="schedaForm">
+      <h1>Modifica o Elimina il tuo account NomeSito</h1>
+      <form action="form_profilo.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+        <fieldset>
+          <h2>Dati personali</h2>
+          <p class="required">I campi marcati con * sono obbligatori</p>
+          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+
+          <label for="mail">*Email</label>
+          <input type="mail" name="email" id="email" class="required" /><br />
+
+          <label for="nickname">*Nickname</label>
+          <input type="text" name="nickname" id="nickname" class="required" /><br />
+
+          <label for="imgPerProfilo">Immagine profilo</label>
+          <input type="file" name="imgPerProfilo" id="imgPerProfilo" /><br />
+        </fieldset>
+
+        <fieldset>
+          <label for="password">*Password</label>
+          <input type="password" name="password" id="password" class="required" /><br />
+
+          <label for="repeatpassword">*Ripeti password</label>
+          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
+
+          <button type="submit" name="salva">Salva modifiche</button>
+          <button type="submit" name="annulla">Annulla modifiche</button>
+          <button type="submit" name="elimina">Elimina profilo</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
