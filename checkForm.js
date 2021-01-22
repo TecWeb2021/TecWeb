@@ -1,8 +1,9 @@
 var dettagli_form = {
     "nome": ["Nome gioco", /^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
-    "pegi": ["PEGI", /^(3|7)$|^1(2|6|8)$/, "Inserire il PEGI del gioco"],
     "sviluppo": ["Nome casa di sviluppo", /^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
+    "pegi": ["PEGI", /^(3|7)$|^1(2|6|8)$/, "Inserire il PEGI del gioco"],
     /*"anno": ["Anno di Rilascio", /^(19|20)\d{2}$/, "Inserire l'anno di rilascio del gioco"],*/
+    "dlc": ["DLC del gioco", /^([\w\s]){2,30}$/, "Inserire il nome del DLC"],
     "descrizione": ["Descrizione del gioco", /.{25,}/, "Inserire la descrizione"],
     "recensione": ["Recensione del gioco", /.{25,}/, "Inserire la recensione"],
     "alternativo": ["testo alternativo", /^([\w\s]){0,50}$/, "Inserire il testo alternativo dell'immagine"],
@@ -15,7 +16,7 @@ var dettagli_form = {
     "mail": ["Mail", /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/, "Inserire la mail"]
 };
 
-/*-----------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------
 function campoDefault(input) {
     input.className = "deftext";
     input.value = dettagli_form[input.id][0];
@@ -51,7 +52,7 @@ function caricamento() {
     handleClick();
     carica_placeholder();
 }
-/*--------------------------------------------------------------------------------------------*/
+--------------------------------------------------------------------------------------------*/
 
 function mostraErrore(input) {
     var elemento = document.createElement("strong");
@@ -111,7 +112,7 @@ function handleClick() {
 
 function caricamento() {
     handleClick();
-    carica_placeholder();
+    /*carica_placeholder();*/
 }
 
 /* Controlla che l'input della searchbar non sia vuoto o composto da spazi */
@@ -167,3 +168,4 @@ window.onclick = function(event) {
       }
     }
   }
+}

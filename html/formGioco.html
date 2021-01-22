@@ -69,21 +69,21 @@
                 <messaggiForm_ph />
         
                 <fieldset>
-                    <label for="nome">*Nome: </label>
-                    <span><input type="text" id="nome" name="nome" value="<valoreTitolo_ph />" /></span><br />
+                    <label for="nome">Nome: </label>
+                    <span><input type="text" id="nome" name="nome" value="<valoreTitolo_ph />" placeholder="Nome gioco" /></span><br />
         
-                    <label for="sviluppo">*Casa di sviluppo: </label>
-                    <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" /></span><br />
+                    <label for="sviluppo">Casa di sviluppo: </label>
+                    <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" placeholder="Casa di sviluppo" /></span><br />
 
-                    <label for="data">*Data di rilascio: </label>
+                    <label for="data">Data di rilascio: </label>
                     <span><input type="date" name="data" value="<valoreData_ph />"></span><br />
 
-                    <label for="pegi">*<abbr title="Pan European Game Information">PEGI</abbr>: </label>
-                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" /></span><br />
+                    <label for="pegi"><abbr title="Pan European Game Information">PEGI</abbr>: </label>
+                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" placeholder="PEGI" /></span><br />
                 </fieldset>
         
                 <fieldset>
-                    <p>*Console:</p>
+                    <p>Console:</p>
                     <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
                     <label for="PS4">PS4</label>
                     <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
@@ -95,7 +95,7 @@
                 </fieldset>
 
                 <fieldset>
-                    <p>*Generi:</p>
+                    <p>Generi:</p>
                     <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <valoreCheckedAvventura_ph /> />
                     <label for="Avventura">Avventura</label>
                     <input type="checkbox" name="genere[]" value="Azione" id="Azione" <valoreCheckedAzione_ph /> />
@@ -111,35 +111,38 @@
                 </fieldset>
         
                 <fieldset>
-                    <label for="immagine">*Immagine: </label>
+                    <label for="immagine">Immagine: </label>
                     <input type="file" id="immagine" name="immagine" /><br />
         
                     <label for="alternativo">Alt immagine: </label>
-                    <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" /></span>
+                    <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
                 <fieldset id="cercaTitolo">
-                    <label for="searchbar">Cerca prequel:</label>
-                    <input list="listaPrequel" name="prequel" id="barraDiRicerca1" class="searchbar" />
+                    <label for="searchbar">Prequel:</label>
+                    <input list="listaPrequel" name="prequel" id="barraDiRicerca1" class="searchbar" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" />
                     <datalist id="listaPrequel" class="formText">
                       <opzioni_form_ph />
                     </datalist> <br />
 
-                    <label for="searchbar">Cerca sequel:</label>
-                    <input list="listaSequel" name="sequel" id="barraDiRicerca2" class="searchbar" />
+                    <label for="searchbar">Sequel:</label>
+                    <input list="listaSequel" name="sequel" id="barraDiRicerca2" class="searchbar" placeholder="Cerca sequel" aria-label="Campo per la ricerca del prequel del gioco" />
                     <datalist id="listaSequel" class="formText">
                       <opzioni_form_ph />
-                    </datalist>
+                    </datalist> <br />
+
+                    <label for="dlc"><abbr title="downloadable content" xml:lang="en">DLC</abbr> </label>
+                    <span><input type="text" id="dlc" name="dlc" value="<valoreDlc_ph />" placeholder="DLC" /></span><br />
                 </fieldset>
         
                 <fieldset>
                     <label for="descrizione">*Descrizione: </label>
-                    <span><textarea id="descrizione" name="descrizione" rows="10" cols="50"><valoreDescrizione_ph /></textarea></span>
+                    <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco"><valoreDescrizione_ph /></textarea></span>
                 </fieldset>
         
                 <fieldset>
                     <label for="recensione">Recensione: </label>
-                    <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione_ph /></textarea></span>
+                    <span><textarea id="recensione" name="recensione" rows="10" cols="50" placeholder="Recensione del gioco"><valoreRecensione_ph /></textarea></span>
                 </fieldset>
         
                 <fieldset id="corto">
