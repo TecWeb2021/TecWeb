@@ -211,7 +211,7 @@ SEZIONE MENU
     margin-left: 0px;
     padding-bottom: 1.5px;
     list-style: none;
-    z-index: 1;
+    z-index: 2;
 }
 
 
@@ -257,9 +257,6 @@ button {
 .searchbutton{
   width: 5em;
   height: 2.5em;
-}
-.applicafiltri{
-  width: 13%;
 }
 
 .menu{
@@ -385,7 +382,7 @@ p.autore{
 
 .aiutoTornaSu{
   margin: 1.1em 1em 0 0;
-  text-align: right;
+  float: right;
 }
 
 .keep_reading{
@@ -483,7 +480,7 @@ SEZIONE FILTRI
 
 
 .dropbtn {
-  background-color: red;
+  background-color: #74c243;
   color: black;
   padding: 0.4em;
   font-size: 16px;
@@ -503,19 +500,11 @@ SEZIONE FILTRI
   position: absolute;
   background-color: #f1f1f1;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
   padding-right: 0.7em;
   padding-left: 0.4em;
-  margin-left: 1.5em;
+  z-index: 1;
 }
 
-#annoin{
-  margin-left: 3em;
-}
-
-#annofin{
-  margin-left: 3em;
-}
 
 .dropdown:hover .dropdown-filter {display: block;}
 
@@ -528,9 +517,12 @@ SEZIONE LETTERE
 */
 
 .filters{
-  display: inline-block;
+  display: inline-flex;
 }
-
+.valutazione{
+  float: right;
+  padding-right: 4em;
+}
 .advance_filter{
   margin-top: 0.5em;
 }
@@ -577,7 +569,7 @@ p.sinossi {
 p.valutazione{
   float: right;
 }
-.games{
+.spazio_contenuto{
   margin-top: 1em;
 }
 /*
@@ -914,7 +906,7 @@ PROFILO
   border-radius: 10px;
   padding: 0.5em;
   margin-top: 0.2em;
-  float: right;
+  display: inline-block;
 }
 .tipo_categorie{
   float: left;
@@ -933,7 +925,7 @@ PROFILO
 
 
 .ordine_btn{
-  background-color: red;
+  background-color: #74c243;
   color: black;
   padding: 0.4em;
   font-size: 16px;

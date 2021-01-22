@@ -34,7 +34,7 @@
   </div>
 
   <div class="topnav" id="menu">
-    <a  class="icon" onclick="myFunction()">
+    <a  class="icon" onclick="responsiveMenu()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
 
@@ -63,7 +63,7 @@
 <div class="container">
     <div class="advance_filter">
         <div class="filtri_categorie">
-          <p class="tipo_categorie">Filtri Ricerca: |</p>
+          <span class="tipo_categorie">Filtri Ricerca: |</span>
           <form class="filters" id="filtri" action="/action_page.php">
             <div class="dropdown">
               <button type="button" class="dropbtn" onclick="OpenConsole()">Console
@@ -173,34 +173,33 @@
                 </label><br />
               </div>
             </div>
-            <button class="applicafiltri" type="submit">Submit</button>
+            <button class="applicafiltri" type="submit">Applica Filtri</button>
           </form>
         </div>
         <div class="filtri_ordine">
           <p class="tipo_ordine">Ordine: |</p>
           <form class="bottoniOrdine" action="/action_page.php">
-            <button type="button" class="ordine_btn" value="Alfabetico">Alfabetico</button>
-            <button type="button" class="ordine_btn" value="Voto >=4">Voto >=4</button>
-            <button type="button" class="ordine_btn" value="Ultimi usciti">Ultimi usciti</button>
+            <fieldset>
+              <button type="button" class="ordine_btn" value="Alfabetico">Alfabetico</button>
+              <button type="button" class="ordine_btn" value="Voto >=4">Voto >=4</button>
+              <button type="button" class="ordine_btn" value="Ultimi usciti">Ultimi usciti</button>
+            </fieldset>
           </form>
         </div>
     </div>
-    <div class="games">
+    <div class="spazio_contenuto">
       <div class="game">
         <div class="game-image">
           <a href="DarkSouls3_scheda.html"><img class="gioco_cover" src="../images/darksouls3.png" alt="" /></a>
         </div>
         <div class="game-description">
-          <div class="intestazione">
-            <div class="titolo_e_data">
-              <h3><a href="DarkSouls3_scheda.html" class="name">Dark Souls 3</a></h3>
-              <p class="date">Pubblicato il 12 aprile 2016</p>
-            </div>
-            <p class="valutazione">Voto: 4,3/5</p>
-          </div>
+          <p class="valutazione">Voto: 4,3/5</p>
+          <h3><a href="DarkSouls3_scheda.html" class="name">Dark Souls 3</a></h3>
+          <p class="date">Pubblicato il 12 aprile 2016</p>
           <p class="sinossi">
             Nel regno di Lothric il suono di una campana preavvisa che l'Era del Fuoco sta terminando: la Prima Fiamma, ravvivata per la prima volta dal primo Signore dei Tizzoni, Lord Gwyn, è sul punto di spegnersi per sempre. In conseguenza di questo riappare la maledizione dei non morti e le ere spazio-temporali convergono tutte nello stesso punto: Lothric...
           </p>
+          <p class="aiutoTornaSu"><a href="#top">Torna su</a></p>
         </div>
       </div>
     </div>
