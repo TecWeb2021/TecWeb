@@ -500,8 +500,6 @@ SEZIONE FILTRI
   position: absolute;
   background-color: #f1f1f1;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding-right: 0.7em;
-  padding-left: 0.4em;
   z-index: 1;
 }
 
@@ -937,9 +935,7 @@ PROFILO
 .customLabel {
   display: block;
   position: relative;
-  padding-left: 1.4em;
-  padding-top: 0.2em;
-  padding-bottom: 0.4em;
+  padding: 0.2em 1em 0.4em 1.7em;
   margin-bottom: -1.5em;
   cursor: pointer;
   font-size: 16px;
@@ -954,12 +950,15 @@ PROFILO
   height: 0;
   width: 0;
 }
+.customLabel:hover{
+  background-color: #ccc;
+}
 
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 6px;
-  left: 0;
+  left: 5px;
   height: 13px;
   width: 13px;
   background-color: #eee;
@@ -1003,7 +1002,7 @@ PROFILO
 .radiomark {
   position: absolute;
   top: 6px;
-  left: 0;
+  left: 5px;
   height: 13px;
   width: 13px;
   background-color: #eee;
