@@ -57,14 +57,14 @@ SEZIONE TITOLO
 SEZIONE DROPDOWN FILTRI
 =========================
 */
-/* Dropdown Button */
+/* Dropdown Button
 .dropbtn {
   background-color: #4CAF50;
   color: white;
   padding: 16px;
   font-size: 16px;
   border: none;
-}
+}*/
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -96,7 +96,7 @@ SEZIONE DROPDOWN FILTRI
 .dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+/*.dropdown:hover .dropbtn {background-color: #3e8e41;}*/
 
 /*
 =========================
@@ -476,41 +476,34 @@ SEZIONE FILTRI
 */
 
 
-/*.filters {
-  position: absolute;
-}*/
-
 .dropbtn {
-  background-color: #3498DB;
-  color: white;
-  padding: 16px;
+  background-color: red;
+  color: black;
+  padding: 0.4em;
   font-size: 16px;
   border: none;
   cursor: pointer;
 }
 
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 .dropdown {
   display: inline-block;
 }
 
 
-.dropdown-content {
+.dropdown-filter {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  padding-right: 0.7em;
+  padding-left: 0.4em;
+  margin-left: 3.5em;
 }
 
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
+.dropdown:hover .dropdown-filter {display: block;}
 
 .show {display:block;}
 
@@ -520,56 +513,19 @@ SEZIONE LETTERE
 =========================
 */
 
-
-/*.a-z_list{
-  position: relative;
-}*/
-
-
-
-.letters a {
-  color: #fff;
-  text-decoration: none;
-  width: 40px;
-  height: 20px;
-  text-align: center;
-  background-color: #1b365d;
-  display: block;
-  margin: 2px;
-}
-.letters a:hover{
-  background: green;
-}
-
-.a-z_list{
-  min-height: 50px;
-}
-/* AZ list */
-.letters li{
-  list-style-type: none;
-}
-.btn-letter{
-  float: left;
-  display: inline-block;
-}
 .filters{
   display: inline-block;
-  padding: 0.1em;
-  float: left;
-  width: 54%;
-}
-.a-z_list{
-  float: right;
-  width:45%;
 }
 
-
+.advance_filter{
+  margin-top: 0.5em;
+}
 /* Clear floats after the columns */
-#advance_filter:after {
+/*#advance_filter:after {
   content: "";
   display: table;
   clear: both;
-}
+}*/
 
 
 p.sinossi {
@@ -589,13 +545,17 @@ p.sinossi {
   border: 1px solid #000;
   border-radius: 10px;
   padding: 0.5em;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.4em;
   display: flex;
   text-align: justify;
 }
 
 .game-image{
   padding-right: 2em;
+}
+
+.games{
+  margin-top: 1em;
 }
 /*
 .game-description{
@@ -617,6 +577,7 @@ p.sinossi {
 .container {
     background-color: #414141;
     padding: 0.2em;
+    display: inline-grid;
 }
 
 #submenu {
@@ -678,6 +639,9 @@ p.sinossi {
   margin-top: 0.5em;
 }
 
+.gioco_cover:hover{
+  opacity: 0.8;
+}
 
 .gioco{
     background-color: #f5f5f5;
@@ -824,7 +788,7 @@ Profilo
 #subContent .AdminBox {
   max-width:100%;
   border:0em;
-  
+
 }
 
 .schedaAdmin>div {
@@ -837,10 +801,10 @@ Profilo
   float: left;
   text-align: center;
   font-weight: bolder;
-} 
+}
 
 .AdminImage {
-  width: 55%;   
+  width: 55%;
   height: 55%;
 }
 
@@ -907,4 +871,152 @@ Profilo
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.2em;
+}
+
+.filtri_categorie{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-top: 0.2em;
+  float: left;
+}
+
+.filtri_ordine{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-top: 0.2em;
+  float: right;
+}
+.tipo_categorie{
+  float: left;
+  margin-top: 0.7em;
+  margin-right: 0.4em;
+}
+.tipo_ordine{
+  float: left;
+  margin-top: 0.7em;
+  margin-right: 0.4em;
+}
+
+.bottoniOrdine{
+  display: inline-block;
+}
+
+
+.ordine_btn{
+  background-color: red;
+  color: black;
+  padding: 0.4em;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Customize the label (the container) */
+.customLabel {
+  display: block;
+  position: relative;
+  padding-left: 1.4em;
+  padding-top: 0.2em;
+  padding-bottom: 0.4em;
+  margin-bottom: -1.5em;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.customLabel input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  height: 13px;
+  width: 13px;
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #000;
+}
+
+/* On mouse-over, add a grey background color */
+.customLabel:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.customLabel input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.customLabel input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.customLabel .checkmark:after {
+  left: 3px;
+  top: 1px;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.radiomark {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  height: 13px;
+  width: 13px;
+  background-color: #eee;
+  border-radius: 50%;
+  border: 1px solid #000;
+}
+
+.customLabel:hover input ~ .radiomark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.customLabel input:checked ~ .radiomark {
+  background-color: #2196F3;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.radiomark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.customLabel input:checked ~ .radiomark:after {
+  display: block;
+}
+
+.customLabel .radiomark:after {
+  top: 3px;
+  left: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: white;
 }

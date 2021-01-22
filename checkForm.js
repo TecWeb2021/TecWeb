@@ -167,3 +167,4 @@ window.onclick = function(event) {
       }
     }
   }
+}
