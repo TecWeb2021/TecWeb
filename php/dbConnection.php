@@ -210,21 +210,30 @@ class DBAccess {
     }
 
     public function getUserByHash($hashValue){
-        $query="SELECT * FROM users WHERE hash=\"$hashValue\"";
-        $result=$this->getResult($query);
-        return $result;
+        $query="SELECT * FROM users WHERE hash='$hashValue'";
+        $queryResult = mysqli_query($this->connection, $query);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult);
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin']);
+
+        return $user;
+        }
     }
 
-    public function addUser($username, $password,$is_admin){
-        $hashValue=hash("md5",$username.$password);
-        $query="INSERT INTO users VALUES ('$username','$hashValue',$is_admin);";
+    public function addUser($user){
+        $name=$user->getUsername();
+        $hash=$user->getHash();
+        $isAdmin=$user->IsAdmin();
+        $query="INSERT INTO users VALUES ('$name','$hash',$isAdmin);";
         echo "query: ".$query;
         $result=$this->getResult($query);
         if($result==null){
             $result="null";
         }
-        echo "addUser_result: ".$result;
-
+        return $result;
     }
 
 }

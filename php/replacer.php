@@ -9,4 +9,23 @@ function replace($subject){
   return $subject;
 }
 
+function generatePageTopAndBottom($templatePath, $page, $user){
+	$base=file_get_contents($templatePath);
+
+	$possiblePages=array("home","giochi","notizie");
+	if(!in_array($page, $possiblePages)){
+		$page=null;
+	}
+	$base=preg_replace("/\<$page\_active\/\>/", "", $base);
+	$base=preg_replace("/\<$page\_active\>/", "", $base);
+
+	foreach ($possiblePages as $value) {
+		if($page!=$value){
+			$base=preg_replace("/\<$value\_active\>class\=\"active\"\<$value\_active\/\>/", "", $base);
+		}
+	}
+
+	return $base;
+}
+
 ?>

@@ -4,10 +4,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title>Home - NomeSito</title>
-  <meta name="title" content="Sito Recensioni Videogiochi" />
-  <meta name="description" content="Home Page del sito di Recensioni" />
-  <meta name="keywords" content="Videogiochi games gaming recensioni" />
+  <title><nomeProfilo_ph /> | NomeSito</title>
+  <meta name="title" content="<nomeProfilo_ph />" />
+  <meta name="description" content="Profilo di <nomeProfilo_ph />" />
+  <meta name="keywords" content="videogiochi, profilo, utente" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="author" content="NomeGruppo" />
@@ -17,23 +17,22 @@
   <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
   <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
   <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
-  
+
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
 <body>
   <div id="header">
-    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
-    <h1 id="titolo1"> Recensioni </h1>
-    <h2 id="titolo2"> Videogiochi </h2>
+    <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
+		<h1 id="titolo1"> Recensioni </h1>
+		<h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
+      <img id="loginPic" alt="foto profilo utente" src="../images/login.png" />
+      <span id="login"><nomeProfilo_ph /> | <a href="../php/logout.php">Logout</a></span>
     </div>
   </div>
 
   <div class="topnav" id="menu">
-
     <a  class="icon" onclick="myFunction()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
@@ -50,31 +49,46 @@
     </form>
 
     <ul class="menu">
-        <li><a <home_active>class="active"<home_active/> href="Home.html"><span xml:lang="en">Home</span></a></li>
-        <li><a <giochi_active>class="active"<giochi_active/> href="Giochi.html">Giochi</a></li>
-        <li><a <notizie_active>class="active"<notizie_active/> href="Notizie.html">Notizie</a></li>
+        <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a href="Notizie.html">Notizie</a></li>
     </ul>
   </div>
 
   <div id="breadcrumb">
-      <p>Ti trovi in: <span xml:lang="en">Home</span></p>
+      <p>Ti trovi in: <span xml:lang="en">Home</span> >> <nomeProfilo_ph /> </p>
   </div>
 
+  <div class="contenutoGenerale">
+    <div class="schedaAdmin">
+      <h2>Profilo personale:</h2>
+      <div>
+        <img id="imgProfilo" alt="immagine profilo utente" src="<immagineProfilo_ph />" />
+        <div class="infoUtente">
+          <dl>
+            <dt xml:lang="en">Nickname:</dt>
+            <dd><nomeProfilo_ph /></dd>
+            <dt>Email:</dt>
+            <dd><mailProfilo_ph /></dd>
+          </dl>
+          <form action="../php/modificaProfilo.php">
+              <fieldset>
+                  <button type="submit">Modifica profilo</button>
+              </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    <admin_placeholder_ph/>
+  
+  </div>
 
-
-
-
-  <page_content_ph/>
-
-
-
-
-
-<div id="footer">
-  <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-  <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
-  <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
-</div>
+  <div id="footer">
+    <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+    <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+    <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+  </div>
 
 </body>
 </html>

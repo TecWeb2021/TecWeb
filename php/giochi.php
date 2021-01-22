@@ -8,7 +8,7 @@ $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/giochiTemplate.html");
-$homePage=replace($homePage);
+
 
 
 
@@ -54,7 +54,11 @@ $gamesDivsString=createGamesDivs($list);
 $homePage=preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
 
 
+$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","giochi",null);
+$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
-echo $homePage;
+$basePage=replace($basePage);
+
+echo $basePage;
 
 ?>

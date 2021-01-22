@@ -12,6 +12,8 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/homeTemplate.html");
 $homePage=replace($homePage);
 
+
+
 function createNewsListItem($news){
 	$item=file_get_contents("../html/templates/homeNewsTemplate.html");
 	
@@ -113,7 +115,11 @@ $homePage=preg_replace("/\<top_game_age_range_ph\/\>/",$topGame->getAgeRange(),$
 $homePage=preg_replace("/\<opzioni_ph\/\>/","$optionsListString",$homePage);
 
 
+$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","home",null);
+$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
-echo $homePage;
+$basePage=replace($basePage);
+
+echo $basePage;
 
 ?>

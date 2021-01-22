@@ -12,56 +12,91 @@
   <meta name="author" content="NomeGruppo" />
   <meta name="language" content="italian it" />
 
-  <link rel="stylesheet" type="text/css" href="../style/style.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
+  <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
+
+  <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body>
+<body onload="caricamento();">
 
   <div id="header">
-      <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
+    <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
     <h1 id="titolo1"> Recensioni </h1>
     <h2 id="titolo2"> Videogiochi </h2>
-      <div class="loginblock">
-        <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-        <span id="login"><a href="login.html">Login</a>/<a href="registrati.html">Registrati</a></span>
-      </div>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a href="login.html">Login</a> | Registrati</span>
+    </div>
+  </div>
+
+  <div class="topnav" id="menu">
+    <a  class="icon" onclick="myFunction()">
+      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+    </a>
+
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph/>
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
+    </form>
+
+    <ul class="menu">
+        <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a href="Notizie.html">Notizie</a></li>
+    </ul>
   </div>
 
   <div id="breadcrumb">
-      <p>Ti trovi in: <span xml:lang="en">Home</span> >> Registrati</p>
+    <p>Ti trovi in: <span xml:lang="en">Home >> Registrati</span></p>
   </div>
-  
+
+
   <div class="contenutoGenerale">
-    <form method="post" action="registration.php">
+    <div class="schedaForm">
+      <h1>Crea il tuo account NomeSito</h1>
+      <form action="../php/registrati.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+        <fieldset>
+          <h2>Dati personali</h2>
+          <p class="required">I campi marcati con * sono obbligatori</p>
+          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
 
-    <messaggiForm_ph />
+          <label for="mail">*Email</label>
+          <input type="mail" name="email" id="email" class="required" /><br />
 
-    <fieldset>
-        <legend>Campi obbligatori</legend>
-        <label for="nome_utente">Nome utente: </label>
-        <span><input type="text" id="nome_utente" name="nome_utente" value="<valoreTitolo_ph />" /></span><br />
+          <label for="nickname">*Nickname</label>
+          <input type="text" name="nickname" id="nickname" class="required" /><br />
 
-        <label for="password">Password: </label>
-        <span><input type="text" id="password" name="password" value="<valoreAnno_ph />" /></span><br />
-    </fieldset>
+          <label for="imgPerProfilo">Immagine profilo</label>
+          <input type="file" name="imgPerProfilo" id="imgPerProfilo" /><br />
+        </fieldset>
 
-    <fieldset>
-        <button type="submit" name="submit">Conferma Modifiche</button>
-        <button type="button" name="annullaModifiche">Annulla Modifiche</button>
-        <button type="button" name="elimina">Elimina Gioco</button>
-    </fieldset>
+        <fieldset>
+          <label for="password">*Password</label>
+          <input type="password" name="password" id="password" class="required" /><br />
 
-</form>
+          <label for="repeatpassword">*Ripeti password</label>
+          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
 
-</div>
+          <button type="submit" name="registrati">Registrati</button>
+        </fieldset>
+      </form>
+    </div>
   </div>
-  
+
   <div id="footer">
     <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
     <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
     <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
   </div>
-  
-</body>
 
+</body>
 </html>
