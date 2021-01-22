@@ -29,11 +29,11 @@
             <h2 id="titolo2"> Videogiochi </h2>
         <div class="loginblock">
           <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
-          <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
+          <span id="login"><a href="../php/profilo.php"><nomeProfilo_ph /></a> | <a href="../php/logout.php">Logout</a></span>
         </div>
-      </div>
+    </div>
 
-      <div class="topnav" id="menu">
+    <div class="topnav" id="menu">
         <a  class="icon" onclick="myFunction()">
           <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
         </a>
@@ -54,80 +54,114 @@
             <li><a href="Giochi.html">Giochi</a></li>
             <li><a href="Notizie.html">Notizie</a></li>
         </ul>
-      </div>
+    </div>
 
-      <div id="breadcrumb">
-          <p>Ti trovi in: <span xml:lang="en">Home</span></p>
-      </div>
+    <div id="breadcrumb">
+        <p>Ti trovi in: <span xml:lang="en">Home</span> >> <nomeProfilo_ph /> >> Nuova Gioco</p>
+    </div>
 
-<div class="contenutoGenerale">
+    <div class="contenutoGenerale">
+        <div class="schedaForm">
+            <h1>Form per l'inserimento di un nuovo gioco</h1>
+            <p>I campi marcati con * sono obbligatori</p>
+            <form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
-<form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+                <messaggiForm_ph />
+        
+                <fieldset>
+                    <label for="nome">*Nome: </label>
+                    <span><input type="text" id="nome" name="nome" value="<valoreTitolo_ph />" /></span><br />
+        
+                    <label for="sviluppo">*Casa di sviluppo: </label>
+                    <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" /></span><br />
 
-    <messaggiForm_ph />
+                    <label for="data">*Data di rilascio: </label>
+                    <span><input type="date" name="data" value="<valoreData_ph />"></span><br />
 
-    <fieldset>
-        <legend>Campi obbligatori</legend>
-        <label for="titolo">Titolo: </label>
-        <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" /></span><br />
+                    <label for="pegi">*<abbr title="Pan European Game Information">PEGI</abbr>: </label>
+                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" /></span><br />
+                </fieldset>
+        
+                <fieldset>
+                    <p>*Console:</p>
+                    <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
+                    <label for="PS4">PS4</label>
+                    <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
+                    <label for="PS5">PS5</label>
+                    <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne_ph /> />
+                    <label for="XboxOne">Xbox One</label>
+                    <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
+                    <label for="XboxSeriesX">Xbox Series X</label>
+                </fieldset>
 
-        <label for="anno">Anno: </label>
-        <span><input type="text" id="anno" name="anno" value="<valoreAnno_ph />" /></span><br />
+                <fieldset>
+                    <p>*Generi:</p>
+                    <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <valoreCheckedAvventura_ph /> />
+                    <label for="Avventura">Avventura</label>
+                    <input type="checkbox" name="genere[]" value="Azione" id="Azione" <valoreCheckedAzione_ph /> />
+                    <label for="Azione">Azione</label>
+                    <input type="checkbox" name="genere[]" value="Platform" id="Platform" <valoreCheckedPlatform_ph /> />
+                    <label for="Platform">Platform</label>
+                    <input type="checkbox" name="genere[]" value="Picchiaduro" id="Picchiaduro" <valoreCheckedPicchiaduro_ph /> />
+                    <label for="Picchiaduro">Picchiaduro</label>
+                    <input type="checkbox" name="genere[]" value="Simulazione" id="Simulazione" <valoreCheckedSimulazione_ph /> />
+                    <label for="Simulazione">Simulazione</label>
+                    <input type="checkbox" name="genere[]" value="Sparatutto" id="Sparatutto" <valoreCheckedSparatutto_ph /> />
+                    <label for="Sparatutto">Sparatutto</label>
+                </fieldset>
+        
+                <fieldset>
+                    <label for="immagine">*Immagine: </label>
+                    <input type="file" id="immagine" name="immagine" /><br />
+        
+                    <label for="alternativo">Alt immagine: </label>
+                    <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" /></span>
+                </fieldset>
 
-        <label for="categoria">Categoria:</label>
-        <select name="categoria" id="categoria">
-            <option>Boh</option>
-            <option>Non</option>
-            <option>So</option>
-        </select>
-    </fieldset>
+                <fieldset id="cercaTitolo">
+                    <label for="searchbar">Cerca prequel:</label>
+                    <input list="listaPrequel" name="prequel" id="barraDiRicerca1" class="searchbar" />
+                    <datalist id="listaPrequel" class="formText">
+                      <opzioni_form_ph />
+                    </datalist> <br />
 
-    <fieldset>
-        <legend>Console:</legend>
-        <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
-        <label for="PS4">PS4</label>
-        <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
-        <label for="PS5">PS5</label>
-        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne_ph /> />
-        <label for="XboxOne">Xbox One</label>
-        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
-        <label for="XboxSeriesX">Xbox Series X</label>
-    </fieldset>
+                    <label for="searchbar">Cerca sequel:</label>
+                    <input list="listaSequel" name="sequel" id="barraDiRicerca2" class="searchbar" />
+                    <datalist id="listaSequel" class="formText">
+                      <opzioni_form_ph />
+                    </datalist>
+                </fieldset>
+        
+                <fieldset>
+                    <label for="descrizione">*Descrizione: </label>
+                    <span><textarea id="descrizione" name="descrizione" rows="10" cols="50"><valoreDescrizione_ph /></textarea></span>
+                </fieldset>
+        
+                <fieldset>
+                    <label for="recensione">Recensione: </label>
+                    <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione_ph /></textarea></span>
+                </fieldset>
+        
+                <fieldset id="corto">
+                    <button type="submit" name="submit">Salva Modifiche</button>
+                </fieldset>
+        
+            </form>
 
-    <fieldset>
-        <label for="immagine">Immagine: </label>
-        <input type="file" id="immagine" name="immagine" /><br />
-
-        <label for="alternativo">Alt immagine: </label>
-        <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" /></span>
-    </fieldset>
-
-    <fieldset>
-        <label for="descrizione">Descrizione: </label>
-        <span><textarea id="descrizione" name="descrizione" rows="10" cols="50"><valoreDescrizione_ph /></textarea></span>
-    </fieldset>
-
-    <fieldset>
-        <label for="recensione">Recensione: </label>
-        <span><textarea id="recensione" name="recensione" rows="10" cols="50"><valoreRecensione_ph /></textarea></span>
-    </fieldset>
-
-    <fieldset id="corto">
-        <button type="submit" name="submit">Salva Modifiche</button>
-    </fieldset>
-
-</form>
-
-<div id="bottoniOpzionali">
-    <form action="admin.php">
-        <button type="submit">Annulla Modifiche</button>
-    </form>
-    <form method="post" action="eliminaGioco.php">
-        <button type="submit" value="<gioco_ph />">Elimina Gioco</button>
-    </form>
-</div>
-
-</div>
+            <div id="bottoniOpzionali">
+                <form action="../php/admin.php">
+                  <fieldset>
+                    <button type="submit">Annulla Modifiche</button>
+                  </fieldset>
+                </form>
+                <form method="post" action="../php/eliminaGioco.php">
+                  <fieldset>
+                    <button type="submit" value="<gioco_ph />">Elimina Gioco</button>
+                  </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
 
 <div id="footer">
 	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />

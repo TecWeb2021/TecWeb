@@ -1,14 +1,17 @@
 var dettagli_form = {
-    "titolo": ["Titolo", /^([\w\s]){2,20}$/, "Inserire il titolo del gioco"],
-    "anno": ["Anno di Rilascio", /^(19|20)\d{2}$/, "Inserire l'anno di rilascio del gioco"],
+    "nome": ["Nome gioco", /^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
+    "pegi": ["PEGI", /^(3|7)$|^1(2|6|8)$/, "Inserire il PEGI del gioco"],
+    "sviluppo": ["Nome casa di sviluppo", /^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
+    /*"anno": ["Anno di Rilascio", /^(19|20)\d{2}$/, "Inserire l'anno di rilascio del gioco"],*/
     "descrizione": ["Descrizione del gioco", /.{25,}/, "Inserire la descrizione"],
     "recensione": ["Recensione del gioco", /.{25,}/, "Inserire la recensione"],
     "alternativo": ["testo alternativo", /^([\w\s]){0,50}$/, "Inserire il testo alternativo dell'immagine"],
 
-    "titoloNews": ["Titolo", /^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
+    "titolo": ["Titolo", /^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": ["Testo della notizia", /.{25,}/, "Inserire il testo della notizia"]
 };
 
+/*-----------------------------------------------------------------------------------*/
 function campoDefault(input) {
     input.className = "deftext";
     input.value = dettagli_form[input.id][0];
@@ -27,6 +30,24 @@ function backToDefault(input) {
         campoDefault(input);
     }
 }
+
+function carica_placeholder() {
+
+    for (var key in dettagli_form) {
+        var input = document.getElementById(key);
+        if (input) {
+            campoDefault(input);
+            input.onfocus = function() {campoPerInput(this);};
+            input.onblur = function() {backToDefault(this);};
+        }
+    }
+}
+
+function caricamento() {
+    handleClick();
+    carica_placeholder();
+}
+/*--------------------------------------------------------------------------------------------*/
 
 function mostraErrore(input) {
     var elemento = document.createElement("strong");
@@ -68,18 +89,6 @@ function validateForm() {
         }
     }
     return corretto;
-}
-
-function carica_placeholder() {
-
-    for (var key in dettagli_form) {
-        var input = document.getElementById(key);
-        if (input) {
-            campoDefault(input);
-            input.onfocus = function() {campoPerInput(this);};
-            input.onblur = function() {backToDefault(this);};
-        }
-    }
 }
 
 function handleClick() {

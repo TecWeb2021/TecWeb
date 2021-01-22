@@ -214,6 +214,11 @@ SEZIONE MENU
 SEZIONE BARRA DI RICERCA
 =========================
 */
+
+input[list] {
+  padding-left: 0.5em;
+}
+
 .search_container{
   width: 100%;
 }
@@ -731,12 +736,12 @@ p.testo{
 
 /*
 =========================
-FORM VARIE
+FORM
 =========================
 */
 
 /* non funziona in searchbar per specificita' */
-.deftext {
+.schedaForm .deftext {
   color: grey;
 }
 
@@ -748,8 +753,40 @@ FORM VARIE
   display: block;
 }
 
-#corto {
-  width: 16%;
+.schedaForm {
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+}
+
+.schedaForm fieldset {
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  padding: 0.5em;
+  border-radius: 10px;
+  margin: 0.2em;
+}
+
+textarea {
+  resize: none;
+  vertical-align: top;
+  width: 50%;
+}​
+
+#bottoniOpzionali {
+  float: left;
+}
+
+input[type=text], textarea {
+  padding: 5px;
+}
+
+.errori {
+  margin-left: 1em;
 }
 
 /*======================================*/
