@@ -23,8 +23,17 @@ if($user){
 	$homePage=file_get_contents("../html/templates/profilo_utenteTemplate.html");
 	if($user->isAdmin()){
 		$admin=file_get_contents("../html/templates/adminTemplate.html");
-	$homePage=str_replace("<admin_placeholder_ph/>", $admin, $homePage);
-	}	
+		$homePage=str_replace("<admin_placeholder_ph/>", $admin, $homePage);
+	}
+	$imagePath="";
+	if($user->getImage()){
+		$imagePath=$user->getImage()->getPath();
+	}else{
+		$imagePath="images/login.png";
+	}
+	$homePage=str_replace("<user_image_ph/>","../".$imagePath, $homePage);
+}else{
+	$homePage="non puoi accedere a questa pagina";
 }
 
 

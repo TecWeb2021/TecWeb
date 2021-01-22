@@ -40,11 +40,10 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 		}
 	}
 
-	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
+	
 	if($user){
-		#qua sotto si potrà decommentare la condizione e togliere il false quando la classe user avrà un attibuto image e una funzione getImage()
-		if(false/*$image=$user->getImage()*/){
-			$base=str_replace("<user_img_path_ph/>",$image->getPath(),$base);
+		if($user->getImage()){
+			$base=str_replace("<user_img_path_ph/>", "../".$user->getImage()->getPath(), $base);
 		}
 
 		$base=preg_replace("/\<not_logged_in\>.*\<\/not_logged_in\>/","",$base);
@@ -52,11 +51,14 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 		$base=str_replace("</logged_in>","",$base);
 
 		$base=str_replace("<username_ph/>", $user->getUsername(), $base);
+		
 	}else{
 		$base=preg_replace("/\<logged_in\>.*\<\/logged_in\>/","",$base);
 		$base=str_replace("<not_logged_in>","",$base);
 		$base=str_replace("</not_logged_in>","",$base);
 	}
+	#la riga qua sotto è efficace( fa quello che deve) solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
+	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
 
 
 	return $base;

@@ -215,14 +215,18 @@ class DBAccess {
     }
 
     public function getUserByHash($hashValue){
-        $query="SELECT * FROM users WHERE hash='$hashValue'";
+        $query="SELECT * FROM users LEFT JOIN images ON users.Image=images.Path WHERE hash='$hashValue'";
         $queryResult = mysqli_query($this->connection, $query);
         
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
-            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin']);
+            $image=null;
+            if($row['Image']!=null){
+                $image=new Image($row['Path'], $row['Alt']);
+            }
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image);
 
         return $user;
         }

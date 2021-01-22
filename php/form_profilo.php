@@ -12,7 +12,7 @@ $homePage=file_get_contents("../html/templates/formProfiloTemplate.html");
 
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "home", $dbAccess);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
