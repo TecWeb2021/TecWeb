@@ -4,10 +4,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title><nomeProfilo_ph /> | NomeSito</title>
-  <meta name="title" content="<nomeProfilo_ph />" />
-  <meta name="description" content="Profilo di <nomeProfilo_ph />" />
-  <meta name="keywords" content="Videogiochi profilo utente" />
+  <title><nomeProfilo_ph /> - NomeSito</title>
+  <meta name="title" content="Sito Recensioni Videogiochi" />
+  <meta name="description" content="Home Page del sito di Recensioni" />
+  <meta name="keywords" content="Videogiochi games gaming recensioni" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="author" content="NomeGruppo" />
@@ -28,11 +28,12 @@
 		<h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
       <img id="loginPic" alt="foto profilo utente" src="../images/login.png" />
-      <span id="login"><nomeProfilo_ph /> | <a href="../php/logout.php">Logout</a></span>
+      <span id="login">France | <a href="../php/logout.php">Logout</a></span>
     </div>
   </div>
 
   <div class="topnav" id="menu">
+
     <a  class="icon" onclick="myFunction()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
@@ -59,36 +60,55 @@
       <p>Ti trovi in: <span xml:lang="en">Home</span></p>
   </div>
 
-  <div class="contenutoGenerale">
-    <div class="schedaAdmin">
-      <h2>Profilo personale:</h2>
-      <div>
-        <img id="imgProfilo" alt="immagine profilo utente" src="<immagineProfilo_ph />" />
-        <div class="infoUtente">
-          <dl>
-            <dt xml:lang="en">Nickname:</dt>
-            <dd><nomeProfilo_ph /></dd>
-            <dt>Email:</dt>
-            <dd><mailProfilo_ph /></dd>
-          </dl>
-          <form action="../php/modificaProfilo.php">
-              <fieldset>
-                  <button type="submit">Modifica profilo</button>
-              </fieldset>
-          </form>
-        </div>
+<div class="contenutoGenerale">
+  <div class="schedaAdmin">
+    <h2>Profilo personale:</h2>
+    <div>
+      <img id="imgProfilo" alt="immagine profilo utente" src="../images/papa.jpg" />
+
+      <div class="infoUtente">
+        <dl>
+          <dt xml:lang="en">Nickname:</dt>
+          <dd>Franceskino</dd>
+          <dt>Email:</dt>
+          <dd>franceskino@vaticano.amen</dd>
+        </dl>
+        <form action="ModificaProfilo.php">
+            <fieldset>
+                <button type="submit">Modifica profilo</button>
+            </fieldset>
+        </form>
       </div>
+      
     </div>
-  
-    <admin_placeholder_ph />
-  
   </div>
 
-  <div id="footer">
-    <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-    <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
-    <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+  <div class="schedaAdmin">
+    <h2>Sezione Admin:</h2>
+    <div>
+      <div class="AdminBox">
+        <a href="../php/news_form.php"><img src="../images/news.jpg" alt=""  class="AdminImage"></a>
+        <p>Nuova notizia</p>
+      </div>
+
+      <div class="AdminBox">
+          <a href="../php/game_form.php"><img src="../images/game.png" alt="" class="AdminImage"></a>
+          <p>Nuovo gioco</p>
+      </div>
+
+      <div class="AdminBox">
+          <a href="../php/utenti.php"><img src="../images/users.png" alt="" class="AdminImage"></a>
+          <p>Gestione utenti</p>
+      </div>
+    </div>
   </div>
+</div>
+
+<div id="footer">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+</div>
 
 </body>
 </html>

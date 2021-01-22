@@ -236,7 +236,7 @@ SEZIONE BARRA DI RICERCA
 button {
   color: white;
   background-color: #1b365d;
-  height: 3.5em;
+  padding: 0.5em;
   margin: 2px;
   border-radius: 5px;
   margin-top: 0.3em;
@@ -750,6 +750,61 @@ FORM VARIE
 
 #corto {
   width: 16%;
+}
+
+/*======================================*/
+
+/*
+=========================
+Profilo
+=========================
+*/
+
+.schedaAdmin {
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+}
+
+#imgProfilo {
+  width: 35%;
+  border-radius: 15px;
+  float: left;
+}
+
+.infoUtente {
+  float: left;
+  padding-left: 1em;
+}
+
+.schedaAdmin dt {
+  font-weight: bold;
+}
+
+#subContent .AdminBox {
+  max-width:100%;
+  border:0em;
+  
+}
+
+.schedaAdmin>div {
+  padding: 1em;
+}
+
+.AdminBox {
+  width:30%;
+  margin:auto;
+  float: left;
+  text-align: center;
+  font-weight: bolder;
+} 
+
+.AdminImage {
+  width: 55%;   
+  height: 55%;
 }
 
 /*======================================*/
