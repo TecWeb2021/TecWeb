@@ -1,8 +1,8 @@
 
 
 <?php
-include "replacer.php";
-include "dbConnection.php";
+require_once "replacer.php";
+require_once "dbConnection.php";
 
 # Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
 
@@ -10,7 +10,6 @@ $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/homeTemplate.html");
-$homePage=replace($homePage);
 
 
 
@@ -115,26 +114,10 @@ $homePage=preg_replace("/\<top_game_age_range_ph\/\>/",$topGame->getAgeRange(),$
 $homePage=preg_replace("/\<opzioni_ph\/\>/","$optionsListString",$homePage);
 
 
-if(isset($_REQUEST['logout'])){
-	$logout=$_REQUEST['logout'];
-	#sanitize;
-	if($logout='true' && isset($_COOKIE['login'])){
-		setcookie("login","");
-		echo "cookie unset";
-		header("Refresh:0");
-	}
-}
-
-$user=null;
-if(isset($_COOKIE['login'])){
-	$hash=$_COOKIE['login'];
-	#sanitize
-	$user=$dbAccess->getUserByHash($hash);
-}
 
 
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "home", $dbAccess);
 
-$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","home",$user);
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);

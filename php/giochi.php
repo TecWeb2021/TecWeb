@@ -1,6 +1,6 @@
 <?php
-include "replacer.php";
-include "dbConnection.php";
+require_once "replacer.php";
+require_once "dbConnection.php";
 
 # Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
 
@@ -53,18 +53,11 @@ $gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder
 $homePage=preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
 
-$user=null;
-if(isset($_COOKIE['login'])){
-	$hash=$_COOKIE['login'];
-	#sanitize
-	$user=$dbAccess->getUserByHash($hash);
-}
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "giochi", $dbAccess);
 
-$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","giochi",$user);
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);
 
 echo $basePage;
-
 ?>

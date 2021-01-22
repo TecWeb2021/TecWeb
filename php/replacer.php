@@ -1,5 +1,5 @@
 <?php
-
+require_once("dbConnection.php");
 require_once("classes/user.php");
 
 function replace($subject){
@@ -9,6 +9,19 @@ function replace($subject){
   $subject=preg_replace("/Forum\.html/","forum.php",$subject);
   $subject=preg_replace("/\"([A-Za-z]*)\.html\"/","\"$1.php\"",$subject);
   return $subject;
+}
+
+function createBasePage($templatePath, $page, $dbAccess){
+	if(isset($_REQUEST['logout'])){
+		logout();
+	}
+
+	$user=getLoggedUser($dbAccess);
+
+	$basePage=generatePageTopAndBottom($templatePath, $page, $user);
+
+	return $basePage;
+
 }
 
 function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImagePath="../images/login.png"){
@@ -47,6 +60,27 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 
 
 	return $base;
+}
+
+
+function logout(){
+	$logout=$_REQUEST['logout'];
+	#sanitize;
+	if($logout='true' && isset($_COOKIE['login'])){
+		setcookie("login","");
+		echo "cookie unset";
+		header("Refresh:0");
+	}
+}
+
+function getLoggedUser($dbAccess){
+	$user=null;
+	if(isset($_COOKIE['login'])){
+		$hash=$_COOKIE['login'];
+		#sanitize
+		$user=$dbAccess->getUserByHash($hash);
+	}
+	return $user;
 }
 
 ?>

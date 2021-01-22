@@ -1,7 +1,6 @@
 <?php
-include "replacer.php";
-include "dbConnection.php";
-require_once("./classes/news.php");
+require_once "replacer.php";
+require_once "dbConnection.php";
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
@@ -44,16 +43,11 @@ function createNewsList($list){
 
 $list=$dbAccess->getNewsList();
 $newsListString=createNewsList($list);
+
 $homePage=preg_replace("/\<news_list_ph\/\>/",$newsListString,$homePage);
 
-$user=null;
-if(isset($_COOKIE['login'])){
-	$hash=$_COOKIE['login'];
-	#sanitize
-	$user=$dbAccess->getUserByHash($hash);
-}
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "notizie", $dbAccess);
 
-$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html","notizie",$user);
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);

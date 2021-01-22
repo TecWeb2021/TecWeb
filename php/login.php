@@ -1,7 +1,7 @@
 <?php
 
-include "replacer.php";
-include "dbConnection.php";
+require_once "replacer.php";
+require_once "dbConnection.php";
 
 # Nei vari template ph è acronimo di placeholder, cioè una cosa che tiene il posto per un altra.
 
@@ -13,9 +13,6 @@ if(isset($_POST['nomeLogin']) && isset($_POST['pw'])){
 	$password=$_POST['pw'];
 	$inputString=$username.$password;
 	$hashValue=hash("md5",$inputString);
-	echo "<hr>";
-	echo $hashValue;
-	echo "<hr>";
 	$user=$dbAccess->getUserByHash($hashValue);
 	if($user){
 		$username=$user->getUsername();
@@ -30,10 +27,13 @@ if(isset($_POST['nomeLogin']) && isset($_POST['pw'])){
 
 
 $homePage=file_get_contents("../html/templates/loginTemplate.html");
-$homePage=replace($homePage);
 
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
 
+$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
-echo $homePage;
+$basePage=replace($basePage);
+
+echo $basePage;
 
 ?>

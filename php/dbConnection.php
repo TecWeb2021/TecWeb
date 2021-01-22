@@ -32,6 +32,11 @@ class DBAccess {
         //si può usare come alternativa
         //restituisce un numero corrispondente all'errore, oppure 0 se è andata a buon fine
     }
+    /*
+    public function closeConnection(){
+        $this->connection->close();
+    }
+    */
 
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
