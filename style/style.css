@@ -506,7 +506,15 @@ SEZIONE FILTRI
   z-index: 1;
   padding-right: 0.7em;
   padding-left: 0.4em;
-  margin-left: 3.5em;
+  margin-left: 1.5em;
+}
+
+#annoin{
+  margin-left: 3em;
+}
+
+#annofin{
+  margin-left: 3em;
 }
 
 .dropdown:hover .dropdown-filter {display: block;}
