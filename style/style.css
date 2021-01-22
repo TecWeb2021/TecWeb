@@ -121,11 +121,16 @@ div.loginblock {
     text-align: center;
     width: 120px;
 }
+
 #loginPic{
   border-radius: 50%;
   width: 50%;
   max-width: 9em;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
 }
+
 #logo {
     float: left;
     width: 6em;         /* 15% del padre */
@@ -206,6 +211,7 @@ SEZIONE MENU
     margin-left: 0px;
     padding-bottom: 1.5px;
     list-style: none;
+    z-index: 1;
 }
 
 
@@ -757,7 +763,7 @@ input[type=text], textarea {
 
 /*
 =========================
-Profilo
+PROFILO
 =========================
 */
 
@@ -772,8 +778,11 @@ Profilo
 
 #imgProfilo {
   width: 35%;
-  border-radius: 15px;
+  border-radius: 5%;
   float: left;
+  border: solid;
+  color: black;
+  border-width: 2px;
 }
 
 .infoUtente {

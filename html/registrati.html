@@ -66,14 +66,14 @@
       <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
         <fieldset>
           <h2>Dati personali</h2>
-          <p class="required">I campi marcati con * sono obbligatori</p>
-          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+          <p>I campi marcati con * sono obbligatori</p>
+          <p>Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
 
-          <label for="mail">*Email</label>
-          <input type="mail" name="email" id="email" class="required" /><br />
+          <label for="mail">*E-mail</label>
+          <input type="mail" name="email" id="email" class="required" value="<mailProfilo_ph />" placeholder="Inserisci la tua mail" /><br />
 
-          <label for="nickname">*Nickname</label>
-          <input type="text" name="nickname" id="nickname" class="required" /><br />
+          <label for="nomeUtente">*Nome utente</label>
+          <input type="text" name="nomeUtente" id="nomeUtente" class="required" value="<nomeProfilo_ph />" placeholder="Nome Utente" /><br />
 
           <label for="imgPerProfilo">Immagine profilo</label>
           <input type="file" name="imgPerProfilo" id="imgPerProfilo" /><br />
@@ -81,10 +81,10 @@
 
         <fieldset>
           <label for="password">*Password</label>
-          <input type="password" name="password" id="password" class="required" /><br />
+          <input type="password" name="password" id="password" class="required" value="<valorePw_ph />" placeholder="Password" /><br />
 
           <label for="repeatpassword">*Ripeti password</label>
-          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
+          <input type="password" name="repeatpassword" id="repeatpassword" value="<valorePw_ph />" placeholder="Ripeti password" /><br />
 
           <button type="submit" name="registrati">Registrati</button>
         </fieldset>

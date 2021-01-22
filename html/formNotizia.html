@@ -69,7 +69,7 @@
     
         <fieldset>
             <label for="titolo">*Titolo: </label>
-            <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" /></span><br />
+            <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
     
         <fieldset id="handler">
@@ -86,8 +86,8 @@
         </fieldset>
     
         <fieldset id="cercaTitolo" class="invisibile">
-            <label for="searchbar">Cerca gioco:</label>
-            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" />
+            <label for="searchbar">Gioco trattato nella notizia:</label>
+            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia"/>
             <datalist id="listaTitoli" class="formText">
               <opzioni_form_ph />
             </datalist>
@@ -98,12 +98,12 @@
             <input type="file" id="immagine" name="immagine" /><br />
     
             <label for="alternativo">Alt immagine: </label>
-            <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" /></span>
+            <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
         </fieldset>
     
         <fieldset>
             <label for="testo">*Testo: </label>
-            <span><textarea id="testo" name="testo" rows="15" cols="50"><valoreTesto_ph /></textarea></span>
+            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia"><valoreTesto_ph /></textarea></span>
         </fieldset>
     
         <fieldset id="corto">
