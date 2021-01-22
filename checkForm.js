@@ -63,7 +63,7 @@ function mostraErrore(input) {
 }
 
 function validazioneCampo(input) {
-    
+
     // controllo se e' gia' presente messaggio d'errore
     var parent = input.parentNode;
     if (parent.children.length == 2) {
@@ -72,7 +72,7 @@ function validazioneCampo(input) {
 
     var regex = dettagli_form[input.id][1];
     var text = input.value;
-    if (text.search(regex) != 0) { 
+    if (text.search(regex) != 0) {
         // -1 se non trova il match, 0 se lo trova, 6 (es) se trova il match dalla posizione 6
         mostraErrore(input);
         return false;
@@ -101,9 +101,9 @@ function handleClick() {
     var barraDiRicerca = document.getElementById("cercaTitolo");
     if (radio) {
         radio.onchange = function(event) {
-            if(event.target.value == "Giochi") 
+            if(event.target.value == "Giochi")
                 barraDiRicerca.className = "visibile";
-            else 
+            else
                 barraDiRicerca.className = "invisibile";
         }
     }
@@ -132,3 +132,38 @@ function myFunction() {
       x.className = "topnav";
     }
 }
+
+//script dalla pagina giochi//
+
+
+function OpenConsole() {
+  document.getElementById("console").classList.toggle("show");
+}
+
+function OpenGeneri() {
+  document.getElementById("generi").classList.toggle("show");
+}
+
+function OpenAnnoFIN() {
+  document.getElementById("annofin").classList.toggle("show");
+}
+
+function OpenAnnoIN() {
+  document.getElementById("annoin").classList.toggle("show");
+}
+
+function OpenOrdine() {
+  document.getElementById("ordine").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
