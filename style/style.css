@@ -603,6 +603,8 @@ p.sinossi {
 span.valutazione{
   float: right;
   font-weight: 800;
+  margin-right: 1em;
+  margin-top: 0.5em;
 }
 .spazio_contenuto{
   margin-top: 1em;
@@ -725,6 +727,7 @@ p.trama{
 }
 .title2{
   display: inline-block;
+  margin-left: 0.5em;
 }
 
 .vote{
