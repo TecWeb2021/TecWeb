@@ -58,18 +58,31 @@ if($user){
 		if(isset($_REQUEST['titolo'])){
 			$title=$_REQUEST['titolo'];
 			#sanitize
+			$homePage=str_replace("<news_title_ph/>",$title,$homePage);
+		}else{
+			$homePage=str_replace("<news_title_ph/>","",$homePage);
 		}
 		if(isset($_REQUEST['tipologia'])){
 			$category=$_REQUEST['tipologia'];
 			#sanitize
+
+			//$homePage=str_replace("<news_title_ph/>",$title,$homePage);
+		}else{
+			//$homePage=str_replace("<news_title_ph/>","",$homePage);
 		}
 		if(isset($_REQUEST['testo'])){
 			$content=$_REQUEST['testo'];
 			#sanitize
+			$homePage=str_replace("<content_ph/>",$content,$homePage);
+		}else{
+			$homePage=str_replace("<content_ph/>","",$homePage);
 		}
 		if(isset($_REQUEST['alternativo'])){
 			$imageAlt=$_REQUEST['alternativo'];
 			#sanitize
+			$homePage=str_replace("<img_alt_ph/>",$imageAlt,$homePage);
+		}else{
+			$homePage=str_replace("<img_alt_ph/>","",$homePage);
 		}
 
 		$image=null;
@@ -83,6 +96,10 @@ if($user){
 		}else{
 			$newNews=new News($title, $content, $user, date('Y-m-d'), $image, $category);
 			$dbAccess->addNews($newNews);
+
+			$homePage=str_replace("<news_title_ph/>","",$homePage);
+			$homePage=str_replace("<content_ph/>","",$homePage);
+			$homePage=str_replace("<img_alt_ph/>","",$homePage);
 		}
 
 	}else{
