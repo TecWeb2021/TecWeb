@@ -140,45 +140,46 @@ function responsiveMenu() {
 
 //script dalla pagina giochi//
 
-var filtri = ["console", "generi", "annofin", "annoin", "ordine"];
+var filtri = {
+    "btn_console" : "console",
+    "btn_generi" : "generi",
+    "btn_da" : "annoin",
+    "btn_a" : "annofin"
+};
 
-function OpenFiltro() {
-    for (var key in filtri) {
-        var filtro = document.getElementById(key);
-        if (filtro)
-            filtro.classList.toggle("show");
+function preparaFiltri() {
+
+    var handler = document.getElementsByClassName("container");
+    if(handler) {
+        handler[0].onclick = function(event) {
+            var open = document.getElementsByClassName("dropdown-filter show");
+            for (var i = 0; i < open.length; i++) {
+              open[i].classList.remove('show');
+            }
+            document.getElementById(filtri[event.target.id]).classList.toggle("show");
+        }
     }
 }
-/*
-function OpenConsole() {
-  document.getElementById("console").classList.toggle("show");
-}
 
-function OpenGeneri() {
-  document.getElementById("generi").classList.toggle("show");
-}
+function checkAnni() {
 
-function OpenAnnoFIN() {
-  document.getElementById("annofin").classList.toggle("show");
-}
+    var radios = document.getElementsByTagName('input');
+    var anni = new Array();
 
-function OpenAnnoIN() {
-  document.getElementById("annoin").classList.toggle("show");
-}
+    for (var i = 0; i < radios.length; i++)
+        if (radios[i].type === 'radio' && radios[i].checked) {
+            anni.push(radios[i].value);       
+        }
 
-function OpenOrdine() {
-  document.getElementById("ordine").classList.toggle("show");
-}
-*/
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
+    if(anni.length == 2)
+        if(anni[0] > anni[1]) {
+            var elemento = document.createElement("div");
+            elemento.className = "erroriFiltri";
+            elemento.appendChild(document.createTextNode("Intervallo temporale sbagliato"));
+        
+            var p = document.getElementById("categorie");
+            p.appendChild(elemento);
+            return false;
+        }
+    return true;
 }

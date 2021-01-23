@@ -1056,3 +1056,11 @@ a.active.name, a:hover.name{
 a:visited.name{
   color: #676767;
 }
+
+.erroriFiltri {
+  color: #313131;
+  background-color: white;
+  border-radius: 10px;
+  width: 90%;
+  text-align: center;
+}
