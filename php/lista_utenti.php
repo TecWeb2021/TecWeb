@@ -7,7 +7,8 @@ require_once "dbConnection.php";
 function createUserHTMLItem($user){
 	$template=file_get_contents("../html/templates/listaUtentiListItemTemplate.html");
 	$image=$user->getImage();
-	$imagePath= $image ? $image->getPath() : "../images/login.php";
+	$imagePath= $image ? $image->getPath() : "../images/login.png";
+	//echo "imagePath: ".$imagePath;
 	$replacements=array(
 		"<usr_img_path_ph/>"=>$imagePath,
 		"<username_ph/>"=>$user->getUsername()

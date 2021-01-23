@@ -101,7 +101,8 @@ class DBAccess {
         }else{
             $usersList=array();
             while($row=mysqli_fetch_assoc($result)){
-                $image=new Image($row['Path'], $row['Alt']);
+                //print_r($row);
+                $image= $row['Image']=="" ? null : new Image($row['Path'], $row['Alt']);
                 $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['email']);
                 array_push($usersList, $user);
             }

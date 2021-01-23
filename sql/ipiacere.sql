@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2021 at 01:39 PM
+-- Generation Time: Jan 23, 2021 at 11:19 PM
 -- Server version: 10.2.36-MariaDB
 -- PHP Version: 7.2.34
 
@@ -61,8 +61,22 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`Path`, `Alt`) VALUES
+('../images/5png', 'fffffffffffffffffffffffffffffffffffffff'),
+('../images/6.png', 'fffffffffffffffffffffffffffffffffffffff'),
+('../images/7.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images/14.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images/15.jpg', ''),
+('images/8.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images/9.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images10.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images9.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images\\11.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images\\12.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
+('images\\13.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff'),
 ('images\\darksouls3.png', 'Il protagonista di DarkSouls 3 che stringe un pugno di terra.'),
-('images\\doom.png', 'Combattente che si difende da demoni');
+('images\\doom.png', 'Combattente che si difende da demoni'),
+('images\\scoiattolo.jpg', 'Uno scoiattolo saltellante'),
+('NULL', 'NULL');
 
 -- --------------------------------------------------------
 
@@ -73,11 +87,11 @@ INSERT INTO `images` (`Path`, `Alt`) VALUES
 CREATE TABLE `news` (
   `Id` int(11) NOT NULL,
   `Title` varchar(200) NOT NULL,
-  `User` int(11) NOT NULL,
-  `Last_edit_date` datetime NOT NULL,
+  `User` varchar(50) NOT NULL,
+  `Last_edit_date` date NOT NULL,
   `Content` varchar(10000) NOT NULL,
   `Image` varchar(50) NOT NULL,
-  `Category` enum('Hardware','Evento','Giochi') NOT NULL
+  `Category` enum('Hardware','Eventi','Giochi') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -85,7 +99,16 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`Id`, `Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES
-(2, 'DOOM Eternal, la recensione per Nintendo Switch: una conversione da applausi', 1, '2021-01-08 14:49:02', 'La recensione di DOOM Eternal per Nintendo Switch ci ha dato modo di sperimentare nuovamente l\'incredibile fascino della formula sparatutto messa a punto da id Software, che con questo nuovo episodio sembra aver raggiunto la piena maturità in un\'orgia di scontri a fuoco, esplosioni e scatti veloci. Si tratta tuttavia anche di una maniera per curiosare fra i risvolti tecnici di una conversione tanto ambiziosa, resa ancora una volta possibile grazie al ', 'images\\doom.png', 'Giochi');
+(1, 'DOOM Eternal, la recensione per Nintendo Switch: una conversione da applausi', 'carlocracco', '2021-01-08', 'La recensione di DOOM Eternal per Nintendo Switch ci ha dato modo di sperimentare nuovamente l\'incredibile fascino della formula sparatutto messa a punto da id Software, che con questo nuovo episodio sembra aver raggiunto la piena maturità in un\'orgia di scontri a fuoco, esplosioni e scatti veloci. Si tratta tuttavia anche di una maniera per curiosare fra i risvolti tecnici di una conversione tanto ambiziosa, resa ancora una volta possibile grazie al ', 'images\\doom.png', 'Giochi'),
+(8, 'Valhalla ciccio carlo e franco', 'carlocracco', '2021-01-23', 'Anche se le carte geografiche contemporanee non ci allertano più della presenza di \"leoni\" oltre i confini dei luoghi conosciuti, il viaggio continua a conservare un fascino difficile da descrivere, anche per bocca di quelle anime che ne sono ormai irrimediabilmente sedotte. E in giorni in cui muovere i propri passi verso luoghi altri non è affatto semplice, percorrere una strada virtuale può aiutare a condurre la mente lontano. Dopo avervi accompagnato alla ricerca delle atmosfere di Sekiro: Shadows Die Twice nel Giappone odierno e alla scoperta della Tokyo di Persona 5, cogliamo questa volta le suggestioni della direzione artistica messa in scena da Assassin\'s Creed: Valhalla per uno - speriamo - piacevole viaggio tra Norvegia e Inghilterra.', 'images/14.jpg', 'Eventi'),
+(9, 'Una notizia di prova', 'carlocracco', '2021-01-23', 'Questa è solo una notizia di prova ma ci scrivo della roba dentro.', 'NULL', 'Eventi'),
+(10, 'Una notizia di prova', 'carlocracco', '2021-01-23', 'Questa è solo una notizia di prova ma ci scrivo della roba dentro.', 'images/15.jpg', 'Eventi'),
+(11, 'fffffffffffffffffffffff', 'carlocracco', '2021-01-23', 'ffffffffffffffffffffffffffff', 'NULL', 'Eventi'),
+(12, 'fffffffffffffffffffffff', 'carlocracco', '2021-01-23', 'ffffffffffffffffffffffffffff', 'NULL', 'Eventi'),
+(13, 'fffffffffffffffffffffff', 'carlocracco', '2021-01-23', 'ffffffffffffffffffffffffffff', 'NULL', 'Eventi'),
+(14, 'fffffffffffffffffffffff', 'carlocracco', '2021-01-23', 'ffffffffffffffffffffffffffff', 'NULL', 'Eventi'),
+(15, 'fffffffffffffffffffffff', 'carlocracco', '2021-01-23', 'ffffffffffffffffffffffffffff', 'NULL', 'Eventi'),
+(16, 'Una notizia divertente', 'carlocracco', '2021-01-23', 'TestoTestoTestoTestoTestoTestoTestoTestoTestoTestoTesto', 'NULL', 'Hardware');
 
 -- --------------------------------------------------------
 
@@ -109,15 +132,17 @@ CREATE TABLE `reviews` (
 CREATE TABLE `users` (
   `Username` varchar(20) NOT NULL,
   `Hash` varchar(32) NOT NULL,
-  `IsAdmin` tinyint(1) NOT NULL
+  `IsAdmin` tinyint(1) NOT NULL,
+  `Image` varchar(50) DEFAULT NULL,
+  `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`Username`, `Hash`, `IsAdmin`) VALUES
-('Ivan', '69ca25354d2f267b909611ad61924869', 1);
+INSERT INTO `users` (`Username`, `Hash`, `IsAdmin`, `Image`, `email`) VALUES
+('ivan123', '98649ff05bba98aeb6ffb0d69bb7ef03', 1, NULL, '');
 
 --
 -- Indexes for dumped tables
@@ -168,7 +193,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `reviews`
