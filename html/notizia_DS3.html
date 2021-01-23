@@ -4,16 +4,17 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title>notizia - DarkSouls3 - NomeSito</title>
+  <title>Notizia DS3 - NomeSito</title>
   <meta name="title" content="Sito Recensioni Videogiochi" />
-  <meta name="description" content="">
-  <meta name="keywords" content="Videogiochi games gaming recensioni">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Home Page del sito di Recensioni" />
+  <meta name="keywords" content="Videogiochi games gaming recensioni" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="author" content="" />
+  <meta name="author" content="NomeGruppo" />
   <meta name="language" content="italian it" />
 
   <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
   <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
   <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
@@ -21,13 +22,13 @@
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body>
+<body onload="preparaFiltri();">
   <div id="header">
-    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png"></a>
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
     <h1 id="titolo1"> Recensioni </h1>
     <h2 id="titolo2"> Videogiochi </h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png"></a>
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
       <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
     </div>
   </div>
@@ -50,79 +51,37 @@
 
     <ul class="menu">
         <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
-        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a class="active" href="Giochi.html">Giochi</a></li>
         <li><a href="Notizie.html">Notizie</a></li>
     </ul>
   </div>
 
   <div id="breadcrumb">
-        <p>Ti trovi in: <a class="link_breadcrumb" href="giochi.html">Giochi</a> > Notizie Gioco</p>
+      <p>Ti trovi in: Notizia DS3</p>
   </div>
 
-  <ul class="leftnav" id="submenu">
-    <li><a href="DarkSouls3_scheda.html"><span xml:lang="en">Scheda Gioco</span></a></li>
-    <li><a href="DarkSouls3_recensione.html">Recensione Gioco</a></li>
-    <li><a class="active" href="DarkSouls3_notizie.html">Notizie Gioco</a></li>
-  </ul>
-
-<div class="container">
-  <div class="lista_notizie">
-    <div class="notizia">
-      <div class="news_top_bar">
-        <p class="data"> 10/01/2021 - 16:18 </p>
-		    <h3><a class="titolo_news" href="notizia_DS3.html"> Dark Souls 3: streamer Twitch lo finisce usando il controller di Guitar Hero, senza subire un colpo </a></h3>
-        <p class="autore"> By Nome Cognome </p>
+  <div class="container">
+    <div class="recensione">
+      <div class="info_gioco">
+        <img class="sfondo_rec" src="../images/darksouls3_banner.jpg" alt="">
       </div>
-        <a href="darksouls3.html"><img class="img_cover" src="../images/darksouls3.png" alt="" /></a>
-        <p class="descrizione">
+      <div class="recensione_gioco">
+        <h3 class="title1">Recensione di Dark Souls 3</h3>
+        <p class="title2">by Gino Pippo</p>
+        <p class="subtilte">Pubblicata il 10 gennaio 2021</p>
+        <p class="testo">
           Lo streamer Twitch MezzPlays ha finito Dark Souls 3 usando il controller di Guitar Hero, senza subire un colpo. Nemmeno il boss finale ha potuto niente contro di lui e la sua chitarrina di plastica. A rendere la già clamorosa impresa ancora più sorprendente il fatto che abbia anche corso parecchio, impiegando appena quattro ore per arrivare ai titoli di coda.
           Considerando che secondo il sito HowLongToBeat ci vogliono più di trenta ore solo per finire la storia principale, si tratta di un risultato davvero incredibile. Naturalmente MezzPlays conosce a menadito Dark Souls 3, altrimenti sarebbe stato impossibile giocarci in questo modo...
         </p>
-        <p class="aiutoTornaSu"><a href="#top">Torna su</a></p>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="footer">
-	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png">
-	<em> Noi quattro - All rights Reserved </em>
-	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif">
-</div>
+  <div id="footer">
+  	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+  	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+  	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+  </div>
 
-<script>
-
-function OpenConsole() {
-  document.getElementById("console").classList.toggle("show");
-}
-
-function OpenGeneri() {
-  document.getElementById("generi").classList.toggle("show");
-}
-
-function OpenAnnoFIN() {
-  document.getElementById("annofin").classList.toggle("show");
-}
-
-function OpenAnnoIN() {
-  document.getElementById("annoin").classList.toggle("show");
-}
-
-function OpenOrdine() {
-  document.getElementById("ordine").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
-</body>
-</html>
+  </body>
+  </html>

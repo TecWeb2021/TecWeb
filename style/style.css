@@ -617,7 +617,6 @@ p.valutazione{
 .container {
     background-color: #414141;
     padding: 0.2em;
-    display: inline-grid;
 }
 
 #submenu {
@@ -671,8 +670,8 @@ p.valutazione{
 
 .gioco_cover{  /* COVER Giochi */
   border-radius: 10px;
-  min-width: 126.61px;
-  min-height: 191.02px;
+  min-width: 142.61px;
+  min-height: 207.02px;
   width: 126.61px;
   height: auto;
   margin-left: 0.5em;
@@ -916,13 +915,16 @@ PROFILO
 
 
 .textbox{
-  width: 88%;
+  width: 87%;
+  margin-left: 0.5em;
   min-height: 40px;
 }
 
 .insertcomment{
-  width: 10%;
+  width: 9%;
   min-height: 40px;
+  margin-top: 1.5em;
+  margin-left: 0.5em;
 }
 
 .miocommento{
@@ -1181,4 +1183,17 @@ a:visited.name{
   border-style: solid;
   border-color: white;
   border-width: 2px;
+}
+
+.modifica{
+  margin: 1.1em 1em 0 0;
+  float: left;
+}
+
+.pagina_notizia{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
 }
