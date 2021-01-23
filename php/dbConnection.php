@@ -68,7 +68,7 @@ class DBAccess {
         }
 
     }
-
+/*
     public function getUserList($name=null) {
         if($name==null){
             $querySelect ="SELECT * FROM users ORDER BY Nickname ASC";
@@ -91,6 +91,23 @@ class DBAccess {
             return $listaPersonaggi;
         }
     }
+*/
+    public function getUsersList(){
+        $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path";
+        $result=mysqli_query($this->connection, $query);
+
+        if(mysqli_num_rows($result) ==0){
+            return null;
+        }else{
+            $usersList=array();
+            while($row=mysqli_fetch_assoc($result)){
+                $image=new Image($row['Path'], $row['Alt']);
+                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['email']);
+                array_push($usersList, $user);
+            }
+            return $usersList;
+        }
+    }
 
     public function insertUser($name=null){
         if($name==null){
@@ -105,6 +122,14 @@ class DBAccess {
         }
         $querySelect ="INSERT INTO users (id,name) VALUES ('$maxId'+1,'$name');";
         $queryResult = mysqli_query($this->connection, $querySelect);
+    }
+
+    public function deleteUser($username){
+        $query="DELETE FROM users WHERE Username='$username'";
+        $queryResult = mysqli_query($this->connection, $query);
+        $sq=$queryResult==null? "null":"not null";
+        echo "delete query result: ".$sq;
+        echo mysqli_error($this->connection);
     }
 
     public function getNewsList() {
