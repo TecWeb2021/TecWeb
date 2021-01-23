@@ -13,10 +13,10 @@ var dettagli_form = {
     "titolo": [/^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": [/.{25,}/, "Inserire il testo della notizia"],
 
-    "nomeUtente": [/^([\w\s]){5,20}$/, "Inserire il nome utente"],/*
-    "password": [ /^\S*([a-z]+)([A-Z]+)(\d+)\S*{8,16}$/, "Inserire la password"],
-    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{6,16}$/, "Le due password non coincidono"],
-    */"email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
+    "nomeUtente": [/^([\w\s]){5,20}$/, "Inserire il nome utente"],
+    "password": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, "Inserire la password"],
+    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, ""],
+    "email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
 
 function mostraErrore(input) {
