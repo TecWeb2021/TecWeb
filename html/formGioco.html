@@ -76,7 +76,7 @@
                     <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" placeholder="Casa di sviluppo" /></span><br />
 
                     <label for="pegi"><abbr title="Pan European Game Information">PEGI</abbr>: </label>
-                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" placeholder="PEGI" /></span><br />
+                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" placeholder="possibili valori: 3, 7, 12, 16, 18" /></span><br />
 
                     <label for="data">Data di rilascio: </label>
                     <span><input type="date" name="data" value="<valoreData_ph />"></span><br />
@@ -121,6 +121,10 @@
                 </fieldset>
 
                 <fieldset id="cercaTitolo">
+
+                    <label for="voto">Voto: </label>
+                    <span><input type="number" id="voto" name="voto" min="0" max="5" step="0.1" value="<valoreVoto_ph />" placeholder="Voto da 0 a 5" /></span><br />
+
                     <label for="searchbar">*Prequel:</label>
                     <span><input list="listaPrequel" name="prequel" id="barraDiRicerca1" class="opzionale" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span>
                     <datalist id="listaPrequel" class="formText">
@@ -141,12 +145,12 @@
                     <label for="descrizione" class="textAreaLabel">Descrizione: </label>
                     <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco"><valoreDescrizione_ph /></textarea></span>
                 </fieldset>
-        
+                
                 <fieldset>
                     <label for="recensione" class="textAreaLabel">*Recensione: </label>
                     <span><textarea id="recensione" name="recensione" class="opzionale" rows="10" cols="50" placeholder="Recensione del gioco"><valoreRecensione_ph /></textarea></span>
                 </fieldset>
-        
+
                 <fieldset>
                     <button type="submit" name="submit">Salva Modifiche</button>
                     <p>Salva le modifiche e torna alla pagina principale Admin</p>
