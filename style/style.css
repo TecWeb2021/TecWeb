@@ -200,7 +200,6 @@ SEZIONE MENU
   display: none;
 }
 
-
 #menu {
     background-color: #2c2c2c;
     position: sticky;
@@ -214,16 +213,9 @@ SEZIONE MENU
     z-index: 2;
 }
 
-
-/*
-=========================
+/*=========================
 SEZIONE BARRA DI RICERCA
-=========================
-*/
-
-input[list] {
-  padding-left: 0.5em;
-}
+=========================*/
 
 .search_container{
   width: 100%;
@@ -234,13 +226,12 @@ input[list] {
   margin-right: 0.5em;
 }
 
-/*se selezionata come classe viene modificata via javascript (placeholder) e crea un conflitto*/
-#searchbar {
-  color: black;
+input {
   background-color: white;
   width: 70%;
   height: 30px;
   margin: 2px;
+  padding-left: 0.5em;
   border-radius: 5px;
 }
 
@@ -709,29 +700,29 @@ p.testo{
   max-height: auto;
 }
 
-/*
-=========================
+/*=========================
 FORM
-=========================
-*/
+=========================*/
 
-
-label, input {
-  display: inline-block;
-}
+label, input { display: inline-block; }
 
 .schedaForm label {
   width: 30%;
   text-align: right;
 }
 
-.invisibile {
-  display: none;
+.schedaForm input {
+  width: 40%;
+  margin: 5px;
 }
 
-.visibile {
-  display: block;
+.schedaForm>p{
+  margin-left: 0.5em;
 }
+
+.invisibile { display: none; }
+
+.visibile { display: block; }
 
 .schedaForm {
   background-color: #f5f5f5;
@@ -751,15 +742,46 @@ label, input {
   margin: 0.2em;
 }
 
+.schedaForm button {
+  width: 20%;
+  float: left;
+  font-weight: bold;
+}
+
+.schedaForm button+p {
+  padding: 0.5em;
+  margin-left: 22%;
+}
+
+.schedaForm input[type=radio], .schedaForm input[type=checkbox] {
+  width: 2%;
+  height: 1.2em;
+  padding-left: 0;
+}
+
+.schedaForm input[type=radio]+label, .schedaForm input[type=checkbox]+label {
+  width: 15%;
+  text-align: left;
+}
+
+.schedaForm input[type=file] {
+  background-color: #f5f5f5;
+}
+
+#handler p{
+  float: left;
+  width: 20%;
+}
+
+fieldset .textAreaLabel {
+  width: 20%;
+}
+
 textarea {
   resize: none;
   vertical-align: top;
-  width: 50%;
+  width: 60%;
 }​
-
-#bottoniOpzionali {
-  float: left;
-}
 
 input[type=text], textarea {
   padding: 5px;
@@ -769,6 +791,14 @@ input[type=text], textarea {
   margin-left: 1em;
 }
 
+.erroriBox {
+  border: 2px solid red;
+}
+
+.correttiBox {
+  border: 2px solid green;
+}
+
 /*======================================*/
 
 /*
@@ -776,6 +806,10 @@ input[type=text], textarea {
 PROFILO
 =========================
 */
+
+.centrato {
+  margin-left: 40%;
+}
 
 .schedaAdmin {
   background-color: #f5f5f5;
@@ -825,6 +859,12 @@ PROFILO
 .AdminImage {
   width: 55%;
   height: 55%;
+}
+
+.nuovoUtente {
+  width: 32%;
+  margin-left:34%;
+  text-align: center;
 }
 
 /*======================================*/

@@ -21,7 +21,7 @@
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body onload="caricamento();">
+<body onload="handleClick();">
   <div id="header">
     <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
         <h1 id="titolo1"> Recensioni </h1>
@@ -62,52 +62,53 @@
   <div class="contenutoGenerale">
     <div class="schedaForm">
       <h1>Form per l'inserimento di una nuova notizia</h1>
-      <p>I campi marcati con * sono obbligatori</p>
+      <p>I campi marcati con * sono opzionali</p>
       <form id="formNotizia" method="post" action="formNotizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
       
         <messaggiForm_ph />
     
         <fieldset>
-            <label for="titolo">*Titolo: </label>
+            <label for="titolo">Titolo: </label>
             <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
     
         <fieldset id="handler">
-            <p>*Tipologia: </p>
+            <p>Tipologia: </p>
     
-            <input type="radio" id="Eventi" name="tipologia" value="Eventi">
+            <input type="radio" id="Eventi" name="tipologia" value="Eventi" <valoreEventi_ph /> >
             <label for="Eventi">Eventi</label>
     
-            <input type="radio" id="Giochi" name="tipologia" value="Giochi">
+            <input type="radio" id="Giochi" name="tipologia" value="Giochi" <valoreGiochi_ph /> >
             <label for="Giochi">Giochi</label>
     
-            <input type="radio" id="Hardware" name="tipologia" value="Hardware">
+            <input type="radio" id="Hardware" name="tipologia" value="Hardware" <valoreHardware_ph /> >
             <label for="Hardware">Hardware</label>
         </fieldset>
     
         <fieldset id="cercaTitolo" class="invisibile">
-            <label for="searchbar">Gioco trattato nella notizia:</label>
-            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia"/>
+            <label for="searchbar">*Gioco trattato nella notizia:</label>
+            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia"/>
             <datalist id="listaTitoli" class="formText">
               <opzioni_form_ph />
             </datalist>
         </fieldset>
     
         <fieldset>
-            <label for="immagine">*Immagine: </label>
+            <label for="immagine">Immagine: </label>
             <input type="file" id="immagine" name="immagine" /><br />
     
-            <label for="alternativo">Alt immagine: </label>
-            <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
+            <label for="alternativo">*Alt immagine: </label>
+            <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
         </fieldset>
     
         <fieldset>
-            <label for="testo">*Testo: </label>
+            <label for="testo" class="textAreaLabel">Testo: </label>
             <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia"><valoreTesto_ph /></textarea></span>
         </fieldset>
     
-        <fieldset id="corto">
+        <fieldset>
             <button type="submit" name="submit">Salva Modifiche</button>
+            <p>Salva le modifiche e torna alla pagina principale Admin</p>
         </fieldset>
     
       </form>
@@ -116,11 +117,13 @@
           <form action="../php/admin.php">
             <fieldset>
               <button type="submit">Annulla Modifiche</button>
+              <p>Annulla le modifiche apportate e torna alla pagina principale Admin</p>
             </fieldset>
           </form>
           <form method="post" action="../php/eliminaNotizia.php">
             <fieldset>
               <button type="submit" value="<titolo_ph />">Elimina Notizia</button>
+              <p>Elimina la notizia e torna alla pagina Admin. Non sarà possibile annullare questa azione.</p>
             </fieldset>
           </form>
       </div>

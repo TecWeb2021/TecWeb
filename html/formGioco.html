@@ -63,23 +63,23 @@
     <div class="contenutoGenerale">
         <div class="schedaForm">
             <h1>Form per l'inserimento di un nuovo gioco</h1>
-            <p>I campi marcati con * sono obbligatori</p>
+            <p>I campi marcati con * sono opzionali</p>
             <form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggiForm_ph />
         
                 <fieldset>
                     <label for="nome">Nome: </label>
-                    <span><input type="text" id="nome" name="nome" value="<valoreTitolo_ph />" placeholder="Nome gioco" /></span>
+                    <span><input type="text" id="nome" name="nome" value="<valoreTitolo_ph />" placeholder="Nome gioco" /></span><br />
         
                     <label for="sviluppo">Casa di sviluppo: </label>
-                    <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" placeholder="Casa di sviluppo" /></span>
+                    <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" placeholder="Casa di sviluppo" /></span><br />
 
                     <label for="pegi"><abbr title="Pan European Game Information">PEGI</abbr>: </label>
-                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" placeholder="PEGI" /></span>
+                    <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" placeholder="PEGI" /></span><br />
 
                     <label for="data">Data di rilascio: </label>
-                    <span><input type="date" name="data" value="<valoreData_ph />"></span>
+                    <span><input type="date" name="data" value="<valoreData_ph />"></span><br />
                 </fieldset>
         
                 <fieldset>
@@ -92,11 +92,13 @@
                     <label for="XboxOne">Xbox One</label>
                     <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
                     <label for="XboxSeriesX">Xbox Series X</label>
+                    <input type="checkbox" name="console[]" value="Switch" id="Switch" <valoreSwitch_ph /> />
+                    <label for="Nintendo Switch">Nintendo Switch</label>
                 </fieldset>
 
                 <fieldset>
                     <p>Generi:</p>
-                    <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <valoreCheckedAvventura_ph /> />
+                    <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" checked="checked"<valoreCheckedAvventura_ph /> />
                     <label for="Avventura">Avventura</label>
                     <input type="checkbox" name="genere[]" value="Azione" id="Azione" <valoreCheckedAzione_ph /> />
                     <label for="Azione">Azione</label>
@@ -114,39 +116,40 @@
                     <label for="immagine">Immagine: </label>
                     <input type="file" id="immagine" name="immagine" /><br />
         
-                    <label for="alternativo">Alt immagine: </label>
-                    <span><input type="text" id="alternativo" name="alternativo" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
+                    <label for="alternativo">*Alt immagine: </label>
+                    <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
                 <fieldset id="cercaTitolo">
-                    <label for="searchbar">Prequel:</label>
-                    <span><input list="listaPrequel" name="prequel" id="barraDiRicerca1" class="searchbar" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span>
+                    <label for="searchbar">*Prequel:</label>
+                    <span><input list="listaPrequel" name="prequel" id="barraDiRicerca1" class="opzionale" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span>
                     <datalist id="listaPrequel" class="formText">
                       <opzioni_form_ph />
                     </datalist>
 
-                    <label for="searchbar">Sequel:</label>
-                    <span><input list="listaSequel" name="sequel" id="barraDiRicerca2" class="searchbar" placeholder="Cerca sequel" aria-label="Campo per la ricerca del prequel del gioco" /></span>
+                    <label for="searchbar">*Sequel:</label>
+                    <span><input list="listaSequel" name="sequel" id="barraDiRicerca2" class="opzionale" placeholder="Cerca sequel" aria-label="Campo per la ricerca del prequel del gioco" /></span>
                     <datalist id="listaSequel" class="formText">
                       <opzioni_form_ph />
                     </datalist>
 
-                    <label for="dlc"><abbr title="downloadable content" xml:lang="en">DLC:</abbr> </label>
-                    <span><input type="text" id="dlc" name="dlc" value="<valoreDlc_ph />" placeholder="DLC" /></span>
+                    <label for="dlc"><abbr title="downloadable content" xml:lang="en">*DLC:</abbr> </label>
+                    <span><input type="text" id="dlc" name="dlc" class="opzionale" value="<valoreDlc_ph />" placeholder="DLC" /></span>
                 </fieldset>
         
                 <fieldset>
-                    <label for="descrizione">*Descrizione: </label>
+                    <label for="descrizione" class="textAreaLabel">Descrizione: </label>
                     <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco"><valoreDescrizione_ph /></textarea></span>
                 </fieldset>
         
                 <fieldset>
-                    <label for="recensione">Recensione: </label>
-                    <span><textarea id="recensione" name="recensione" rows="10" cols="50" placeholder="Recensione del gioco"><valoreRecensione_ph /></textarea></span>
+                    <label for="recensione" class="textAreaLabel">*Recensione: </label>
+                    <span><textarea id="recensione" name="recensione" class="opzionale" rows="10" cols="50" placeholder="Recensione del gioco"><valoreRecensione_ph /></textarea></span>
                 </fieldset>
         
-                <fieldset id="corto">
+                <fieldset>
                     <button type="submit" name="submit">Salva Modifiche</button>
+                    <p>Salva le modifiche e torna alla pagina principale Admin</p>
                 </fieldset>
         
             </form>
@@ -155,11 +158,13 @@
                 <form action="../php/admin.php">
                   <fieldset>
                     <button type="submit">Annulla Modifiche</button>
+                    <p>Annulla le modifiche apportate e torna alla pagina principale Admin</p>
                   </fieldset>
                 </form>
                 <form method="post" action="../php/eliminaGioco.php">
                   <fieldset>
                     <button type="submit" value="<gioco_ph />">Elimina Gioco</button>
+                    <p>Elimina il gioco e torna alla pagina Admin. Non sarà possibile annullare questa azione.</p>
                   </fieldset>
                 </form>
             </div>

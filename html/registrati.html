@@ -20,7 +20,7 @@
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body onload="caricamento();">
+<body">
 
   <div id="header">
     <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
@@ -37,7 +37,7 @@
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </a>
 
-    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+    <form class="searchbox" action="../php/action_page.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
         <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
@@ -66,13 +66,12 @@
       <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
         <fieldset>
           <h2>Dati personali</h2>
-          <p>I campi marcati con * sono obbligatori</p>
-          <p>Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+          <p>Tutti i campi sono obbligatori</p>
 
-          <label for="email">*E-mail</label>
+          <label for="email">E-mail</label>
           <span><input type="text" name="eemail" id="email" value="<mailProfilo_ph />" placeholder="Inserisci la tua e-mail" /></span><br />
 
-          <label for="nomeUtente">*Nome utente</label>
+          <label for="nomeUtente">Nome utente</label>
           <span><input type="text" name="nomeUtente" id="nomeUtente" value="<nomeProfilo_ph />" placeholder="Nome Utente" /></span><br />
 
           <label for="imgPerProfilo">Immagine profilo</label>
@@ -80,13 +79,14 @@
         </fieldset>
 
         <fieldset>
-          <label for="password">*Password</label>
+          <p>La password deve contenere da 8 a 16 caratteri, fra cui almeno un numero, un carattere maiuscolo e un carattere minuscolo</p>
+          <label for="password">Password</label>
           <span><input type="password" name="password" id="password" value="<valorePw_ph />" placeholder="Password" /></span><br />
 
-          <label for="repeatpassword">*Ripeti password</label>
+          <label for="repeatpassword">Ripeti password</label>
           <span><input type="password" name="repeatpassword" id="repeatpassword" value="<valorePw_ph />" placeholder="Ripeti password" /></span><br />
 
-          <button type="submit" name="registrati">Registrati</button>
+          <button type="submit" name="registrati" class="centrato">Registrati</button>
         </fieldset>
       </form>
     </div>

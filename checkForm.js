@@ -1,7 +1,7 @@
 var dettagli_form = {
     "nome": [/^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
     "sviluppo": [/^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
-    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Inserire il PEGI del gioco"],
+    "pegi": [/^(3|7)$|^1(2|6|8)$/, "I possibili valori di PEGI sono: 3, 7, 12, 16, 18"],
     "dlc": [/^([\w\s]){2,30}$/, "Inserire il nome del DLC"],
     "descrizione": [/.{25,}/, "Inserire la descrizione"],
     "recensione": [/.{25,}/, "Inserire la recensione"],
@@ -10,50 +10,11 @@ var dettagli_form = {
     "titolo": [/^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": [/.{25,}/, "Inserire il testo della notizia"],
 
-    "nomeUtente": [/^([\w\s]){5,20}$/, "Inserire il nickname"],
-    "password": [/^([\w]){8,16}$/, "Inserire la password"],
-    "repeatpassword": [/^([\w]){8,16}$/, "Le due password non coincidono"],
-    "email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
-    
+    "nomeUtente": [/^([\w\s]){5,20}$/, "Inserire il nome utente"],/*
+    "password": [ /^\S*([a-z]+)([A-Z]+)(\d+)\S*{8,16}$/, "Inserire la password"],
+    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{6,16}$/, "Le due password non coincidono"],
+    */"email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
-
-/*-----------------------------------------------------------------------------------
-function campoDefault(input) {
-    input.className = "deftext";
-    input.value = dettagli_form[input.id][ex0];
-}
-
-function campoPerInput(input) {
-
-    if (input.value == dettagli_form[input.id][ex0]) {
-        input.value = "";
-        input.className = "";
-    }
-}
-
-function backToDefault(input) {
-    if (!input.value.search(/^\s*$/)) {
-        campoDefault(input);
-    }
-}
-
-function carica_placeholder() {
-
-    for (var key in dettagli_form) {
-        var input = document.getElementById(key);
-        if (input) {
-            campoDefault(input);
-            input.onfocus = function() {campoPerInput(this);};
-            input.onblur = function() {backToDefault(this);};
-        }
-    }
-}
-
-function caricamento() {
-    handleClick();
-    carica_placeholder();
-}
---------------------------------------------------------------------------------------------*/
 
 function mostraErrore(input) {
     var elemento = document.createElement("strong");
@@ -112,11 +73,6 @@ function handleClick() {
                 barraDiRicerca.className = "invisibile";
         }
     }
-}
-
-function caricamento() {
-    handleClick();
-    /*carica_placeholder();*/
 }
 
 /* Controlla che l'input della searchbar non sia vuoto o composto da spazi */

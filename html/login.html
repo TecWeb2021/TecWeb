@@ -21,7 +21,7 @@
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body onload="caricamento();">
+<body>
 
   <div id="header">
       <a href="home.html"><img id="logo" alt="" src="../images/joystick.png" /></a>
@@ -71,17 +71,16 @@
           <label for="nomeUtente">Nome utente:</label>
           <span><input type="text" id="nomeUtente"  name="nomeUtente" value="<nomeProfilo_ph />" placeholder="nomeUtente" /></span><br />
 
-          <label for="pw">Password:</label>
-          <span><input type="password" id="pw" name="pw" value="<valorePw_ph />" placeholder="Password" /></span><br />
+          <label for="password">Password:</label>
+          <span><input type="password" id="password" name="password" value="<valorePw_ph />" placeholder="Password" /></span><br />
 
-          <button type="submit" name="login">Login</button>
+          <button type="submit" name="login" class="centrato">Login</button><br />
+
+          <div class="nuovoUtente">
+            <p>Non hai un profilo? <a href="../php/registrati.php">Creane subito uno</a></p>
+          </div>
         </fieldset>
       </form>
-
-      <div>
-        <p>Nuovo su NomeSito?</p>
-        <a href="../php/registrati.php">Crea un nuovo account</a>
-      </div>
     </div>
   </div>
 
