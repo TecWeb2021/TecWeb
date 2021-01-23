@@ -108,3 +108,17 @@ p.sinossi{
 .game-image{
   padding-right: 0.5em;
 }
+dl.info dt{
+  float: none;
+  width: auto;
+  font-weight: bold;
+}
+dl.info dd{
+  float: none;
+  width: auto;
+  padding-bottom: 0.5em;
+}
+.info_gioco_scheda{
+  width: 100%;
+  text-align: center;
+}

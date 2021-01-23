@@ -51,7 +51,19 @@ img.cover_gioco_della_settimana{
   margin-top: 3em;
 }
 
-
+dl.info dd{
+  padding-bottom: 0.5em;
+}
+dl.info_scheda dt{
+  float: none;
+  width: auto;
+  font-weight: bold;
+}
+dl.info_scheda dd{
+  display: block;
+  width: 100%;
+  padding-bottom: 0.5em;
+}
 
 p.descrizione_home {
     column-count: 3;

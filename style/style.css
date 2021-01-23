@@ -146,6 +146,9 @@ div.loginblock {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
+.link_breadcrumb{
+  color: white;
+}
 
 /*
 =========================
@@ -258,14 +261,18 @@ button {
 SEZIONE RIGHT COLUMN
 =========================
 */
-#titolo_gioco_della_settimana{
+#titolo_gioco_della_settimana, .titolo_info_scheda{
   text-align: center;
+}
+.titolo_info_scheda{
+  padding-top: 0.5em;
 }
 .sidebox {
   background-color: #f5f5f5;
   border-radius: 10px;
   border: 1px solid #000;
   padding: 0.5em;
+  display: inline-block;
 }
 .sidebox h4{
   text-align: center;
@@ -284,12 +291,14 @@ li.giocotop{
   display: table;
   width: 100%;
 }
-img.sfondo_giocotop{
+img.sfondo_giocotop, img.cover_scheda{
     width: 100%;
-    border-radius: 10px;
     height: inherit;
     top: 0;
     left: 0;
+}
+img.sfondo_giocotop{
+  border-radius: 10px;
 }
 .sfondo_giocotop:hover{
   opacity: 0.8;
@@ -301,7 +310,38 @@ img.cover_gioco_della_settimana{
     top: 0;
     left: 0;
 }
-
+.info_scheda{
+  padding: 0.5em;
+}
+dl.info{
+  padding: 0.5em;
+  border: 1px solid;
+}
+dl.info dt, dl.info_scheda dt{
+  float: left;
+  width: 50%;
+  font-weight: bold;
+  display: inline-block;
+}
+dl.info dd{
+  display: inline-block;
+  width: 50%;
+  padding-bottom: 1.5em;
+}
+dl.info_scheda dd{
+  display: inline-block;
+  width: 50%;
+  padding-bottom: 1.5em;
+}
+.info_gioco_scheda{
+  background-color: #f5f5f5;
+  border: 1px solid;
+  border-radius: 25px;
+  float: left;
+  display: inline-block;
+  width: 29%;
+  margin-right: 5px;
+}
 /*
 =========================
 SEZIONE CONTENUTO
@@ -317,16 +357,15 @@ SEZIONE CONTENUTO
   width:30%;
 }
 /* Clear floats after the columns */
-.row:after {
+.row:after, .container_scheda::after {
   content: "";
   display: table;
   clear: both;
 }
-.row{
+.row, .container_scheda{
   background-color: #414141;
   padding: 0.2em;
 }
-
 
 .notizia{
   background-color: #f5f5f5;
@@ -599,10 +638,10 @@ p.valutazione{
     font-weight: bold;
     line-height: 30px;
     text-decoration: none;
-    width: 150px;
+    width: 9.7em;
     height: 30px;
     text-align: center;
-    background-color: red;
+    background-color: #1b365d;
     border-bottom: 5px solid #54BAE2;
     border-radius: 10px;
     display: block;
@@ -656,7 +695,6 @@ p.valutazione{
 }
 
 p.trama{
-  width: 90%;
   column-count: 2;
   column-rule: 1px solid #ccccb3;
   border-radius: 25px;
