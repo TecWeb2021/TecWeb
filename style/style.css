@@ -812,6 +812,10 @@ label, input { display: inline-block; }
 }
 
 .schedaForm input[type=file] {
+  padding-top: 0.5em;
+}
+
+.schedaForm input[type=file] {
   background-color: #f5f5f5;
 }
 
@@ -834,17 +838,11 @@ input[type=text], textarea {
   padding: 5px;
 }
 
-.errori {
-  margin-left: 1em;
-}
+.messaggi { margin-left: 1em; }
 
-.erroriBox {
-  border: 2px solid red;
-}
+.erroreBox { border: 2px solid red; }
 
-.correttiBox {
-  border: 2px solid green;
-}
+.correttoBox { border: 2px solid green; }
 
 /*======================================*/
 
@@ -1208,4 +1206,8 @@ a:visited.name{
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.2em;
+}
+
+#rosso.ao {
+  background-color: red;
 }
