@@ -26,9 +26,6 @@ if(isset($_GET['id_notizia'])){
 		$newsSubpage="non esiste una notizia con questo Id";
 	}
 
-
-
-
 $homePage=preg_replace("/\<single_new_ph\/\>/",$newsSubpage,$homePage);
 
 
@@ -38,6 +35,13 @@ $homePage=preg_replace("/\<single_new_ph\/\>/",$newsSubpage,$homePage);
 }
 
 
-echo $homePage;
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+
+$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+
+$basePage=replace($basePage);
+
+echo $basePage;
+
 
 ?>

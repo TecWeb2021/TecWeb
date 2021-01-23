@@ -32,9 +32,15 @@ if($user){
 		$imagePath="images/login.png";
 	}
 	$homePage=str_replace("<user_image_ph/>","../".$imagePath, $homePage);
+
+	$homePage=str_replace("<username_ph/>",$user->getUsername(), $homePage);
+	$homePage=str_replace("<email_ph/>",$user->getEmail(), $homePage);
 }else{
 	$homePage="non puoi accedere a questa pagina";
 }
+
+
+
 
 
 

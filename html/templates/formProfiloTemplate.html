@@ -10,18 +10,18 @@
           <p class="required">I campi marcati con * sono obbligatori</p>
           <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
 
-          <label for="mail">*Email</label>
-          <input type="mail" name="email" id="email" class="required" /><br />
+          <label for="mail">Email</label>
+          <input type="mail" name="email" id="email" class="required" value="<email_ph/>"/><br />
 
           <label for="imgPerProfilo">Immagine profilo</label>
           <input type="file" name="imgPerProfilo" id="imgPerProfilo" /><br />
         </fieldset>
 
         <fieldset>
-          <label for="password">*Password</label>
+          <label for="password">Password : se vuoi cambiare password scrivi quella nuova nei due form seguenti</label>
           <input type="password" name="password" id="password" class="required" /><br />
 
-          <label for="repeatpassword">*Ripeti password</label>
+          <label for="repeatpassword">Ripeti password</label>
           <input type="password" name="repeatpassword" id="repeatpassword" /><br />
 
           <button type="submit" name="salva">Salva modifiche</button>

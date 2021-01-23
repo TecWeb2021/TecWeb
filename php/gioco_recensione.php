@@ -43,7 +43,8 @@ if(isset($_REQUEST['game'])){
 
 
 
-$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html",null,null);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);

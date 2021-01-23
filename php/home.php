@@ -14,6 +14,7 @@ $homePage=file_get_contents("../html/templates/homeTemplate.html");
 
 
 function createNewsListItem($news){
+	
 	$item=file_get_contents("../html/templates/homeNewsTemplate.html");
 	
 	//$item=preg_replace("/\<news_url_ph\/\>/","no_data",$item);
@@ -35,7 +36,6 @@ function createNewsList($list){
 	$stringsArray=array();
 	foreach($list as $news){
 		$s=createNewsListItem($news);
-
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);

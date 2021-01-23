@@ -65,6 +65,13 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 }
 
 
+function getHash($username, $password){
+	$inputString=$username.$password;
+	$hashValue=hash("md5",$inputString);
+	return $hashValue;
+}
+
+
 function logout(){
 	$logout=$_REQUEST['logout'];
 	#sanitize;

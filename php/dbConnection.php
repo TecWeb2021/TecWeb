@@ -117,7 +117,7 @@ class DBAccess {
             $newsList=array();
             while($row=mysqli_fetch_assoc($result)){
                 $image=new Image($row['Path'], $row['Alt']);
-                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null);
+                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['email']);
                 $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category']);
                 array_push($newsList, $news);
             }
@@ -214,6 +214,22 @@ class DBAccess {
         }
     }
 
+    public function getImages(){
+        $querySelect ="SELECT * FROM images";
+        $queryResult = mysqli_query($this->connection, $querySelect);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $imagesList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                $image=new Image($row['Path'],$row['Alt']);
+                array_push($imagesList, $image);
+            }
+            return $imagesList;
+        }
+    }
+
     public function getUserByHash($hashValue){
         $query="SELECT * FROM users LEFT JOIN images ON users.Image=images.Path WHERE hash='$hashValue'";
         $queryResult = mysqli_query($this->connection, $query);
@@ -226,7 +242,7 @@ class DBAccess {
             if($row['Image']!=null){
                 $image=new Image($row['Path'], $row['Alt']);
             }
-            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image);
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['email']);
 
         return $user;
         }
@@ -236,8 +252,57 @@ class DBAccess {
         $name=$user->getUsername();
         $hash=$user->getHash();
         $isAdmin=$user->IsAdmin();
-        $query="INSERT INTO users VALUES ('$name','$hash',$isAdmin);";
+        $image=$user->getImage();
+        $email=$user->getEmail();
+
+        $imagePath="";
+        $imageAlt="";
+        #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
+        if($image){
+            $imagePath=$image->getPath();
+            $imageAlt=$image->getAlt();
+            $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+        }
+        
+        if($image){
+            $image=$imagePath;
+        }else{
+            $image="NULL";
+        }
+
+        $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, $image, '$email');";
         echo "query: ".$query;
+        $result=$this->getResult($query);
+        if($result==null){
+            $result="null";
+        }
+        return $result;
+    }
+
+    public function addNews($news){
+        $title=$news->getTitle();
+        $content=$news->getContent()==null ? "NULL" : $news->getContent();
+        $author=$news->getAuthor();
+        $authorUsername=$author->getUsername();
+        $last_edit_date_time=$news->getLastEditDateTime();
+        $image=$news->getImage();
+        $imagePath="NULL";
+        $imageAlt="NULL";
+        if($image){
+            $imagePath=$image->getPath();
+            $imageAlt=$image->getAlt();
+        }
+        $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
+
+        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+        echo "<br/>image insertion";
+        $this->getResult($query);
+
+        echo "<br/>news insertion";
+        $content=addslashes($content);
+        $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
+
+        echo "<br/>query: ".$query;
         $result=$this->getResult($query);
         if($result==null){
             $result="null";

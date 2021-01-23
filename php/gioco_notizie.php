@@ -9,7 +9,6 @@ $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/giocoNotizieTemplate.html");
-$homePage=replace($homePage);
 
 function replacePH($game){
 	global $homePage;
@@ -39,7 +38,8 @@ if(isset($_REQUEST['game'])){
 
 
 
-$basePage=generatePageTopAndBottom("../html/templates/top_and_bottomTemplate.html",null,null);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);

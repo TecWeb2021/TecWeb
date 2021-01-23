@@ -10,24 +10,45 @@ $dbAccess->openDBConnection();
 
 
 $homePage=file_get_contents("../html/templates/registratiTemplate.html");
-$homePage=replace($homePage);
 
-if(isset($_REQUEST['nickname']) && isset($_REQUEST['password'])){
-	$username=$_REQUEST['nickname'];
-	$password=$_REQUEST['password'];
-	#sanitize
+$user=getLoggedUser($dbAccess);
 
+if($user){
+	$homePage="Sei già registrato e hai già fatto il login";
+}else{
+	if(isset($_REQUEST['nickname']) && isset($_REQUEST['password']) && isset($_REQUEST['email'])){
+		$username=$_REQUEST['nickname'];
+		$password=$_REQUEST['password'];
+		$email=$_REQUEST['email'];
+		#sanitize
 
-	$inputString=$username.$password;
-	$hashValue=hash("md5",$inputString);
-	$newUser=new User($username,$hashValue,0);
-	#controlla se è già registrato
+		if(isset($_FILE['userfile'])){
+			$name=$_FILE['userfile']['name'];
+			#sanitize
+			echo "nome file caricato: ".$name;
+		}
 
-	$result=$dbAccess->addUser($newUser);
-	if($result==false){
-		echo "operazione fallita";
+		$hashValue=getHash($username, $password);
+		$newUser=new User($username,$hashValue,0, null, $email);
+		#controlla se è già registrato
+
+		$result=$dbAccess->addUser($newUser);
+		if($result==false){
+			echo "operazione fallita";
+		}else{
+			setcookie('login',$hashValue);
+			echo "<br/>operazione eseguita con successo<br/>tra 5 secondi verrai portato sulla pagina home";
+			header( "refresh:5;url=home.php" );
+		}
 	}
 }
+/*
+#rifaccio il controllo dell'utente dopo l'operazione di registrazione
+$user=getLoggedUser($dbAccess);
+if($user){
+	$homePage="Sei già registrato e hai già fatto il login";
+}
+*/
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
 
