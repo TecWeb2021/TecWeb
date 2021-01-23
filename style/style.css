@@ -544,10 +544,7 @@ SEZIONE LETTERE
 .filters{
   display: inline-flex;
 }
-.valutazione{
-  float: right;
-  padding-right: 4em;
-}
+
 .advance_filter{
   margin-top: 0.5em;
 }
@@ -568,6 +565,7 @@ p.sinossi {
   background-color:#f5f5f5;
   text-align: left;
   padding: 1em;
+  margin-top: 0.5em;
   /*max-height: 180px;*/
 }
 
@@ -593,6 +591,8 @@ p.sinossi {
 }
 p.valutazione{
   float: right;
+  padding-right: 4em;
+  padding-top: 0.5em;
 }
 .spazio_contenuto{
   margin-top: 1em;
@@ -1140,4 +1140,45 @@ a:visited.name{
   border-radius: 10px;
   width: 90%;
   text-align: center;
+}
+
+.lista_utenti{
+  background-color: #414141;
+  padding: 0.2em;
+  padding-top: 0.4em;
+}
+
+.utente{
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  padding:1em;
+  margin-bottom: 0.4em;
+}
+
+.info_utente {
+    float: right;
+    width: 90%;
+    padding-top: 0.8em;
+}
+
+.azioni_admin_utente{
+  float: right;
+  padding-right: 1em;
+}
+
+.nome_utente{
+  padding-top: 0.2em;
+  float: left;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+#fotoUtente{
+  border-radius: 50%;
+  width: 50%;
+  max-width: 4em;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
 }
