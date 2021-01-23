@@ -121,7 +121,6 @@ SEZIONE LOGIN
 
 div.loginblock a{
   color: white;
-  font-weight: bold;
 }
 
 div.loginblock {
@@ -793,6 +792,7 @@ label, input { display: inline-block; }
 .schedaForm button {
   width: 20%;
   font-weight: bold;
+  float:left;
 }
 
 .schedaForm button+p {
@@ -855,7 +855,7 @@ PROFILO
 */
 
 .centrato {
-  margin-left: 40%;
+  margin-left: 36%;
   margin-bottom: 0.5em;
 }
 
