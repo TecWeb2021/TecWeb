@@ -13,7 +13,11 @@ var dettagli_form = {
     "titolo": [/^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": [/.{25,}/, "Inserire il testo della notizia"],
 
-    "nomeUtente": [/^([\w\s]){5,20}$/, "Inserire il nome utente"],
+
+    "immagine": [/./, "Nessun file selezionato"],
+
+
+    "nomeUtente": [/^([\w\s]){5,15}$/, "Inserire il nome utente"],
     "password": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, "Inserire la password"],
     "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, ""],
     "email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
@@ -21,15 +25,55 @@ var dettagli_form = {
 
 function mostraErrore(input) {
     var elemento = document.createElement("strong");
-    elemento.className = "errori";
+    elemento.className = "messaggi";
     elemento.appendChild(document.createTextNode("✘ " + dettagli_form[input.id][1]));
 
     var p = input.parentNode;
     p.appendChild(elemento);
 
-    input.className = "erroriBox";
+    input.className = "erroreBox";
 }
 
+function mostraMessaggio(input, stato) {
+    var elemento = document.createElement("strong");
+    elemento.className = "messaggi";
+
+    if(!stato) {
+        elemento.appendChild(document.createTextNode("✘ " + dettagli_form[input.id][1]));
+        input.className = "erroreBox";
+    } else {
+        elemento.appendChild(document.createTextNode("✔"));
+        input.className = "correttoBox";
+    }
+
+    var p = input.parentNode;
+    p.appendChild(elemento);
+    return stato;
+}
+
+/*
+function isFilePresent(file) {
+    if(file.files.length == 0 ) { 
+        var elemento = document.createElement("strong");
+        elemento.className = "errori";
+        elemento.appendChild(document.createTextNode("✘ Nessun file selezionato"));
+        var p = input.parentNode;
+        p.appendChild(elemento);
+    
+        input.className = "erroriBox";
+        return false;
+    } else { 
+        var elemento = document.createElement("strong");
+        elemento.className = "errori";
+        elemento.appendChild(document.createTextNode("✔"));
+        var p = input.parentNode;
+        p.appendChild(elemento);
+
+        input.className = "correttiBox";
+        return true;
+    } 
+}
+*/
 function validazioneCampo(input) {
 
     // controlla se e' gia' presente messaggio d'errore e lo rimuove
@@ -41,27 +85,25 @@ function validazioneCampo(input) {
     var regex = dettagli_form[input.id][0];
     var text = input.value;
 
+    if(input.id == "immagine") {
+        if (input.files.length == 0)
+            return mostraMessaggio(input,false);
+        else
+            return mostraMessaggio(input,true);
+    }
+
     // se il campo input e' opzionale e vuoto non effettua il controllo
     if (input.className === "opzionale" && !text) {
         return true;
     }
+
     // se il contenuto e' non vuoto e non rispetta l'espr. regolare mosto errore
     if (text.search(regex) != 0) {
         // -1 se non trova il match, 0 se lo trova, k se trova il match dalla posizione k
-        mostraErrore(input);
-        return false;
-    }
-    // se input è corretto corretto
-    else {
-
-        var elemento = document.createElement("strong");
-        elemento.className = "errori";
-        elemento.appendChild(document.createTextNode("✔"));
-        var p = input.parentNode;
-        p.appendChild(elemento);
-
-        input.className = "correttiBox";
-        return true;
+        return mostraMessaggio(input, false);
+    } else {
+        // se input è corretto corretto
+        return mostraMessaggio(input, true);
     }
 }
 
@@ -74,10 +116,6 @@ function validateForm() {
             var risultato = validazioneCampo(input);
             corretto = corretto && risultato;
         }
-    }
-    var file = document.getElementById("immagine");
-    if(file) {
-        corretto = corretto && isFilePresent(file);
     }
     return corretto;
 }
@@ -103,28 +141,6 @@ function checkNotEmpty() {
         return false;
     else
         return true;
-}
-
-function isFilePresent(file) {
-    if(file.files.length == 0 ) { 
-        var elemento = document.createElement("strong");
-        elemento.className = "errori";
-        elemento.appendChild(document.createTextNode("✘ Nessun file selezionato"));
-        var p = input.parentNode;
-        p.appendChild(elemento);
-    
-        input.className = "erroriBox";
-        return false;
-    } else { 
-        var elemento = document.createElement("strong");
-        elemento.className = "errori";
-        elemento.appendChild(document.createTextNode("✔"));
-        var p = input.parentNode;
-        p.appendChild(elemento);
-
-        input.className = "correttiBox";
-        return true;
-    } 
 }
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
