@@ -75,6 +75,10 @@ function validateForm() {
             corretto = corretto && risultato;
         }
     }
+    var file = document.getElementById("immagine");
+    if(file) {
+        corretto = corretto && isFilePresent(file);
+    }
     return corretto;
 }
 
@@ -99,6 +103,28 @@ function checkNotEmpty() {
         return false;
     else
         return true;
+}
+
+function isFilePresent(file) {
+    if(file.files.length == 0 ) { 
+        var elemento = document.createElement("strong");
+        elemento.className = "errori";
+        elemento.appendChild(document.createTextNode("✘ Nessun file selezionato"));
+        var p = input.parentNode;
+        p.appendChild(elemento);
+    
+        input.className = "erroriBox";
+        return false;
+    } else { 
+        var elemento = document.createElement("strong");
+        elemento.className = "errori";
+        elemento.appendChild(document.createTextNode("✔"));
+        var p = input.parentNode;
+        p.appendChild(elemento);
+
+        input.className = "correttiBox";
+        return true;
+    } 
 }
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
