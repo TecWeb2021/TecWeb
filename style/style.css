@@ -781,7 +781,6 @@ label, input { display: inline-block; }
 
 .schedaForm button {
   width: 20%;
-  float: left;
   font-weight: bold;
 }
 
@@ -846,6 +845,7 @@ PROFILO
 
 .centrato {
   margin-left: 40%;
+  margin-bottom: 0.5em;
 }
 
 .schedaAdmin {
