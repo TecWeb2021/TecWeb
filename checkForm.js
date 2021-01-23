@@ -23,19 +23,8 @@ var dettagli_form = {
     "email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
 
-function mostraErrore(input) {
-    var elemento = document.createElement("strong");
-    elemento.className = "messaggi";
-    elemento.appendChild(document.createTextNode("✘ " + dettagli_form[input.id][1]));
-
-    var p = input.parentNode;
-    p.appendChild(elemento);
-
-    input.className = "erroreBox";
-}
-
 function mostraMessaggio(input, stato) {
-    var elemento = document.createElement("strong");
+    var elemento = document.createElement("p");
     elemento.className = "messaggi";
 
     if(!stato) {
@@ -51,29 +40,6 @@ function mostraMessaggio(input, stato) {
     return stato;
 }
 
-/*
-function isFilePresent(file) {
-    if(file.files.length == 0 ) { 
-        var elemento = document.createElement("strong");
-        elemento.className = "errori";
-        elemento.appendChild(document.createTextNode("✘ Nessun file selezionato"));
-        var p = input.parentNode;
-        p.appendChild(elemento);
-    
-        input.className = "erroriBox";
-        return false;
-    } else { 
-        var elemento = document.createElement("strong");
-        elemento.className = "errori";
-        elemento.appendChild(document.createTextNode("✔"));
-        var p = input.parentNode;
-        p.appendChild(elemento);
-
-        input.className = "correttiBox";
-        return true;
-    } 
-}
-*/
 function validazioneCampo(input) {
 
     // controlla se e' gia' presente messaggio d'errore e lo rimuove

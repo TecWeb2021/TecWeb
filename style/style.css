@@ -807,8 +807,12 @@ label, input { display: inline-block; }
 }
 
 .schedaForm input[type=radio]+label, .schedaForm input[type=checkbox]+label {
-  width: 15%;
+  width: 14%;
   text-align: left;
+}
+
+.gruppoCheck {
+  margin-left: 5%;
 }
 
 .schedaForm input[type=file] {
@@ -825,7 +829,7 @@ label, input { display: inline-block; }
 }
 
 fieldset .textAreaLabel {
-  width: 12%;
+  width: 23%;
 }
 
 textarea {
@@ -838,11 +842,25 @@ input[type=text], textarea {
   padding: 5px;
 }
 
-.messaggi { margin-left: 1em; }
+.messaggi { 
+  width: 34%;
+  padding-top: 0.5em;
+  float: right;
+  text-align: left;
+}
+
+.gruppo label{
+  width: 10%;
+}
 
 .erroreBox { border: 2px solid red; }
 
 .correttoBox { border: 2px solid green; }
+
+.messaggio {
+  float: right;
+  padding-right: 1em;
+}
 
 /*======================================*/
 

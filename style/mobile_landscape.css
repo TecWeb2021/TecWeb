@@ -2,7 +2,8 @@ body{
   max-width: 1024px;
 }
 
-.topnav a {display: none;}
+.topnav a { display: none; }
+
 .topnav a.icon {
   width: 150px;
   float: right;
@@ -75,4 +76,9 @@ p.descrizione_home {
   padding: 0.1em;
   float: left;
   width: 100%;
+}
+
+.messaggi {
+  float: none;
+  margin-left: 24%;
 }
