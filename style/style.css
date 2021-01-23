@@ -21,6 +21,17 @@ body {
 fieldset{
   border: 0px;
 }
+a.link{
+    font-weight: bold;
+    color: black;
+}
+a.link:visited{
+    color: #676767;
+}
+a.link:hover, a.link_login:hover{
+    color: white;
+    background-color: #313131;
+}
 
 /*
 =========================
@@ -110,11 +121,12 @@ SEZIONE LOGIN
 
 div.loginblock a{
   color: white;
+  font-weight: bold;
 }
 
 div.loginblock {
     color: white;
-    margin-top: -90px;
+    margin-top: -6.5em;
     float: right;
     vertical-align: top;
     display: inline-block;
@@ -544,7 +556,6 @@ SEZIONE LETTERE
 .filters{
   display: inline-flex;
 }
-
 .advance_filter{
   margin-top: 0.5em;
 }
@@ -589,10 +600,9 @@ p.sinossi {
 .titolo_e_data{
   float:left;
 }
-p.valutazione{
+span.valutazione{
   float: right;
-  padding-right: 4em;
-  padding-top: 0.5em;
+  font-weight: 800;
 }
 .spazio_contenuto{
   margin-top: 1em;
@@ -675,7 +685,6 @@ p.valutazione{
   min-height: 191.02px;
   width: 126.61px;
   height: auto;
-  margin-left: 0.5em;
   margin-top: 0.5em;
 }
 
@@ -1126,7 +1135,7 @@ a.name{
   color: black;
 }
 
-a.active.name, a:hover.name{
+a.active.name, a:hover.name,{
     color: white;
     background-color: #313131;
 }
