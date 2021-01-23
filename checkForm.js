@@ -1,11 +1,14 @@
 var dettagli_form = {
     "nome": [/^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
     "sviluppo": [/^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
-    "pegi": [/^(3|7)$|^1(2|6|8)$/, "I possibili valori di PEGI sono: 3, 7, 12, 16, 18"],
-    "dlc": [/^([\w\s]){2,30}$/, "Inserire il nome del DLC"],
+    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3, 7, 12, 16, 18"],
+    "prequel": [/^([\w\s]){2,20}$/, "Inserire il nome del prequel"],
+    "sequel": [/^([\w\s]){2,20}$/, "Inserire il nome del sequel"],
+    "dlc": [/^([\w\s]){2,20}$/, "Inserire il nome del dlc"],
+
     "descrizione": [/.{25,}/, "Inserire la descrizione"],
     "recensione": [/.{25,}/, "Inserire la recensione"],
-    "alternativo": [/^([\w\s]){0,50}$/, "Inserire il testo alternativo dell'immagine"],
+    "alternativo": [/^([\w\s]){0,50}$/, "Alt lungo massimo 50 caratteri"],
 
     "titolo": [/^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": [/.{25,}/, "Inserire il testo della notizia"],
@@ -19,7 +22,7 @@ var dettagli_form = {
 function mostraErrore(input) {
     var elemento = document.createElement("strong");
     elemento.className = "errori";
-    elemento.appendChild(document.createTextNode(dettagli_form[input.id][1]));
+    elemento.appendChild(document.createTextNode("✘ " + dettagli_form[input.id][1]));
 
     var p = input.parentNode;
     p.appendChild(elemento);
@@ -29,7 +32,7 @@ function mostraErrore(input) {
 
 function validazioneCampo(input) {
 
-    // controllo se e' gia' presente messaggio d'errore
+    // controlla se e' gia' presente messaggio d'errore e lo rimuove
     var parent = input.parentNode;
     if (parent.children.length == 2) {
         parent.removeChild(parent.children[1]);
@@ -37,12 +40,26 @@ function validazioneCampo(input) {
 
     var regex = dettagli_form[input.id][0];
     var text = input.value;
+
+    // se il campo input e' opzionale e vuoto non effettua il controllo
+    if (input.className === "opzionale" && !text) {
+        return true;
+    }
+    // se il contenuto e' non vuoto e non rispetta l'espr. regolare mosto errore
     if (text.search(regex) != 0) {
-        // -1 se non trova il match, 0 se lo trova, 6 (es) se trova il match dalla posizione 6
+        // -1 se non trova il match, 0 se lo trova, k se trova il match dalla posizione k
         mostraErrore(input);
         return false;
     }
+    // se input è corretto corretto
     else {
+
+        var elemento = document.createElement("strong");
+        elemento.className = "errori";
+        elemento.appendChild(document.createTextNode("✔"));
+        var p = input.parentNode;
+        p.appendChild(elemento);
+
         input.className = "correttiBox";
         return true;
     }
