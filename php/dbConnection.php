@@ -156,14 +156,50 @@ class DBAccess {
         return $result;
     }
 
-    public function getGamesList($gameName=null){
-        if($gameName==null){
-            $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id";
-        }else{
-            $querySelect ="SELECT * FROM (games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id) WHERE games.Name='$gameName' ";
+    public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null){
+        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path";
+
+        
+
+        $specifyGameNameAppend= $gameName ? "games.Name='$gameName'" : null;
+
+        $isYearRangeGiven= $yearRangeStart && $yearRangeEnd;
+        $yearRangeStart=$yearRangeStart."-01-01";
+        $yearRangeEnd=$yearRangeEnd."-12-31";
+        $specifyYearRangeAppend= $isYearRangeGiven ? "games.Publication_date >= '$yearRangeStart' AND games.Publication_date <= '$yearRangeEnd'" : null;
+
+        switch ($order) {
+            case 'alfabetico':
+                $orderQueryAppend="ORDER BY games.Name ASC";
+                break;
+            
+            case 'voto':
+                $orderQueryAppend="ORDER BY games.Vote ASC";
+                break;
+
+            default:
+                $orderQueryAppend="ORDER BY games.Publication_date DESC";
+                break;
         }
 
-        $queryResult = mysqli_query($this->connection, $querySelect);
+        if($specifyGameNameAppend){
+            $query=$query." WHERE ".$specifyGameNameAppend; 
+
+            if($specifyYearRangeAppend){
+                $query=$query." AND ".$specifyYearRangeAppend;
+            }
+        }else{
+            if($specifyYearRangeAppend){
+                $query=$query." WHERE ".$specifyYearRangeAppend;
+            }
+        }
+
+        
+
+        
+
+        $query=$query." ".$orderQueryAppend;
+        $queryResult = mysqli_query($this->connection, $query);
         
         if($queryResult==false){
             echo mysqli_error($this->connection);

@@ -2,7 +2,7 @@
     <div class="advance_filter">
         <div class="filtri_categorie">
           <p class="tipo_categorie">Filtri Ricerca: |</p>
-          <form class="filters" id="filtri" action="/action_page.php">
+          <form class="filters" id="filtri" action="giochi.php">
             <div class="dropdown">
               <button type="button" class="dropbtn" onclick="OpenConsole()">Console
                 <i class="fa fa-caret-down"></i>
@@ -116,10 +116,10 @@
         </div>
         <div class="filtri_ordine">
           <p class="tipo_ordine">Ordine: |</p>
-          <form class="bottoniOrdine" action="/action_page.php">
-            <button type="button" class="ordine_btn" value="Alfabetico">Alfabetico</button>
-            <button type="button" class="ordine_btn" value="Voto >=4">Voto >=4</button>
-            <button type="button" class="ordine_btn" value="Ultimi usciti">Ultimi usciti</button>
+          <form class="bottoniOrdine" action="giochi.php">
+            <button type="submit" name="ordine" class="ordine_btn" value="alfabetico">Alfabetico</button>
+            <button type="submit" name="ordine" class="ordine_btn" value="voto">Voto >=4</button>
+            <button type="submit" name="ordine" class="ordine_btn" value="data_uscita">Ultimi usciti</button>
           </form>
         </div>
     </div>

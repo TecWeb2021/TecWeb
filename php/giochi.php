@@ -34,6 +34,7 @@ function createGamesDivs($gamesList){
 	}
 	$stringsArray=array();
 	foreach($gamesList as $entry){
+		
 		$s=createGameHTMLItem($entry);
 		array_push($stringsArray, $s);
 	}
@@ -41,13 +42,22 @@ function createGamesDivs($gamesList){
 	return $joinedItems;
 }
 
-$gameName=null;
-if(isset($_REQUEST['searchbar'])){
-	$gameName=$_REQUEST['searchbar'];
-	#sanitize
+$gameName= isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+#sanitize
+$order= isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
+$possibleOrders=array("alfabetico", "voto", "data_uscita");
+if(!in_array($order, $possibleOrders, true)){
+	$order=null;
 }
+
+$yearRangeStart= isset($_REQUEST['year']) ? $_REQUEST['year'] : null;
+#sanitize
+$yearRangeEnd= isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
+#sanitize
+
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getGamesList($gameName);
+$list=$dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order);
+//print_r($list);
 # Unisco le notizie in una lista html 
 $gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder
