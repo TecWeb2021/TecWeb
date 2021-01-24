@@ -787,7 +787,7 @@ label, input { display: inline-block; }
 }
 
 .schedaForm input[type=radio], .schedaForm input[type=checkbox] {
-  width: 2%;
+  width: 16px;
   height: 1.2em;
   padding-left: 0;
 }
@@ -801,17 +801,16 @@ label, input { display: inline-block; }
   margin-left: 5%;
 }
 
+.gruppoRadio {
+  margin-left: 18%;
+}
+
 .schedaForm input[type=file] {
   padding-top: 0.5em;
 }
 
 .schedaForm input[type=file] {
   background-color: #f5f5f5;
-}
-
-#handler p{
-  float: left;
-  width: 20%;
 }
 
 fieldset .textAreaLabel {
@@ -845,14 +844,6 @@ p+p.messaggi {
 .spuntabili {
   width: auto;
   display: inline-block;
-}
-
-#labelTipologia+p {
-  width: auto;
-}
-
-.gruppo label{
-  width: 10%;
 }
 
 .erroreBox { border: 2px solid red; }
