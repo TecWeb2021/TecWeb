@@ -706,13 +706,10 @@ p.trama{
 
 .vote{
   float: right;
-  padding-right: 2em;
-  padding-top: 0.5em;
   font-weight: 800;
 }
 
 p.testo{
-  width: 95%;
   column-count: 2;
   column-rule: 1px solid #ccccb3;
   border-radius: 25px;
@@ -947,13 +944,12 @@ PROFILO
 
 
 .textbox{
-  width: 87%;
+  width: 90%;
   margin-left: 0.5em;
   min-height: 40px;
 }
 
 .insertcomment{
-  width: 9%;
   min-height: 40px;
   margin-top: 1.5em;
   margin-left: 0.5em;

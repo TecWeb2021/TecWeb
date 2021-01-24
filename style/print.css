@@ -4,10 +4,11 @@
 }
 
 html {
-    font-family: Georgia, "Times New Roman", serif;
     margin: auto;
 }
-
+body{
+  font-family: Georgia, "Times New Roman", serif;
+}
 .aiutiNascosti {
     display: none;
 }
@@ -152,7 +153,9 @@ table caption {
     margin-bottom: 0.9;
     font-size: 1.1em;
 }
-
+.leftcolumn{
+  width: 100%;
+}
 /*
 =========================
 SEZIONE FOOTER
