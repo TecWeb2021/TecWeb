@@ -16,9 +16,9 @@ var dettagli_form = {
     "testo": [/.{25,}/, "Inserire il testo della notizia"],
     "immagine": [/./, "Nessun file selezionato"],
 
-    "nomeUtente": [/^([\w]){5,15}$/, "Inserire il nome utente"],
-    "password": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, "Inserire la password"],
-    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, "Le password non combaciano"],
+    "nomeUtente": [/^([\w]){4,15}$/, "Inserire il nome utente"],
+    "password": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,12}$|^user$|^admin$/, "Inserire la password"],
+    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,12}$|^user$|^admin$/, "Le password non combaciano"],
     "email": [/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
 
