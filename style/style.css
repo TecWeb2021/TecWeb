@@ -792,7 +792,7 @@ label, input { display: inline-block; }
   padding-left: 0;
 }
 
-.schedaForm input[type=radio]+label, .schedaForm input[type=checkbox]+label {
+.schedaForm input[type=radio]+label {
   width: 14%;
   text-align: left;
 }
@@ -866,13 +866,26 @@ p+p.messaggi {
 
 textarea.correttoBox+p {
   width: 13%;
-
+  display: inline;
+  padding-left: 1em;
 }
 
 textarea.erroreBox+p {
-  float: none;
-  margin-left: 24%;
+  padding: 0em;
+  display: block;
+  text-align: center;
 }
+
+ul.checkbox  { 
+  margin-left: 20px; 
+  list-style: none; 
+} 
+
+ul.checkbox li { 
+  border: transparent solid; 
+  display: inline-block;
+  width: 30%;
+} 
 
 /*======================================*/
 

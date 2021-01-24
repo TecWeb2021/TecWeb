@@ -1,7 +1,7 @@
 var dettagli_form = {
     "nome": [/^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
     "sviluppo": [/^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
-    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3, 7, 12, 16, 18"],
+    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3,7,12,16,18"],
     "voto": [/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/, "Voto da 0 a 5"],
     "prequel": [/^([\w\s]){2,20}$/, "Inserire il nome del prequel"],
     "sequel": [/^([\w\s]){2,20}$/, "Inserire il nome del sequel"],
