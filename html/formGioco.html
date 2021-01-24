@@ -34,9 +34,9 @@
     </div>
 
     <div class="topnav" id="menu">
-        <a  class="icon" onclick="responsiveMenu()">
-          <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
-        </a>
+      <button  class="icon" onclick="responsiveMenu()">
+        <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+      </button>
 
         <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
             <fieldset>
@@ -67,11 +67,11 @@
             <form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggiForm_ph />
-        
+
                 <fieldset>
                     <label for="nome">Nome: </label>
                     <span><input type="text" id="nome" name="nome" value="<valoreTitolo_ph />" placeholder="Nome gioco" /></span><br />
-        
+
                     <label for="sviluppo">Casa di sviluppo: </label>
                     <span><input type="text" id="sviluppo" name="sviluppo" value="<valoreSviluppo_ph />" placeholder="Casa di sviluppo" /></span><br />
 
@@ -81,7 +81,7 @@
                     <label for="data">Data di rilascio: </label>
                     <span><input type="date" name="data" id="data" value="<valoreData_ph />"></span><br />
                 </fieldset>
-        
+
                 <fieldset>
                     <span><p id="labelConsole" class="spuntabili">Console:</p></span>
                     <div class="gruppoCheck">
@@ -111,7 +111,7 @@
                         <label for="GDR"><abbr title="Giochi di ruolo">GDR</abbr></label>
                         <input type="checkbox" name="genere[]" value="Horror" id="Horror" <valoreCheckedHorror_ph /> />
                         <label for="Horror" xml:lang="en">Horror</label><br />
-                    
+
                         <input type="checkbox" name="genere[]" value="Platform" id="Platform" <valoreCheckedPlatform_ph /> />
                         <label for="Platform">Platform</label>
                         <input type="checkbox" name="genere[]" value="Puzzle" id="Puzzle" <valoreCheckedPuzzle_ph /> />
@@ -124,11 +124,11 @@
                         <label for="Strategia">Strategia</label>
                     </div>
                 </fieldset>
-        
+
                 <fieldset>
                     <label for="immagine">Immagine: </label>
                     <span><input type="file" id="immagine" name="immagine" /></span><br />
-        
+
                     <label for="alternativo">*Alt immagine: </label>
                     <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
                 </fieldset>
@@ -153,12 +153,12 @@
                     <label for="dlc"><abbr title="downloadable content" xml:lang="en">*DLC:</abbr> </label>
                     <span><input type="text" id="dlc" name="dlc" class="opzionale" value="<valoreDlc_ph />" placeholder="Inserisci il nome del DLC" /></span>
                 </fieldset>
-        
+
                 <fieldset>
                     <label for="descrizione" class="textAreaLabel">Descrizione: </label>
                     <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco, deve essere lunga almeno 25 caratteri"><valoreDescrizione_ph /></textarea></span>
                 </fieldset>
-                
+
                 <fieldset>
                     <label for="recensione" class="textAreaLabel">*Recensione: </label>
                     <span><textarea id="recensione" name="recensione" class="opzionale" rows="10" cols="50" placeholder="Recensione del gioco, deve essere lunga almeno 25 caratteri"><valoreRecensione_ph /></textarea></span>
@@ -168,7 +168,7 @@
                     <button type="submit" name="submit">Salva Modifiche</button>
                     <p>Salva le modifiche e torna alla pagina principale Admin</p>
                 </fieldset>
-        
+
             </form>
 
             <div id="bottoniOpzionali">

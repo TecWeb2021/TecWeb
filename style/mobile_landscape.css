@@ -4,13 +4,13 @@ body{
 
 .topnav a { display: none; }
 
-.topnav a.icon {
+.topnav button.icon {
   width: 150px;
   float: right;
   display: block;
 }
 
-.topnav.responsive a.icon {
+.topnav.responsive button.icon {
   float: right;
   width: 150px;
   text-align: center;
