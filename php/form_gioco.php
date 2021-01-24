@@ -65,24 +65,13 @@ if($user){
 			}
 		}
 		if($areAllAssigned){
-#function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image){
 
-			#upload dell'immagine
-			$uploaddir = '../images/';
-			#Recupero il percorso temporaneo del file
-			$image_tmp_location = $image['tmp_name'];
-			#recupero il nome originale del file caricato
 
-			$originalName=$image['name'];
-			$imagesList=$dbAccess->getImages();
-			$imagesCount=count($imagesList);
-			$extension=end(explode('.', $originalName));
-			$newFileName=$imagesCount.".".$extension;
-			$fileDestination=$uploaddir . $newFileName;
+			$imgSaveResult=saveImageFromFILES($dbAccess, "immagine");
 
-			if (move_uploaded_file($image_tmp_location, $fileDestination)) {
+			if ($imgSaveResult!=false) {
 			  	#Se l'operazione è andata a buon fine...
-			  	$imagePath="images"."/".$newFileName;
+			  	$imagePath=$imgSaveResult;
 			  	$newImage=new Image($imagePath, $imageAlt);
 			  	$newGame=new Game($name, $date, 0, $sinopsis, $age_range, $review, $newImage);
 				$result=$dbAccess->addGame($newGame);

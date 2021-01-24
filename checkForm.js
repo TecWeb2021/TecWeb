@@ -209,7 +209,8 @@ function preparaFiltri() {
             for (var i = 0; i < open.length; i++) {
               open[i].classList.remove('show');
             }
-            document.getElementById(filtri[event.target.id]).classList.toggle("show");
+            if(event.target.classList == "dropbtn")
+                document.getElementById(filtri[event.target.id]).classList.toggle("show");
         }
 }
 

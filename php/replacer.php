@@ -92,4 +92,40 @@ function getLoggedUser($dbAccess){
 	return $user;
 }
 
+function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/'){
+
+	$image= isset($_FILES['$imgReceiveName']) ? $_FILES['$imgReceiveName'] : null;
+	if(!$image){
+		return false;
+	}
+	#Recupero il percorso temporaneo del file
+	$image_tmp_location = $image['tmp_name'];
+	#recupero il nome originale del file caricato
+
+	$originalName=$image['name'];
+
+	#ricavo nome immagine col numero più alto presente nel database
+	$imagesList=$dbAccess->getImages("path asc");
+	$numArray=array();
+	foreach ($imagesList as $image) {
+		$num= explode(".",explode("/",$image->getPath())[1])[0];
+		array_push($imagesList, $num);
+	}
+	$maxNum= count($numArray)>0 ? max($numArray) : -1;
+
+	#ricavo il nome da assegnare al nuovo file
+	$newNumber=$maxNum+1;
+	$extension=end(explode('.', $originalName));
+	$newFileName=$newNumber.".".$extension;
+	$fileDestination=$uploaddir . $newFileName;
+	$imgSaveResult=move_uploaded_file($image_tmp_location, $fileDestination);
+
+	if($imgSaveResult){
+		$filePath="images"."/".$newFileName;
+		return $filePath;
+	}else{
+		return false;
+	}
+}
+
 ?>

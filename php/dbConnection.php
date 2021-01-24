@@ -222,7 +222,7 @@ class DBAccess {
     }
 
     public function getGame($name){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path AND games.Name='$name' LEFT JOIN reviews ON games.Review=reviews.Id";
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id WHERE games.Name='$name'";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -270,9 +270,13 @@ class DBAccess {
         }
     }
 
-    public function getImages(){
-        $querySelect ="SELECT * FROM images";
-        $queryResult = mysqli_query($this->connection, $querySelect);
+    public function getImages($order=null){
+
+        $query ="SELECT * FROM images";
+
+        $orderQueryAppend= $order=="path asc" ? "ORDER BY images.Path ASC" : "";
+        $query=$query." ".$orderQueryAppend;
+        $queryResult = mysqli_query($this->connection, $query);
         
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
@@ -332,6 +336,29 @@ class DBAccess {
         if($result==null){
             $result="null";
         }
+        return $result;
+    }
+
+    public function updateUser($user){
+        $username=$user->getUsername();
+        $hash=$user->getHash();
+        $isAdmin=$user->isAdmin();
+        $image=$user->getImage();
+        $imagePath= $image ? $image->getPath() : null;
+        $this->addImage($image);
+        $email=$user->getImage();
+
+        $query="UPDATE users SET Hash=$hash, IsAdmin=$isAdmin, Image=$imagePath, Email=$email WHERE Username='$username'";
+    }
+
+    public function addImage($image){
+        if(!$image){
+            return null;
+        }
+        $imagePath=$image->getPath();
+        $imageAlt=$image->getAlt();
+        $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
+        $result=$this->getResult($query);
         return $result;
     }
 
