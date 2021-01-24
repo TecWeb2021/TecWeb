@@ -585,12 +585,15 @@ p.sinossi {
   border-radius: 10px;
   padding: 0.5em;
   margin-bottom: 0.4em;
+  margin-top: 0.4em;
   display: inline-flex;
   width: 98%;
 }
 
 .game-image{
-  padding-right: 2em;
+  margin-right: 1em;
+  margin-left: 0.5em;
+  margin-bottom: 0.2em;
 }
 
 .intestazione{
@@ -731,9 +734,10 @@ p.trama{
 }
 
 .vote{
- float: right;
- padding-right: 1.5em;
- padding-top: 1em;
+  float: right;
+  padding-right: 2em;
+  padding-top: 0.5em;
+  font-weight: 800;
 }
 
 p.testo{
@@ -1249,4 +1253,32 @@ a:visited.name{
 
 #rosso.ao {
   background-color: red;
+}
+#modifica_scheda_gioco{
+  padding-left: 5.2em;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+#modifica_scheda_recensione{
+  float: none;
+  text-align: right;
+  padding-right: 1em;
+}
+
+#modifica_scheda_notizia{
+  float: none;
+  text-align: right;
+  padding-right: 1em;
+}
+
+.notizia_cover{
+  border-radius: 10px;
+  min-width: 148.61px;
+  min-height: 220.02px;
+  width: 126.61px;
+  height: auto;
+  margin-right: 1em;
+  margin-left: 0.5em;
+  float: left;
 }
