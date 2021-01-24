@@ -4,7 +4,6 @@ require_once("./classes/news.php");
 require_once("./classes/game.php");
 require_once("./classes/image.php");
 require_once("./classes/user.php");
-require_once("./classes/review.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -68,30 +67,7 @@ class DBAccess {
         }
 
     }
-/*
-    public function getUserList($name=null) {
-        if($name==null){
-            $querySelect ="SELECT * FROM users ORDER BY Nickname ASC";
-        }else{
-            $querySelect ="SELECT * FROM users WHERE name='$name' ORDER BY Nickname ASC";
-        }
-        $queryResult = mysqli_query($this->connection, $querySelect);
-        
-        if(mysqli_num_rows($queryResult) == 0) {
-            return null;
-        }else {
-            $listaPersonaggi = array();
-            while ($riga = mysqli_fetch_assoc($queryResult)) {
-                $singoloPersonaggio = array(
-                    "Name" => $riga['Name'],
-                );
-                array_push($listaPersonaggi, $singoloPersonaggio);
-            }
 
-            return $listaPersonaggi;
-        }
-    }
-*/
     public function getUsersList(){
         $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path";
         $result=mysqli_query($this->connection, $query);
@@ -200,9 +176,8 @@ class DBAccess {
             $gamesList = array();
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 $image=new Image($row['Path'],$row['Alt']);
-                $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review,$image);
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
                 array_push($gamesList, $game);
             }
 
@@ -219,8 +194,7 @@ class DBAccess {
         }else {
             $row = mysqli_fetch_assoc($queryResult);
             $image=new Image($row['Path'],$row['Alt']);
-            $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review, $image);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image);
 
         return $game;
         }
@@ -235,8 +209,7 @@ class DBAccess {
         }else {
             $row = mysqli_fetch_assoc($queryResult);
             $image=new Image($row['Path'],$row['Alt']);
-            $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review, $image);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image);
 
         return $game;
         }
@@ -252,9 +225,8 @@ class DBAccess {
             $gamesList = array();
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 $image=new Image($row['Path'],$row['Alt']);
-                $review=new Review($row['Content'], $row['Author'], $row['Last_edit_date_time']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $review,$image);
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
                 array_push($gamesList, $game);
             }
 
@@ -355,6 +327,30 @@ class DBAccess {
         if($result==null){
             $result="null";
         }
+        return $result;
+    }
+
+    public function addGame($game){
+        $name=$game->getName();
+        $date=$game->getPublicationDate();
+        $vote=$game->getVote();
+        $sinopsis=$game->getSinopsis();
+        $age_range=$game->getAgeRange();
+        $review=$game->getReview();
+        $image=$game->getImage();
+        $imagePath= $image ? $image->getPath() : null;
+        $imageAlt= $image ? $image->getAlt() : null;
+        if($image){
+            $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
+            $result=$this->getResult($query);
+            if($result==null){
+                return $result;
+            }
+        }
+
+
+        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath')";
+        $result=$this->getResult($query);
         return $result;
     }
 

@@ -45,9 +45,56 @@ if($user){
 			$newFileName=$imagesCount.".".$extension;
 
 			if (move_uploaded_file($userfile_tmp, $uploaddir . $newFileName)) {
-			  //Se l'operazione è andata a buon fine...
-			  echo 'File inviato con successo.';
-			  $imagePath="images"."/" . $newFileName;
+			  	//Se l'operazione è andata a buon fine...
+			  	echo 'File inviato con successo.';
+			  	$imagePath="images"."/" . $newFileName;
+
+				if(isset($_REQUEST['titolo'])){
+					$title=$_REQUEST['titolo'];
+					#sanitize
+					$homePage=str_replace("<news_title_ph/>",$title,$homePage);
+				}else{
+					$homePage=str_replace("<news_title_ph/>","",$homePage);
+				}
+				if(isset($_REQUEST['tipologia'])){
+					$category=$_REQUEST['tipologia'];
+					#sanitize
+
+					//$homePage=str_replace("<news_title_ph/>",$title,$homePage);
+				}else{
+					//$homePage=str_replace("<news_title_ph/>","",$homePage);
+				}
+				if(isset($_REQUEST['testo'])){
+					$content=$_REQUEST['testo'];
+					#sanitize
+					$homePage=str_replace("<content_ph/>",$content,$homePage);
+				}else{
+					$homePage=str_replace("<content_ph/>","",$homePage);
+				}
+				if(isset($_REQUEST['alternativo'])){
+					$imageAlt=$_REQUEST['alternativo'];
+					#sanitize
+					$homePage=str_replace("<img_alt_ph/>",$imageAlt,$homePage);
+				}else{
+					$homePage=str_replace("<img_alt_ph/>","",$homePage);
+				}
+
+				$image=null;
+				if($imagePath){
+					echo "<br/>image present";
+					$image=new Image($imagePath,$imageAlt);
+				}
+
+				if($title==null && $content==null){
+					echo "inserisci almeno titolo e contenuto";
+				}else{
+					$newNews=new News($title, $content, $user, date('Y-m-d'), $image, $category);
+					$result=$dbAccess->addNews($newNews);
+					if($result!=null){
+						header('Location: home.php');
+					}
+				}
+			
 			}else{
 			  //Se l'operazione è fallta...
 			  echo 'Upload NON valido!'; 
@@ -55,52 +102,10 @@ if($user){
 
 		}
 
-		if(isset($_REQUEST['titolo'])){
-			$title=$_REQUEST['titolo'];
-			#sanitize
-			$homePage=str_replace("<news_title_ph/>",$title,$homePage);
-		}else{
-			$homePage=str_replace("<news_title_ph/>","",$homePage);
-		}
-		if(isset($_REQUEST['tipologia'])){
-			$category=$_REQUEST['tipologia'];
-			#sanitize
 
-			//$homePage=str_replace("<news_title_ph/>",$title,$homePage);
-		}else{
-			//$homePage=str_replace("<news_title_ph/>","",$homePage);
-		}
-		if(isset($_REQUEST['testo'])){
-			$content=$_REQUEST['testo'];
-			#sanitize
-			$homePage=str_replace("<content_ph/>",$content,$homePage);
-		}else{
-			$homePage=str_replace("<content_ph/>","",$homePage);
-		}
-		if(isset($_REQUEST['alternativo'])){
-			$imageAlt=$_REQUEST['alternativo'];
-			#sanitize
-			$homePage=str_replace("<img_alt_ph/>",$imageAlt,$homePage);
-		}else{
-			$homePage=str_replace("<img_alt_ph/>","",$homePage);
-		}
-
-		$image=null;
-		if($imagePath){
-			echo "<br/>image present";
-			$image=new Image($imagePath,$imageAlt);
-		}
-
-		if($title==null && $content==null){
-			echo "inserisci almeno titolo e contenuto";
-		}else{
-			$newNews=new News($title, $content, $user, date('Y-m-d'), $image, $category);
-			$dbAccess->addNews($newNews);
-
-			$homePage=str_replace("<news_title_ph/>","",$homePage);
-			$homePage=str_replace("<content_ph/>","",$homePage);
-			$homePage=str_replace("<img_alt_ph/>","",$homePage);
-		}
+		$homePage=str_replace("<news_title_ph/>","",$homePage);
+		$homePage=str_replace("<content_ph/>","",$homePage);
+		$homePage=str_replace("<img_alt_ph/>","",$homePage);
 
 	}else{
 		$homePage="non puoi accedere a questa pagina perchè non sei un amministratore";	
