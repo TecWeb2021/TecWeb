@@ -409,7 +409,7 @@ SEZIONE CONTENUTO
 }
 
 p.data{
-  float: right;
+  text-align: right;
   font-size: smaller;
 }
 p.valutazione{
@@ -438,7 +438,6 @@ p.autore{
   margin: 0.5em 0em 0.5em 0em;
   text-align: left;
   width: 100%;
-  padding-left: 0.5em;
 }
 
 .aiutoTornaSu{
@@ -456,13 +455,12 @@ p.autore{
 
 .img_cover{  /* COVER NOTIZIA */
   border-radius: 10px;
-  min-width: 157.61px;
-  min-height: 222.02px;
+  min-width: 130.61px;
+  min-height: 202.02px;
   width: 126.61px;
   height: auto;
   margin-right: 0.5em;
   float: left;
-  margin-top: 2em;
 }
 .img_cover:hover,.notizia_cover:hover{
   opacity: 0.8;
