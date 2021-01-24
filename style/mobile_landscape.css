@@ -36,6 +36,7 @@ img.cover_gioco_della_settimana{
 .leftcolumn, .rightcolumn{
   width: 100%;
   padding: 0;
+  max-height: none;
 }
 #ultime_aggiunte{
   float: right;

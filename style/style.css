@@ -367,6 +367,8 @@ SEZIONE CONTENUTO
 .leftcolumn{
   float: left;
   width:70%;
+  max-height: 1290px;
+  overflow: overlay;
 }
 .rightcolumn{
   float: right;

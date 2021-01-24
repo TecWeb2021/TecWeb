@@ -36,10 +36,13 @@ div.loginblock{
   margin-right: -10px;
 }
 .topnav a {display: none;}
-.topnav a.icon {
+.topnav button.icon {
   width: 85px;
   float: right;
   display: block;
+}
+#hamburger{
+  width: 23%;
 }
 
 .topnav.responsive a.icon {
