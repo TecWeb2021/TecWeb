@@ -17,13 +17,16 @@ function createNewsListItem($news){
 	
 	$item=file_get_contents("../html/templates/homeNewsTemplate.html");
 	
-	//$item=preg_replace("/\<news_url_ph\/\>/","no_data",$item);
+	$item=preg_replace("/\<news_url_ph\/\>/","notizia.php?news=".$news->getTitle(),$item);	
 	$item=preg_replace("/\<news_publication_date_time_ph\/\>/",$news->getLastEditDateTime(),$item);
 	$item=preg_replace("/\<news_title_ph\/\>/",$news->getTitle(),$item);
 	$item=preg_replace("/\<news_content_ph\/\>/",$news->getContent(),$item);
 	$item=preg_replace("/\<news_author_ph\/\>/",$news->getAuthor()->getUsername(),$item);
-	$item=preg_replace("/\<img_path_ph\/\>/","../".$news->getImage()->getPath(),$item);
-	$item=preg_replace("/\<img_alt_ph\/\>/",$news->getImage()->getAlt(),$item);
+	$image=$news->getImage();
+	$imagePath= $image ? $image->getPath() : "no_image_present";
+	$imageAlt= $image ? $image->getAlt(): "no_alt_present";
+	$item=preg_replace("/\<img_path_ph\/\>/","../".$imagePath,$item);
+	$item=preg_replace("/\<img_alt_ph\/\>/",$imageAlt,$item);
 	return $item;
 }
 

@@ -1,7 +1,7 @@
 <?php
 
 include "replacer.php";
-include "dbConnection.php";
+require_once("dbConnection.php");
 
 # Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
 
@@ -11,28 +11,39 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/notiziaTemplate.html");
 $homePage=replace($homePage);
 
-$newsSubpage="";
-if(isset($_GET['id_notizia'])){
+function replacePH($news){
+	global $homePage;
 
-	$news_id=$_GET['id_notizia'];
-	#sanitize
-
-	$news=$dbAccess->getNewsList($news_id);
-
-	if($news){
-		$newsSubpage=$news[0]->getTitle()."<br/>".$news[0]->getContent();
-	}else{
-
-		$newsSubpage="non esiste una notizia con questo Id";
+	$image=$news->getImage();
+	$imagePath=  $image ? "../".$image->getPath() : "no_data";
+	$imageAlt=  $image ? $image->getAlt() : "no_data";
+	$replacements=array(
+		"<img_path_ph/>"=>$imagePath,
+		"<img_alt_ph/>"=>$imageAlt,
+		"<news_title_ph/>"=>$news->getTitle(),
+		"<news_author_ph/>"=>$news->getAuthor()->getUsername(),
+		"<news_publication_date_ph/>"=>$news->getLastEditDateTime(),
+		"<news_content_ph/>"=>$news->getContent()
+	);
+	foreach ($replacements as $key => $value) {
+		$homePage=str_replace($key, $value, $homePage);
 	}
-
-$homePage=preg_replace("/\<single_new_ph\/\>/",$newsSubpage,$homePage);
-
-
-
-}else{
-	$homePage="specificare un gioco";
 }
+
+
+if(isset($_REQUEST['news'])){
+	$newsTitle=$_REQUEST['news'];
+	#sanitize;
+	$news=$dbAccess->getNews($newsTitle);
+	if($news==null){
+		echo "la notizia specificata non è stata trovata";
+	}else{
+		replacePH($news);
+	}
+}else{
+	echo "non è specificata una notizia";
+}
+
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
@@ -42,6 +53,7 @@ $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 $basePage=replace($basePage);
 
 echo $basePage;
+
 
 
 ?>

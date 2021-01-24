@@ -103,7 +103,7 @@ class DBAccess {
             while($row=mysqli_fetch_assoc($result)){
                 //print_r($row);
                 $image= $row['Image']=="" ? null : new Image($row['Path'], $row['Alt']);
-                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['email']);
+                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
                 array_push($usersList, $user);
             }
             return $usersList;
@@ -143,11 +143,33 @@ class DBAccess {
             $newsList=array();
             while($row=mysqli_fetch_assoc($result)){
                 $image=new Image($row['Path'], $row['Alt']);
-                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['email']);
+                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
                 $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category']);
                 array_push($newsList, $news);
             }
             return $newsList;
+        }
+    }
+
+    public function getNews($title){
+        $query="SELECT *, news.Image as newsImage FROM news LEFT JOIN users ON news.User=users.Username LEFT JOIN images ON news.Image=images.Path WHERE news.Title='$title'";
+
+        $queryResult = mysqli_query($this->connection, $query);
+        if($queryResult==false){
+            echo mysqli_error($this->connection);
+            return null;
+        }
+
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult);
+            //echo "Image: ".$row['Image']."<br/>";
+            $image= $row['newsImage']=='' ? null : new Image($row['Path'],$row['Alt']);
+            $author= new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
+            $news= new News($row['Title'], $row['Content'], $author, $row['Last_edit_date'], $image, $row['Category']);
+
+            return $news;
         }
     }
 
@@ -268,7 +290,7 @@ class DBAccess {
             if($row['Image']!=null){
                 $image=new Image($row['Path'], $row['Alt']);
             }
-            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['email']);
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
 
         return $user;
         }

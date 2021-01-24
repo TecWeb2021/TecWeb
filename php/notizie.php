@@ -15,7 +15,7 @@ function createNewsHTMLItem($news){
 	$item=file_get_contents("../html/templates/newsListItemTemplate.html");
 	
 	$item=preg_replace("/\<news_date_ph\/\>/",$news->getLastEditDateTime(),$item);
-	$item=preg_replace("/\<news_url_ph\/\>/","no_data",$item);
+	$item=preg_replace("/\<news_url_ph\/\>/","notizia.php?news=".$news->getTitle(),$item);	
 	$item=preg_replace("/\<news_title_ph\/\>/",$news->getTitle(),$item);
 	$item=preg_replace("/\<news_author_ph\/\>/",$news->getAuthor()->getUsername(),$item);
 	$item=preg_replace("/\<img_path_ph\/\>/","../".$news->getImage()->getPath(),$item);
