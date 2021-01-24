@@ -29,25 +29,12 @@ if($user){
 			echo "userifileName: ".$_FILES['immagine']['name'];
 		
 
-			$uploaddir = '../images/';
+			$imgSaveResult=saveImageFromFILES($dbAccess, "immagine");
 
-			//Recupero il percorso temporaneo del file
-			$userfile_tmp = $_FILES['immagine']['tmp_name'];
-
-			//recupero il nome originale del file caricato
-			$userfile_name = $_FILES['immagine']['name'];
-
-			
-			$imagesList=$dbAccess->getImages();
-			$imagesCount=count($imagesList);
-
-			$extension=end(explode('.', $userfile_name));
-			$newFileName=$imagesCount.".".$extension;
-
-			if (move_uploaded_file($userfile_tmp, $uploaddir . $newFileName)) {
+			if ($imgSaveResult!=false) {
 			  	//Se l'operazione è andata a buon fine...
 			  	echo 'File inviato con successo.';
-			  	$imagePath="images"."/" . $newFileName;
+			  	$imagePath=$imgSaveResult;
 
 				if(isset($_REQUEST['titolo'])){
 					$title=$_REQUEST['titolo'];

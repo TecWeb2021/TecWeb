@@ -16,6 +16,10 @@ class User{
 
 	}
 
+	static function copyConstruct($_user){
+		return new User($_user->getUsername(), $_user->getHash(), $_user->isAdmin(), $_user->getImage(), $_user->getEmail());
+	}
+
 	function getUsername(){
 		return $this->username;
 	}
@@ -34,6 +38,21 @@ class User{
 
 	function getEmail(){
 		return $this->email;
+	}
+
+
+	function setHashByPassword($password){
+		$inputString=$this->username.$this->password;
+		$hashValue=hash("md5",$inputString);
+		$this->hash=$hashValue;
+	}
+
+	function setEmail($email){
+		$this->email=$email;
+	}
+
+	function setImage($image){
+		$this->image=$image;
 	}
 }
 
