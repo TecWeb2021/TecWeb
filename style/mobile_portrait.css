@@ -122,3 +122,8 @@ dl.info dd{
   width: 100%;
   text-align: center;
 }
+
+.schedaForm input {
+  width: 55%;
+  margin: 5px;
+}

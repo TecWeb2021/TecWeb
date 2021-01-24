@@ -79,53 +79,49 @@
                     <span><input type="text" id="pegi" name="pegi" value="<valorePegi_ph />" placeholder="possibili valori: 3, 7, 12, 16, 18" /></span><br />
 
                     <label for="data">Data di rilascio: </label>
-                    <span><input type="date" name="data" value="<valoreData_ph />"></span><br />
+                    <span><input type="date" name="data" id="data" value="<valoreData_ph />"></span><br />
                 </fieldset>
         
                 <fieldset>
-                    <span><p>Console:</p></span>
+                    <p class="etichettaCheck">Console:</p>
                     <div class="gruppoCheck">
-                        <input type="checkbox" name="console[]" value="PS4" id="PS4" />
+                        <input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
                         <label for="PS4">PS4</label>
-                        <input type="checkbox" name="console[]" value="PS5" id="PS5"  />
+                        <input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
                         <label for="PS5">PS5</label>
-                        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne"  />
+                        <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne_ph /> />
                         <label for="XboxOne">Xbox One</label>
-                        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX"  />
+                        <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
                         <label for="XboxSeriesX">Xbox Series X</label>
-                        <input type="checkbox" name="console[]" value="Switch" id="Switch" />
+                        <input type="checkbox" name="console[]" value="Switch" id="Switch" <valoreSwitch_ph /> />
                         <label for="Nintendo Switch">Nintendo Switch</label>
                     </div>
                 </fieldset>
 
                 <fieldset>
-                    <span><p>Generi:</p></span>
+                    <p class="etichettaCheck">Generi:</p>
                     <div class="gruppoCheck">
-                        <div>
-                            <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" checked="checked" />
-                            <label for="Avventura">Avventura</label>
-                            <input type="checkbox" name="genere[]" value="Azione" id="Azione"  />
-                            <label for="Azione">Azione</label>
-                            <input type="checkbox" name="genere[]" value="FPS" id="FPS" />
-                            <label for="FPS"><abbr xml:lang="en" title="First-person shooter">FPS</abbr></label>
-                            <input type="checkbox" name="genere[]" value="GDR" id="GDR"  />
-                            <label for="GDR"><abbr title="Giochi di ruolo">GDR</abbr></label>
-                            <input type="checkbox" name="genere[]" value="Horror" id="Horror"  />
-                            <label for="Horror" xml:lang="en">Horror</label>
-                        </div>
-                        
-                        <div>
-                            <input type="checkbox" name="genere[]" value="Platform" id="Platform" />
-                            <label for="Platform">Platform</label>
-                            <input type="checkbox" name="genere[]" value="Puzzle" id="Puzzle" />
-                            <label for="Puzzle">Puzzle</label>
-                            <input type="checkbox" name="genere[]" value="Ritmici" id="Ritmici"  />
-                            <label for="Ritmici">Ritmici</label>
-                            <input type="checkbox" name="genere[]" value="Sport" id="Sport" checked="checked" />
-                            <label for="Sport">Sport</label>
-                            <input type="checkbox" name="genere[]" value="Strategia" id="Strategia"  />
-                            <label for="Strategia">Strategia</label>
-                        </div>
+                        <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" checked="checked"<valoreCheckedAvventura_ph /> />
+                        <label for="Avventura">Avventura</label>
+                        <input type="checkbox" name="genere[]" value="Azione" id="Azione" <valoreCheckedAzione_ph /> />
+                        <label for="Azione">Azione</label>
+                        <input type="checkbox" name="genere[]" value="FPS" id="FPS" <valoreCheckedFPS_ph /> />
+                        <label for="FPS"><abbr xml:lang="en" title="First-person shooter">FPS</abbr></label>
+                        <input type="checkbox" name="genere[]" value="GDR" id="GDR" <valoreCheckedGDR_ph /> />
+                        <label for="GDR"><abbr title="Giochi di ruolo">GDR</abbr></label>
+                        <input type="checkbox" name="genere[]" value="Horror" id="Horror" <valoreCheckedHorror_ph /> />
+                        <label for="Horror" xml:lang="en">Horror</label><br />
+                    
+                        <input type="checkbox" name="genere[]" value="Platform" id="Platform" <valoreCheckedPlatform_ph /> />
+                        <label for="Platform">Platform</label>
+                        <input type="checkbox" name="genere[]" value="Puzzle" id="Puzzle" <valoreCheckedPuzzle_ph /> />
+                        <label for="Puzzle">Puzzle</label>
+                        <input type="checkbox" name="genere[]" value="Ritmici" id="Ritmici" <valoreCheckedRitmici_ph /> />
+                        <label for="Ritmici">Ritmici</label>
+                        <input type="checkbox" name="genere[]" value="Sport" id="Sport" checked="checked"<valoreCheckedSport_ph /> />
+                        <label for="Sport">Sport</label>
+                        <input type="checkbox" name="genere[]" value="Strategia" id="Strategia" <valoreCheckedStrategia_ph /> />
+                        <label for="Strategia">Strategia</label>
                     </div>
                 </fieldset>
         
@@ -140,7 +136,7 @@
                 <fieldset id="cercaTitolo">
 
                     <label for="voto">Voto: </label>
-                    <span><input type="number" id="voto" name="voto" min="0" max="5" step="0.1" value="<valoreVoto_ph />" placeholder="Voto da 0 a 5" /></span><br />
+                    <span><input type="text" id="voto" name="voto" value="<valoreVoto_ph />" placeholder="Voto da 0 a 5" /></span><br />
 
                     <label for="searchbar">*Prequel:</label>
                     <span><input list="listaPrequel" name="prequel" id="prequel" class="opzionale" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span><br />

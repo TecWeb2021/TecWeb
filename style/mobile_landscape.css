@@ -79,6 +79,7 @@ p.descrizione_home {
 }
 
 .messaggi {
+  width: auto;
   float: none;
   margin-left: 24%;
 }

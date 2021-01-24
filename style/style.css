@@ -862,6 +862,16 @@ input[type=text], textarea {
   padding-right: 1em;
 }
 
+textarea.correttoBox+p {
+  width: 13%;
+
+}
+
+textarea.erroreBox+p {
+  float: none;
+  margin-left: 24%;  
+}
+
 /*======================================*/
 
 /*

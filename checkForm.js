@@ -2,9 +2,11 @@ var dettagli_form = {
     "nome": [/^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
     "sviluppo": [/^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
     "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3, 7, 12, 16, 18"],
+    "voto": [/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/, "Voto da 0 a 5"],
     "prequel": [/^([\w\s]){2,20}$/, "Inserire il nome del prequel"],
     "sequel": [/^([\w\s]){2,20}$/, "Inserire il nome del sequel"],
     "dlc": [/^([\w\s]){2,20}$/, "Inserire il nome del dlc"],
+    "data": [/./, "Data non valida"],
 
     "descrizione": [/.{25,}/, "Inserire la descrizione"],
     "recensione": [/.{25,}/, "Inserire la recensione"],
@@ -13,13 +15,11 @@ var dettagli_form = {
     "titolo": [/^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
     "testo": [/.{25,}/, "Inserire il testo della notizia"],
 
-
     "immagine": [/./, "Nessun file selezionato"],
 
-
-    "nomeUtente": [/^([\w\s]){5,15}$/, "Inserire il nome utente"],
+    "nomeUtente": [/^([\w]){5,15}$/, "Inserire il nome utente"],
     "password": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, "Inserire la password"],
-    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, ""],
+    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,16}$/, "Le password non combaciano"],
     "email": [/^\w+(\.?\w+)*@\w+(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
 
@@ -58,6 +58,24 @@ function validazioneCampo(input) {
             return mostraMessaggio(input,true);
     }
 
+    if (input.id == "data") {
+        var data = Date.parse(input.value);
+        if (data > Date.UTC(1947) && data < Date.UTC(2077))
+            return mostraMessaggio(input, true);
+        else 
+            return mostraMessaggio(input, false);
+    }
+
+    if(input.id == "repeatpassword") {
+        var pw = document.getElementById("password").value;
+        if(pw) {
+            if (pw == document.getElementById("repeatpassword").value)
+                return mostraMessaggio(input,true);
+            else
+                return mostraMessaggio(input,false);
+        }
+    }
+
     // se il campo input e' opzionale e vuoto non effettua il controllo
     if (input.className === "opzionale" && !text) {
         return true;
@@ -73,6 +91,7 @@ function validazioneCampo(input) {
     }
 }
 
+// Controllo dell'input delle form
 function validateForm() {
 
     var corretto = true;
@@ -86,6 +105,7 @@ function validateForm() {
     return corretto;
 }
 
+// Fa comparire il campo "gioco" se viene selezionata la categoria giochi in FormNotizie
 function handleClick() {
 
     var radio = document.getElementById("handler");
@@ -98,6 +118,17 @@ function handleClick() {
                 barraDiRicerca.className = "invisibile";
         }
     }
+}
+
+function checkPasswordRipetuta(pw1, pw2) {
+    if (pw2.value) {
+      if (!(password.value == rpassword.value)) {
+        setErrorBox(rpassword);
+        return false;
+      }
+    }
+    removeErrorBox(rpassword);
+    return true;
 }
 
 /* Controlla che l'input della searchbar non sia vuoto o composto da spazi */
