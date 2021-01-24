@@ -590,7 +590,9 @@ p.sinossi {
 }
 
 .game-image{
-  padding-right: 2em;
+  margin-right: 1em;
+  margin-left: 0.5em;
+  margin-bottom: 0.2em;
 }
 
 .intestazione{
