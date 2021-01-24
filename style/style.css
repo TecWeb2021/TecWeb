@@ -586,6 +586,7 @@ p.sinossi {
   padding: 0.5em;
   margin-bottom: 0.4em;
   display: inline-flex;
+  width: 98%;
 }
 
 .game-image{
