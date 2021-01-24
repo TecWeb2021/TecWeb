@@ -44,7 +44,9 @@ div.loginblock{
 #hamburger{
   width: 23%;
 }
-
+p.testo{
+  width: 92%;
+}
 .topnav.responsive a.icon {
   float: right;
   width: 85px;

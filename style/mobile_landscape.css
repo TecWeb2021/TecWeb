@@ -28,7 +28,9 @@ body{
 .searchbutton {
     float: none;
 }
-
+.textbox{
+  width: 76%;
+}
 img.cover_gioco_della_settimana{
   border-radius: inherit;
 }
