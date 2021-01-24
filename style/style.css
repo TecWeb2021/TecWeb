@@ -1040,6 +1040,7 @@ PROFILO
   margin-top: 0.2em;
   display: inline-block;
   float: left;
+  margin-right: 0.4em;
 }
 
 .filtri_ordine{
@@ -1049,15 +1050,17 @@ PROFILO
   padding: 0.3em;
   margin-top: 0.2em;
   display: inline-block;
-  float: left;
 }
 
 .erroriFiltri {
-  color: #313131;
+  color: red;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   text-align: center;
   font-weight: bold;
+  width: 57%;
+  margin-top: 0.2em;
+  border: 1px solid #000;
 }
 
 .tipo_categorie{
