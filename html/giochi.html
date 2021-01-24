@@ -34,9 +34,9 @@
   </div>
 
   <div class="topnav" id="menu">
-    <a class="icon" onclick="responsiveMenu()">
+    <button  class="icon" onclick="responsiveMenu()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
-    </a>
+    </button>
 
     <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
@@ -180,9 +180,9 @@
           <span class="tipo_ordine">Ordine: |</span>
           <form class="bottoniOrdine" action="../php/action_page.php">
             <fieldset>
-              <button class="ordine_btn" value="Alfabetico">Alfabetico</button>
-              <button class="ordine_btn" value="Voto >=4">Voto >=4</button>
-              <button class="ordine_btn" value="Ultimi usciti">Ultimi usciti</button>
+              <button class="dropbtn" value="Alfabetico">Alfabetico</button>
+              <button class="dropbtn" value="Voto >=4">Voto >=4</button>
+              <button class="dropbtn" value="Ultimi usciti">Ultimi usciti</button>
             </fieldset>
           </form>
         </div>
