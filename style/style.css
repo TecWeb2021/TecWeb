@@ -849,6 +849,23 @@ input[type=text], textarea {
   text-align: left;
 }
 
+p+p.messaggi {
+  float: none;
+  clear: both;
+  display: inline-block;
+  margin-left: 0.5em;
+  width: auto;
+}
+
+.spuntabili {
+  width: auto;
+  display: inline-block;
+}
+
+#labelTipologia+p {
+  width: auto;
+}
+
 .gruppo label{
   width: 10%;
 }
@@ -936,8 +953,9 @@ PROFILO
 }
 
 .nuovoUtente {
-  width: 32%;
-  margin-left:34%;
+  width: 30%;
+  margin-left: 32%;
+  clear: both;
   text-align: center;
 }
 
@@ -1015,7 +1033,6 @@ PROFILO
   border-radius: 10px;
   padding: 0.5em;
   margin-top: 0.2em;
-  float:left;
   display: inline-block;
 }
 
@@ -1023,10 +1040,19 @@ PROFILO
   background-color: #f5f5f5;
   border: 1px solid #000;
   border-radius: 10px;
-  padding: 0.3em;
+  padding: 0.5em;
   margin-top: 0.2em;
   display: inline-block;
 }
+
+.erroriFiltri {
+  color: #313131;
+  background-color: white;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .tipo_categorie{
   float: left;
   margin-top: 0.7em;
@@ -1172,14 +1198,6 @@ a.active.name, a:hover.name,{
 }
 a:visited.name{
   color: #676767;
-}
-
-.erroriFiltri {
-  color: #313131;
-  background-color: white;
-  border-radius: 10px;
-  width: 90%;
-  text-align: center;
 }
 
 .lista_utenti{
