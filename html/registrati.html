@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
   <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 
+
   <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
@@ -60,43 +61,43 @@
   </div>
 
 
-  <div class="contenutoGenerale">
-    <div class="schedaForm">
-      <h1>Crea il tuo account NomeSito</h1>
-      <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
-        <fieldset>
-          <h2>Dati personali</h2>
-          <p>Tutti i campi sono obbligatori</p>
+    <div class="contenutoGenerale">
+      <div class="schedaForm">
+        <h1>Crea il tuo account NomeSito</h1>
+        <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+          <fieldset>
+            <h2>Dati personali</h2>
+            <p>Tutti i campi sono obbligatori</p>
 
-          <label for="email">E-mail</label>
-          <span><input type="text" name="eemail" id="email" value="<mailProfilo_ph />" placeholder="Inserisci la tua e-mail" /></span><br />
+            <label for="email">E-mail</label>
+            <span><input type="text" name="eemail" id="email" value="<mailProfilo_ph />" placeholder="Inserisci la tua e-mail" /></span><br />
 
-          <label for="nomeUtente">Nome utente</label>
-          <span><input type="text" name="nomeUtente" id="nomeUtente" value="<nomeProfilo_ph />" placeholder="Da 5 a 15 caratteri alfanumerici" /></span><br />
+            <label for="nomeUtente">Nome utente</label>
+            <span><input type="text" name="nomeUtente" id="nomeUtente" value="<nomeProfilo_ph />" placeholder="Da 5 a 15 caratteri alfanumerici" /></span><br />
 
-          <label for="immagine">Immagine profilo</label>
-          <span><input type="file" id="immagine" name="immagine" /></span><br />
-        </fieldset>
+            <label for="immagine">Immagine profilo</label>
+            <span><input type="file" id="immagine" name="immagine" /></span><br />
+          </fieldset>
 
-        <fieldset>
-          <p>La password deve contenere da 8 a 12 caratteri, fra cui almeno un numero, un carattere maiuscolo e un carattere minuscolo</p>
-          <label for="password">Password</label>
-          <span><input type="password" name="password" id="password" value="<valorePw_ph />" placeholder="Password" /></span><br />
+          <fieldset>
+            <p>La password deve contenere da 8 a 12 caratteri, fra cui almeno un numero, un carattere maiuscolo e un carattere minuscolo</p>
+            <label for="password">Password</label>
+            <span><input type="password" name="password" id="password" value="<valorePw_ph />" placeholder="Password" /></span><br />
 
-          <label for="repeatpassword">Ripeti password</label>
-          <span><input type="password" name="repeatpassword" id="repeatpassword" value="<valorePw_ph />" placeholder="Ripeti password" /></span><br />
+            <label for="repeatpassword">Ripeti password</label>
+            <span><input type="password" name="repeatpassword" id="repeatpassword" value="<valorePw_ph />" placeholder="Ripeti password" /></span><br />
 
-          <button type="submit" name="registrati" class="centrato">Registrati</button>
-        </fieldset>
-      </form>
+            <div class="loginButton"><button type="submit" name="registrati" >Registrati</button></div>
+          </fieldset>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <div id="footer">
-    <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-    <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
-    <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
-  </div>
+    <div id="footer">
+      <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+      <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+      <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+    </div>
 
 </body>
 </html>
