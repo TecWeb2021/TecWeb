@@ -416,6 +416,13 @@ p.valutazione{
   float: right;
   font-weight: bold;
 }
+
+#voto_home{
+  float: none;
+  font-weight: bold;
+  text-align: center;
+}
+
 p.descrizione {
     column-count: 3;
     column-rule: 1px solid #ccccb3;
