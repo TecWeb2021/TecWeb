@@ -39,6 +39,22 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 	}
 	$base=str_replace("<this_url_ph/>", $url, $base);
 
+	#completare i replacements
+	$titleAndBreadcrumbReplacements=array(
+		"home.php"=>["Home","Home"],
+		"giochi.php"=>["Giochi",""],
+		"notizie.php"=>["Notizie",""],
+		"notizia.php"=>["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"]
+	);
+
+	foreach ($titleAndBreadcrumbReplacements as $key => $value) {
+		if(strpos($url, $key)!=false){
+			//echo $key;
+			$base=str_replace("<page_title_ph/>", $value[0]." - ALLGames", $base);
+			$base=str_replace("<page_breadcrumb_ph/>", $value[1], $base);
+		}
+	}
+
 	$possiblePages=array("home","giochi","notizie");
 	if(!in_array($page, $possiblePages)){
 		$page=null;

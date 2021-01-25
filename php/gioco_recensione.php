@@ -31,6 +31,9 @@ function replacePH($game){
 function generateGameCommentsDivs($gameName,$dbAccess){
 	$commentTemplate=file_get_contents("../html/templates/commentDivTemplate.html");
 	$commentsList=$dbAccess->getCommentsList($gameName);
+	if(!$commentsList){
+		return "";
+	}
 	$commentsString="";
 	foreach ($commentsList as $com) {
 		$s=$commentTemplate;

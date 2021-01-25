@@ -52,7 +52,18 @@ if($user){
 			"<img_alt_ph/>"=>$imageAlt,
 			"<dlc_ph/>"=>$dlc,
 			"<sinopsis_ph/>"=>$sinopsis,
-			"<review_ph/>"=>$review
+			"<review_ph/>"=>$review,
+			"<valore_checked_ps4_ph/>"=> $consoles && in_array("PS4", $consoles) ? "checked=\"checked\"" : "",
+			"<valore_checked_ps5_ph/>"=> $consoles && in_array("PS4", $consoles) ? "checked=\"checked\"" : "",
+			"<valore_checked_xboxone_ph/>"=> $consoles && in_array("Xbox One", $consoles) ? "checked=\"checked\"" : "",
+			"<valore_checked_xboxseriesx_ph/>"=> $consoles && in_array("Xbox Series X", $consoles) ? "checked=\"checked\"" : "",
+
+			"<valore_checked_avventura_ph/>"=> $genres && in_array("Avventura", $genres) ? "checked=\"checked\"" : "",
+			"<valore_checked_azione_ph/>"=> $genres && in_array("Azione", $genres) ? "checked=\"checked\"" : "",
+			"<valore_checked_platform_ph/>"=> $genres && in_array("Platform", $genres) ? "checked=\"checked\"" : "",
+			"<valore_checked_picchiaduro_ph/>"=> $genres && in_array("Picchiaduro", $genres) ? "checked=\"checked\"" : "",
+			"<valore_checked_simulazione_ph/>"=> $genres && in_array("Simulazione", $genres) ? "checked=\"checked\"" : "",
+			"<valore_checked_sparatutto_ph/>"=> $genres && in_array("Sparatutto", $genres) ? "checked=\"checked\"" : "",
 		);
 
 		$requiredValues=array($name , $developer , $date , $age_range , $consoles , $genres , $image , $imageAlt , $prequel , $sequel , $dlc , $sinopsis , $review);
@@ -73,10 +84,19 @@ if($user){
 			  	#Se l'operazione è andata a buon fine...
 			  	$imagePath=$imgSaveResult;
 			  	$newImage=new Image($imagePath, $imageAlt);
-			  	$newGame=new Game($name, $date, 0, $sinopsis, $age_range, $review, $newImage);
+			  	$gameConsoles=array();
+			  	foreach ($consoles as $value) {
+			  		array_push($gameConsoles, $value);
+			  	}
+			  	$gameGenres=array();
+			  	foreach ($genres as $value) {
+			  		array_push($gameGenres, $value);
+			  	}
+			  	
+			  	$newGame=new Game($name, $date, 0, $sinopsis, $age_range, $review, $newImage, $gameConsoles, $gameGenres);
 				$result=$dbAccess->addGame($newGame);
 				if($result!=null){
-					header('Location: home.php');
+					header('Refresh: 0; URL=home.php');
 				}else{
 					
 					echo "salvataggio del gioco fallito";

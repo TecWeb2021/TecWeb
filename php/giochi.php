@@ -12,7 +12,7 @@ $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 
 
 
-function createGameHTMLItem($game){
+function createGameHTMLItem($game, $isAdmin=false){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
 	$item=preg_replace("/\<game_name_ph\/\>/",$game->getName(),$item);
@@ -24,25 +24,34 @@ function createGameHTMLItem($game){
 	$item=preg_replace("/\<game_scheda_url_ph\/\>/","gioco_scheda.php?game=".strtolower($game->getName()),$item);
 	$item=preg_replace("/\<game_edit_ph\/\>/","edit_gioco.php?game=".strtolower($game->getName()),$item);
 	
+	if($isAdmin){
+		$item=str_replace("<admin_func_ph>","",$item);
+		$item=str_replace("</admin_func_ph>","",$item);
+	}else{
+		$item=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$item);
+	}
+
 	return $item;
 }
 
 
 
-function createGamesDivs($gamesList){
+function createGamesDivs($gamesList, $isAdmin=false){
 	if(!$gamesList){
 		return "";
 	}
 	$stringsArray=array();
 	foreach($gamesList as $entry){
 		
-		$s=createGameHTMLItem($entry);
+		$s=createGameHTMLItem($entry, $isAdmin);
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode(" ", $stringsArray);
 	return $joinedItems;
 }
 
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
 
 
 $gameName= isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
@@ -58,10 +67,41 @@ $yearRangeStart= isset($_REQUEST['year']) ? $_REQUEST['year'] : null;
 $yearRangeEnd= isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
 #sanitize
 
+$consoles_pre=isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
+#sanitize
+$genres_pre=isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
+#sanitize
+/*
+$consoles=null;
+if($consoles_pre){
+	$checkValues=array("PS4", "PS5", "XboxOne", "XboxSeriesX");
+	$consoles=array();
+	print_r($_REQUEST);
+	foreach ($checkValues as $value) {
+		if(in_array($value, $consoles_pre)){
+			array_push($consoles, $value);
+		}
+	}
+}
+
+$consoles
+
+$genres=null;
+if($genres_pre){
+	$checkValues=array("Avventura", "Azione", "Platform", "Picchiaduro", "Simulazione", "Sparatutto");
+	$genres=array();
+	print_r($_REQUEST);
+	foreach ($checkValues as $value) {
+		if(in_array($value, $genres_pre)){
+			array_push($genres, $value);
+		}
+	}
+}*/
+
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order);
+$list=$dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order, $consoles_pre, $genres_pre);
 # Unisco le notizie in una lista html 
-$gamesDivsString=createGamesDivs($list);
+$gamesDivsString=createGamesDivs($list, $isAdmin);
 # Metto la lista al posto del placeholder
 $homePage=preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
 
