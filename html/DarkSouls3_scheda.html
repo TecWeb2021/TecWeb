@@ -94,40 +94,5 @@
 	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif">
 </div>
 
-<script>
-
-function OpenConsole() {
-  document.getElementById("console").classList.toggle("show");
-}
-
-function OpenGeneri() {
-  document.getElementById("generi").classList.toggle("show");
-}
-
-function OpenAnnoFIN() {
-  document.getElementById("annofin").classList.toggle("show");
-}
-
-function OpenAnnoIN() {
-  document.getElementById("annoin").classList.toggle("show");
-}
-
-function OpenOrdine() {
-  document.getElementById("ordine").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
 </body>
 </html>
