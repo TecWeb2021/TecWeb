@@ -31,8 +31,6 @@ body{ max-width: 1024px; }
 
 .textbox { width: 76%; }
 
-img.cover_gioco_della_settimana { border-radius: inherit; }
-
 .leftcolumn, .rightcolumn {
   width: 100%;
   padding: 0;

@@ -63,7 +63,7 @@ p.testo { width: 92%; }
 }
 .searchbutton { width: 4em; }
 
-.notizia h3 { font-size: 0.9em; }
+.titoli_notizie { font-size: 0.9em; }
 
 p.autore { font-size: 0.9em; }
 
@@ -91,8 +91,6 @@ p.sinossi{
   column-rule: 0px;
 }
 
-.game-image { padding-right: 0.5em; }
-
 dl.info dt {
   float: none;
   width: auto;
@@ -114,8 +112,6 @@ dl.info dd {
   width: 55%;
   margin: 5px;
 }
-
-/*---------------------*/
 
 
 #gioco_della_settimana {width: 50%;}

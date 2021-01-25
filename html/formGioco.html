@@ -21,7 +21,7 @@
     <script type="text/javascript" src="../checkForm.js"></script>
 </head>
 
-<body onload="carica_placeholder();">
+<body>
 
     <div id="header">
         <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
@@ -57,13 +57,13 @@
     </div>
 
     <div id="breadcrumb">
-        <p>Ti trovi in: <a class="link_breadcrumb" href="home.html"><span xml:lang="en">Home</span></a> > <a class="link_breadcrumb" href="esempioAdmin.html"><span xml:lang="en">Admin</span></a> > Inserisci Gioco</p>
+        <p>Ti trovi in: <a class="link_breadcrumb" href="home.html"><span xml:lang="en">Home</span></a> : <a class="link_breadcrumb" href="esempioAdmin.html"><span xml:lang="en">Admin</span></a> : Inserisci Gioco</p>
     </div>
 
     <div class="container" id="content">
         <div class="schedaForm">
-            <h3>Form per l'inserimento di un nuovo gioco</h3>
-            <p>I campi marcati con * sono opzionali</p>
+            <h3 class="titolo_form">Form per l'inserimento di un nuovo gioco</h3>
+            <p class="avviso_importante">I campi marcati con * sono opzionali</p>
             <form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggiForm_ph />
@@ -87,13 +87,13 @@
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="console[]" value="PS4" id="PS4" <valoreCheckedPS4_ph /> />
-                            <label for="PS4">PS4</label></li>
+                            <label for="PS4"><abbr title="Pan European Game Information">PS4</abbr></label></li>
                             <li><input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valoreCheckedXboxOne_ph /> />
                             <label for="XboxOne">XboxOne</label></li>
                             <li><input type="checkbox" name="console[]" value="Switch" id="Switch" <valoreSwitch_ph /> />
                             <label for="Nintendo Switch">Switch</label></li>
                             <li><input type="checkbox" name="console[]" value="PS5" id="PS5" <valoreCheckedPS5_ph /> />
-                            <label for="PS5">PS5</label></li>
+                            <label for="PS5"><abbr title="Pan European Game Information">PS5</abbr></label></li>
                             <li><input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valoreCheckedXboxSeriesX_ph /> />
                             <label for="XboxSeriesX">XboxSeriesX/S</label></li>
                         </ul>
@@ -116,7 +116,7 @@
                             <label for="Horror" xml:lang="en">Horror</label></li>
                             <li><input type="checkbox" name="genere[]" value="Puzzle" id="Puzzle" <valoreCheckedPuzzle_ph /> />
                             <label for="Puzzle">Puzzle</label></li>
-                        <ul>
+                        </ul>
                     </div>
                 </fieldset>
 
