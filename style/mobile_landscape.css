@@ -12,7 +12,6 @@ body{
 
 .topnav.responsive button.icon {
   float: right;
-  width: 150px;
   text-align: center;
 }
 .topnav.responsive a {
@@ -82,7 +81,7 @@ p.descrizione_home {
 }
 
 .messaggi {
-  width: auto;
-  float: none;
-  margin-left: 24%;
+  padding: 0em;
+  display: block;
+  text-align: center;
 }

@@ -1,7 +1,7 @@
 var dettagli_form = {
     "nome": [/^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
     "sviluppo": [/^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
-    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3, 7, 12, 16, 18"],
+    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3,7,12,16,18"],
     "voto": [/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/, "Voto da 0 a 5"],
     "prequel": [/^([\w\s]){2,20}$/, "Inserire il nome del prequel"],
     "sequel": [/^([\w\s]){2,20}$/, "Inserire il nome del sequel"],
@@ -17,8 +17,8 @@ var dettagli_form = {
     "immagine": [/./, "Nessun file selezionato"],
 
     "nomeUtente": [/^([\w]){4,15}$/, "Inserire il nome utente"],
-    "password": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,12}$|^user$|^admin$/, "Inserire la password"],
-    "repeatpassword": [ /^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9!.@#$%^&*]{8,12}$|^user$|^admin$/, "Le password non combaciano"],
+    "password": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$|^user$|^admin$/, "Inserire la password"],
+    "repeatpassword": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$|^user$|^admin$/, "Le password non combaciano"],
     "email": [/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
 
