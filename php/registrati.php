@@ -16,11 +16,18 @@ $user=getLoggedUser($dbAccess);
 if($user){
 	$homePage="Sei già registrato e hai già fatto il login";
 }else{
-	if(isset($_REQUEST['nickname']) && isset($_REQUEST['password']) && isset($_REQUEST['email'])){
-		$username=$_REQUEST['nickname'];
-		$password=$_REQUEST['password'];
-		$email=$_REQUEST['email'];
-		#sanitize
+	$username=isset($_REQUEST['username']) ? $_REQUEST['username'] : null;
+	#sanitize
+	$password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
+	#sanitize
+	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+	#sanitize
+	$image=isset($_FILES['immagine']) ? $_FILES['immagine'] : null;
+	#sanitize
+
+	if($username && $password && $email && $image){
+		
+		
 
 		if(isset($_FILE['userfile'])){
 			$name=$_FILE['userfile']['name'];
@@ -28,19 +35,38 @@ if($user){
 			echo "nome file caricato: ".$name;
 		}
 
-		$hashValue=getHash($username, $password);
-		$newUser=new User($username,$hashValue,0, null, $email);
-		#controlla se è già registrato
+		$imagePath=saveImageFromFILES($dbAccess, "immagine");
+		if($imagePath!=false){
+			$image=new Image($imagePath, "immagine utente");
+			$hashValue=getHash($username, $password);
+			$newUser=new User($username,$hashValue,0, $image, $email);
+			#controlla se è già registrato
 
-		$result=$dbAccess->addUser($newUser);
-		if($result==false){
-			echo "operazione fallita";
+			$result=$dbAccess->addUser($newUser);
+			if($result){
+				setcookie('login',$hashValue);
+				echo "<br/>operazione eseguita con successo<br/>tra 5 secondi verrai portato sulla pagina home";
+				header( "refresh:60;url=home.php" );
+			}else{
+				echo "salvataggio utente fallito";
+				
+			}
+
 		}else{
-			setcookie('login',$hashValue);
-			echo "<br/>operazione eseguita con successo<br/>tra 5 secondi verrai portato sulla pagina home";
-			header( "refresh:5;url=home.php" );
+			echo "immagine non caricata";
 		}
+
+		
+	}else{
+		echo "inserire i valori";
 	}
+	$replacements=array(
+		"<email_ph/>"=>$email,
+		"<username_ph/>"=>$username
+		);
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
+		}
 }
 /*
 #rifaccio il controllo dell'utente dopo l'operazione di registrazione

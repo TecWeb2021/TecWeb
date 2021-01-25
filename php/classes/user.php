@@ -42,7 +42,7 @@ class User{
 
 
 	function setHashByPassword($password){
-		$inputString=$this->username.$this->password;
+		$inputString=$this->username.$password;
 		$hashValue=hash("md5",$inputString);
 		$this->hash=$hashValue;
 	}

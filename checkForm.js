@@ -17,8 +17,8 @@ var dettagli_form = {
     "immagine": [/./, "Nessun file selezionato"],
 
     "nomeUtente": [/^([\w]){4,15}$/, "Inserire il nome utente"],
-    "password": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$|^user$|^admin$/, "Inserire la password"],
-    "repeatpassword": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$|^user$|^admin$/, "Le password non combaciano"],
+    "password": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/, "Inserire la password"],
+    "repeatpassword": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/, "Le password non combaciano"],
     "email": [/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
 

@@ -40,7 +40,7 @@ class DBAccess {
 
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
-    public function getResult($query){
+    public function getResult($query, $silent=false){
         $querySelect ="$query";
         $queryResult = mysqli_query($this->connection, $querySelect);
         /*echo "query result: ".$queryResult;*/
@@ -48,7 +48,7 @@ class DBAccess {
             return $queryResult;
         }
 
-        if($queryResult==false){
+        if($queryResult==false && !$silent){
             echo mysqli_error($this->connection);
             return null;
         }
@@ -401,24 +401,21 @@ class DBAccess {
         $imagePath="";
         $imageAlt="";
         #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
+        $result=null;
         if($image){
             $imagePath=$image->getPath();
             $imageAlt=$image->getAlt();
+            echo "imageAlt: ".$imageAlt;
             $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        }
-        
-        if($image){
-            $image=$imagePath;
-        }else{
-            $image="NULL";
+            $result=$this->getResult($query);
+            if($result==null){
+                return null;
+            }
         }
 
-        $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, $image, '$email');";
+        $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, '$imagePath', '$email');";
         echo "query: ".$query;
         $result=$this->getResult($query);
-        if($result==null){
-            $result="null";
-        }
         return $result;
     }
 
@@ -429,9 +426,11 @@ class DBAccess {
         $image=$user->getImage();
         $imagePath= $image ? $image->getPath() : null;
         $this->addImage($image);
-        $email=$user->getImage();
+        $email=$user->getEmail();
 
-        $query="UPDATE users SET Hash=$hash, IsAdmin=$isAdmin, Image=$imagePath, Email=$email WHERE Username='$username'";
+        $query="UPDATE users SET Hash='$hash', IsAdmin=$isAdmin, Image='$imagePath', Email='$email' WHERE Username='$username'";
+        $result=$this->getResult($query);
+        return $result;
     }
 
     public function addImage($image){

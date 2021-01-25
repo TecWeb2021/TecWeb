@@ -146,7 +146,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	$originalName=$image['name'];
 
 	#ricavo nome immagine col numero più alto presente nel database
-	$imagesList=$dbAccess->getImages("path asc");
+	$imagesList=$dbAccess->getImages();
 	$numArray=array();
 	echo "step2";
 	foreach ($imagesList as $image) {
@@ -162,6 +162,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 
 	#ricavo il nome da assegnare al nuovo file
 	$newNumber=$maxNum+1;
+	echo "newNUmber :".$newNumber;
 	$extension=end(explode('.', $originalName));
 	$newFileName=$newNumber.".".$extension;
 	$fileDestination=$uploaddir . $newFileName;
