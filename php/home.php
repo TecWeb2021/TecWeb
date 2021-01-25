@@ -45,10 +45,11 @@ function createNewsList($list){
 	return $joinedItems;
 }
 
-function createTop5GamesItem($game){
+function createTop5GamesItem($game, $positionNumber){
 	$item=file_get_contents("../html/templates/homeTop5GameTemplate.html");
 
 	$item=preg_replace("/\<game_url_ph\/\>/","gioco_scheda.php?game=".strtolower($game->getName()),$item);
+	$item=preg_replace("/\<game_position_ph\/\>/",$positionNumber."°",$item);
 	$item=preg_replace("/\<game_name_ph\/\>/",$game->getName(),$item);
 	$item=preg_replace("/\<img_path_ph\/\>/","../".$game->getImage()->getPath(),$item);
 	$item=preg_replace("/\<img_alt_ph\/\>/",$game->getImage()->getAlt(),$item);
@@ -60,8 +61,9 @@ function createTop5Games($list){
 		return "";
 	}
 	$stringsArray=array();
-	foreach($list as $game){
-		$s=createTop5GamesItem($game);
+	for($i=0;$i<min(5,count($list));$i++){
+		$game=$list[$i];
+		$s=createTop5GamesItem($game,$i+1);
 
 		array_push($stringsArray, $s);
 	}

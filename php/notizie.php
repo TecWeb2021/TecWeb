@@ -21,6 +21,7 @@ function createNewsHTMLItem($news){
 	$item=preg_replace("/\<img_path_ph\/\>/","../".$news->getImage()->getPath(),$item);
 	$item=preg_replace("/\<img_alt_ph\/\>/",$news->getImage()->getAlt(),$item);
 	$item=preg_replace("/\<news_content_ph\/\>/",$news->getContent(),$item);
+	$item=preg_replace("/\<news_edit_ph\/\>/","edit_notizia.php?news=".strtolower($news->getTitle()),$item);
 	return $item;
 }
 
@@ -36,15 +37,13 @@ function createNewsList($list){
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
-	$newsListTemplate=file_get_contents("../html/templates/newsListTemplate.html");
-	$newsList=preg_replace("/\<news_list_items_ph\/\>/", $joinedItems, $newsListTemplate);
-	return $newsList;
+	return $joinedItems;
 }
 
 $list=$dbAccess->getNewsList();
 $newsListString=createNewsList($list);
 
-$homePage=preg_replace("/\<news_list_ph\/\>/",$newsListString,$homePage);
+$homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "notizie", $dbAccess);
 

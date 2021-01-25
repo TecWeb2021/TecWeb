@@ -1,9 +1,9 @@
 
     <div id="content" class="contenutoGenerale">
         <div class="schedaForm">
-            <h1>Form per l'inserimento di un nuovo gioco</h1>
+            <h1>Form per la modifica di un gioco</h1>
             <p>I campi marcati con * sono obbligatori</p>
-            <form id="formGioco" method="post" action="form_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+            <form id="formGioco" method="post" action="edit_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggiForm_ph />
         
@@ -96,7 +96,7 @@
                     <button type="submit">Annulla Modifiche</button>
                   </fieldset>
                 </form>
-                <form method="post" action="form_gioco.php">
+                <form method="post" action="edit_gioco.php">
                   <fieldset>
                     <button type="submit" name="delete" value="<game_name_ph/>">Elimina Gioco</button>
                   </fieldset>

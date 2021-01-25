@@ -2,9 +2,9 @@
 
   <div id="content" class="contenutoGenerale">
     <div class="schedaForm">
-      <h1>Form per l'inserimento di una nuova notizia</h1>
+      <h1>Form per la modifica di una notizia</h1>
       <p>I campi marcati con * sono obbligatori</p>
-      <form id="formNotizia" method="post" action="form_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+      <form id="formNotizia" method="post" action="edit_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
       
         <messaggiForm_ph />
     
@@ -61,7 +61,7 @@
           </form>
           <form method="post" action="../php/eliminaNotizia.php">
             <fieldset>
-              <button type="submit" value="<titolo_ph />">Elimina Notizia</button>
+              <button type="submit" name="delete" value="<news_name_ph/>">Elimina Notizia</button>
             </fieldset>
           </form>
       </div>

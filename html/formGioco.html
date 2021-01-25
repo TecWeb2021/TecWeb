@@ -4,11 +4,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>Inserisci Gioco - NomeSito</title>
-    <meta name="title" content="Inserisci Gioco - NomeSito" />
+    <title>Inserisci Gioco - ALLGames</title>
+    <meta name="title" content="Inserisci Gioco - ALLGames" />
     <meta name="description" content="Pagina per l'inserimento di nuovi giochi" />
     <meta name="keywords" content="videogiochi, giochi, nuovi" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <meta name="author" content="Federico Chiarello" />
     <meta name="language" content="italian it" />
@@ -25,8 +25,8 @@
 
     <div id="header">
         <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
-            <h1 id="titolo1"> Recensioni </h1>
-            <h2 id="titolo2"> Videogiochi </h2>
+        <h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
+    		<h2 id="titolo2">Tutto sui Videogiochi</h2>
         <div class="loginblock">
           <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
           <span id="login"><a href="../php/profilo.php"><nomeProfilo_ph /></a> | <a href="../php/logout.php">Logout</a></span>
@@ -57,12 +57,12 @@
     </div>
 
     <div id="breadcrumb">
-        <p>Ti trovi in: <span xml:lang="en">Home</span> >> <nomeProfilo_ph /> >> Nuova Gioco</p>
+        <p>Ti trovi in: <a class="link_breadcrumb" href="home.html"><span xml:lang="en">Home</span></a> > <a class="link_breadcrumb" href="esempioAdmin.html"><span xml:lang="en">Admin</span></a> > Inserisci Gioco</p>
     </div>
 
-    <div class="contenutoGenerale">
+    <div class="container">
         <div class="schedaForm">
-            <h1>Form per l'inserimento di un nuovo gioco</h1>
+            <h3>Form per l'inserimento di un nuovo gioco</h3>
             <p>I campi marcati con * sono opzionali</p>
             <form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
@@ -193,7 +193,7 @@
 
 <div id="footer">
 	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-	<em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+	<em> Noi4 - <span xml:lang="en">All rights Reserved</span> </em>
 	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
 

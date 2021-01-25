@@ -4,6 +4,7 @@ require_once("./classes/news.php");
 require_once("./classes/game.php");
 require_once("./classes/image.php");
 require_once("./classes/user.php");
+require_once("./classes/comment.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -109,9 +110,17 @@ class DBAccess {
         echo mysqli_error($this->connection);
     }
 
-    public function getNewsList() {
+    public function getNewsList($gameName=null) {
+        $specifyGameNameAppend="";
+        if($gameName!=null){
+            $specifyGameNameAppend="WHERE news.Game='$gameName'";
+        }
         $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
-        $result=mysqli_query($this->connection, $query);
+        $query=$query." ".$specifyGameNameAppend;
+        $result=$this->getResult($query);
+        if($result==null){
+            return null;
+        }
 
         if(mysqli_num_rows($result) ==0){
             return null;
@@ -383,12 +392,45 @@ class DBAccess {
 
         echo "<br/>news insertion";
         $content=addslashes($content);
-        $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
+        $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category', NULL)";
 
         echo "<br/>query: ".$query;
         $result=$this->getResult($query);
         if($result==null){
             $result="null";
+        }
+        return $result;
+    }
+
+    public function addGameNews(){
+        $title=$news->getTitle();
+        $content=$news->getContent()==null ? "NULL" : $news->getContent();
+        $author=$news->getAuthor();
+        $authorUsername=$author->getUsername();
+        $last_edit_date_time=$news->getLastEditDateTime();
+        $image=$news->getImage();
+        $imagePath="NULL";
+        $imageAlt="NULL";
+        if($image){
+            $imagePath=$image->getPath();
+            $imageAlt=$image->getAlt();
+        }
+        $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
+        $gameName=$news->getGameName()==null ? "NULL" : $news->getGameName();
+
+        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+        echo "<br/>image insertion";
+        $this->getResult($query);
+
+        echo "<br/>news insertion";
+        $content=addslashes($content);
+        $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
+
+        echo "<br/>query: ".$query;
+        $result=$this->getResult($query);
+        if($result==null){
+            $query="UPDATE news SET Title='$title', User='$authorUsername', Last_edit_date='$last_edit_date_time', Content='$content', Image='$imagePath', Category='$category' WHERE Title='$title'";
+            $result=$this->getResult($query);
         }
         return $result;
     }
@@ -414,7 +456,44 @@ class DBAccess {
 
         $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath')";
         $result=$this->getResult($query);
+        if($result==null){
+            $query="UPDATE games SET Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$name'";
+            $result=$this->getResult($query);
+        }
         return $result;
+    }
+
+
+    function addComment($comment){
+        $authorName=$comment->getAuthorName();
+        $gameName=$comment->getGameName();
+        $date_time=$comment->getDateTime();
+        $content=$comment->getContent();
+
+        $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function getCommentsList($gameName=null, $order="date_time desc"){
+        $query="SELECT * FROM comments";
+        $gameNameQueryAppend= $gameName ? "WHERE comments.Game='$gameName'" : "";
+        $orderQueryAppend= $order=="date_time desc" ? "ORDER BY comments.Date_time DESC" : "";
+        $query=$query." ".$gameNameQueryAppend." ".$orderQueryAppend;
+        $queryResult = $this->getResult($query);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $commentsList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                $comment=new Comment($row['Author'],$row['Game'], $row['Date_time'],$row['Content']);
+                array_push($commentsList, $comment);
+            }
+            return $commentsList;
+        }
+
+
     }
 
 }

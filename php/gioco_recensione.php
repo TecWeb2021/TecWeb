@@ -9,7 +9,6 @@ $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
-$homePage=replace($homePage);
 
 function replacePH($game){
 	global $homePage;
@@ -20,6 +19,7 @@ function replacePH($game){
 	$homePage=str_replace("<img_alt_ph/>", $game->getImage()->getAlt(),$homePage);
 	$homePage=str_replace("<review_content_ph/>", $game->getReview(),$homePage);
 	$homePage=str_replace("<game_vote_ph/>", $game->getVote(),$homePage);
+	$homePage=str_replace("<game_name_ph/>", $game->getName(),$homePage);
 	/*$homePage=str_replace("</>", $game->,$homePage);
 	$homePage=str_replace("</>", $game->,$homePage);
 	$homePage=str_replace("</>", $game->,$homePage);
@@ -28,14 +28,52 @@ function replacePH($game){
 	$homePage=str_replace("</>", $game->,$homePage);*/
 }
 
+function generateGameCommentsDivs($gameName,$dbAccess){
+	$commentTemplate=file_get_contents("../html/templates/commentDivTemplate.html");
+	$commentsList=$dbAccess->getCommentsList($gameName);
+	$commentsString="";
+	foreach ($commentsList as $com) {
+		$s=$commentTemplate;
+		$s=str_replace("<comment_content_ph/>", $com->getContent(), $s);
+		$commentsString=$commentsString.$s;
+	}
+	return $commentsString;
+
+}
+
 if(isset($_REQUEST['game'])){
 	$gameName=$_REQUEST['game'];
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
-	if($game==null){
-		echo "il gioco specificato non è stato trovato";
-	}else{
+	if($game){
 		replacePH($game);
+
+		
+
+		
+		$write=isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
+		#sanitize;
+		if($write){
+			$user=getLoggedUser($dbAccess);
+			if($user){
+				$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
+				$result=$dbAccess->addComment($comment);
+				if($result){
+					echo "commento inserito<br/>";
+				}else{
+					echo "commento non inserito<br/>";
+				}
+			}else{
+				echo "Per commentare devi essere autenticato";
+			}
+			
+		}
+
+		$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess);
+		$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
+
+	}else{
+		echo "il gioco specificato non è stato trovato";
 	}
 }else{
 	echo "non è specificato un gioco";

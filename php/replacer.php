@@ -25,7 +25,19 @@ function createBasePage($templatePath, $page, $dbAccess){
 }
 
 function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImagePath="../images/login.png"){
+
+	if(isset($_REQUEST['tendina']) && ($_REQUEST['tendina']=='true' || $_REQUEST['tendina']=='false')){
+		$templatePath="../html/templates/top_and_bottomTemplateNoJS.html";
+	}
 	$base=file_get_contents($templatePath);
+	$url=$_SERVER['REQUEST_URI'];
+
+	if (strpos($url, '?') !== false) {
+    	$url=$url."&";
+	}else{
+		$url=$url."?";
+	}
+	$base=str_replace("<this_url_ph/>", $url, $base);
 
 	$possiblePages=array("home","giochi","notizie");
 	if(!in_array($page, $possiblePages)){
@@ -61,6 +73,16 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
 
 
+
+	if(isset($_REQUEST['tendina'])){
+		if($_REQUEST['tendina']=='true'){
+			$base=str_replace("topnav","topnav responsive",$base);	
+			$base=str_replace("<tendina_bool_ph/>","false",$base);
+		}elseif($_REQUEST['tendina']=='false'){
+			$base=str_replace("<tendina_bool_ph/>","true",$base);
+		}
+	}
+
 	return $base;
 }
 
@@ -93,11 +115,14 @@ function getLoggedUser($dbAccess){
 }
 
 function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/'){
-
-	$image= isset($_FILES['$imgReceiveName']) ? $_FILES['$imgReceiveName'] : null;
+	//echo "saveImageFromFILES";
+	//print_r($_FILES);
+	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
+	//print_r($image);
 	if(!$image){
 		return false;
 	}
+	echo "step1";
 	#Recupero il percorso temporaneo del file
 	$image_tmp_location = $image['tmp_name'];
 	#recupero il nome originale del file caricato
@@ -107,10 +132,16 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	#ricavo nome immagine col numero più alto presente nel database
 	$imagesList=$dbAccess->getImages("path asc");
 	$numArray=array();
+	echo "step2";
 	foreach ($imagesList as $image) {
-		$num= explode(".",explode("/",$image->getPath())[1])[0];
-		array_push($imagesList, $num);
+		//echo $image->getPath()."<br/>";
+		$a=explode("/",$image->getPath())[1];
+		//echo $a."<br/>";
+		$num= explode(".",$a)[0];
+		array_push($numArray, $num);
 	}
+	print_r($numArray);
+	echo "step3";
 	$maxNum= count($numArray)>0 ? max($numArray) : -1;
 
 	#ricavo il nome da assegnare al nuovo file

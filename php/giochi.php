@@ -22,6 +22,7 @@ function createGameHTMLItem($game){
 	$item=preg_replace("/\<img_path_ph\/\>/","../".$game->getImage()->getPath(),$item);
 	$item=preg_replace("/\<img_alt_ph\/\>/",$game->getImage()->getAlt(),$item);
 	$item=preg_replace("/\<game_scheda_url_ph\/\>/","gioco_scheda.php?game=".strtolower($game->getName()),$item);
+	$item=preg_replace("/\<game_edit_ph\/\>/","edit_gioco.php?game=".strtolower($game->getName()),$item);
 	
 	return $item;
 }
@@ -42,6 +43,8 @@ function createGamesDivs($gamesList){
 	return $joinedItems;
 }
 
+
+
 $gameName= isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 #sanitize
 $order= isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
@@ -57,7 +60,6 @@ $yearRangeEnd= isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
 
 # Chiedo al server una lista delle notizie
 $list=$dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order);
-//print_r($list);
 # Unisco le notizie in una lista html 
 $gamesDivsString=createGamesDivs($list);
 # Metto la lista al posto del placeholder

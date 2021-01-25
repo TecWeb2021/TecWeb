@@ -3,21 +3,17 @@
     margin: 0em;
 }
 
-html {
-    margin: auto;
-}
-body{
-  font-family: Georgia, "Times New Roman", serif;
-}
-.aiutiNascosti {
-    display: none;
-}
+html { margin: auto; }
 
-/*
-=========================
+body{ font-family: Georgia, "Times New Roman", serif; }
+
+.aiutiNascosti { display: none; }
+
+img { display: none; }
+
+/*=========================
 SEZIONE HEADER
-=========================
-*/
+=========================*/
 
 #header {
     padding: 1.0em 0em 1.0em 0em;
@@ -26,25 +22,13 @@ SEZIONE HEADER
     margin-bottom: 0.5em;
 }
 
-#header h1 {
-    font-size: 2.5em;
-}
-
-#logo {
-    display: none;
-}
+#header h1 { font-size: 2.5em; }
 
 #header h2 {
     font-size: 1.1em;
     font-style: italic;
     font-weight: normal;
 }
-
-/*
-=========================
-SEZIONE BREADCRUMB
-=========================
-*/
 
 #breadcrumb {
     padding: 0.5em 0 0.5em 1.0em;
@@ -54,32 +38,18 @@ SEZIONE BREADCRUMB
     border-bottom: 1px solid #ddd;
 }
 
-/*
-=========================
-SEZIONE MENU
-=========================
-*/
+#menu { display: none; }
 
-#menu {
-    display: none;
-}
-
-/*
-=========================
+/*=========================
 SEZIONE CONTENUTO
-=========================
-*/
-
-
+=========================*/
 
 .contenutoGenerale h1 {
     font-size: 2em;
     margin-bottom: 0.5em;
 }
 
-.contenutoGenerale h2 {
-    font-size: 1.2em;
-}
+.contenutoGenerale h2 { font-size: 1.2em; }
 
 .contenutoGenerale p {
     margin-left: 0em;
@@ -91,28 +61,19 @@ SEZIONE CONTENUTO
     margin-bottom: 1em;
 }
 
-.imgCon {
-    display: none;
-}
-
 p {
     margin-left: 0em;
     margin-bottom: 1em;
     text-align: justify;
 }
 
-.aiutoTornaSu {
-    display: none;
-}
+.aiutoTornaSu { display: none; }
 
-.leftcolumn{
-  width: 100%;
-}
-/*
-=========================
+.leftcolumn { width: 100%; }
+
+/*=========================
 SEZIONE FOOTER
-=========================
-*/
+=========================*/
 
 #footer {
     text-align: center;
@@ -124,33 +85,33 @@ SEZIONE FOOTER
     border-bottom: 1px solid #ddd;
 }
 
-#imgValidCode {
-    display: none;
-}
+#imgValidCode { display: none; }
 
-#imgValidCSS {
-    display: none;
-}
+#imgValidCSS { display: none; }
 
-.leftcolumn, .rightcolumn{
+.leftcolumn, .rightcolumn {
   width: 100%;
   padding: 0;
   max-height: none;
 }
-#ultime_aggiunte{
+
+#ultime_aggiunte {
   float: right;
   width: 30%;
   padding: 0;
 }
-#gioco_della_settimana{
+
+#gioco_della_settimana {
   float: left;
   width: 69%;
   padding: 0;
 }
-p.trama, p.testo{
+
+p.trama, p.testo {
   column-count: 1;
 }
-.info_gioco_scheda{
+
+.info_gioco_scheda {
   width: 100%;
   text-align: center;
 }
