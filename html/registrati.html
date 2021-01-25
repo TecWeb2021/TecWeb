@@ -65,8 +65,8 @@
         <h3 class="titolo_login_registrati">Crea il tuo account ALLGames</h1>
         <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
           <fieldset>
-            <p>Dati personali<p>
-            <p>Tutti i campi sono obbligatori</p>
+            <p class="dati_personali">Dati personali<p>
+            <p class="avviso_importante">Tutti i campi sono obbligatori</p>
 
             <label for="email">E-mail</label>
             <span><input type="text" name="eemail" id="email" value="<mailProfilo_ph />" placeholder="Inserisci la tua e-mail" /></span><br />
@@ -79,7 +79,7 @@
           </fieldset>
 
           <fieldset>
-            <p>La password deve contenere da 8 a 12 caratteri, fra cui almeno un numero, una lettera minuscola e una maiuscola</p>
+            <p class="avviso_importante">La password deve contenere da 8 a 12 caratteri, fra cui almeno un numero, una lettera minuscola e una maiuscola</p>
             <label for="password">Password</label>
             <span><input type="password" name="password" id="password" value="<valorePw_ph />" placeholder="Password" /></span><br />
 

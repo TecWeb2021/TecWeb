@@ -33,7 +33,7 @@
   </div>
 
   <div class="topnav" id="menu">
-    <button  class="icon" onclick="responsiveMenu()">
+    <button class="icon" onclick="responsiveMenu()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </button>
 
@@ -59,8 +59,28 @@
       <p>Ti trovi in: Notizie</p>
   </div>
 
-  <div class="container">
-    <div class="advance_filter_notizie">
+  <div id="content" class="container">
+    <div class="advance_filter" id="categorie">
+          <form class="barra_ricerca_notizie" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+            <fieldset>
+              <label for="searchbar" class="structural">Cerca notizia:</label>
+              <input list="titleInput" name="searchbar" id="searchbar_notizie" class="searchbar" placeholder="Cerca notizia..." aria-label="Campo per la ricerca di notizie" />
+              <datalist id="titleInput" class="formText">
+                <opzioni_ph/>
+              </datalist>
+              <button type="submit" class="searchbutton">Cerca</button>
+            </fieldset>
+          </form>
+        <div class="filtri_ordine">
+          <span class="tipo_ordine">Tipologia: |</span>
+          <form class="bottoniOrdine" action="../php/action_page.php">
+            <fieldset>
+              <button class="dropbtn" value="Hardware">Hardware</button>
+              <button class="dropbtn" value="Giochi">Giochi</button>
+              <button class="dropbtn" value="Eventi">Eventi</button>
+            </fieldset>
+          </form>
+        </div>
     </div>
     <div class="spazio_contenuto">
       <div class="notizia">
@@ -78,7 +98,7 @@
           <p class="modifica"><a class="link" href="">Modifica notizia</a></p>
       </div>
     </div>
-  </div>
+</div>
 
 <div id="footer">
 	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />

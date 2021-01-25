@@ -76,13 +76,13 @@
             <span><p id="labelTipologia" class="spuntabili">Tipologia: </p></span>
             <div class="gruppoRadio">
               <ul class="checkbox">
-                <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" >
+                <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <valoreEventi_ph /> >
                     <label for="Eventi">Eventi</label></li>
 
-                <li><input type="radio" id="Giochi" name="tipologia" value="Giochi" >
+                  <li><input type="radio" id="Giochi" name="tipologia" value="Giochi" <valoreGiochi_ph /> >
                     <label for="Giochi">Giochi</label></li>
 
-                <li><input type="radio" id="Hardware" name="tipologia" value="Hardware" >
+                <li><input type="radio" id="Hardware" name="tipologia" value="Hardware" <valoreHardware_ph /> >
                     <label for="Hardware">Hardware</label></li>
               </ul>
             </div>
@@ -97,7 +97,7 @@
         </fieldset>
 
         <fieldset>
-            <label for="immagine">Immagine: </label>
+            <label id="label_immagine" for="immagine">Immagine: </label>
             <span><input type="file" id="immagine" name="immagine" /></span><br />
 
             <label for="alternativo">*Alt immagine: </label>
@@ -109,7 +109,7 @@
             <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><valoreTesto_ph /></textarea></span>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="salva">
             <button type="submit" name="submit">Salva Modifiche</button>
             <p>Salva le modifiche e torna alla pagina principale Admin</p>
         </fieldset>
