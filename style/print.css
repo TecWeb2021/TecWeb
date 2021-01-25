@@ -115,7 +115,9 @@ p.trama, p.testo {
   width: 100%;
   text-align: center;
 }
-
-.modifica, .aiutoTornaSu, #login, #registrati, #loginPic, .filtri_ordine, .filtri_categorie, #submenu, #inserisci_commento, .messaggioLogin, #loginButton{
-  display: none
+#imgProfilo, #fotoUtente{
+  display: inline-block;
+}
+.modifica, .aiutoTornaSu, #login, #registrati, #loginPic, .filtri_ordine, .filtri_categorie, #submenu, #inserisci_commento, .messaggioLogin, #loginButton, .barra_ricerca_notizie, #bottoniOpzionali, #salva, #immagine, #label_immagine, button, #schedaAdmin{
+  display: none;
 }

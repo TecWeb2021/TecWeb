@@ -363,6 +363,9 @@ SEZIONE IMMAGINI
   left: 0;
   border-radius: 5px;
 }
+.noborder{
+  border-radius: 0px;
+}
 
 .img_cover:hover, .img_sfondo:hover{
   opacity: 0.8;
