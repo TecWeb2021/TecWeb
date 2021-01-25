@@ -418,33 +418,29 @@ SEZIONE DROPDOWN FILTRI
 
 .dropdown:hover .dropdown-filter, .show {display: block;}
 
-/*
-=========================
-SEZIONE FORM
-=========================
-*/
+/*==================================
+ELEMENTI DI PAGINE CONTENENTI FORM
+==================================*/
 
 label, input { display: inline-block; }
 
-.schedaForm label{
+.schedaForm label {
   width: 28%;
   text-align: right;
 }
 
-.schedaForm input{
+.schedaForm input {
   width: 40%;
   margin: 5px;
 }
 
-.schedaForm>p{
-  margin-left: 0.5em;
-}
+.schedaForm>p { margin-left: 0.5em; }
 
 .invisibile { display: none; }
 
 .visibile { display: block; }
 
-.schedaForm{
+.schedaForm {
   background-color: #f5f5f5;
   border: 1px solid #000;
   border-radius: 10px;
@@ -453,7 +449,7 @@ label, input { display: inline-block; }
   overflow: auto;
 }
 
-.schedaForm fieldset{
+.schedaForm fieldset {
   border: 1px;
   border-color: black;
   border-style: solid;
@@ -462,57 +458,59 @@ label, input { display: inline-block; }
   margin: 0.2em;
 }
 
-.schedaForm button{
+.schedaForm button {
   width: 20%;
   font-weight: bold;
   float:left;
 }
 
-.schedaForm button+p{
+.schedaForm button+p {
   padding: 0.5em;
   margin-left: 22%;
 }
 
-.schedaForm input[type=radio], .schedaForm input[type=checkbox]{
-  width: 2%;
+.schedaForm input[type=radio], .schedaForm input[type=checkbox] {
+  width: 16px;
   height: 1.2em;
   padding-left: 0;
 }
 
-.schedaForm input[type=radio]+label{
+.schedaForm input[type=radio]+label {
   width: 14%;
   text-align: left;
 }
 
-.gruppoCheck{
+.gruppoCheck {
   margin-left: 5%;
 }
 
-.schedaForm input[type=file]{
+.gruppoRadio {
+  margin-left: 18%;
+}
+
+.schedaForm input[type=file] {
   padding-top: 0.5em;
+}
+
+.schedaForm input[type=file] {
   background-color: #f5f5f5;
 }
 
-#handler p{
-  float: left;
-  width: 20%;
-}
-
-fieldset .textAreaLabel{
+fieldset .textAreaLabel {
   width: 23%;
 }
 
-textarea{
+textarea {
   resize: none;
   vertical-align: top;
   width: 60%;
 }​
 
-input[type=text], textarea{
+input[type=text], textarea {
   padding: 5px;
 }
 
-.messaggi{
+.messaggi {
   padding-top: 0.5em;
   display: inline-block;
   text-align: left;
@@ -531,14 +529,6 @@ p+p.messaggi {
   display: inline-block;
 }
 
-#labelTipologia+p {
-  width: auto;
-}
-
-.gruppo label{
-  width: 10%;
-}
-
 .erroreBox { border: 2px solid red; }
 
 .correttoBox { border: 2px solid green; }
@@ -550,16 +540,26 @@ p+p.messaggi {
 
 textarea.correttoBox+p {
   width: 13%;
+  display: inline;
+  padding-left: 1em;
 }
 
 textarea.erroreBox+p {
-  float: none;
-  margin-left: 24%;
+  padding: 0em;
+  display: block;
+  text-align: center;
 }
 
-#rosso.ao {
-  background-color: red;
-}
+ul.checkbox  { 
+  margin-left: 20px; 
+  list-style: none; 
+} 
+
+ul.checkbox li { 
+  border: transparent solid; 
+  display: inline-block;
+  width: 30%;
+} 
 
 /*
 =========================
@@ -630,7 +630,7 @@ a.name{
   color: black;
 }
 
-a.active.name, a:hover.name,{
+a.active.name, a:hover.name {
     color: white;
     background-color: #313131;
 }
