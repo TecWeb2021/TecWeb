@@ -13,58 +13,29 @@ html {
 }
 
 body {
-<<<<<<< HEAD
     max-width: 1024px;
     margin: auto;
     background-color: #f5f5f5;
     font-family: "Roboto", Arial, sans-serif;
 }
+
 fieldset{
   border: 0px;
 }
 
 /*
 =========================
-=======
-  max-width: 1024px;
-  margin: auto;
-  background-color: #f5f5f5;
-  font-family: "Roboto", Arial, sans-serif;
-}
-
-fieldset{ border: 0px; }
-
-a.link{
-  font-weight: bold;
-  color: black;
-}
-
-a.link:visited{ color: #676767; }
-
-a.link:hover, a.link_login:hover {
-  color: white;
-  background-color: #313131;
-}
-
-.loginButton, #login_credential {
-  display: flex;
-  justify-content: center;
-}
-
-.loginButton { margin-bottom: 0.5em; }
-
-/*=========================
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 SEZIONE HEADER
-=========================*/
+=========================
+*/
 
-#header {
+#header{
   background-color: #600000;
   padding: 1.0em;
   min-height: 2em;
 }
 
-.aiutiNascosti {
+.aiutiNascosti{
   position: absolute;
   height: 1px;
   width: 1px;
@@ -89,51 +60,8 @@ SEZIONE TITOLO
   font-style: italic;
   font-weight: normal;
 }
-<<<<<<< HEAD
 
 /*login*/
-=======
-
-/*=========================
-SEZIONE DROPDOWN FILTRI
-=========================*/
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover { background-color: #ddd; }
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content { display: block; }
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-/*.dropdown:hover .dropbtn {background-color: #3e8e41;}*/
-
-/*=========================
-SEZIONE LOGIN
-=========================*/
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 
 #login{ display: block; }
 
@@ -164,7 +92,6 @@ div.loginblock {
     max-width: 9em;
 }
 
-<<<<<<< HEAD
 /*
 =========================
 SEZIONE MENU
@@ -233,81 +160,6 @@ button.icon{
     padding-bottom: 1.5px;
     list-style: none;
     z-index: 2;
-=======
-#breadcrumb {
-    background-color: #333;
-    color: white;
-    padding: 0.3em 0 0.3em 0.5em;
-    font-weight: bold;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-}
-
-.link_breadcrumb { color: white; }
-
-/*=========================
-SEZIONE MENU
-=========================*/
-
-.topnav { background-color: #333; }
-
-.topnav a, button.icon {
-  color: #fff;
-  font-weight: bold;
-  line-height: 30px;
-  text-decoration: none;
-  width: 150px;
-  height: 30px;
-  text-align: center;
-  background-color: #1b365d;
-  border-bottom: 5px solid #54BAE2;
-  border-radius: 10px;
-  display: block;
-  margin: 2px;
-  float: left;
-}
-
-button.icon{ height: 36px; }
-
-.topnav a.active, .topnav a:hover, button:hover.icon {
-  background-color: #600000;
-  border-bottom: 5px solid #1b365d;
-}
-.topnav a.active {
-  pointer-events: none;
-  cursor: default;
-}
-.topnav::after {
-  content: " ";
-  display: block;
-  height: 0;
-  clear: both;
-}
-
-/*====== ICON ======*/
-
-#hamburger {
-  width: 12%;
-  max-width: 13em;
-  margin-bottom: 4px;
-}
-
-.advance_filter{ display: inline-block; }
-
-.topnav .icon { display: none; }
-
-#menu {
-  background-color: #2c2c2c;
-  position: sticky;
-  top: 0px;
-  display: block;
-  font-family: Verdana, sans-serif;
-  font-size: 14px;
-  margin-left: 0px;
-  padding-bottom: 1.5px;
-  list-style: none;
-  z-index: 2;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 }
 
 /*barra di ricerca*/
@@ -316,11 +168,7 @@ button.icon{ height: 36px; }
   width: 100%;
 }
 
-<<<<<<< HEAD
 .searchbox{
-=======
-.searchbox {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   float: right;
   width: 30%;
   margin-right: 0.5em;
@@ -350,7 +198,6 @@ button{
   cursor: pointer;
 }
 
-<<<<<<< HEAD
 .menu{
   list-style-type: none;
 }
@@ -491,201 +338,6 @@ SEZIONE IMMAGINI
 */
 
 .img_cover{
-=======
-.searchbutton {
-  width: 5em;
-  height: 2.5em;
-}
-
-.menu{ list-style-type: none; }
-
-/*=========================
-SEZIONE RIGHT COLUMN
-=========================*/
-
-#titolo_gioco_della_settimana, .titolo_info_scheda { text-align: center; }
-
-.titolo_info_scheda { padding: 0.5em 0.5em 0em; }
-
-.sidebox {
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  border: 1px solid #000;
-  padding: 0.5em;
-  display: inline-block;
-}
-.sidebox h4 { text-align: center; }
-.titolo_last_games {
-  text-align: center;
-  font-size: inherit;
-}
-
-a.linktop { height: 5rem; }
-
-li.giocotop {
-  height: 5rem;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: table;
-  width: 100%;
-}
-
-img.sfondo_giocotop, img.cover_scheda {
-  width: 100%;
-  height: inherit;
-  top: 0;
-  left: 0;
-}
-
-img.sfondo_giocotop {
-  border-radius: 10px;
-}
-
-.sfondo_giocotop:hover {
-  opacity: 0.8;
-}
-
-img.cover_gioco_della_settimana {
-  border-radius: 10px;
-  width: 100%;
-  height: inherit;
-  top: 0;
-  left: 0;
-}
-
-.info_scheda { padding: 0.5em; }
-
-dl.info { padding: 0.5em; }
-
-dl.info dt, dl.info_scheda dt {
-  float: left;
-  width: 50%;
-  font-weight: bold;
-  display: inline-block;
-}
-
-dl.info dd {
-  display: inline-block;
-  width: 50%;
-  padding-bottom: 1.5em;
-}
-
-dl.info_scheda dd {
-  display: inline-block;
-  width: 50%;
-  padding-bottom: 1.5em;
-}
-
-.info_gioco_scheda {
-  background-color: #f5f5f5;
-  border: 1px solid;
-  border-radius: 25px;
-  float: left;
-  display: inline-block;
-  width: 29%;
-  margin-right: 5px;
-}
-
-/*=========================
-SEZIONE CONTENUTO
-=========================*/
-
-.leftcolumn {
-  float: left;
-  width:70%;
-  max-height: 1290px;
-}
-
-.rightcolumn {
-  float: right;
-  width:30%;
-}
-
-.row:after, .container_scheda::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.row, .container_scheda {
-  background-color: #414141;
-  padding: 0.2em;
-}
-
-.notizia, .game {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-bottom: 0.2em;
-  overflow: auto;
-}
-
-.contenutoGenerale {
-  background-color: #414141;
-  padding: 0.2em;
-}
-
-.notizia h3 {
-  float: left;
-  padding: 0.2em;
-  border-radius: 5px;
-  font-size: 1.2em;
-  margin-top: 0.5em;
-  display: inline-block;
-  padding-left: 0.4em;
-}
-
-p.data {
-  text-align: right;
-  font-size: smaller;
-}
-p.valutazione {
-  float: right;
-  font-weight: bold;
-}
-
-#voto_home {
-  float: none;
-  font-weight: bold;
-  text-align: center;
-}
-
-p.descrizione {
-  column-count: 3;
-  column-rule: 1px solid #ccccb3;
-  border-radius: 25px;
-  border: 1px solid #000;
-  background-color:#f5f5f5;
-  text-align: left;
-  padding: 1em;
-}
-
-p.data_pubblicazione_gioco {
-  display: inline-block;
-  margin: 0.5em 0em 0.5em 0em;
-  text-align: left;
-  width: 100%;
-}
-
-p.autore {
-  display: inline-block;
-  margin: 0.5em 0em 0.5em 0em;
-  text-align: left;
-  width: 100%;
-}
-
-.aiutoTornaSu {
-  margin: 1.1em 1em 0 0;
-  float: right;
-}
-
-.keep_reading{ display: inline-block; }
-
-.contenutoGenerale h1 { text-align: center; }
-
-.img_cover {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   border-radius: 10px;
   min-width: 130.61px;
   min-height: 202.02px;
@@ -694,7 +346,6 @@ p.autore {
   margin-right: 0.5em;
   float: left;
 }
-<<<<<<< HEAD
 
 .img_sfondo{
   width: 100%;
@@ -724,57 +375,6 @@ SEZIONE DROPDOWN FILTRI
 
 .dropdown{
   display: inline-block;
-=======
-
-.img_cover:hover,.notizia_cover:hover { opacity: 0.8; }
-
-a.titolo_news {
-  max-width: 80%;
-  font-weight: bold;
-  font-size: larger;
-  color: black;
-}
-
-a.active.titolo_news, a:hover.titolo_news {
-  color: white;
-  background-color: #313131;
-}
-
-a:visited.titolo_news { color: #676767; }
-
-.wrapper{
-  width: 80%;
-  float: right;
-}
-
-p.descrizione_home {
-  column-count: 3;
-  column-rule: 1px solid #ccccb3;
-  border-radius: 25px;
-  border: 1px solid #000;
-  background-color:#f5f5f5;
-  text-align: left;
-  padding: 1em;
-}
-
-/*=========================
-SEZIONE FOOTER
-=========================*/
-
-#footer {
-  position: relative;
-  text-align: center;
-  font-size: 0.7em;
-  padding: 1.5em;
-  padding-top: 1.3em;
-  font-style: italic;
-  border-top: 1px solid #ddd;
-}
-
-#imgValidCode {
-  margin-top: -0.5em;
-  float: left;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 }
 
 .dropdown-content{
@@ -786,23 +386,12 @@ SEZIONE FOOTER
   z-index: 1;
 }
 
-<<<<<<< HEAD
 .dropdown-content a{
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
-=======
-.structural {
-  position:absolute;
-  left:-9999px;
-}
-
-/*=========================
-SEZIONE FILTRI
-=========================*/
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 
 .dropbtn{
   background-color: #74c243;
@@ -813,15 +402,7 @@ SEZIONE FILTRI
   cursor: pointer;
 }
 
-<<<<<<< HEAD
 .dropdown-filter{
-=======
-.dropbtn:hover {background-color: #3e8e41;}
-
-.dropdown { display: inline-block; }
-
-.dropdown-filter {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   display: none;
   position: absolute;
   background-color: #f1f1f1;
@@ -829,7 +410,6 @@ SEZIONE FILTRI
   z-index: 1;
 }
 
-<<<<<<< HEAD
 .dropdown-content a:hover {background-color: #ddd;}
 
 .dropbtn:hover {background-color: #3e8e41;}
@@ -843,13 +423,6 @@ SEZIONE FILTRI
 SEZIONE FORM
 =========================
 */
-=======
-.dropdown:hover .dropdown-filter, .show {display: block;}
-
-/*=========================
-SEZIONE LETTERE
-=========================*/
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 
 label, input { display: inline-block; }
 
@@ -862,7 +435,6 @@ label, input { display: inline-block; }
   width: 40%;
   margin: 5px;
 }
-<<<<<<< HEAD
 
 .schedaForm>p{
   margin-left: 0.5em;
@@ -931,219 +503,12 @@ fieldset .textAreaLabel{
 }
 
 textarea{
-=======
-
-.intestazione {
-  display: inline-block;
-  margin-bottom: 1em;
-}
-
-.titolo_e_data {
-  float:left;
-}
-
-.spazio_contenuto{ margin-top: 1em; }
-
-.container {
-  background-color: #414141;
-  padding: 0.2em;
-}
-
-#submenu {
-  background-color: #2c2c2c;
-  position: sticky;
-  top:41px;
-  display: block;
-  font-family: Verdana, sans-serif;
-  font-size: 14px;
-  margin-left: 0px;
-  padding-bottom: 1.5px;
-  list-style: none;
-}
-
-.leftnav a {
-  color: #fff;
-  font-weight: bold;
-  line-height: 30px;
-  text-decoration: none;
-  width: 9.7em;
-  height: 30px;
-  text-align: center;
-  background-color: #1b365d;
-  border-bottom: 5px solid #54BAE2;
-  border-radius: 10px;
-  display: block;
-  margin: 2px;
-  float: left;
-}
-
-.leftnav {
-  display:inline-block;
-  background-color: #333;
-  overflow: hidden;
-}
-
-.leftnav a.active, .leftnav a:hover {
-  background-color: #600000;
-  border-bottom: 5px solid #1b365d;
-}
-
-.leftnav a.active {
-  pointer-events: none;
-  cursor: default;
-}
-
-.leftnav::after {
-  content: " ";
-  display: block;
-  height: 0;
-  clear: both;
-}
-
-.gioco{
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-bottom: 0.2em;
-  display: flex;
-  text-align: justify;
-}
-
-p.trama {
-  column-count: 2;
-  column-rule: 1px solid #ccccb3;
-  border-radius: 25px;
-  border: 1px solid #000;
-  background-color:#f5f5f5;
-  text-align: left;
-  padding: 1em;
-}
-
-.recensione {
-    background-color: #f5f5f5;
-    border: 1px solid #000;
-    border-radius: 10px;
-    padding: 0.5em;
-    margin-bottom: 0.2em;
-}
-
-.title1 { display: inline-block; }
-
-.title2 {
-  display: inline-block;
-  margin-left: 0.5em;
-}
-
-.vote {
-  float: right;
-  font-weight: 800;
-}
-
-p.testo {
-  column-count: 2;
-  column-rule: 1px solid #ccccb3;
-  border-radius: 25px;
-  border: 1px solid #000;
-  background-color:#f5f5f5;
-  text-align: left;
-  padding: 1em;
-}
-
-/*==================================
-ELEMENTI DI PAGINE CONTENENTI FORM
-==================================*/
-
-label, input { display: inline-block; }
-
-.schedaForm label {
-  width: 28%;
-  text-align: right;
-}
-
-.schedaForm input {
-  width: 40%;
-  margin: 5px;
-}
-
-.schedaForm>p { margin-left: 0.5em; }
-
-.invisibile { display: none; }
-
-.visibile { display: block; }
-
-.schedaForm {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-bottom: 0.2em;
-  overflow: auto;
-}
-
-.schedaForm fieldset {
-  border: 1px;
-  border-color: black;
-  border-style: solid;
-  padding: 0.5em;
-  border-radius: 10px;
-  margin: 0.2em;
-}
-
-.schedaForm button {
-  width: 20%;
-  font-weight: bold;
-  float:left;
-}
-
-.schedaForm button+p {
-  padding: 0.5em;
-  margin-left: 22%;
-}
-
-.schedaForm input[type=radio], .schedaForm input[type=checkbox] {
-  width: 16px;
-  height: 1.2em;
-  padding-left: 0;
-}
-
-.schedaForm input[type=radio]+label {
-  width: 14%;
-  text-align: left;
-}
-
-.gruppoCheck {
-  margin-left: 5%;
-}
-
-.gruppoRadio {
-  margin-left: 18%;
-}
-
-.schedaForm input[type=file] {
-  padding-top: 0.5em;
-}
-
-.schedaForm input[type=file] {
-  background-color: #f5f5f5;
-}
-
-fieldset .textAreaLabel {
-  width: 23%;
-}
-
-textarea {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   resize: none;
   vertical-align: top;
   width: 60%;
 }​
 
-<<<<<<< HEAD
 input[type=text], textarea{
-=======
-input[type=text], textarea {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   padding: 5px;
 }
 
@@ -1166,6 +531,14 @@ p+p.messaggi {
   display: inline-block;
 }
 
+#labelTipologia+p {
+  width: auto;
+}
+
+.gruppo label{
+  width: 10%;
+}
+
 .erroreBox { border: 2px solid red; }
 
 .correttoBox { border: 2px solid green; }
@@ -1177,7 +550,6 @@ p+p.messaggi {
 
 textarea.correttoBox+p {
   width: 13%;
-
 }
 
 textarea.erroreBox+p {
@@ -1185,7 +557,6 @@ textarea.erroreBox+p {
   margin-left: 24%;
 }
 
-<<<<<<< HEAD
 #rosso.ao {
   background-color: red;
 }
@@ -1197,24 +568,6 @@ SEZIONE PROFILO
 */
 
 .schedaAdmin{
-=======
-ul.checkbox  { 
-  margin-left: 20px; 
-  list-style: none; 
-} 
-
-ul.checkbox li { 
-  border: transparent solid; 
-  display: inline-block;
-  width: 30%;
-} 
-
-/*=========================
-PROFILO UTENTE
-=========================*/
-
-.schedaAdmin {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   background-color: #f5f5f5;
   border: 1px solid #000;
   border-radius: 10px;
@@ -1237,26 +590,18 @@ PROFILO UTENTE
   padding-left: 1em;
 }
 
-<<<<<<< HEAD
 .schedaAdmin dt{
   font-weight: bold;
 }
-=======
-.schedaAdmin dt { font-weight: bold; }
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 
 #subContent .AdminBox{
   max-width:100%;
   border:0em;
 }
 
-<<<<<<< HEAD
 .schedaAdmin>div{
   padding: 1em;
 }
-=======
-.schedaAdmin>div { padding: 1em; }
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 
 .AdminBox{
   width:30%;
@@ -1278,7 +623,6 @@ PROFILO UTENTE
 
 /*name*/
 
-<<<<<<< HEAD
 a.name{
   max-width: 80%;
   font-weight: bold;
@@ -1327,47 +671,6 @@ SEZIONE LISTA UTENTI
 }
 
 .utente{
-=======
-.sfondo_rec {
-  width: 100%;
-  border-radius: 10px;
-  height: inherit;
-  top: 0;
-  left: 0;
-}
-
-.textbox {
-  width: 90%;
-  margin-left: 0.5em;
-  min-height: 40px;
-}
-
-.insertcomment {
-  min-height: 40px;
-  margin-top: 1.5em;
-  margin-left: 0.5em;
-}
-
-.miocommento { margin-bottom: 0.5em; }
-
-.commenti {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-bottom: 0.2em;
-}
-
-.lista_commenti {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-bottom: 0.2em;
-}
-
-.commento_singolo {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   border-radius: 25px;
   border: 1px solid #000;
   background-color:#f5f5f5;
@@ -1375,7 +678,6 @@ SEZIONE LISTA UTENTI
   margin-bottom: 0.4em;
 }
 
-<<<<<<< HEAD
 .info_utente{
     float: right;
     width: 90%;
@@ -1398,38 +700,11 @@ SEZIONE LISTA UTENTI
 
 .nome_utente{
   padding-top: 0.2em;
-=======
-.commentatore {
-  display: inline-block;
-  width:30%;
-}
-
-.datapubb {
-  float: right;
-}
-
-.lista_notizie {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-bottom: 0.2em;
-}
-
-.filtri_categorie {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.5em;
-  margin-top: 0.2em;
-  display: inline-block;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   float: left;
   font-size: 150%;
   font-weight: bold;
 }
 
-<<<<<<< HEAD
 /*
 =========================
 SEZIONE HOME
@@ -1439,15 +714,6 @@ SEZIONE HOME
 .container{
   background-color: #414141;
   padding: 0.2em;
-=======
-.filtri_ordine {
-  background-color: #f5f5f5;
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 0.3em;
-  margin-top: 0.2em;
-  display: inline-block;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 }
 
 .container::after {
@@ -1521,12 +787,14 @@ li.giocotop{
 dl.info{
   padding: 0.5em;
 }
+
 dl.info dt{
   float: left;
   width: 50%;
   font-weight: bold;
   display: inline-block;
 }
+
 dl.info dd{
   display: inline-block;
   width: 50%;
@@ -1564,7 +832,6 @@ SEZIONE GIOCHI
   margin-right: 0.4em;
 }
 
-<<<<<<< HEAD
 .filtri{
   display: inline-flex;
 }
@@ -1579,9 +846,6 @@ SEZIONE GIOCHI
 }
 
 .tipo_ordine{
-=======
-.tipo_ordine {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   float: left;
   margin-top: 0.7em;
   margin-right: 0.4em;
@@ -1700,15 +964,10 @@ ul.checkbox li {
   position: absolute;
   display: none;
 }
-<<<<<<< HEAD
 
 .customLabel input:checked ~ .radiomark:after{
   display: block;
 }
-=======
-/* Show the checkmark when checked */
-.customLabel input:checked ~ .radiomark:after { display: block; }
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 
 .customLabel .radiomark:after{
   top: 3px;
@@ -1719,33 +978,14 @@ ul.checkbox li {
   background: white;
 }
 
-<<<<<<< HEAD
 /*giochi*/
 
 .spazio_contenuto{
   margin-top: 1em;
-=======
-a.name {
-  max-width: 80%;
-  font-weight: bold;
-  font-size: larger;
-  color: black;
 }
 
-a.active.name, a:hover.name {
-  color: white;
-  background-color: #313131;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
-}
-a:visited.name { color: #676767; }
-
-<<<<<<< HEAD
 .game{
   background-color: #f5f5f5;
-=======
-.utente {
-  border-radius: 25px;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   border: 1px solid #000;
   border-radius: 10px;
   padding: 0.5em;
@@ -1753,7 +993,6 @@ a:visited.name { color: #676767; }
   overflow: auto;
 }
 
-<<<<<<< HEAD
 p.valutazione{
   float: right;
   font-weight: bold;
@@ -1779,34 +1018,6 @@ p.descrizione{
 .torna_su{
   margin: 1.1em 1em 0 0;
   float: right;
-=======
-.info_utente {
-    float: right;
-    padding-top: 0.8em;
-    text-align: left;
-    width: 80%;
-}
-
-.azioni_admin_utente {
-  float: right;
-  padding-right: 1em;
-}
-
-.nome_utente {
-  padding-top: 0.2em;
-  float: left;
-  font-size: 150%;
-  font-weight: bold;
-}
-
-#fotoUtente {
-  border-radius: 50%;
-  width: 50%;
-  max-width: 4em;
-  border-style: solid;
-  border-color: white;
-  border-width: 2px;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 }
 
 .modifica {
@@ -1814,7 +1025,6 @@ p.descrizione{
   float: left;
 }
 
-<<<<<<< HEAD
 /*
 =========================
 SEZIONE NOTIZIE
@@ -1828,9 +1038,6 @@ SEZIONE NOTIZIE
 /*spazio_contenuto da giochi*/
 
 .notizia{
-=======
-.pagina_notizia {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   background-color: #f5f5f5;
   border: 1px solid #000;
   border-radius: 10px;
@@ -1839,7 +1046,6 @@ SEZIONE NOTIZIE
   overflow: auto;
 }
 
-<<<<<<< HEAD
 p.data{
   text-align: right;
   font-size: smaller;
@@ -1905,15 +1111,11 @@ dl.info_scheda dd{
 }
 
 #modifica_scheda_gioco{
-=======
-#modifica_scheda_gioco {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   padding-left: 5.2em;
   margin-top: 0;
   margin-bottom: 1em;
 }
 
-<<<<<<< HEAD
 p.testo{
   column-count: 2;
   column-rule: 1px solid #ccccb3;
@@ -1951,15 +1153,11 @@ SEZIONE RECENSIONE
 /*testo,valutazione da scheda giochi*/
 
 #modifica_scheda_recensione{
-=======
-#modifica_scheda_recensione {
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
   float: none;
   text-align: right;
   padding-right: 1em;
 }
 
-<<<<<<< HEAD
 /*commenti*/
 
 .commenti{
@@ -2040,15 +1238,12 @@ SEZIONE NOTIZIA SINGOLA
     margin-bottom: 0.2em;
 }
 
-=======
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
 #modifica_scheda_notizia {
   float: none;
   text-align: right;
   padding-right: 1em;
 }
 
-<<<<<<< HEAD
 
 /*-------------------------------------------*/
 
@@ -2073,26 +1268,10 @@ img.cover_scheda{
 
 .gioco{
     background-color: #f5f5f5;
-=======
-.notizia_cover {
-  border-radius: 10px;
-  min-width: 148.61px;
-  min-height: 220.02px;
-  width: 126.61px;
-  height: auto;
-  margin-right: 1em;
-  margin-left: 0.5em;
-  float: left;
-}
-
-.notizia_home {
-  background-color: #f5f5f5;
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
     border: 1px solid #000;
     border-radius: 10px;
     padding: 0.5em;
     margin-bottom: 0.2em;
-<<<<<<< HEAD
     display: flex;
     text-align: justify;
 }
@@ -2104,9 +1283,3 @@ img.cover_scheda{
   padding: 0.5em;
   margin-bottom: 0.2em;
 }
-=======
-    overflow: auto;
-    padding-right: 1em;
-    margin-right: 0.5em;
-}
->>>>>>> 2f45b763b065ab6b8100c5790e105161ae1d22c0
