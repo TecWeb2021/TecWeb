@@ -3,12 +3,10 @@
     margin: 0em;
 }
 
-html {
-    margin: auto;
-}
-body{
-  font-family: Georgia, "Times New Roman", serif;
-}
+html { margin: auto; }
+
+body{ font-family: Georgia, "Times New Roman", serif; }
+
 .aiutiNascosti {
     display: none;
 }
@@ -91,10 +89,6 @@ SEZIONE CONTENUTO
     margin-bottom: 1em;
 }
 
-.imgCon {
-    display: none;
-}
-
 p {
     margin-left: 0em;
     margin-bottom: 1em;
@@ -157,4 +151,8 @@ p.trama, p.testo{
 
 .modifica, .aiutoTornaSu, #login, #registrati, #loginPic, .filtri_ordine, .filtri_categorie, #submenu, #inserisci_commento, .messaggioLogin, #loginButton{
   display: none
+}
+
+img {
+    display: none;
 }

@@ -51,6 +51,14 @@ SEZIONE HEADER
     min-height: 2em;
 }
 
+.aiutiNascosti {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px,1px,1px,1px);
+}
+
 /*
 =========================
 SEZIONE TITOLO
@@ -1177,12 +1185,6 @@ a:visited.name{
   color: #676767;
 }
 
-.lista_utenti{
-  background-color: #414141;
-  padding: 0.2em;
-  padding-top: 0.4em;
-}
-
 .utente{
   border-radius: 25px;
   border: 1px solid #000;
@@ -1193,8 +1195,9 @@ a:visited.name{
 
 .info_utente {
     float: right;
-    width: 90%;
     padding-top: 0.8em;
+    text-align: left;
+    width: 80%;
 }
 
 .azioni_admin_utente{
