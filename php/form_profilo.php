@@ -27,7 +27,7 @@ if($user){
 
 
 	$newEmail=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-	$newImageFile=isset($_FILES['immagine']) ? $_FILES['immagine'] : null;
+	$newImageFile=isset($_FILES['immagine']) && $_FILES['immagine']['name']!="" ? $_FILES['immagine'] : null;
 	$newPassword=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
 
 	$updatedUser= User::copyConstruct($user);
@@ -37,33 +37,40 @@ if($user){
 	if($newPassword){
 		$updatedUser->setHashByPassword($newPassword);
 	}
+
+	$ok=true;
 	if($newImageFile){
 		$saveResult=saveImageFromFILES($dbAccess, "immagine");
-		if($saveResult!=false){
-			$newImage=new Image($newImagePath, "Immagine profilo dell'utente");
-			$updatedUser->setImage($newImage);
-		}else{
-			$failed=true;
+		if($saveResult==false){
+			$ok=false;
+			echo "caricamento immagine fallito";
 		}
+		echo $saveResult;
+		$newImage=new Image($saveResult, addslashes("Immagine profilo dell'utente"));
+		$updatedUser->setImage($newImage);
 	}
-
-	if(!$failed){
+	print_r($_FILES);
+	if($ok && ($newEmail || $newPassword || $newImageFile)){
 		$updateResult=$dbAccess->updateUser($updatedUser);
-		$failed= $updateResult ? true : false;
+		if($updateResult){
+			if($newEmail || $newImageFile || $newPassword){
+				setcookie('login',$updatedUser->getHash());
+				echo "ti reindirizzo tra 0 secondi";
+				header("refresh:0;url=profilo.php");
+			}
+		}else{
+			echo "aggiornamento utente fallito";
+		}
+	}else{
+		echo "non si può proseguire per manacanza di input o fallimento del caricamento immagine";
 	}
 
-	if($failed){
-		$replacements=array(
+	$replacements=array(
 			"<email_ph/>"=> $newEmail ? $newEmail : $user->getEmail(),
 			);
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
 		}
-	}else{
-		if($newEmail || $newImageFile || $newPassword){
-			header('Location: profilo.php');
-		}
-	}
 	
 
 }else{
