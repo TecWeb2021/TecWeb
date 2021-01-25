@@ -69,9 +69,6 @@ p.autore { font-size: 0.9em; }
 
 .img_cover { margin-left: 0em; }
 
-
-#gioco_della_settimana{ width: 50%; }
-
 #ultime_aggiunte{ width: 49%; }
 
 p.descrizione {
@@ -117,3 +114,9 @@ dl.info dd {
   width: 55%;
   margin: 5px;
 }
+
+/*---------------------*/
+
+#sfondo_gioco_mobile {border-radius: 0;}
+
+#gioco_della_settimana {width: 50%;}

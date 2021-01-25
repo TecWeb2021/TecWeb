@@ -1061,6 +1061,7 @@ p.autore{
   margin: 0.5em 0em 0.5em 0em;
   text-align: left;
   width: 100%;
+  margin-left: 0.5em;
 }
 
 /*descrizione,torna_su,modifica da giochi*/
