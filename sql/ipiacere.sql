@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 25, 2021 at 12:19 AM
+-- Generation Time: Jan 25, 2021 at 01:35 AM
 -- Server version: 10.2.36-MariaDB
 -- PHP Version: 7.2.34
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `ipiacere`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `Id` int(11) NOT NULL,
+  `Author` varchar(50) NOT NULL,
+  `Game` varchar(50) NOT NULL,
+  `Date_time` datetime NOT NULL,
+  `Content` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`Id`, `Author`, `Game`, `Date_time`, `Content`) VALUES
+(1, 'ivan123', 'Ciao1', '2021-01-25 01:15:27', 'content'),
+(2, 'ivan123', 'Ciccio1', '2021-01-25 01:18:39', 'content'),
+(3, 'ivan123', 'Ciccio1', '2021-01-25 01:30:51', 'content'),
+(4, 'ivan123', 'Ciccio1', '2021-01-25 01:32:18', 'ciao'),
+(5, 'ivan123', 'Ciccio1', '2021-01-25 01:32:22', 'ciao'),
+(6, 'ivan123', 'Ciccio1', '2021-01-25 01:33:24', 'ciao'),
+(7, 'ivan123', 'Ciccio1', '2021-01-25 01:34:30', 'ciao capo');
 
 -- --------------------------------------------------------
 
@@ -44,6 +71,7 @@ CREATE TABLE `games` (
 INSERT INTO `games` (`Name`, `Publication_date`, `Vote`, `Sinopsis`, `Age_range`, `Review`, `Image`) VALUES
 ('Bioshock infinite', '2021-01-06', 0, 'Descizione di Bioshock Infinite', 18, 'Recensione che è molto bella', 'images/21.jpg'),
 ('Ciao1', '2021-01-08', 0.5, 'ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg', 12, 'gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg', 'images/27.png'),
+('Ciccio1', '2021-01-06', 0, 'DescrizioneDescrizioneDescrizioneDescrizioneDescrizioneDescrizione', 12, 'RecensioneRecensioneRecensioneRecensioneRecensioneRecensioneRecensioneRecensioneRecensione', 'images/28.jpg'),
 ('Dark Souls 3', '2016-04-12', 4.3, 'Nel regno di Lothric il suono di una campana preavvisa che l\'Era del Fuoco sta terminando: la Prima Fiamma, ravvivata per la prima volta dal primo Signore dei Tizzoni, Lord Gwyn, è sul punto di spegnersi per sempre. In conseguenza di questo riappare la maledizione dei non morti e le ere spazio-temporali convergono tutte nello stesso punto: Lothric. L\'Era del Fuoco potrà essere prolungata con un rituale in cui grandi signori ed eroi sacrificano le loro anime per ripristinare la Prima Fiamma. Tuttavia, il principe Lothric ha abbandonato il suo dovere e sceglie invece di guardare la fiamma morire in modo da mettere fine al ciclo e lasciare che giunga finalmente l\'Era Oscura. La campana è l\'ultima speranza per l\'Era del Fuoco, che fa risorgere dalle loro tombe i Signori dei Tizzoni, eroi che si sono sacrificati per vincolare il fuoco, per tentare nuovamente di ravvivare la Prima Fiamma. Tuttavia, un solo Signore dei Tizzoni si presenta sul suo rispettivo trono. Anche il protagonista si risveglia dal suo luogo di sepoltura al suono della campana. Una volta sveglio, affronterà il Giudice Gundyr per ottenere l\'accesso all\'Altare del Vincolo, zona centrale del gioco. Una volta giunto all\'Altare, il protagonista scoprirà di essere una Fiamma Sopita, ovvero il prescelto che dovrà riportare i Signori dei Tizzoni sui loro rispettivi troni, in modo che le loro anime, messe insieme, possano fungere da combustibile per la Prima Fiamma. Una volta che la Fiamma Sopita avrà inserito la spada a spirale nel falò dell\'Altare del Vincolo potrà teletrasportarsi a Lothric, dove inizierà il suo viaggio alla ricerca dei Signori dei Tizzoni: nel Forte Farron troverà i Guardiani dell\'Abisso, guerrieri della Legione dei non morti legati da un\'unica anima attraverso il sangue di lupo; nell\'antica Anor Londo Aldrich, divenuto un Signore dei Tizzoni non per le sue virtù quanto per il suo potere e che ha previsto un\'era proveniente dal mare profondo; nella Capitale profanata il gigante Yhorm, discendente di un gigante conquistatore, e infine il principe Lothric insieme al fratello Lorian. Portate le anime dei Signori dei Tizzoni sui loro troni, la Fiamma Sopita si reca nelle rovine della Fornace della Prima Fiamma, dove incontra l\'Anima dei Tizzoni, una fusione delle anime di tutti i Signori dei Tizzoni che si sono vincolati alla Prima Fiamma.', 16, NULL, 'images\\darksouls3.png'),
 ('Dishonored', '2020-12-30', 0, '0', 18, 'glkdsmnfkldsmfkldsmfkldsmfkldmsfklmdsklfmdklsmfdsmfkldsmfklmdsfklmdslfmdsklmfdlsmf', 'images/20.jpg'),
 ('Gioco a caso', '2017-01-01', 0, 'hghghghghghghghghhghghghghghghghghhghghghghghghghghhghghghghghghghghhghghghghghghghgh', 3, 'hghghghghghghghghhghghghghghghghghhghghghghghghghghhghghghghghghghghhghghghghghghghgh', 'images/22.jpg'),
@@ -84,6 +112,7 @@ INSERT INTO `images` (`Path`, `Alt`) VALUES
 ('images/25.png', 'Panorama anni 80'),
 ('images/26.png', 'Panorama anni 80'),
 ('images/27.png', 'Panorama anni 80'),
+('images/28.jpg', 'ciao grandissimo'),
 ('images/8.jpg', 'fdfdfdfdfdfdfdfdfdfdfdfffdfdff');
 
 -- --------------------------------------------------------
@@ -151,6 +180,12 @@ INSERT INTO `users` (`Username`, `Hash`, `IsAdmin`, `Image`, `Email`) VALUES
 --
 
 --
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `games`
 --
 ALTER TABLE `games`
@@ -183,6 +218,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `news`
