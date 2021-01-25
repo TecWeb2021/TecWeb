@@ -664,12 +664,6 @@ SEZIONE LISTA UTENTI
 =========================
 */
 
-.lista_utenti{
-  background-color: #414141;
-  padding: 0.2em;
-  padding-top: 0.4em;
-}
-
 .utente{
   border-radius: 25px;
   border: 1px solid #000;
@@ -680,7 +674,7 @@ SEZIONE LISTA UTENTI
 
 .info_utente{
     float: right;
-    width: 90%;
+    width: 80%;
     padding-top: 0.8em;
 }
 
