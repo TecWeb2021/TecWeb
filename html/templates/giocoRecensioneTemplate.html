@@ -10,9 +10,9 @@
       <img class="sfondo_rec" src="<img_path_ph/>" alt="<img_alt_ph/>">
     </div>
     <div class="recensione_gioco">
-      <h2 class="title1">Recensione di Dark Souls 3</h2>
-      <p class="title2">by Gino Pippo</p>
-      <p class="subtilte">Pubblicata il 18 gennaio 2021</p>
+      <h2 class="title1">Recensione di <game_name_ph/></h2>
+      <p class="title2">by <review_author_ph/></p>
+      <p class="subtilte">Pubblicata il <review_date_ph/></p>
       <p class="testo">
         <review_content_ph/>
         <p class="vote">Voto: <game_vote_ph/></p>
@@ -21,18 +21,17 @@
   </div>
   <div class="commenti">
     <div class="miocommento">
-      <form class="textbox" id="testo_commento" action="/action_page.php">
+      <form class="textbox" id="testo_commento" action="gioco_recensione.php">
         <div>
           <label for="textbox" class="structural">Inserisci Commento:</label>
+          <input type="hidden" name="game" value="<game_name_ph/>">
           <input id="textbox" class="textbox" type="text" name="write" />
           <button class="insertcomment" type="submit">Submit</button>
         </div>
       </form>
     </div>
     <div class="altri_commenti">
-      <div class="comment">
-
-      </div>
+      <comments_divs_ph/>
     </div>
   </div>
 </div>

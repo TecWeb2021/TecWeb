@@ -4,6 +4,7 @@ require_once("./classes/news.php");
 require_once("./classes/game.php");
 require_once("./classes/image.php");
 require_once("./classes/user.php");
+require_once("./classes/comment.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -460,6 +461,39 @@ class DBAccess {
             $result=$this->getResult($query);
         }
         return $result;
+    }
+
+
+    function addComment($comment){
+        $authorName=$comment->getAuthorName();
+        $gameName=$comment->getGameName();
+        $date_time=$comment->getDateTime();
+        $content=$comment->getContent();
+
+        $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function getCommentsList($gameName=null, $order="date_time desc"){
+        $query="SELECT * FROM comments";
+        $gameNameQueryAppend= $gameName ? "WHERE comments.Game='$gameName'" : "";
+        $orderQueryAppend= $order=="date_time desc" ? "ORDER BY comments.Date_time DESC" : "";
+        $query=$query." ".$gameNameQueryAppend." ".$orderQueryAppend;
+        $queryResult = $this->getResult($query);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $commentsList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                $comment=new Comment($row['Author'],$row['Game'], $row['Date_time'],$row['Content']);
+                array_push($commentsList, $comment);
+            }
+            return $commentsList;
+        }
+
+
     }
 
 }
