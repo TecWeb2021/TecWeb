@@ -16,83 +16,100 @@ $user=getLoggedUser($dbAccess);
 
 if($user){
 	if($user->isAdmin()){
+
 		#mi salvo i dati ricevuti
-		$title=null;
-		$category=null;
-		$imagePath=null;
-		$imageAlt=null;
-		$content=null;
-
-		if(!isset($_FILES['immagine'])){
-			echo "non hai caricato alcun file";
+		$title=isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
+		$category=isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
+		$imageAlt=isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$image=isset($_FILES['immagine']) && $_FILES['immagine']['name']!="" ? $_FILES['immagine'] : null;
+		$imagePath=saveImageFromFILES($dbAccess, "immagine");
+		if($imagePath!=false){
+			$image=new Image($imagePath, $imageAlt);
 		}else{
-			echo "userifileName: ".$_FILES['immagine']['name'];
-		
-
-			$imgSaveResult=saveImageFromFILES($dbAccess, "immagine");
-
-			if ($imgSaveResult!=false) {
-			  	//Se l'operazione è andata a buon fine...
-			  	echo 'File inviato con successo.';
-			  	$imagePath=$imgSaveResult;
-
-				if(isset($_REQUEST['titolo'])){
-					$title=$_REQUEST['titolo'];
-					#sanitize
-					$homePage=str_replace("<news_title_ph/>",$title,$homePage);
-				}else{
-					$homePage=str_replace("<news_title_ph/>","",$homePage);
-				}
-				if(isset($_REQUEST['tipologia'])){
-					$category=$_REQUEST['tipologia'];
-					#sanitize
-
-					//$homePage=str_replace("<news_title_ph/>",$title,$homePage);
-				}else{
-					//$homePage=str_replace("<news_title_ph/>","",$homePage);
-				}
-				if(isset($_REQUEST['testo'])){
-					$content=$_REQUEST['testo'];
-					#sanitize
-					$homePage=str_replace("<content_ph/>",$content,$homePage);
-				}else{
-					$homePage=str_replace("<content_ph/>","",$homePage);
-				}
-				if(isset($_REQUEST['alternativo'])){
-					$imageAlt=$_REQUEST['alternativo'];
-					#sanitize
-					$homePage=str_replace("<img_alt_ph/>",$imageAlt,$homePage);
-				}else{
-					$homePage=str_replace("<img_alt_ph/>","",$homePage);
-				}
-
-				$image=null;
-				if($imagePath){
-					echo "<br/>image present";
-					$image=new Image($imagePath,$imageAlt);
-				}
-
-				if($title==null && $content==null){
-					echo "inserisci almeno titolo e contenuto";
-				}else{
-					$newNews=new News($title, $content, $user, date('Y-m-d'), $image, $category);
-					$result=$dbAccess->addNews($newNews);
-					if($result!=null){
-						header('Location: home.php');
-					}
-				}
-			
-			}else{
-			  //Se l'operazione è fallta...
-			  echo 'Upload NON valido!'; 
-			}
-
+			echo "errore caricamento immagine";
 		}
 
+		
+		$content=isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
+		$author=$user;
 
-		$homePage=str_replace("<news_title_ph/>","",$homePage);
-		$homePage=str_replace("<content_ph/>","",$homePage);
-		$homePage=str_replace("<img_alt_ph/>","",$homePage);
+		
+
+		$required=array($title, $category, $image, $imageAlt, $content);
+
+		$onePresent=false;
+		$allPresent=true;
+		foreach ($required as $value) {
+			if($value){
+				$onePresent=true;
+				break;
+			}
+		}
+		foreach ($required as $value) {
+			if(!$value){
+				$allPresent=false;
+				break;
+			}
+		}
+
+		$newsTitle=isset($_REQUEST['news']) ? $_REQUEST['news'] : null;
+		if(!$newsTitle){
+			$newsTitle=isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
+		}
+		if($newsTitle){
+			$news=$dbAccess->getNews($newsTitle);
+			if($news){
+				
+				$title=isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : $news->getTitle();
+				$category=isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : $news->getCategory();
+				$imageFile=isset($_FILES['immagine']) && $_FILES['immagine']['name']!="" ? $_FILES['immagine'] : null;
+				$image=null;
+				$imageAlt="";
+				if(!$imageFile){
+					$image=$news->getImage();
+					$imageAlt=isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+				}else{
+					$imagePath=saveImageFromFILES($dbAccess, "immagine");
+					if($imagePath!=false){
+						$image=new Image($imagePath,$imageAlt);
+					}else{
+						echo "errore nel caricamento immagine";
+					}
+					
+				}
+				$content=isset($_REQUEST['testo']) ? $_REQUEST['testo'] : $news->getContent();
+				$author=User::copyConstruct($user);
+				$date=$news->getLastEditDateTime();
+
+			}else{
+				echo "non è presente la notizia selezionata";
+			}
+
+		}else{
+			echo "non è specificata una notizia";
+		}
+
+		$author=User::copyConstruct($user);
+#$_title, $_content, $_author, $_last_edit_date_time, $_image, $_category
+		$newNews=new News($title, $content, $author, date("y-m-d h:m:s"), $image, $category);
+
+		$result=$dbAccess->addNews($newNews);
+		echo "esito operazione: ".$result==true ? "true" : "false";
+
+		$replacements=array(
+			"<news_title_ph/>"=>$title,
+			"<content_ph/>"=>$content,
+			"<eventi_checked_ph/>"=>$category=="Eventi" ? "checked=\"checked\"" : "",
+			"<giochi_checked_ph/>"=>$category=="Giochi" ? "checked=\"checked\"" : "",
+			"<hardware_checked_ph/>"=>$category=="Hardware" ? "checked=\"checked\"" : "",
+			"<content_ph/>"=>$content,
+			"<img_alt_ph/>"=>$image ? $image->getAlt() : ""
+		);
+
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
+
+		}
 
 	}else{
 		$homePage="non puoi accedere a questa pagina perchè non sei un amministratore";	

@@ -85,7 +85,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 		$base=str_replace("<not_logged_in>","",$base);
 		$base=str_replace("</not_logged_in>","",$base);
 	}
-	#la riga qua sotto è efficace( fa quello che deve) solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
+	#la riga qua sotto fa quello che deve solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
 	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
 
 

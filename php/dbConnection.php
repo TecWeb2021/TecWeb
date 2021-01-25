@@ -256,7 +256,7 @@ class DBAccess {
     }
 
     public function getGame($name){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id WHERE games.Name='$name'";
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -320,7 +320,7 @@ class DBAccess {
     }
 
     public function getTopGame(){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id ORDER BY games.Vote DESC LIMIT 1";
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path ORDER BY games.Vote DESC LIMIT 1";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -335,7 +335,7 @@ class DBAccess {
     }
 
     public function getTop5Games(){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN reviews ON games.Review=reviews.Id ORDER BY games.Vote DESC LIMIT 5";
+        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path ORDER BY games.Vote DESC LIMIT 5";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -465,13 +465,41 @@ class DBAccess {
 
         echo "<br/>news insertion";
         $content=addslashes($content);
-        $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category', NULL)";
+        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
 
         echo "<br/>query: ".$query;
         $result=$this->getResult($query);
         if($result==null){
             $result="null";
         }
+        return $result;
+    }
+
+    public function updateNews($news){
+        $title=$news->getTitle();
+        $content=$news->getContent()==null ? "NULL" : $news->getContent();
+        $author=$news->getAuthor();
+        $authorUsername=$author->getUsername();
+        $last_edit_date_time=$news->getLastEditDateTime();
+        $image=$news->getImage();
+        $imagePath="NULL";
+        $imageAlt="NULL";
+        if($image){
+            $imagePath=$image->getPath();
+            $imageAlt=$image->getAlt();
+        }
+        $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
+
+        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+        echo "<br/>image insertion";
+        $this->getResult($query);
+
+        echo "<br/>news insertion";
+        $content=addslashes($content);
+        $query="UPDATE news SET User='$authorUsername', Last_edit_date='$last_edit_date_time', Image='$imagePath', Category='$category', Content='$content' WHERE Title='$title'";
+
+        echo "<br/>query: ".$query;
+        $result=$this->getResult($query);
         return $result;
     }
 
@@ -589,6 +617,18 @@ class DBAccess {
         }
 
 
+    }
+
+    function deleteNews($newsTitle){
+        $query="DELETE FROM news WHERE Title='$newsTitle'";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function deleteGame($gameName){
+        $query="DELETE FROM games WHERE Name='$gameName'";
+        $result=$thid->getResult($query);
+        return $result;
     }
 
 }

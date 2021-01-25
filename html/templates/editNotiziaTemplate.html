@@ -16,13 +16,13 @@
         <fieldset id="handler">
             <p>*Tipologia: </p>
     
-            <input type="radio" id="Eventi" name="tipologia" value="Eventi">
+            <input type="radio" id="Eventi" name="tipologia" value="Eventi" <eventi_checked_ph/>>
             <label for="Eventi">Eventi</label>
     
-            <input type="radio" id="Giochi" name="tipologia" value="Giochi">
+            <input type="radio" id="Giochi" name="tipologia" value="Giochi" <giochi_checked_ph/>>
             <label for="Giochi">Giochi</label>
     
-            <input type="radio" id="Hardware" name="tipologia" value="Hardware">
+            <input type="radio" id="Hardware" name="tipologia" value="Hardware" <hardware_checked_ph/>>
             <label for="Hardware">Hardware</label>
         </fieldset>
     
@@ -59,9 +59,10 @@
               <button type="submit">Annulla Modifiche</button>
             </fieldset>
           </form>
-          <form method="post" action="../php/eliminaNotizia.php">
+          <form method="post" action="edit_notizia.php">
             <fieldset>
-              <button type="submit" name="delete" value="<news_name_ph/>">Elimina Notizia</button>
+              <input type="hidden" name="news" value="<news_title_ph/>"></input>
+              <button type="submit" name="delete" value="<news_title_ph/>">Elimina Notizia</button>
             </fieldset>
           </form>
       </div>
