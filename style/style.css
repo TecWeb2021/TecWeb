@@ -648,6 +648,7 @@ SEZIONE LOGIN
 
 .titolo_login_registrati{
   text-align: center;
+  font-size: x-large;
 }
 
 .loginButton,#login_credential{
@@ -656,6 +657,22 @@ SEZIONE LOGIN
 }
 
 .loginButton{
+  margin-bottom: 0.5em;
+}
+
+/*
+=========================
+SEZIONE REGISTRATI
+=========================
+*/
+
+.dati_personali{
+  font-weight: bold;
+  font-size: large;
+}
+
+.avviso_importante{
+  color: red;
   margin-bottom: 0.5em;
 }
 
