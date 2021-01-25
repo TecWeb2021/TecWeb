@@ -1,115 +1,28 @@
 
-
-<div id="content" class="row">
+<div class="container" id="content">
   <div class="leftcolumn">
     <news_divs_ph/>
   </div>
   <div class="rightcolumn">
-    <div id="top5" class="sidebox">
-      <h4>TOP 5 VIDEOGIOCHI</h4>
+    <div id="ultime_aggiunte" class="sidebox">
+      <h4>ULTIME AGGIUNTE:</h4>
         <ul>
-        	<top_5_games_ph/>
+          <top_5_games_ph/>
         </ul>
     </div>
     <div id="gioco_della_settimana" class="sidebox">
         <h4> GIOCO DELLA SETTIMANA </h4>
           <div class="info_gioco">
-            <a href="<top_game_url_ph/>"><h3 id="titolo_gioco_della_settimana"><top_game_name_ph/></h3><img class="cover_gioco_della_settimana" src="<top_game_img_path_ph/>" alt="<top_game_img_alt_ph/>"></a>
-            <table class="info">
-              <tr class="vote">
-                <h4>Voto: <top_game_vote_ph/>/5</h4>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Piattaforma:</h5>
-                </th>
-                <td class style>
-                  <p>PS4,Xbox One,PC</p>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Data pubblicazione:</h5>
-                </th>
-                <td class style>
-                  <p><top_game_publication_date_ph/></p>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Genere:</h5>
-                </th>
-                <td class style>
-                  <p>Action,RPG</p>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Sviluppo:</h5>
-                </th>
-                <td class style>
-                  <p>FromSoftware</p>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Pubblicazione:</h5>
-                </th>
-                <td class style>
-                  <p>FromSoftware,Bandai Namco</p>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Fascia di età:</h5>
-                </th>
-                <td class style>
-                  <p><top_game_age_range_ph/></p>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Espansioni:</h5>
-                </th>
-                <td class style>
-                  <ul class="expansion">
-                    <li>
-                      <a href="DS3ariandel.html">Ashes of Ariandel</a>
-                    </li>
-                    <li>
-                      <a href="DS3ringedcity.html">The Ringed City</a>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Prequel:</h5>
-                </th>
-                <td class style>
-                  <ul class="serie">
-                    <li>
-                      <a href="DS2.html">Dark Souls 2</a>
-                    </li>
-                    <li>
-                      <a href="DS1.html">Dark Souls</a>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-              <tr>
-                <th style>
-                  <h5>Sequel:</h5>
-                </th>
-                <td class style>
-                  <ul class="serie">
-                    <li>
-                      <p>Nessuno</p>
-                    </li>
-                  </ul>
-                </td>
-              </tr>
-            </table>
+            <h5 id="titolo_gioco_della_settimana"><a class="link" href="<top_game_url_ph/>"><top_game_name_ph/></a></h5><a tabindex="-1" href="<top_game_url_ph/>"><img class="img_sfondo noborder_home" src="<top_game_img_path_ph/>" alt="<top_game_img_alt_ph/>"></a>
+                <p class="valutazione" id="voto_home">Voto: <top_game_vote_ph/>/5</p>
+                <dl class="info">
+                  <!--<dt>Piattaforma:</dt><dd>PS4,Xbox One,PC</dd>-->
+                  <dt>Data pubblicazione:</dt><dd><top_game_publication_date_ph/></dd>
+                  <!--<dt>Genere:</dt><dd>Action,RPG</dd>-->
+                  <!--<dt>Sviluppo:</dt><dd>FromSoftware</dd>-->
+                  <dt>Pubblicazione:</dt><dd>FromSoftware, Bandai Namco</dd>
+                  <dt>Fascia di età:</dt><dd>PEGI <top_game_age_range_ph/></dd>
+                </dl>
           </div>
     </div>
   </div>
