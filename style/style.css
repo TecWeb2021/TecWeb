@@ -1184,7 +1184,7 @@ SEZIONE RECENSIONE
 }
 
 .lista_commenti{
-  background-color: #f5f5f5;
+  background-color: #414141;
   border: 1px solid #000;
   border-radius: 10px;
   padding: 0.5em;
@@ -1203,10 +1203,17 @@ SEZIONE RECENSIONE
 .commentatore{
   display: inline-block;
   width:30%;
+  font-weight: bold;
+  font-size: large;
 }
 
 .data_post{
   float: right;
+}
+
+.testo_commento{
+  margin-top: 0.5em;
+  overflow: hidden;
 }
 
 /*

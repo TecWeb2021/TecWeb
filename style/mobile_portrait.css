@@ -120,3 +120,8 @@ dl.info dd {
 #sfondo_gioco_mobile {border-radius: 0;}
 
 #gioco_della_settimana {width: 50%;}
+
+.autore_recensione{
+  display: block;
+  margin-left: 0;
+}
