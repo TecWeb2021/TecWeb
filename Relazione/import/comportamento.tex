@@ -11,11 +11,22 @@ JS......
 \end{itemize}
 
 \subsection{PHP}
-PHP.......................
+Il backend del server è stato sviluppato con script PHP e database relazionale MariaDB;
 
 \subsubsection{Classi}
-\paragraph{NomeClasse} 
-descrizion......
+\begin{itemize}
+	\item DBAccess: è la classe che gestisce tutte le interazioni col database.
+	\item User
+	\item Game
+	\item News
+	\item GameNews
+	\item Comment
+	\item Image
+\end{itemize}
+
+\paragraph{DBAccess} 
+La classe DBAccess è abbastanza complessa da richiedere un approfondimento.
+Essa offre per metodi per la lettura e per la scrittura dei dati rappresentati dalle altre 6 classi.
 
 I metodi più importanti sono:
 \begin{itemize}
