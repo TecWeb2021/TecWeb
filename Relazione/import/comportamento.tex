@@ -1,13 +1,26 @@
 \section{Comportamento}
-Per comporamento del sito è gestito lato server dai file PHP e lato client da JavaScript.
+Per comporamento del sito è gestito lato server da PHP e lato client da JavaScript.
 
 \subsection{Javascript}
-JS......
+Abbiamo usato un unico file per contenere tutte le funzioni implementate. Il file è stato nominato checkForm.js in quanto le funzioni presenti svolgono principalmente controlli sull'input delle form presenti.
+Di seguito riportiamo le funzioni con una breve spiegazione:
 
-\subsubsection{Funzionalità}
-......la lista delle funzioni:
 \begin{itemize}
-	\item \textbf{nomeFUNZIONE():} descrizione.....\\
+	\item \textbf{validateForm(): } esegue un controllo sull'input della form (lato client). Viene chiamata in tutte le pagine che contengono delle form di inserimento/modifica dei dati lato admin (Form Notizie e Form Giochi) e nelle pagine di login e registrazione lato utente.
+	Per facilitare eventuali future aggiunte di campi input nel sito, la funzione si appoggia ad un array (dettagliform) contenente come chiavi gli id dei campi input a cui viene associato un array contenente le espressioni regolari per la verifica dell'input e il corrispondente messaggio d'errore.
+	La funzione procede chiamando prima validazioneCampo(input) per ogni input presente nell'array di supporto trovato nella pagina di invocazione ed in seguito chiama checkChecked(), che effettua un controllo dei campi checkbox e radio.\\
+	\item \textbf{validazioneCampo(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o conferma dell'inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file o data, il campo "repeatedpassword" e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in dettagliform e procede a invocare la funzione mostraMessaggio(input,stato), dove stato è rispettivamente true o false se la value rispetta o meno le caratteristiche volute. \\
+	\item \textbf{mostraMessaggio(input, stato): } mostra un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le categorie di utenti.\\
+	\item \textbf{checkChecked(): } descrizione.....\\
+	\item \textbf{checkPassword(): } descrizione.....\\
+	\item \textbf{checkPassword(): } descrizione.....\\
+	\item \textbf{checkNotEmpty(): } descrizione.....\\
+	\item \textbf{responsiveMenu(): } questa funzione assegna un evento di click al pulsante del menu nella versione mobile.
+	Abbiamo scelto l'evento onclick perchè gestisce anche l'evento ontouch per dispositivi mobile.
+	Il pulsante è situato nel top-right della pagina, dove è più facilmente raggiungibile da un utente mobile;\\
+	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina giochi. Gestisce l'evento onclick dei button tramite event delegation nel container. All'onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del container la richiude.\\
+	\item \textbf{checkAnni(): } effettua un controllo sull'intevallo selezionato di anni di uscita dei videogiochi nella pagina giochi.
+	Inserisce un messaggio d'errore se l'intervallo è inamissibile (es: da 2020 a 2016) e blocca il submit.\\
 \end{itemize}
 
 \subsection{PHP}
