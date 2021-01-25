@@ -24,8 +24,8 @@
 <body onload="handleClick();">
   <div id="header">
     <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
-        <h1 id="titolo1"> Recensioni </h1>
-        <h2 id="titolo2"> Videogiochi </h2>
+    <h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
+		<h2 id="titolo2">Tutto sui Videogiochi</h2>
     <div class="loginblock">
       <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
       <span id="login"><a href="../php/profilo.php"><nomeProfilo_ph /></a> | <a href="../php/logout.php">Logout</a></span>
@@ -55,12 +55,13 @@
   </div>
 
   <div id="breadcrumb">
-      <p>Ti trovi in: <span xml:lang="en">Home</span> >> <nomeProfilo_ph /> >> Nuova Notizia</p>
+      <p>Ti trovi in: <a class="link_breadcrumb" href="home.html"><span xml:lang="en">Home</span></a> > <a class="link_breadcrumb" href="esempioAdmin.html"><span xml:lang="en">Admin</span></a> > Inserisci Notizia</p>
   </div>
 
-  <div id="content" class="contenutoGenerale">
+
+  <div class="container">
     <div class="schedaForm">
-      <h1>Form per l'inserimento di una nuova notizia</h1>
+      <h3>Form per l'inserimento di una nuova notizia</h3>
       <p>I campi marcati con * sono opzionali</p>
       <form id="formNotizia" method="post" action="formNotizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
