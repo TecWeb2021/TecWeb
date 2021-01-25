@@ -69,13 +69,6 @@ p.autore { font-size: 0.9em; }
 
 .img_cover { margin-left: 0em; }
 
-p.descrizione_home{
-  overflow: hidden;
-  max-height: 10em;
-  width: 57%;
-  column-count: 1;
-  column-rule: 0px;
-}
 
 #gioco_della_settimana{ width: 50%; }
 
