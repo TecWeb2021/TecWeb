@@ -165,8 +165,9 @@ class DBAccess {
         return $result;
     }
 
-    public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null){
-        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path";
+    public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null, $consoles=null, $genres=null){
+        print_r($consoles);
+        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
 
         
 
@@ -176,6 +177,27 @@ class DBAccess {
         $yearRangeStart=$yearRangeStart."-01-01";
         $yearRangeEnd=$yearRangeEnd."-12-31";
         $specifyYearRangeAppend= $isYearRangeGiven ? "games.Publication_date >= '$yearRangeStart' AND games.Publication_date <= '$yearRangeEnd'" : null;
+        $specifyConsoles="";
+        if($consoles && count($consoles)>0){
+            $value=$consoles[0];
+            $specifyConsoles="WHERE games_consoles.Console='$value'";
+            for ($i=1;$i<count($consoles);$i++) {
+                $value=$consoles[$i];
+                $specifyConsoles=$specifyConsoles." "."OR games_consoles.Console='$value'";
+            }
+            $query=$query." ".$specifyConsoles;
+        }
+
+        $specifyGenres="";
+        if($genres && count($genres)>0){
+            $value=$genres[0];
+            $specifyGenres="WHERE games_genres.Genre='$value'";
+            for ($i=1;$i<count($genres);$i++) {
+                $value=$genres[$i];
+                $specifyGenres=$specifyGenres." "."OR games_genres.Genre='$value'";
+            }
+            $query=$query." ".$specifyGenres;
+        }
 
         switch ($order) {
             case 'alfabetico':
@@ -220,9 +242,12 @@ class DBAccess {
         }else {
             $gamesList = array();
             while ($row = mysqli_fetch_assoc($queryResult)) {
+                $consoles=$this->getConsoles($gameName);
+                $genres=$this->getGenres($gameName);
+
                 $image=new Image($row['Path'],$row['Alt']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image);
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image, $consoles, $genres);
                 array_push($gamesList, $game);
             }
 
@@ -238,11 +263,60 @@ class DBAccess {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
+            $consoles=$this->getConsoles($name);
+            $genres=$this->getGenres($name);
+
             $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres);
 
         return $game;
         }
+    }
+
+    public function getConsoles($gameName){
+        if(!$gameName){
+            return null;
+        }
+        $query="SELECT * FROM games_consoles WHERE Game='$gameName'";
+        $result=$this->getResult($query);
+        if(!$result){
+            return null;
+        }
+
+        $consoles=array();
+        if(mysqli_num_rows($result) == 0) {
+            return null;
+        }else {
+            while ($row = mysqli_fetch_assoc($result)) {
+                array_push($consoles, $row['Console']);
+            }
+
+            return $consoles;
+        }
+
+    }
+
+    public function getGenres($gameName){
+        if(!$gameName){
+            return null;
+        }
+        $query="SELECT * FROM games_genres WHERE Game='$gameName'";
+        $result=$this->getResult($query);
+        if(!$result){
+            return null;
+        }
+
+        $genres=array();
+        if(mysqli_num_rows($result) == 0) {
+            return null;
+        }else {
+            while ($row = mysqli_fetch_assoc($result)) {
+                array_push($genres, $row['Genre']);
+            }
+
+            return $genres;
+        }
+
     }
 
     public function getTopGame(){
@@ -445,6 +519,10 @@ class DBAccess {
         $image=$game->getImage();
         $imagePath= $image ? $image->getPath() : null;
         $imageAlt= $image ? $image->getAlt() : null;
+
+        $consoles=$game->getConsoles();
+        $genres=$game->getGenres();
+
         if($image){
             $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
             $result=$this->getResult($query);
@@ -453,6 +531,24 @@ class DBAccess {
             }
         }
 
+        if($consoles){
+            foreach ($consoles as $value) {
+                $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
+                $result=$this->getResult($query);
+                if(!$result){
+                    break;
+                }
+            }
+        }
+        if($genres){
+            foreach ($genres as $value) {
+                $query="INSERT INTO games_genres VALUES ('$name', '$value')";
+                $result=$this->getResult($query);
+                if(!$result){
+                    break;
+                }
+            }
+        }
 
         $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath')";
         $result=$this->getResult($query);

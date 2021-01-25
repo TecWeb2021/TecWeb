@@ -22,6 +22,10 @@ function replacePH($game){
 	$homePage=str_replace("<publication_date_ph/>", $game->getPublicationDate(),$homePage);
 	$homePage=str_replace("<game_name_ph/>", $game->getName(),$homePage);
 	$homePage=str_replace("<sinopsis_ph/>", $game->getSinopsis(),$homePage);
+	$platform= $game->getConsoles() ? implode(", ", $game->getConsoles()) : "";
+	$homePage=str_replace("<platforms_ph/>", $platform,$homePage);
+	$platform= $game->getGenres() ? implode(", ", $game->getGenres()) : "";
+	$homePage=str_replace("<genres_ph/>", $platform,$homePage);
 	/*$homePage=str_replace("</>", $game->,$homePage);
 	$homePage=str_replace("</>", $game->,$homePage);
 	$homePage=str_replace("</>", $game->,$homePage);
