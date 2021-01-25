@@ -62,16 +62,6 @@ dl.info_scheda dd {
   padding-bottom: 0.5em;
 }
 
-p.descrizione_home {
-  column-count: 3;
-  column-rule: 1px solid #ccccb3;
-  border-radius: 25px;
-  border: 1px solid #000;
-  background-color:#f5f5f5;
-  text-align: left;
-  padding: 1em;
-}
-
 .messaggi {
   padding: 0em;
   display: block;

@@ -69,16 +69,6 @@ p.autore { font-size: 0.9em; }
 
 .img_cover { margin-left: 0em; }
 
-p.descrizione_home{
-  overflow: hidden;
-  max-height: 10em;
-  width: 57%;
-  column-count: 1;
-  column-rule: 0px;
-}
-
-#gioco_della_settimana{ width: 50%; }
-
 #ultime_aggiunte{ width: 49%; }
 
 p.descrizione {
@@ -89,7 +79,6 @@ p.descrizione {
   margin-right: -1em;
   padding-right: 1em;
   max-height: 10em;
-  width: 57%;
   overflow: hidden;
   column-count: 1;
   column-rule: 0px;
@@ -125,3 +114,9 @@ dl.info dd {
   width: 55%;
   margin: 5px;
 }
+
+/*---------------------*/
+
+#sfondo_gioco_mobile {border-radius: 0;}
+
+#gioco_della_settimana {width: 50%;}
