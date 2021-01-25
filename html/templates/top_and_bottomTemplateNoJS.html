@@ -20,15 +20,13 @@
 
   <script type="text/javascript" src="../checkForm.js"></script>
 
-  <!--<noscript> <meta http-equiv="refresh" content="0;url=<this_url_ph/>tendina=false"> </noscript>-->
-
 </head>
 
 <body>
   <div id="header">
     <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
 		<h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
-		<h2 id="titolo2">Recensioni e notizie riguardanti i giochi</h2>
+		<h2 id="titolo2">Recensioni e notizie riguradanti i giochi</h2>
     <div class="loginblock">
       <a href="profilo.php"><img id="loginPic" alt="foto profilo utente" src="<user_img_path_ph/>" /></a>
       <not_logged_in><span id="login"><a class="link_login" href="login.html">Login</a> | <a class="link_login" href="registrati.html">Registrati</a></span></not_logged_in>
@@ -37,11 +35,11 @@
   </div>
 
   <div class="topnav" id="menu">
-  	<!--<form action="#" method="get">-->
+  	<form action="<this_url_ph/>" method="get">
     <button type="submit" name="tendina" value="<tendina_bool_ph/>" class="icon" onclick="responsiveMenu()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </button>
-	<!--</form>-->
+	</form>
 
     <form class="searchbox" action="giochi.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>

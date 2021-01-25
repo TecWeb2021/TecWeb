@@ -1,91 +1,91 @@
 <div class="container">
-    <div class="advance_filter">
+    <div class="advance_filter" id="categorie">
         <div class="filtri_categorie">
-          <p class="tipo_categorie">Filtri Ricerca: |</p>
-          <form class="filters" id="filtri" action="giochi.php">
+          <span class="tipo_categorie">Filtri Ricerca: |</span>
+          <form class="filters" id="filtri" action="../php/action_page.php"  onsubmit="return checkAnni();">
             <div class="dropdown">
-              <button type="button" class="dropbtn" onclick="OpenConsole()">Console
+              <button type="button" class="dropbtn" id="btn_console">Console
                 <i class="fa fa-caret-down"></i>
               </button>
               <div class="dropdown-filter" id="console">
                 <label class="customLabel" for="console1">PlayStation 4
-                  <input type="checkbox" id="console1" name="console1" value="PS4" />
+                  <input type="checkbox" id="console1" name="console" value="PS4" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="console2">PlayStation 5
-                  <input type="checkbox" id="console2" name="console2" value="PS5" />
+                  <input type="checkbox" id="console2" name="console" value="PS5" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="console3">Xbox One
-                  <input type="checkbox" id="console3" name="console3" value="Xbox One" />
+                  <input type="checkbox" id="console3" name="console" value="Xbox One" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="console4">Xbox Series X/S
-                  <input type="checkbox" id="console4" name="console4" value="Xbox Series X/S" />
+                  <input type="checkbox" id="console4" name="console" value="Xbox Series X/S" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="console5">Nintendo Switch
-                  <input type="checkbox" id="console5" name="console5" value="Nintendo Switch" />
+                  <input type="checkbox" id="console5" name="console" value="Nintendo Switch" />
                   <span class="checkmark"></span>
                 </label><br />
               </div>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" onclick="OpenGeneri()">Generi
+              <button type="button" class="dropbtn" id="btn_generi">Generi
                 <i class="fa fa-caret-down"></i>
               </button>
               <div class="dropdown-filter" id="generi">
                 <label class="customLabel" for="genere1">FPS
-                  <input type="checkbox" id="genere1" name="genere1" value="FPS" />
+                  <input type="checkbox" id="genere1" name="genere" value="FPS" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="genere2">Horror
-                  <input type="checkbox" id="genere2" name="genere2" value="Horror" />
+                  <input type="checkbox" id="genere2" name="genere" value="Horror" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="genere3">GDR
-                  <input type="checkbox" id="genere3" name="genere3" value="GDR" />
+                  <input type="checkbox" id="genere3" name="genere" value="GDR" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="genere4">Avventura
-                  <input type="checkbox" id="genere4" name="genere4" value="Avventura" />
+                  <input type="checkbox" id="genere4" name="genere" value="Avventura" />
                   <span class="checkmark"></span>
                 </label><br />
                 <label class="customLabel" for="genere5">Puzzle
-                  <input type="checkbox" id="genere5" name="genere5" value="Puzzle" />
+                  <input type="checkbox" id="genere5" name="genere" value="Puzzle" />
                   <span class="checkmark"></span>
                 </label><br />
               </div>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" onclick="OpenAnnoIN()">Dall'anno:
+              <button type="button" class="dropbtn" id="btn_da">Dall'anno:
                 <i class="fa fa-caret-down"></i>
               </button>
               <div class="dropdown-filter" id="annoin">
                 <label class="customLabel" for="da2020">2020
-                  <input type="radio" id="da2020" name="year" value="2020" />
+                  <input type="radio" id="da2020" name="year1" value="2020" />
                   <span class="radiomark"></span>
                 </label><br />
                 <label class="customLabel" for="da2019">2019
-                  <input type="radio" id="da2019" name="year" value="2019" />
+                  <input type="radio" id="da2019" name="year1" value="2019" />
                   <span class="radiomark"></span>
                 </label><br />
                 <label class="customLabel" for="da2018">2018
-                  <input type="radio" id="da2018" name="year" value="2018" />
+                  <input type="radio" id="da2018" name="year1" value="2018" />
                   <span class="radiomark"></span>
                 </label><br />
                 <label class="customLabel" for="da2017">2017
-                  <input type="radio" id="da2017" name="year" value="2017" />
+                  <input type="radio" id="da2017" name="year1" value="2017" />
                   <span class="radiomark"></span>
                 </label><br />
                 <label class="customLabel" for="da2016">2016
-                  <input type="radio" id="da2016" name="year" value="2016" />
+                  <input type="radio" id="da2016" name="year1" value="2016" />
                   <span class="radiomark"></span>
                 </label><br />
               </div>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" onclick="OpenAnnoFIN()">All'anno:
+              <button type="button" class="dropbtn" id="btn_a">All'anno:
                 <i class="fa fa-caret-down"></i>
               </button>
               <div class="dropdown-filter" id="annofin">
@@ -111,19 +111,23 @@
                 </label><br />
               </div>
             </div>
-            <button class="applicafiltri" type="submit">Submit</button>
+            <button class="applicafiltri" type="submit">Applica Filtri</button>
           </form>
         </div>
         <div class="filtri_ordine">
-          <p class="tipo_ordine">Ordine: |</p>
-          <form class="bottoniOrdine" action="giochi.php">
-            <button type="submit" name="ordine" class="ordine_btn" value="alfabetico">Alfabetico</button>
-            <button type="submit" name="ordine" class="ordine_btn" value="voto">Voto >=4</button>
-            <button type="submit" name="ordine" class="ordine_btn" value="data_uscita">Ultimi usciti</button>
+          <span class="tipo_ordine">Ordine: |</span>
+          <form class="bottoniOrdine" action="../php/action_page.php">
+            <fieldset>
+              <button class="dropbtn" value="Alfabetico">Alfabetico</button>
+              <button class="dropbtn" value="Voto >=4">Voto >=4</button>
+              <button class="dropbtn" value="Ultimi usciti">Ultimi usciti</button>
+            </fieldset>
           </form>
         </div>
     </div>
-    <div id="games">
+    <div class="spazio_contenuto">
+      
       <games_divs_ph/>
+
     </div>
 </div>
