@@ -1272,3 +1272,15 @@ SEZIONE NOTIZIA SINGOLA
   text-align: right;
   padding-right: 1em;
 }
+li:hover,
+li:focus-within {
+  background: #ccc;
+  cursor: pointer;
+}
+
+li:focus-within a {
+  outline: none;
+}
+li{
+  list-style-type: none;
+}
