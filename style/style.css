@@ -1124,6 +1124,7 @@ p.testo{
   background-color:#f5f5f5;
   text-align: left;
   padding: 1em;
+  margin-top: 0.5em;
   max-height: auto;
 }
 
