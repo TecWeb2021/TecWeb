@@ -4,13 +4,13 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-  <title>Home - ALLGames</title>
+  <title>Home | ALLGames</title>
   <meta name="title" content="Sito Recensioni Videogiochi" />
   <meta name="description" content="Home Page del sito di Recensioni" />
   <meta name="keywords" content="Videogiochi games gaming recensioni" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="author" content="NomeGruppo" />
+  <meta name="author" content="Noi4" />
   <meta name="language" content="italian it" />
 
   <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
@@ -26,6 +26,9 @@
 
 <body>
   <div id="header">
+    <a class="aiutiNascosti" href="#vociMenu"> Vai al menù </a>
+    <a class="aiutiNascosti" href="#content"> Vai al contenuto </a>
+
     <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
 		<h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
 		<h2 id="titolo2">Recensioni e notizie riguardanti i giochi</h2>
@@ -43,6 +46,13 @@
     </button>
 	<!--</form>-->
 
+  <ul class="menu">
+    <li><a <home_active>class="active"<home_active/> href="Home.html"><span xml:lang="en">Home</span></a></li>
+    <li><a <giochi_active>class="active"<giochi_active/> href="Giochi.html">Giochi</a></li>
+    <li><a <notizie_active>class="active"<notizie_active/> href="Notizie.html">Notizie</a></li>
+  </ul>
+
+
     <form class="searchbox" action="giochi.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
@@ -53,12 +63,6 @@
         <button type="submit" class="searchbutton">Cerca</button>
       </fieldset>
     </form>
-
-    <ul class="menu">
-        <li><a <home_active>class="active"<home_active/> href="Home.html"><span xml:lang="en">Home</span></a></li>
-        <li><a <giochi_active>class="active"<giochi_active/> href="Giochi.html">Giochi</a></li>
-        <li><a <notizie_active>class="active"<notizie_active/> href="Notizie.html">Notizie</a></li>
-    </ul>
   </div>
 
   <div id="breadcrumb">
@@ -77,7 +81,7 @@
 
 <div id="footer">
   <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-  <em> NomeGruppo - <span xml:lang="en">All rights Reserved</span> </em>
+  <em> Noi4 - <span xml:lang="en">All rights Reserved</span> </em>
   <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
 
