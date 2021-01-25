@@ -550,16 +550,16 @@ textarea.erroreBox+p {
   text-align: center;
 }
 
-ul.checkbox  { 
-  margin-left: 20px; 
-  list-style: none; 
-} 
+ul.checkbox  {
+  margin-left: 20px;
+  list-style: none;
+}
 
-ul.checkbox li { 
-  border: transparent solid; 
+ul.checkbox li {
+  border: transparent solid;
   display: inline-block;
   width: 30%;
-} 
+}
 
 /*
 =========================
@@ -1107,9 +1107,10 @@ dl.info_scheda dd{
 }
 
 #modifica_scheda_gioco{
-  padding-left: 5.2em;
-  margin-top: 0;
-  margin-bottom: 1em;
+  text-align: center;
+  padding-bottom: 0.5em;
+  margin: 0 0 0 0;
+  float: none;
 }
 
 p.testo{
