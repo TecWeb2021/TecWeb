@@ -744,7 +744,8 @@ SEZIONE HOME
   float: left;
   width:70%;
   max-height: 1290px;
-  overflow: overlay;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .notizia_home{
@@ -1146,7 +1147,6 @@ p.testo{
   text-align: left;
   padding: 1em;
   margin-top: 0.5em;
-  max-height: auto;
 }
 
 /*
@@ -1220,7 +1220,6 @@ SEZIONE RECENSIONE
   border-radius: 25px;
   border: 1px solid #000;
   background-color:#f5f5f5;
-  max-height: auto;
   padding:1em;
   margin-bottom: 0.4em;
 }
