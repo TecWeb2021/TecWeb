@@ -32,6 +32,7 @@ body{ max-width: 1024px; }
 .textbox { width: 76%; }
 
 .leftcolumn, .rightcolumn {
+  overflow: visible;
   width: 100%;
   padding: 0;
   max-height: none;
@@ -67,4 +68,8 @@ dl.info_scheda dd {
   padding: 0em;
   display: block;
   text-align: center;
+}
+
+.notizia_home{
+  margin-right: 0;
 }
