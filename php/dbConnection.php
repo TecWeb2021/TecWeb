@@ -580,7 +580,19 @@ class DBAccess {
 
     function overwriteGame($oldGameName, $newGame){
         // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
-        echo "funzione non ancora implementata";
+        $name=$newGame->getName();
+        $date=$newGame->getPublicationDate();
+        $vote=$newGame->getVote();
+        $sinopsis=$newGame->getSinopsis();
+        $age_range=$newGame->getAgeRange();
+        $review=$newGame->getReview();
+        $image=$newGame->getImage();
+        $imagePath= $image ? $image->getPath() : null;
+        $imageAlt= $image ? $image->getAlt() : null;
+
+        $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$oldGameName'";
+        $result=$this->getResult($query);
+        return $result;
     }
 
 
