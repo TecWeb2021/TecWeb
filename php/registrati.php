@@ -46,7 +46,7 @@ if($user){
 			if($result){
 				setcookie('login',$hashValue);
 				echo "<br/>operazione eseguita con successo<br/>tra 5 secondi verrai portato sulla pagina home";
-				header( "refresh:60;url=home.php" );
+				header( "refresh:5;url=home.php" );
 			}else{
 				echo "salvataggio utente fallito";
 				

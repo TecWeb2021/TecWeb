@@ -10,7 +10,7 @@ function createUserHTMLItem($user){
 	$imagePath= $image ? $image->getPath() : "../images/login.png";
 	//echo "imagePath: ".$imagePath;
 	$replacements=array(
-		"<usr_img_path_ph/>"=>$imagePath,
+		"<usr_img_path_ph/>"=>"../".$imagePath,
 		"<username_ph/>"=>$user->getUsername()
 	);
 	foreach ($replacements as $key => $value) {

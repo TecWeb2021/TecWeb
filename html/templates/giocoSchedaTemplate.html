@@ -1,111 +1,31 @@
 
-<div id="content" class="container">
-  <div class="leftnav" id="submenu">
-    <a class="active" href="<gioco_scheda_ph/>"><span xml:lang="en">Scheda Gioco</span></a>
-    <a href="<gioco_recensione_ph/>">Recensione Gioco</a>
-    <a href="<gioco_notizie_ph/>">Notizie Gioco</a>
-  </div>
-  <div class="gioco">
-    <div class="info_gioco">
-      <img class="img_cover" src="<img_path_ph/>" alt="<img_alt_ph/>">
-      <table class="info">
-        <tr>
-          <th style>
-            <h5>Piattaforma:</h5>
-          </th>
-          <td class style>
-            <p><platforms_ph/></p>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Data pubblicazione:</h5>
-          </th>
-          <td class style>
-            <p><publication_date_ph/></p>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Genere:</h5>
-          </th>
-          <td class style>
-            <p><genres_ph/></p>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Sviluppo:</h5>
-          </th>
-          <td class style>
-            <p>FromSoftware</p>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Pubblicazione:</h5>
-          </th>
-          <td class style>
-            <p>FromSoftware,Bandai Namco</p>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Fascia di età:</h5>
-          </th>
-          <td class style>
-            <p><age_range/></p>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Espansioni:</h5>
-          </th>
-          <td class style>
-            <ul class="expansion">
-              <li>
-                <a href="DS3ariandel.html">Ashes of Ariandel</a>
-              </li>
-              <li>
-                <a href="DS3ringedcity.html">The Ringed City</a>
-              </li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Prequel:</h5>
-          </th>
-          <td class style>
-            <ul class="serie">
-              <li>
-                <a href="DS2.html">Dark Souls 2</a>
-              </li>
-              <li>
-                <a href="DS1.html">Dark Souls</a>
-              </li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th style>
-            <h5>Sequel:</h5>
-          </th>
-          <td class style>
-            <ul class="serie">
-              <li>
-                <p>Nessuno</p>
-              </li>
-            </ul>
-          </td>
-        </tr>
-      </table>
+
+  <ul class="leftnav" id="submenu">
+    <li><a class="active" href="<gioco_scheda_ph/>">Scheda Gioco</a></li>
+    <li><a href="<gioco_recensione_ph/>">Recensione Gioco</a></li>
+    <li><a href="<gioco_notizie_ph/>">Notizie Gioco</a></li>
+  </ul>
+
+<div class="container" id="content">
+    <div class="info_gioco_scheda">
+      <h3 class="titolo_info_scheda"><game_name_ph/></h3>
+      <img class="sfondo noborder" src="<img_path_ph/>" alt="<img_alt_ph/>">
+      <dl class="info_scheda">
+        <dt>Piattaforma:</dt><dd><platforms_ph/></dd>
+        <dt>Data pubblicazione:</dt><dd><publication_date_ph/></dd>
+        <dt>Genere:</dt><dd><genres_ph/></dd>
+        <dt>Sviluppo:</dt><dd>FromSoftware</dd>
+        <dt>Pubblicazione:</dt><dd>FromSoftware, Bandai Namco</dd>
+        <dt>Fascia di età:</dt><dd><age_range/></dd>
+        <dt>Espansioni:</dt><dd>Ashes of Ariandel, The Ringed City</dd>
+        <dt>Prequel:</dt><dd>Dark Souls 2</dd>
+        <dt>Sequel:</dt><dd>Nessuno</dd>
+      </dl>
+      <p class="modifica" id="modifica_scheda_gioco"><a class="link" href="">Modifica gioco</a></p>
     </div>
     <div class="trama_gioco">
-      <h3><game_name_ph/></h3>
-      <p class="trama">
+      <p class="testo">
         <sinopsis_ph/>
       </p>
     </div>
-  </div>
 </div>
