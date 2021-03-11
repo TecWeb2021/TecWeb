@@ -3,7 +3,7 @@
 require_once "replacer.php";
 require_once "dbConnection.php";
 
-# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
+# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un'altra.
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();

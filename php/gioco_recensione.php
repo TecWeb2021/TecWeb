@@ -12,21 +12,25 @@ $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 
 function replacePH($game){
 	global $homePage;
-	$homePage=str_replace("<gioco_scheda_ph/>", "gioco_scheda.php?game=".strtolower($game->getName()),$homePage);
-	$homePage=str_replace("<gioco_recensione_ph/>", "gioco_recensione.php?game=".strtolower($game->getName()),$homePage);
-	$homePage=str_replace("<gioco_notizie_ph/>", "gioco_notizie.php?game=".strtolower($game->getName()),$homePage);
-	$homePage=str_replace("<img_path_ph/>", "../".$game->getImage()->getPath(),$homePage);
-	$homePage=str_replace("<img_alt_ph/>", $game->getImage()->getAlt(),$homePage);
-	$homePage=str_replace("<review_content_ph/>", $game->getReview(),$homePage);
-	$homePage=str_replace("<game_vote_ph/>", $game->getVote(),$homePage);
-	$homePage=str_replace("<game_name_ph/>", $game->getName(),$homePage);
-	/*$homePage=str_replace("</>", $game->,$homePage);
-	$homePage=str_replace("</>", $game->,$homePage);
-	$homePage=str_replace("</>", $game->,$homePage);
-	$homePage=str_replace("</>", $game->,$homePage);
-	$homePage=str_replace("</>", $game->,$homePage);
-	$homePage=str_replace("</>", $game->,$homePage);*/
+
+	// questa è la lista delle sostituzioni da applicare
+	$replacements=array(
+		"<gioco_scheda_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
+		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
+		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
+		"<img_path_ph/>" => "../".$game->getImage()->getPath(),
+		"<img_alt_ph/>" => $game->getImage()->getAlt(),
+		"<review_content_ph/>" => $game->getReview(),
+		"<game_vote_ph/>" => $game->getVote(),
+		"<game_name_ph/>" => $game->getName(),
+	);
+
+	//applico le sostituzioni
+	foreach ($replacements as $key => $value) {
+		$homePage = str_replace($key, $value, $homePage);
+	}
 }
+
 
 function generateGameCommentsDivs($gameName,$dbAccess){
 	$commentTemplate=file_get_contents("../html/templates/commentDivTemplate.html");
