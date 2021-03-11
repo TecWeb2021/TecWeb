@@ -115,7 +115,7 @@ if($allOk){
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 		$new_gameImage=null;
-		if(/* metto un false perchè ho bisogno di inserire un'immagine nel form senza che venga rilevata dal php*/false && isset($_REQUEST['immagine'])){
+		if(/* metto un false perchè ho bisogno di inserire un'immagine nel form, perchè lo vuole lo script js, senza che venga rilevata dal php*/false && isset($_REQUEST['immagine'])){
 			//qui devo creare il nuovo oggetto immagine, oltre che 	salvare l'immagine caricata
 		}else{
 			$new_gameImage=$oldGame->getImage();
@@ -124,7 +124,7 @@ if($allOk){
 	
 		$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage);
 
-		$overwriteResult=$dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
+		$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
 		echo "risultato overwrite: ".$overwriteResult;
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database

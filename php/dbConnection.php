@@ -578,6 +578,7 @@ class DBAccess {
         return $result;
     }
 
+    //sarebbe una cosa buona mettere un count per vedere se c'è un gioco che verrà sovrascritto, per capire se l'operazione andrà a vuoto o se farà qualcosa
     function overwriteGame($oldGameName, $newGame){
         // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
         $name=$newGame->getName();
