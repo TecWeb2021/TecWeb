@@ -27,16 +27,8 @@ class DBAccess {
         }else {
             return true;
         }
+    }
 
-        //myswli_connect_error($this->connction)
-        //si può usare come alternativa
-        //restituisce un numero corrispondente all'errore, oppure 0 se è andata a buon fine
-    }
-    /*
-    public function closeConnection(){
-        $this->connection->close();
-    }
-    */
 
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
@@ -170,8 +162,8 @@ class DBAccess {
         $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
 
         
-
-        $specifyGameNameAppend= $gameName ? "games.Name='$gameName'" : null;
+        // l'operatore LIKE trova valori che rispettano il pattern. In questo caso il pattern è %$gameName% che vuol dire qualsiasi stringa contenente $gameName ($gameName è il nome del parametro, al suo posto ci sarà il valore del parametro)
+        $specifyGameNameAppend= $gameName ? "games.Name LIKE '%$gameName%'" : null;
 
         $isYearRangeGiven= $yearRangeStart && $yearRangeEnd;
         $yearRangeStart=$yearRangeStart."-01-01";
@@ -584,6 +576,11 @@ class DBAccess {
             $result=$this->getResult($query);
         }
         return $result;
+    }
+
+    function overwriteGame($oldGameName, $newGame){
+        // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
+        echo "funzione non ancora implementata";
     }
 
 

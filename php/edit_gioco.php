@@ -1,10 +1,14 @@
 
 
+
 <?php
+ 
+// una differenza tra questo script e quello per l'inserimento di un gioco nuovo sta nel fatto che qui viene accettato il "salva modifiche" anche se non è stata fornita una immagine in input, o almeno credo
+
 require_once "replacer.php";
 require_once "dbConnection.php";
 
-# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
+# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un'altra.
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
@@ -12,134 +16,85 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/editGiocoTemplate.html");
 
 
+
+
+// verifico che l'utente abbia l'autorizzazione per modificare un gioco
 $user=getLoggedUser($dbAccess);
 
-if($user){
-	if($user->isAdmin()){
-		$gameNameToModify=isset($_REQUEST['game']) ? $_REQUEST['game'] : null;
-		$game=null;
-		if($gameNameToModify){
-			$game=$dbAccess->getGame($gameNameToModify);
-		}
+$authCheck=true;
+
+if(!$user){
+	$homePage="Non sei autenticato";
+	$authCheck=false;
+}
+if($authCheck && !$user->isAdmin()){
+	$homePage="Non sei un amministratore";
+	$authCheck=false;
+}
+
+//allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
+$allOk=$authCheck;
+// verifico che sia stato specificato un gioco
+if($allOk && !isset($_REQUEST['game'])){
+	$homePage="Non è stato specificato alcun gioco";
+	$allOk=false;
+}
 
 
+$gameToBeModifiedName=$_REQUEST['game'];
 
+if($allOk /*&& !correctFormat(gameName) (qui devo controllare che il nel nome del gioco non siano presenti comandi malevoli)*/ && false/*questo false serve per non entrare nell'if in fase di testing*/){
+	$homePage="Formato del nome del gioco non corretto";
+	$allOk=false;
+}
+// verifico che il gioco specificato esista
+if($allOk && !$game=$dbAccess->getGame($gameToBeModifiedName)){
+	$homePage="Il gioco $gameToBeModifiedName specificato non esiste";
+	$allOk=false;
+}
+	
+if($allOk){
+	//ora posso popolare la pagina con gli attributi del gioco
+	//rinino il gioco a oldGame perchè è più chiaro nel contesto che c'è d'ora in poi
+	$oldGame=$game;
 
-		#valori in input
-		$name= isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
-		#sanitize
-		$developer= isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
-		#sanitize
-		$date= isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
-		#sanitize
-		$age_range= isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
-		#sanitize
-		$consoles= isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
-		#sanitize
-		$genres= isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
-		#sanitize
-		$image= isset($_FILES['immagine']) ? $_FILES['immagine'] : null;
-		#sanitize
-		$imageAlt= isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
-		#sanitize
-		$prequel= isset($_REQUEST['prequel']) ? $_REQUEST['prequel'] : null;
-		#sanitize
-		$sequel= isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
-		#sanitize
-		$dlc= isset($_REQUEST['dlc']) ? $_REQUEST['dlc'] : null;
-		#sanitize
-		$sinopsis= isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
-		#sanitize
-		$review= isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
-		#sanitize
+	//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
+	$replacements = array(
+		"<game_name_ph/>" => $oldGame->getName(),
+		"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+		"<date_ph/>" => $oldGame->getPublicationDate(),
+		"<age_range_ph/>" => $oldGame->getAgeRange(),
+		"<img_alt_ph/>" => "alt immagine", //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+		"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+		"<sinopsis_ph/>" => $oldGame->getSinopsis(),
+		"<review_ph/>" => $oldGame->getReview()
+	);
 
-		if($game){
-			echo "yes game<br/>";
-			#valori in input
-			$name= $game->getName();
-			#sanitize
-			$developer= null;
-			#sanitize
-			$date= $game->getPublicationDate();
-			#sanitize
-			$age_range= $game->getAgeRange();
-			#sanitize
-			$consoles= null;
-			#sanitize
-			$genres= null;
-			#sanitize
-			$image= null;
-			#sanitize
-			$imageAlt= null;
-			#sanitize
-			$prequel= null;
-			#sanitize
-			$sequel= null;
-			#sanitize
-			$dlc= null;
-			#sanitize
-			$sinopsis= null;
-			#sanitize
-			$review= null;
-			#sanitize
-		}
-
-		$phMapping=array(
-			"<game_name_ph/>"=>$name,
-			"<developer_ph/>"=>$developer,
-			"<date_ph/>"=>$date,
-			"<age_range_ph/>"=>$age_range,
-			"<img_alt_ph/>"=>$imageAlt,
-			"<dlc_ph/>"=>$dlc,
-			"<sinopsis_ph/>"=>$sinopsis,
-			"<review_ph/>"=>$review
-		);
-
-		$requiredValues=array($name , $developer , $date , $age_range , $consoles , $genres , $image , $imageAlt , $prequel , $sequel , $dlc , $sinopsis , $review);
-
-		$areAllAssigned=true;
-		for($i=0;$i<count($requiredValues);$i++){
-			if(!$requiredValues[$i]){
-				$areAllAssigned=false;
-				echo "$i is null";
-			}
-		}
-		if($areAllAssigned){
-
-			$imgSaveResult=saveImageFromFILES($dbAccess, "immagine");
-
-			if ($imgSaveResult!=false) {
-				echo "caricamento dell'immagine riuscito";
-			  	#Se l'operazione è andata a buon fine...
-			  	$imagePath=$imgSaveResult;
-			  	$newImage=new Image($imagePath, $imageAlt);
-			  	$newGame=new Game($name, $date, 0.5, $sinopsis, $age_range, $review, $newImage);
-				$result=$dbAccess->addGame($newGame);
-				if($result!=null){
-					header('Location: home.php');
-				}else{
-					
-					echo "salvataggio del gioco fallito";
-				}
-
-			}else{
-				echo "caricamento dell'immagine fallito";
-			}
-		}else{
-			echo "inserire i valori";
-
-		}
-		foreach ($phMapping as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
-
-	}else{
-		$homePage="non puoi accedere a questa pagina perchè non sei un amministratore";	
+	foreach ($replacements as $key => $value) {
+		$homePage=str_replace($key, $value, $homePage);
 	}
 
-}else{
-	$homePage="non puoi accedere a questa pagina perchè non hai fatto il login";
+
+	// ora devo raccogliere i valori che mi sono stati passati
+	// devono essere presenti tutti i valori tranne l'immagine
+	// sovrascriverò i valori del gioco nel database anche se sono uguali a quelli già presenti
+	$new_gameName= isset($_REQUEST['']) ? $_REQUEST[''] : null;
+	$new_gamePublicationDate= isset($_REQUEST['']) ? $_REQUEST[''] : null;
+	$new_gameAgeRange= isset($_REQUEST['']) ? $_REQUEST[''] : null;
+	$new_gameSinopsis= isset($_REQUEST['']) ? $_REQUEST[''] : null;
+	$new_gameReview= isset($_REQUEST['']) ? $_REQUEST[''] : null;
+
+	// l'immagine è un caso particolare: se l'utente ne inserisce una devo creare un oggetto che la rappresenti, altrimenti, visto che non è stata messa nell'html durante le sostituzioni, devo prendermi l'oggetto immagine di $oldGame
+	$new_gameImage=null;
+	if(isset($_REQUEST['immagine'])){
+		//qui devo creare il nuovo oggetto immagine, oltre che salvare l'immagine caricata
+	}else{
+		
+	}
+
+	$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview)
 }
+			
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);

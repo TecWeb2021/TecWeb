@@ -71,32 +71,7 @@ $consoles_pre=isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
 #sanitize
 $genres_pre=isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
 #sanitize
-/*
-$consoles=null;
-if($consoles_pre){
-	$checkValues=array("PS4", "PS5", "XboxOne", "XboxSeriesX");
-	$consoles=array();
-	print_r($_REQUEST);
-	foreach ($checkValues as $value) {
-		if(in_array($value, $consoles_pre)){
-			array_push($consoles, $value);
-		}
-	}
-}
 
-$consoles
-
-$genres=null;
-if($genres_pre){
-	$checkValues=array("Avventura", "Azione", "Platform", "Picchiaduro", "Simulazione", "Sparatutto");
-	$genres=array();
-	print_r($_REQUEST);
-	foreach ($checkValues as $value) {
-		if(in_array($value, $genres_pre)){
-			array_push($genres, $value);
-		}
-	}
-}*/
 
 # Chiedo al server una lista delle notizie
 $list=$dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order, $consoles_pre, $genres_pre);
