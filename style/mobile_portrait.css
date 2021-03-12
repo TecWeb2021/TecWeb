@@ -24,9 +24,17 @@ body {
 
 #titolo2 { display: none; }
 
-#logo { width: 15%; }
+#logo {
+  width: 4.5em;
+  margin-top: -0.5em;
+}
 
-#loginPic { width: 40%; }
+#loginPic {
+  min-width: 48px;
+  max-width: 48px;
+  min-height: 48px;
+  max-height: 48px; 
+}
 
 div.loginblock{
   margin-top: -68px;

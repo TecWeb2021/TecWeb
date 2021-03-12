@@ -69,7 +69,8 @@ div.loginblock a { color: white; }
 
 div.loginblock {
   color: white;
-  margin-top: -6.5em;
+  margin-top: -5.5em;
+  margin-right: -0.4em;
   float: right;
   vertical-align: top;
   display: inline-block;
@@ -79,8 +80,10 @@ div.loginblock {
 
 #loginPic {
   border-radius: 50%;
-  width: 50%;
-  max-width: 9em;
+  min-width: 60px;
+  max-width: 60px;
+  min-height: 60px;
+  max-height: 60px;
   border-style: solid;
   border-color: white;
   border-width: 2px;
