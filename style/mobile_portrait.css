@@ -120,3 +120,7 @@ dl.info dd {
   display: block;
   margin-left: 0;
 }
+
+.info_utente{
+    width: 80%;
+}

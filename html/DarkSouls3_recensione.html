@@ -87,20 +87,23 @@
       <form class="spazio_testo" id="inserisci_commento" action="/action_page.php" onsubmit="return checkNotEmpty();">
         <fieldset>
           <label for="textbox" class="structural">Inserisci Commento:</label>
-          <textarea id="textbox" class="textbox" name="write" rows="4" cols="100"></textarea>
+          <textarea id="textbox" class="textbox" name="write" rows="4" cols="100" placeholder="Inserisci commento..."></textarea>
           <button class="insertcomment" type="submit">Submit</button>
         </fieldset>
       </form>
     </div>
-    <div class="lista_commenti">
-      <div class="commento_singolo">
-        <p class="commentatore">Topolino</p>
-        <p class="data_post"> 18 gennaio 2021</p>
-        <p class="testo_commento">
-          Buongiorno professoressaci dia 30 per favore
-        </p>
-      </div>
-    </div>
+    <ul class="lista_commenti">
+      <li class="commento_singolo">
+        <div class="intestazione_commento">
+          <img id="foto_commentatore" src="../images/login.png">
+          <span class="commentatore"> Gigio </span>
+          <span class="data_post"> 18 Gennaio 2021 </span>
+        </div>
+        <div class="contenuto_commento">
+          <p class="testo_commento"> Nel regno di Lothric il suono di una campana preavvisa che l'Era del Fuoco sta terminando: la Prima Fiamma, ravvivata per la prima volta dal primo Signore dei Tizzoni, Lord Gwyn, è sul punto di spegnersi per sempre. In conseguenza di questo riappare la maledizione dei non morti e le ere spazio-temporali convergono tutte nello stesso punto: Lothric. L'Era del Fuoco potrà essere prolungata con un rituale in cui grandi signori ed eroi sacrificano le loro anime per ripristinare la Prima Fiamma. Tuttavia, il principe Lothric ha abbandonato il suo dovere e sceglie invece di guardare </p>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>
 

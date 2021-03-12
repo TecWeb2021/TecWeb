@@ -696,7 +696,7 @@ SEZIONE LISTA UTENTI
 
 .info_utente{
     float: right;
-    width: 80%;
+    width: 84%;
     padding-top: 0.8em;
 }
 
@@ -1201,11 +1201,28 @@ SEZIONE RECENSIONE
 }
 
 /*structural dall menu*/
+#foto_commentatore{
+  float: left;
+    max-width: 10%;
+    min-width: 2em;
+    width: 3em;
+    margin-right: 1em;
+    border-radius: 50%;
+}
 
 .insertcomment{
   min-height: 40px;
   margin-top: 1.5em;
   margin-left: 0.5em;
+}
+
+.intestazione_commento{
+  border: solid;
+  color: white;
+  background-color: #600000;
+  border-radius: 25px;
+  padding: 1em;
+  overflow: hidden;
 }
 
 .lista_commenti{
@@ -1220,11 +1237,11 @@ SEZIONE RECENSIONE
   border-radius: 25px;
   border: 1px solid #000;
   background-color:#f5f5f5;
-  padding:1em;
   margin-bottom: 0.4em;
 }
 
 .commentatore{
+  padding-top: 0.6em;
   display: inline-block;
   width:30%;
   font-weight: bold;
@@ -1232,11 +1249,15 @@ SEZIONE RECENSIONE
 }
 
 .data_post{
+  padding-top: 0.6em;
+  font-size: 1.2em;
+  font-family: monospace;
   float: right;
+  display: inline-block;
 }
 
 .testo_commento{
-  margin-top: 0.5em;
+  padding: 0.5em 0.5em 1em 0.5em;
   overflow: hidden;
 }
 
