@@ -131,6 +131,9 @@ function getLoggedUser($dbAccess){
 }
 
 function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/'){
+	//questa funzione ritorna il percorso in cui l'immagine è salvata
+	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
+
 	//echo "saveImageFromFILES";
 	//print_r($_FILES);
 	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;

@@ -588,10 +588,35 @@ class DBAccess {
         $age_range=$newGame->getAgeRange();
         $review=$newGame->getReview();
         $image=$newGame->getImage();
+        $this->addImage($image);
         $imagePath= $image ? $image->getPath() : null;
         $imageAlt= $image ? $image->getAlt() : null;
 
         $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$oldGameName'";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    /*
+    $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
+    */
+
+    function overwriteNews($oldNewsTitle, $newNews){
+        // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
+        $title=$newNews->getTitle();
+        $content=$newNews->getContent();
+        $author=$newNews->getAuthor()->getUsername();
+        $edit_date_time=$newNews->getLastEditDateTime();
+        $image=$newNews->getImage();
+        $this->addImage($image);
+        $category=$newNews->getCategory();
+        
+        $imagePath= $image ? $image->getPath() : null;
+        $imageAlt= $image ? $image->getAlt() : null;
+
+        //manca l'eventuale inserimento dell'immagine
+
+        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image='$imagePath', Category='$category' WHERE Title='$oldNewsTitle'";
         $result=$this->getResult($query);
         return $result;
     }

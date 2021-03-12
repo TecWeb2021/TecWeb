@@ -11,6 +11,17 @@
 //	se qualcosa va storto torno alla pagina, ma vengono rimessi nei placeholder i valori del vecchio gioco
 // potrei fare così: se rilevo tutti valori richiesti nel $_REQUEST allora metto quelli, altrimenti metto quelli del vecchio gioco
 
+
+//una buona organizzazione:
+//	se mi mandi tutti i valori:
+//		se va a buon fine: ti mostro i valori che mi hai mandato, che sono anche quelli del gioco come è scritto sul db dopo le modifiche
+//		se non va a buon fine: ti mostro i valori che mi hai inserito, così non perdi quello che stavi scrivendo
+//		(quindi ti mostro sempre quello che mi hai mandato)
+//	se non mi mandi tutto (arrivi da un'altra pagina):
+//		ti mostro i valori del gioco specificato
+
+//ATTENZIONE: questo script ha bisogno che ci sia un input nel form dell'html che invii il nome del gioco. Questo input può essere hidden.
+
 require_once "replacer.php";
 require_once "dbConnection.php";
 
@@ -37,6 +48,8 @@ if($authCheck && !$user->isAdmin()){
 	$homePage="Non sei un amministratore";
 	$authCheck=false;
 }
+
+
 
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
@@ -66,44 +79,14 @@ if($allOk){
 	//rinino il gioco a oldGame perchè è più chiaro nel contesto che c'è d'ora in poi
 	$oldGame=$game;
 
-	//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
-	$replacements = array(
-		"<game_name_ph/>" => $oldGame->getName(),
-		"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
-		"<date_ph/>" => $oldGame->getPublicationDate(),
-		"<age_range_ph/>" => $oldGame->getAgeRange(),
-		"<img_alt_ph/>" => "alt immagine", //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
-		"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
-		"<sinopsis_ph/>" => $oldGame->getSinopsis(),
-		"<review_ph/>" => $oldGame->getReview()
-	);
-
-	foreach ($replacements as $key => $value) {
-		$homePage=str_replace($key, $value, $homePage);
-	}
-	echo "replacements completati<br/>";
-
-
-
 	// ora devo raccogliere i valori che mi sono stati passati
 	// devono essere presenti tutti i valori tranne l'immagine
 	// sovrascriverò i valori del gioco nel database anche se sono uguali a quelli già presenti
 
 	//se almeno un valore, a parte l'immagine, non è settato, vuol dire che sono arrivato a questa pagina da un altra, e quindi non serve che mi metta a raccogliere i valori e a scriverli nel database
 
-	//verifico che tutti i vaori siano settati
+	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(!isset($_REQUEST['nome'])){
-		echo "nome non inserito<br/>";
-	}elseif(!isset($_REQUEST['data'])){
-		echo "data non inserito<br/>";
-	}elseif(!isset($_REQUEST['pegi'])){
-		echo "pegi non inserito<br/>";
-	}elseif(!isset($_REQUEST['descrizione'])){
-		echo "descrizione non inserito<br/>";
-	}elseif(!isset($_REQUEST['recensione'])){
-		echo "recensione non inserito<br/>";
-	}
 	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione'])  ){
 		echo "i nuovi valori per il gioco sono stati tutti rilevati<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
@@ -115,9 +98,22 @@ if($allOk){
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 		$new_gameImage=null;
-		if(/* metto un false perchè ho bisogno di inserire un'immagine nel form, perchè lo vuole lo script js, senza che venga rilevata dal php*/false && isset($_REQUEST['immagine'])){
-			//qui devo creare il nuovo oggetto immagine, oltre che 	salvare l'immagine caricata
+		/*per ora l'immagine ci sarà sempre perchè il js mi obbliga ad inserirla, ma questa imposizione va tolta*/
+		if(isset($_FILES['immagine'])){
+			echo "rilevato campo immagine\n";
+			//prendo l'immagine inserita dall'utente
+			$result = saveImageFromFILES($dbAccess, "immagine");
+			$new_gameImagePath= $result ? $result : null;
+
+			$new_gameImage = $new_gameImagePath ? new Image($new_gameImagePath,"immagine del gioco") : null;
+			if($new_gameImage == null){
+				echo "Salvataggio immagine fallito\n";
+			}else{
+				echo "Salvataggio immagine riuscito nel percorso:".$new_gameImagePath."\n";
+			}
 		}else{
+			echo "non rilevato campo immagine\n";
+			//prendo l'immagine già presente per il gioco prima delle modifiche
 			$new_gameImage=$oldGame->getImage();
 		}
 	
@@ -125,13 +121,59 @@ if($allOk){
 		$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage);
 
 		$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-		echo "risultato overwrite: ".$overwriteResult;
+		echo "risultato overwrite: ".$overwriteResult."<br/>";
+
+		$replacements = array(
+			"<game_name_ph/>" => $new_gameName,
+			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<date_ph/>" => $new_gamePublicationDate,
+			"<age_range_ph/>" => $new_gameAgeRange,
+			"<img_alt_ph/>" => "alt immagine", //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<sinopsis_ph/>" => $new_gameSinopsis,
+			"<review_ph/>" => $new_gameReview
+		);
+	
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
+		}
+		echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
 		echo "i nuovi valori per il gioco non sono stati rilevati tutti, probabilmente arrivo da un'altra pagina<br/>";
 		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
+
+		// controllo quale valore non è stato inserito
+		if(!isset($_REQUEST['nome'])){
+			echo "nome non inserito<br/>";
+		}elseif(!isset($_REQUEST['data'])){
+			echo "data non inserito<br/>";
+		}elseif(!isset($_REQUEST['pegi'])){
+			echo "pegi non inserito<br/>";
+		}elseif(!isset($_REQUEST['descrizione'])){
+			echo "descrizione non inserito<br/>";
+		}elseif(!isset($_REQUEST['recensione'])){
+			echo "recensione non inserito<br/>";
+		}
+
+		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
+		$replacements = array(
+			"<game_name_ph/>" => $oldGame->getName(),
+			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<date_ph/>" => $oldGame->getPublicationDate(),
+			"<age_range_ph/>" => $oldGame->getAgeRange(),
+			"<img_alt_ph/>" => "alt immagine", //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<sinopsis_ph/>" => $oldGame->getSinopsis(),
+			"<review_ph/>" => $oldGame->getReview()
+		);
+	
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
+		}
+		echo "replacements completati<br/>";
 	}
 
 }
