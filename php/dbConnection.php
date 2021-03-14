@@ -619,20 +619,25 @@ class DBAccess {
 
             echo "comincio a inserire i nuovi valori per le console e i generi"."<br/>";
             if($result && $consoles){
+                echo "step4"."<br/>";
                 foreach ($consoles as $value) {
-                    echo "$name $value"."<br/>";
+                    echo "$name : $value"."<br/>";
                     $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
                     $result=$this->getResult($query);
                     if(!$result){
+                        echo "problem"."<br/>";
                         break;
                     }
                 }
             }
             if($result && $genres){
+                echo "step5"."<br/>";
                 foreach ($genres as $value) {
+                    echo "$name : $value"."<br/>";
                     $query="INSERT INTO games_genres VALUES ('$name', '$value')";
                     $result=$this->getResult($query);
                     if(!$result){
+                        echo "problem"."<br/>";
                         break;
                     }
                 }

@@ -87,7 +87,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['console']) && isset($_REQUEST['genere']) ){
+	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['voto']) ){
 		echo "i nuovi valori per il gioco sono stati tutti rilevati<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
 		$new_gameName = $_REQUEST['nome'];
@@ -96,8 +96,9 @@ if($allOk){
 		$new_gameSinopsis = $_REQUEST['descrizione'];
 		$new_gameReview = $_REQUEST['recensione'];
 		$new_gameAlt = $_REQUEST['alternativo'];
-		$new_gameConsoles = $_REQUEST['console'];
-		$new_gameGenres = $_REQUEST['genere'];
+		$new_gameVote = $_REQUEST['voto'];
+		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
+		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
 		echo "console: ";
 		print_r($new_gameConsoles);
 		echo "<br/>";
@@ -151,7 +152,7 @@ if($allOk){
 			$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres);
 
 			$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-			echo "risultato overwrite: ".$overwriteResult."<br/>";
+			echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
 		}
 
 		$replacements = array(
@@ -160,6 +161,7 @@ if($allOk){
 			"<date_ph/>" => $new_gamePublicationDate,
 			"<age_range_ph/>" => $new_gameAgeRange,
 			"<img_alt_ph/>" => $new_gameAlt, //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<vote_ph/>" => $new_gameVote,
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis,
 			"<review_ph/>" => $new_gameReview
@@ -197,10 +199,8 @@ if($allOk){
 			echo "recensione non inserito<br/>";
 		}elseif(!isset($_REQUEST['alternativo'])){
 			echo "alt non inserito<br/>";
-		}elseif(!isset($_REQUEST['console'])){
-			echo "consoles non inserito<br/>";
-		}elseif(!isset($_REQUEST['genere'])){
-			echo "generi non inserito<br/>";
+		}elseif(!isset($_REQUEST['voto'])){
+			echo "voto non inserito<br/>";
 		}
 
 		$old_gameConsoles = $oldGame->getConsoles();
@@ -224,6 +224,7 @@ if($allOk){
 			"<game_name_ph/>" => $oldGame->getName(),
 			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<date_ph/>" => $oldGame->getPublicationDate(),
+			"<vote_ph/>" => $oldGame->getVote(),
 			"<age_range_ph/>" => $oldGame->getAgeRange(),
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $oldGame->getSinopsis(),
