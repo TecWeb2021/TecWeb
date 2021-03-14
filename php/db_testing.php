@@ -11,7 +11,7 @@ if(isset($_REQUEST['query'])){
 		echo "null"."<br/>";
 	}elseif($res==false){
 		echo "false"."<br/>";
-	}elseif($res==true){
+	}elseif(false && $res==true){
 		echo "true"."<br/>";
 	}else{
 		echo "<table style=\"border-collapse: collapse;\">";

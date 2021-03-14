@@ -159,7 +159,8 @@ class DBAccess {
 
     public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null, $consoles=null, $genres=null){
         print_r($consoles);
-        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
+        //qui non serve fare il join con le tabelle delle console e dei generi, quelle cose le cerco più in basso.
+        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path";
 
         
         // l'operatore LIKE trova valori che rispettano il pattern. In questo caso il pattern è %$gameName% che vuol dire qualsiasi stringa contenente $gameName ($gameName è il nome del parametro, al suo posto ci sarà il valore del parametro)
@@ -547,30 +548,29 @@ class DBAccess {
             }
         }
 
-        if($consoles){
-            foreach ($consoles as $value) {
-                $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
-                $result=$this->getResult($query);
-                if(!$result){
-                    break;
-                }
-            }
-        }
-        if($genres){
-            foreach ($genres as $value) {
-                $query="INSERT INTO games_genres VALUES ('$name', '$value')";
-                $result=$this->getResult($query);
-                if(!$result){
-                    break;
-                }
-            }
-        }
+        
 
         $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath')";
         $result=$this->getResult($query);
-        if($result==null){
-            $query="UPDATE games SET Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$name'";
-            $result=$this->getResult($query);
+        if($result){
+            if($consoles){
+                foreach ($consoles as $value) {
+                    $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
+                    $result=$this->getResult($query);
+                    if(!$result){
+                        break;
+                    }
+                }
+            }
+            if($genres){
+                foreach ($genres as $value) {
+                    $query="INSERT INTO games_genres VALUES ('$name', '$value')";
+                    $result=$this->getResult($query);
+                    if(!$result){
+                        break;
+                    }
+                }
+            }
         }
         return $result;
     }

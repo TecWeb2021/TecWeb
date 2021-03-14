@@ -5,20 +5,7 @@
  
 // una differenza tra questo script e quello per l'inserimento di un gioco nuovo sta nel fatto che qui viene accettato il "salva modifiche" anche se non è stata fornita una immagine in input, o almeno credo
 
-//possibile modifica da fare:
-//	per ora metto nei placeholder i valori del gioco che voglio modificare.
-//	l'utente poi può modificare i valori e inviarli
-//	se qualcosa va storto torno alla pagina, ma vengono rimessi nei placeholder i valori del vecchio gioco
-// potrei fare così: se rilevo tutti valori richiesti nel $_REQUEST allora metto quelli, altrimenti metto quelli del vecchio gioco
-
-
-//una buona organizzazione:
-//	se mi mandi tutti i valori:
-//		se va a buon fine: ti mostro i valori che mi hai mandato, che sono anche quelli del gioco come è scritto sul db dopo le modifiche
-//		se non va a buon fine: ti mostro i valori che mi hai inserito, così non perdi quello che stavi scrivendo
-//		(quindi ti mostro sempre quello che mi hai mandato)
-//	se non mi mandi tutto (arrivi da un'altra pagina):
-//		ti mostro i valori del gioco specificato
+//se viene cambiato il nome del gioco le relazioni con le console e i generi vengono redirette al gioco col nome cambiato, perchè ogni volta che un gioco viene modificato le sue console e generi vengono rimossi dal db e riscritti, eventualmente collegati al nuovo nome
 
 //ATTENZIONE: questo script ha bisogno che ci sia un input nel form dell'html che invii il nome del gioco. Questo input può essere hidden.
 
@@ -76,7 +63,7 @@ if($allOk && !$game=$dbAccess->getGame($gameToBeModifiedName)){
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
-	//rinino il gioco a oldGame perchè è più chiaro nel contesto che c'è d'ora in poi
+	//rinomino il gioco a oldGame perchè è più chiaro nel contesto che c'è d'ora in poi
 	$oldGame=$game;
 
 	// ora devo raccogliere i valori che mi sono stati passati
@@ -149,7 +136,7 @@ if($allOk){
 		
 		if($imageOk){
 		
-			$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres);
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres);
 
 			$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
 			echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
@@ -239,7 +226,7 @@ if($allOk){
 			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
 
-
+		//se il vecchio gioco aveva un immagine inserisco il suo alt nel campo di input per l'alt
 		if($oldImage=$oldGame->getImage()){
 			$replacements["<img_alt_ph/>"] = $oldImage->getAlt();
 		}

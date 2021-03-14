@@ -1,10 +1,31 @@
 
 
+
 <?php
+ 
+// una differenza tra questo script e quello per l'inserimento di un gioco nuovo sta nel fatto che qui viene accettato il "salva modifiche" anche se non è stata fornita una immagine in input, o almeno credo
+
+//possibile modifica da fare:
+//	per ora metto nei placeholder i valori del gioco che voglio modificare.
+//	l'utente poi può modificare i valori e inviarli
+//	se qualcosa va storto torno alla pagina, ma vengono rimessi nei placeholder i valori del vecchio gioco
+// potrei fare così: se rilevo tutti valori richiesti nel $_REQUEST allora metto quelli, altrimenti metto quelli del vecchio gioco
+
+
+//una buona organizzazione:
+//	se mi mandi tutti i valori:
+//		se va a buon fine: ti mostro i valori che mi hai mandato, che sono anche quelli del gioco come è scritto sul db dopo le modifiche
+//		se non va a buon fine: ti mostro i valori che mi hai inserito, così non perdi quello che stavi scrivendo
+//		(quindi ti mostro sempre quello che mi hai mandato)
+//	se non mi mandi tutto (arrivi da un'altra pagina):
+//		ti mostro i valori del gioco specificato
+
+//ATTENZIONE: questo script ha bisogno che ci sia un input nel form dell'html che invii il nome del gioco. Questo input può essere hidden.
+
 require_once "replacer.php";
 require_once "dbConnection.php";
 
-# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
+# Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un'altra.
 
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
@@ -12,113 +33,181 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/formGiocoTemplate.html");
 
 
+
+
+// verifico che l'utente abbia l'autorizzazione per modificare un gioco
 $user=getLoggedUser($dbAccess);
 
-if($user){
-	if($user->isAdmin()){
-		#valori in input
-		$name= isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
-		#sanitize
-		$developer= isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
-		#sanitize
-		$date= isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
-		#sanitize
-		$age_range= isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
-		#sanitize
-		$consoles= isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
-		#sanitize
-		$genres= isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
-		#sanitize
-		$image= isset($_FILES['immagine']) ? $_FILES['immagine'] : null;
-		#sanitize
-		$imageAlt= isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
-		#sanitize
-		$prequel= isset($_REQUEST['prequel']) ? $_REQUEST['prequel'] : null;
-		#sanitize
-		$sequel= isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
-		#sanitize
-		$dlc= isset($_REQUEST['dlc']) ? $_REQUEST['dlc'] : null;
-		#sanitize
-		$sinopsis= isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
-		#sanitize
-		$review= isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
-		#sanitize
+$authCheck=true;
 
-		$phMapping=array(
-			"<game_name_ph/>"=>$name,
-			"<developer_ph/>"=>$developer,
-			"<date_ph/>"=>$date,
-			"<age_range_ph/>"=>$age_range,
-			"<img_alt_ph/>"=>$imageAlt,
-			"<dlc_ph/>"=>$dlc,
-			"<sinopsis_ph/>"=>$sinopsis,
-			"<review_ph/>"=>$review,
-			"<valore_checked_ps4_ph/>"=> $consoles && in_array("PS4", $consoles) ? "checked=\"checked\"" : "",
-			"<valore_checked_ps5_ph/>"=> $consoles && in_array("PS4", $consoles) ? "checked=\"checked\"" : "",
-			"<valore_checked_xboxone_ph/>"=> $consoles && in_array("Xbox One", $consoles) ? "checked=\"checked\"" : "",
-			"<valore_checked_xboxseriesx_ph/>"=> $consoles && in_array("Xbox Series X", $consoles) ? "checked=\"checked\"" : "",
+if(!$user){
+	$homePage="Non sei autenticato";
+	$authCheck=false;
+}
+if($authCheck && !$user->isAdmin()){
+	$homePage="Non sei un amministratore";
+	$authCheck=false;
+}
 
-			"<valore_checked_avventura_ph/>"=> $genres && in_array("Avventura", $genres) ? "checked=\"checked\"" : "",
-			"<valore_checked_azione_ph/>"=> $genres && in_array("Azione", $genres) ? "checked=\"checked\"" : "",
-			"<valore_checked_platform_ph/>"=> $genres && in_array("Platform", $genres) ? "checked=\"checked\"" : "",
-			"<valore_checked_picchiaduro_ph/>"=> $genres && in_array("Picchiaduro", $genres) ? "checked=\"checked\"" : "",
-			"<valore_checked_simulazione_ph/>"=> $genres && in_array("Simulazione", $genres) ? "checked=\"checked\"" : "",
-			"<valore_checked_sparatutto_ph/>"=> $genres && in_array("Sparatutto", $genres) ? "checked=\"checked\"" : "",
+
+
+//allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
+$allOk=$authCheck;
+
+	
+if($allOk){
+	//ora posso popolare la pagina con gli attributi del gioco
+
+	// ora devo raccogliere i valori che mi sono stati passati
+	// devono essere presenti tutti i valori tranne l'immagine
+	// sovrascriverò i valori del gioco nel database anche se sono uguali a quelli già presenti
+
+	//se almeno un valore, a parte l'immagine, non è settato, vuol dire che sono arrivato a questa pagina da un altra, e quindi non serve che mi metta a raccogliere i valori e a scriverli nel database
+
+	//verifico che tutti i valori siano settati
+	//devo ancora implementare la gestione dell'alt dell'immagine
+	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['voto']) && isset($_FILES['immagine'])){
+		echo "i nuovi valori per il gioco sono stati tutti rilevati<br/>";
+		//i nuovi valori per il gioco sono stati tutti rilevati
+		$new_gameName = $_REQUEST['nome'];
+		$new_gamePublicationDate = $_REQUEST['data'];
+		$new_gameAgeRange = $_REQUEST['pegi'];
+		$new_gameSinopsis = $_REQUEST['descrizione'];
+		$new_gameReview = $_REQUEST['recensione'];
+		$new_gameAlt = $_REQUEST['alternativo'];
+		$new_gameVote = $_REQUEST['voto'];
+		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
+		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+		echo "console: ";
+		print_r($new_gameConsoles);
+		echo "<br/>";
+		echo "generi: ";
+		print_r($new_gameGenres);
+		echo "<br/>";
+
+
+		
+		$selected_consoles=array();
+		//creao un array che per ogni posizione indica se la console in quella posizione è stata selezionata
+		foreach (Game::$possible_consoles as $key => $value) {
+
+			$selected_consoles[$key] = in_array($value, $new_gameConsoles);
+			echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
+		}
+
+		
+		$selected_genres=array();
+		//creao un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
+		foreach (Game::$possible_genres as $key => $value) {
+			$selected_genres[$key] = in_array($value, $new_gameGenres);
+		}
+		
+	
+		$new_gameImage=null;
+		$imageOk=false;
+		
+		echo "rilevato campo immagine"."<br/>";
+		//prendo l'immagine inserita dall'utente
+		$imagePath = saveImageFromFILES($dbAccess, "immagine");
+		if($imagePath){
+			echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
+			$new_gameImage = new Image($imagePath,$new_gameAlt);
+			$imageOk=true;
+			
+		}else{
+			echo "Salvataggio immagine fallito"."<br/>";
+		}
+		
+		if($imageOk){
+		
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres);
+
+			$opResult = $dbAccess->addGame($newGame);
+			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
+		}
+
+		$replacements = array(
+			"<game_name_ph/>" => $new_gameName,
+			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<date_ph/>" => $new_gamePublicationDate,
+			"<age_range_ph/>" => $new_gameAgeRange,
+			"<img_alt_ph/>" => $new_gameAlt, //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<vote_ph/>" => $new_gameVote,
+			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<sinopsis_ph/>" => $new_gameSinopsis,
+			"<review_ph/>" => $new_gameReview
 		);
 
-		$requiredValues=array($name , $developer , $date , $age_range , $consoles , $genres , $image , $imageAlt , $prequel , $sequel , $dlc , $sinopsis , $review);
-
-		$areAllAssigned=true;
-		for($i=0;$i<count($requiredValues);$i++){
-			if(!$requiredValues[$i]){
-				$areAllAssigned=false;
-				echo "$i is null";
-			}
+		//aggiungo ai replacement quelli delle checkboxes
+		foreach ($selected_consoles as $key => $value) {
+			$replacements["<checked_console_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
-		if($areAllAssigned){
-
-
-			$imgSaveResult=saveImageFromFILES($dbAccess, "immagine");
-
-			if ($imgSaveResult!=false) {
-			  	#Se l'operazione è andata a buon fine...
-			  	$imagePath=$imgSaveResult;
-			  	$newImage=new Image($imagePath, $imageAlt);
-			  	$gameConsoles=array();
-			  	foreach ($consoles as $value) {
-			  		array_push($gameConsoles, $value);
-			  	}
-			  	$gameGenres=array();
-			  	foreach ($genres as $value) {
-			  		array_push($gameGenres, $value);
-			  	}
-			  	
-			  	$newGame=new Game($name, $date, 0, $sinopsis, $age_range, $review, $newImage, $gameConsoles, $gameGenres);
-				$result=$dbAccess->addGame($newGame);
-				if($result!=null){
-					header('Refresh: 0; URL=home.php');
-				}else{
-					
-					echo "salvataggio del gioco fallito";
-				}
-			}else{
-				echo "caricamento dell'immagine fallito";
-			}
-		}else{
-			echo "inserire i valori";
-
+		foreach ($selected_genres as $key => $value) {
+			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
-		foreach ($phMapping as $key => $value) {
+	
+		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
 		}
+		echo "replacements completati<br/>";
 
+		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
+		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		$homePage="non puoi accedere a questa pagina perchè non sei un amministratore";	
+		echo "i nuovi valori per il gioco non sono stati rilevati tutti, probabilmente arrivo da un'altra pagina<br/>";
+		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
+
+		// controllo quale valore non è stato inserito
+		if(!isset($_REQUEST['nome'])){
+			echo "nome non inserito<br/>";
+		}elseif(!isset($_REQUEST['data'])){
+			echo "data non inserito<br/>";
+		}elseif(!isset($_REQUEST['pegi'])){
+			echo "pegi non inserito<br/>";
+		}elseif(!isset($_REQUEST['descrizione'])){
+			echo "descrizione non inserito<br/>";
+		}elseif(!isset($_REQUEST['recensione'])){
+			echo "recensione non inserito<br/>";
+		}elseif(!isset($_REQUEST['alternativo'])){
+			echo "alt non inserito<br/>";
+		}elseif(!isset($_REQUEST['voto'])){
+			echo "voto non inserito<br/>";
+		}elseif(!isset($_FILES['immagine'])){
+			echo "immagine non inserita<br/>";
+		}
+
+		
+
+		$replacements = array(
+			"<game_name_ph/>" => "",
+			"<developer_ph/>" => "", 
+			"<date_ph/>" => "",
+			"<img_alt_ph/>" => "",
+			"<vote_ph/>" => "",
+			"<age_range_ph/>" => "",
+			"<dlc_ph/>" => "",
+			"<sinopsis_ph/>" => "",
+			"<review_ph/>" => ""
+		);
+
+
+
+		//aggiungo ai replacement quelli delle checkboxes
+		for($i=0;$i<count(Game::$possible_consoles);$i++){
+			$replacements["<checked_console_".$i."/>"] = "";
+		}
+		for($i=0;$i<count(Game::$possible_genres);$i++){
+			$replacements["<checked_genere_".$i."/>"] = "";
+		}
+	
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
+		}
+		echo "replacements completati<br/>";
 	}
 
-}else{
-	$homePage="non puoi accedere a questa pagina perchè non hai fatto il login";
 }
+			
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);

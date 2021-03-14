@@ -1,16 +1,9 @@
 
-
-
-pre
-
-
-
-
     <div id="content" class="contenutoGenerale">
         <div class="schedaForm">
-            <h1>Form per la modifica di un gioco</h1>
+            <h1>Form per l'inserimento di un nuovo gioco</h1>
             <p>I campi marcati con * sono obbligatori</p>
-            <form id="formGioco" method="post" action="edit_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+            <form id="formGioco" method="post" action="form_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggiForm_ph />
         
@@ -30,29 +23,29 @@ pre
         
                 <fieldset>
                     <p>Console:</p>
-                    <input type="checkbox" name="console[]" value="PS4" id="PS4" <checked_console_0/> />
+                    <input type="checkbox" name="console[]" value="PS4" id="PS4" <valore_checked_ps4_ph/> />
                     <label for="PS4">PS4</label>
-                    <input type="checkbox" name="console[]" value="PS5" id="PS5" <checked_console_1/> />
+                    <input type="checkbox" name="console[]" value="PS5" id="PS5" <valore_checked_ps5_ph/> />
                     <label for="PS5">PS5</label>
-                    <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <checked_console_2/> />
+                    <input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <valore_checked_xboxone_ph/> />
                     <label for="XboxOne">Xbox One</label>
-                    <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <checked_console_3/> />
+                    <input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <valore_checked_xboxseriesx_ph /> />
                     <label for="XboxSeriesX">Xbox Series X</label>
                 </fieldset>
 
                 <fieldset>
                     <p>Generi:</p>
-                    <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <checked_genere_0/> />
+                    <input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <valore_checked_avventura_ph/> />
                     <label for="Avventura">Avventura</label>
-                    <input type="checkbox" name="genere[]" value="Azione" id="Azione" <checked_genere_1/> />
+                    <input type="checkbox" name="genere[]" value="Azione" id="Azione" <valore_checked_azione_ph/> />
                     <label for="Azione">Azione</label>
-                    <input type="checkbox" name="genere[]" value="Platform" id="Platform" <checked_genere_2/> />
+                    <input type="checkbox" name="genere[]" value="Platform" id="Platform" <valore_checked_platform_ph/> />
                     <label for="Platform">Platform</label>
-                    <input type="checkbox" name="genere[]" value="Picchiaduro" id="Picchiaduro" <checked_genere_3/> />
+                    <input type="checkbox" name="genere[]" value="Picchiaduro" id="Picchiaduro" <valore_checked_picchiaduro_ph/> />
                     <label for="Picchiaduro">Picchiaduro</label>
-                    <input type="checkbox" name="genere[]" value="Simulazione" id="Simulazione" <checked_genere_4/> />
+                    <input type="checkbox" name="genere[]" value="Simulazione" id="Simulazione" <valore_checked_simulazione_ph/> />
                     <label for="Simulazione">Simulazione</label>
-                    <input type="checkbox" name="genere[]" value="Sparatutto" id="Sparatutto" <checked_genere_5/> />
+                    <input type="checkbox" name="genere[]" value="Sparatutto" id="Sparatutto" <valore_checked_sparatutto_ph/> />
                     <label for="Sparatutto">Sparatutto</label>
                 </fieldset>
         
@@ -90,12 +83,9 @@ pre
                     <label for="recensione">Recensione: </label>
                     <span><textarea id="recensione" name="recensione" rows="10" cols="50" placeholder="Recensione del gioco"><review_ph/></textarea></span>
                 </fieldset>
-
-                <!--uso il seguente input per tenere menoria del gioco che voglio modificare-->
-                <input type="hidden" id="game" name="game" value="<game_name_ph/>" placeholder="supporto" /></span><br />
-                
+        
                 <fieldset id="corto">
-                    <button type="submit" name="submit" >Salva Modifiche</button>
+                    <button type="submit" name="submit">Salva Modifiche</button>
                 </fieldset>
         
             </form>
@@ -106,7 +96,7 @@ pre
                     <button type="submit">Annulla Modifiche</button>
                   </fieldset>
                 </form>
-                <form method="post" action="edit_gioco.php">
+                <form method="post" action="form_gioco.php">
                   <fieldset>
                     <button type="submit" name="delete" value="<game_name_ph/>">Elimina Gioco</button>
                   </fieldset>
