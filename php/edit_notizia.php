@@ -73,6 +73,18 @@ if($allOk && !$news=$dbAccess->getNews($newsToBeModifiedName)){
 	$homePage="La notizia $newsToBeModifiedName specificata non esiste";
 	$allOk=false;
 }
+
+//se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
+if(isset($_REQUEST['elimina'])){
+	$newsToBeDeletedName=$_REQUEST["elimina"];
+	echo "elimina: ".$newsToBeDeletedName."<br/>";
+	$opResult=$dbAccess->deleteNews($newsToBeDeletedName);
+	if($opResult){
+		$homePage="eliminazione della notizia $newsToBeDeletedName riuscita";
+	}else{
+		$homePage="eliminazione della notizia $newsToBeDeletedName fallita";
+	}
+}
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -186,11 +198,12 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $oldNews->getTitle(),
 			"<content_ph/>" => $oldNews->getContent(),
-			"<img_alt_ph/>" => $new_newsAlt
 		);
 
 		if($oldImage=$oldNews->getImage()){
 			$replacements['<img_alt_ph/>'] = $oldImage->getAlt();
+		}else{
+			$replacements['<img_alt_ph/>'] = "";
 		}
 
 		if($oldNews->getCategory()=="Eventi"){
