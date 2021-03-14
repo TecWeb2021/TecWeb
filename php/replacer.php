@@ -141,7 +141,6 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	if(!$image){
 		return false;
 	}
-	echo "step1";
 	#Recupero il percorso temporaneo del file
 	$image_tmp_location = $image['tmp_name'];
 	#recupero il nome originale del file caricato
@@ -151,7 +150,6 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	#ricavo nome immagine col numero più alto presente nel database
 	$imagesList=$dbAccess->getImages();
 	$numArray=array();
-	echo "step2";
 	foreach ($imagesList as $image) {
 		//echo $image->getPath()."<br/>";
 		$a=explode("/",$image->getPath())[1];
@@ -159,13 +157,10 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 		$num= explode(".",$a)[0];
 		array_push($numArray, $num);
 	}
-	print_r($numArray);
-	echo "step3";
 	$maxNum= count($numArray)>0 ? max($numArray) : -1;
 
 	#ricavo il nome da assegnare al nuovo file
 	$newNumber=$maxNum+1;
-	echo "newNUmber :".$newNumber;
 	$extension=end(explode('.', $originalName));
 	$newFileName=$newNumber.".".$extension;
 	$fileDestination=$uploaddir . $newFileName;

@@ -11,6 +11,10 @@ class Game{
 	protected $consoles;
 	protected $genres;
 
+	//è importante che i seguenti valori corrispondano a quelli presenti nell'html
+	public static $possible_consoles=array("PS4","PS5","XboxOne","XboxSeriesX");
+	public static $possible_genres=array("Avventura","Azione","Platform","Picchiaduro","Simulazione","Sparatutto");
+
 
 	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null){
 		$this->name=$_name;

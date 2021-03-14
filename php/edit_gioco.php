@@ -87,52 +87,91 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione'])  ){
+	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['console']) && isset($_REQUEST['genere']) ){
 		echo "i nuovi valori per il gioco sono stati tutti rilevati<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
-		$new_gameName=  $_REQUEST['nome'];
-		$new_gamePublicationDate= $_REQUEST['data'];
-		$new_gameAgeRange= $_REQUEST['pegi'];
-		$new_gameSinopsis= $_REQUEST['descrizione'];
-		$new_gameReview= $_REQUEST['recensione'];
+		$new_gameName = $_REQUEST['nome'];
+		$new_gamePublicationDate = $_REQUEST['data'];
+		$new_gameAgeRange = $_REQUEST['pegi'];
+		$new_gameSinopsis = $_REQUEST['descrizione'];
+		$new_gameReview = $_REQUEST['recensione'];
+		$new_gameAlt = $_REQUEST['alternativo'];
+		$new_gameConsoles = $_REQUEST['console'];
+		$new_gameGenres = $_REQUEST['genere'];
+		echo "console: ";
+		print_r($new_gameConsoles);
+		echo "<br/>";
+		echo "generi: ";
+		print_r($new_gameGenres);
+		echo "<br/>";
+
+
+		
+		$selected_consoles=array();
+		//creao un array che per ogni posizione indica se la console in quella posizione è stata selezionata
+		foreach (Game::$possible_consoles as $key => $value) {
+
+			$selected_consoles[$key] = in_array($value, $new_gameConsoles);
+			echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
+		}
+
+		
+		$selected_genres=array();
+		//creao un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
+		foreach (Game::$possible_genres as $key => $value) {
+			$selected_genres[$key] = in_array($value, $new_gameGenres);
+		}
+		
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 		$new_gameImage=null;
-		/*per ora l'immagine ci sarà sempre perchè il js mi obbliga ad inserirla, ma questa imposizione va tolta*/
+		$imageOk=false;
+		
 		if(isset($_FILES['immagine'])){
-			echo "rilevato campo immagine\n";
+			echo "rilevato campo immagine"."<br/>";
 			//prendo l'immagine inserita dall'utente
-			$result = saveImageFromFILES($dbAccess, "immagine");
-			$new_gameImagePath= $result ? $result : null;
-
-			$new_gameImage = $new_gameImagePath ? new Image($new_gameImagePath,"immagine del gioco") : null;
-			if($new_gameImage == null){
-				echo "Salvataggio immagine fallito\n";
+			$imagePath = saveImageFromFILES($dbAccess, "immagine");
+			if($imagePath){
+				echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
+				$new_gameImage = new Image($imagePath,$new_gameAlt);
+				$imageOk=true;
+				
 			}else{
-				echo "Salvataggio immagine riuscito nel percorso:".$new_gameImagePath."\n";
+				echo "Salvataggio immagine fallito"."<br/>";
 			}
 		}else{
-			echo "non rilevato campo immagine\n";
+			echo "campo immagine non rilevato"."<br/>";
 			//prendo l'immagine già presente per il gioco prima delle modifiche
 			$new_gameImage=$oldGame->getImage();
+			$imageOk=true;
 		}
-	
-	
-		$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage);
+		
+		if($imageOk){
+		
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, 2.5, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres);
 
-		$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-		echo "risultato overwrite: ".$overwriteResult."<br/>";
+			$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
+			echo "risultato overwrite: ".$overwriteResult."<br/>";
+		}
 
 		$replacements = array(
 			"<game_name_ph/>" => $new_gameName,
 			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<date_ph/>" => $new_gamePublicationDate,
 			"<age_range_ph/>" => $new_gameAgeRange,
-			"<img_alt_ph/>" => "alt immagine", //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<img_alt_ph/>" => $new_gameAlt, //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis,
 			"<review_ph/>" => $new_gameReview
 		);
+
+		//aggiungo ai replacement quelli delle checkboxes
+		foreach ($selected_consoles as $key => $value) {
+			$replacements["<checked_console_".$key."/>"] = $value ? "checked=\"checked\"" : "";
+		}
+		foreach ($selected_genres as $key => $value) {
+			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
+		}
 	
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
@@ -156,6 +195,28 @@ if($allOk){
 			echo "descrizione non inserito<br/>";
 		}elseif(!isset($_REQUEST['recensione'])){
 			echo "recensione non inserito<br/>";
+		}elseif(!isset($_REQUEST['alternativo'])){
+			echo "alt non inserito<br/>";
+		}elseif(!isset($_REQUEST['console'])){
+			echo "consoles non inserito<br/>";
+		}elseif(!isset($_REQUEST['genere'])){
+			echo "generi non inserito<br/>";
+		}
+
+		$old_gameConsoles = $oldGame->getConsoles();
+		$old_gameGenres = $oldGame->getGenres();
+
+		$selected_consoles=array();
+		//creao un array che per ogni posizione indica se la console in quella posizione è stata selezionata
+		foreach (Game::$possible_consoles as $key => $value) {
+			$selected_consoles[$key] = $old_gameConsoles ? in_array($value, $old_gameConsoles) : false;
+		}
+
+		
+		$selected_genres=array();
+		//creao un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
+		foreach (Game::$possible_genres as $key => $value) {
+			$selected_genres[$key] = $old_gameGenres ? in_array($value, $old_gameGenres) : false;
 		}
 
 		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
@@ -164,11 +225,23 @@ if($allOk){
 			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<date_ph/>" => $oldGame->getPublicationDate(),
 			"<age_range_ph/>" => $oldGame->getAgeRange(),
-			"<img_alt_ph/>" => "alt immagine", //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $oldGame->getSinopsis(),
 			"<review_ph/>" => $oldGame->getReview()
 		);
+
+		//aggiungo ai replacement quelli delle checkboxes
+		foreach ($selected_consoles as $key => $value) {
+			$replacements["<checked_console_".$key."/>"] = $value ? "checked=\"checked\"" : "";
+		}
+		foreach ($selected_genres as $key => $value) {
+			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
+		}
+
+
+		if($oldImage=$oldGame->getImage()){
+			$replacements["<img_alt_ph/>"] = $oldImage->getAlt();
+		}
 	
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);

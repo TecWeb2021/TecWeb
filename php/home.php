@@ -58,11 +58,11 @@ function createTop5GamesItem($game, $positionNumber){
 	$item=file_get_contents("../html/templates/homeTop5GameTemplate.html");
 
 	$replacements=array(
-		"/\<game_url_ph\/\>/" => "gioco_scheda.php?game=".strtolower($game->getName()),
+		"/\<game_url_ph\/\>/" => $game ? "gioco_scheda.php?game=".strtolower($game->getName()) : "#",
 		"/\<game_position_ph\/\>/" => $positionNumber."°",
-		"/\<game_name_ph\/\>/" => $game->getName(),
-		"/\<img_path_ph\/\>/" => "../".$game->getImage()->getPath(),
-		"/\<img_alt_ph\/\>/" => $game->getImage()->getAlt()
+		"/\<game_name_ph\/\>/" => $game ? $game->getName() : "",
+		"/\<img_path_ph\/\>/" => $game ? "../".$game->getImage()->getPath() : "",
+		"/\<img_alt_ph\/\>/" => $game ? $game->getImage()->getAlt() : ""
 	);
 
 	foreach ($replacements as $key => $value) {
@@ -116,16 +116,17 @@ $top5GamesString=createTop5Games($top5GamesList);
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
 $homePage=preg_replace("/\<top_5_games_ph\/\>/",$top5GamesString,$homePage);
 
+//usa cosa da implementare: se il top game non esiste bisogna togliere il div relativo, non lasciarlo con i valori vuoti
 
 //sostituzioni riguardanti il top_game
 $replacements=array(
-		"/\<top_game_url_ph\/\>/" => "gioco_scheda.php?game=".strtolower($topGame->getName()),
-		"/\<top_game_name_ph\/\>/" => $topGame->getName(),
-		"/\<top_game_img_path_ph\/\>/" => "../".$topGame->getImage()->getPath(),
-		"/\<top_game_img_alt_ph\/\>/" => $topGame->getImage()->getAlt(),
-		"/\<top_game_vote_ph\/\>/" => $topGame->getVote(),
-		"/\<top_game_publication_date_ph\/\>/" => $topGame->getPublicationDate(),
-		"/\<top_game_age_range_ph\/\>/" => $topGame->getAgeRange()
+		"/\<top_game_url_ph\/\>/" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
+		"/\<top_game_name_ph\/\>/" => $topGame ? $topGame->getName() : "",
+		"/\<top_game_img_path_ph\/\>/" => $topGame ? "../".$topGame->getImage()->getPath() : "",
+		"/\<top_game_img_alt_ph\/\>/" => $topGame ? $topGame->getImage()->getAlt() : "",
+		"/\<top_game_vote_ph\/\>/" => $topGame ? $topGame->getVote() : "",
+		"/\<top_game_publication_date_ph\/\>/" => $topGame ? $topGame->getPublicationDate() : "",
+		"/\<top_game_age_range_ph\/\>/" => $topGame ? $topGame->getAgeRange() : ""
 );
 
 foreach ($replacements as $key => $value) {

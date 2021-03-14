@@ -41,7 +41,7 @@ class DBAccess {
         }
 
         if($queryResult==false && !$silent){
-            echo mysqli_error($this->connection);
+            echo mysqli_error($this->connection)."<br/>";
             return null;
         }
 
@@ -98,8 +98,8 @@ class DBAccess {
         $query="DELETE FROM users WHERE Username='$username'";
         $queryResult = mysqli_query($this->connection, $query);
         $sq=$queryResult==null? "null":"not null";
-        echo "delete query result: ".$sq;
-        echo mysqli_error($this->connection);
+        echo "delete query result: ".$sq."<br/>"."<br/>";
+        echo mysqli_error($this->connection)."<br/>";
     }
 
     public function getNewsList($gameName=null) {
@@ -133,7 +133,7 @@ class DBAccess {
 
         $queryResult = mysqli_query($this->connection, $query);
         if($queryResult==false){
-            echo mysqli_error($this->connection);
+            echo mysqli_error($this->connection)."<br/>";
             return null;
         }
 
@@ -225,7 +225,7 @@ class DBAccess {
         $queryResult = mysqli_query($this->connection, $query);
         
         if($queryResult==false){
-            echo mysqli_error($this->connection);
+            echo mysqli_error($this->connection)."<br/>";
             return null;
         }
 
@@ -397,7 +397,7 @@ class DBAccess {
         if($image){
             $imagePath=$image->getPath();
             $imageAlt=$image->getAlt();
-            echo "imageAlt: ".$imageAlt;
+            echo "imageAlt: ".$imageAlt."<br/>";
             $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
             $result=$this->getResult($query);
             if($result==null){
@@ -406,7 +406,7 @@ class DBAccess {
         }
 
         $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, '$imagePath', '$email');";
-        echo "query: ".$query;
+        echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
         return $result;
     }
@@ -452,18 +452,15 @@ class DBAccess {
         $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
 
         $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "<br/>image insertion";
+        echo "image insertion"."<br/>";
         $this->getResult($query);
 
-        echo "<br/>news insertion";
+        echo "news insertion"."<br/>";
         $content=addslashes($content);
         $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
 
-        echo "<br/>query: ".$query;
+        echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
-        if($result==null){
-            $result="null";
-        }
         return $result;
     }
 
@@ -483,14 +480,14 @@ class DBAccess {
         $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
 
         $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "<br/>image insertion";
+        echo "image insertion"."<br/>";
         $this->getResult($query);
 
-        echo "<br/>news insertion";
+        echo "news insertion"."<br/>";
         $content=addslashes($content);
         $query="UPDATE news SET User='$authorUsername', Last_edit_date='$last_edit_date_time', Image='$imagePath', Category='$category', Content='$content' WHERE Title='$title'";
 
-        echo "<br/>query: ".$query;
+        echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
         return $result;
     }
@@ -512,14 +509,14 @@ class DBAccess {
         $gameName=$news->getGameName()==null ? "NULL" : $news->getGameName();
 
         $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "<br/>image insertion";
+        echo "image insertion"."<br/>";
         $this->getResult($query);
 
-        echo "<br/>news insertion";
+        echo "news insertion"."<br/>";
         $content=addslashes($content);
         $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
 
-        echo "<br/>query: ".$query;
+        echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
         if($result==null){
             $query="UPDATE news SET Title='$title', User='$authorUsername', Last_edit_date='$last_edit_date_time', Content='$content', Image='$imagePath', Category='$category' WHERE Title='$title'";
@@ -592,8 +589,58 @@ class DBAccess {
         $imagePath= $image ? $image->getPath() : null;
         $imageAlt= $image ? $image->getAlt() : null;
 
-        $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$oldGameName'";
-        $result=$this->getResult($query);
+        $consoles=$newGame->getConsoles();
+        $genres=$newGame->getGenres();
+        print_r($consoles);
+        echo "<br/>";
+
+        $result=true;
+
+        
+
+        if($result){
+            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$oldGameName'";
+            $result=$this->getResult($query);
+        }
+
+        echo "step1"."<br/>";
+        if($result){
+            if($result){
+                echo "step2"."<br/>";
+                $query="DELETE FROM games_consoles WHERE Game='$oldGameName'";
+                $result=$this->getResult($query);
+            }
+            echo "partial result".($result==true ? "true" : "false")."<br/>";
+            if($result){
+                echo "step3"."<br/>";
+                $query="DELETE FROM games_genres WHERE Game='$oldGameName'";
+                $result=$this->getResult($query);
+            }
+
+            echo "comincio a inserire i nuovi valori per le console e i generi"."<br/>";
+            if($result && $consoles){
+                foreach ($consoles as $value) {
+                    echo "$name $value"."<br/>";
+                    $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
+                    $result=$this->getResult($query);
+                    if(!$result){
+                        break;
+                    }
+                }
+            }
+            if($result && $genres){
+                foreach ($genres as $value) {
+                    $query="INSERT INTO games_genres VALUES ('$name', '$value')";
+                    $result=$this->getResult($query);
+                    if(!$result){
+                        break;
+                    }
+                }
+            }
+
+            
+        }
+
         return $result;
     }
 
@@ -654,6 +701,7 @@ class DBAccess {
 
     }
 
+    //the three functions below just remove things from the db
     function deleteNews($newsTitle){
         $query="DELETE FROM news WHERE Title='$newsTitle'";
         $result=$this->getResult($query);
@@ -662,7 +710,13 @@ class DBAccess {
 
     function deleteGame($gameName){
         $query="DELETE FROM games WHERE Name='$gameName'";
-        $result=$thid->getResult($query);
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function deleteImage($imagePath){
+        $query="DELETE FROM images WHERE Path='$imagePath'";
+        $result=$this->getResult($query);
         return $result;
     }
 

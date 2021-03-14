@@ -4,11 +4,15 @@ include "dbConnection.php";
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
-if(isset($_GET['query'])){
-	$query=$_GET['query'];
+if(isset($_REQUEST['query'])){
+	$query=$_REQUEST['query'];
 	$res=$dbAccess->getResult($query);
 	if($res==null){
-		echo "null";
+		echo "null"."<br/>";
+	}elseif($res==false){
+		echo "false"."<br/>";
+	}elseif($res==true){
+		echo "true"."<br/>";
 	}else{
 		echo "<table style=\"border-collapse: collapse;\">";
 		foreach($res as $r){
@@ -25,7 +29,7 @@ if(isset($_GET['query'])){
 	}
 }
 
-$htmlPage= file_get_contents("../html/templates/db_testing_QueryForm.html");
+$htmlPage= file_get_contents("../html/templates/db_testingTemplate.html");
 
 echo $htmlPage
 

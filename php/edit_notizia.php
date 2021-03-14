@@ -87,7 +87,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if( isset($_REQUEST['titolo']) && isset($_REQUEST['testo']) ){
+	if( isset($_REQUEST['titolo']) && isset($_REQUEST['testo']) && isset($_REQUEST['tipologia']) && isset($_REQUEST['alternativo']) ){
 		echo "i nuovi valori per la notizia sono stati tutti rilevati<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
 		$new_newsTitle =  $_REQUEST['titolo'];
@@ -95,27 +95,71 @@ if($allOk){
 		// alcuni valori li riprendo dalla vecchia notizia
 		$new_newsAuthor = $oldNews->getAuthor();
 		$new_newsEditDateTime = $oldNews->getLastEditDateTime();
-		$new_newsCategory = $oldNews->getCategory();
+		$new_newsCategory = isset($_REQUEST['tipologia']);
+		$new_newsAlt=$_REQUEST['alternativo'];
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 		$new_newsImage=null;
-		if(/* metto un false perchè ho bisogno di inserire un'immagine nel form, perchè lo vuole lo script js, senza che venga rilevata dal php*/false && isset($_REQUEST['immagine'])){
-			//qui devo creare il nuovo oggetto immagine, oltre che 	salvare l'immagine caricata
+		$imageOk=false;
+		if(isset($_FILES['immagine'])){
+			echo "l'utente ha inserito una nuova immagine"."<br/>";
+			
+
+			$imagePath=saveImageFromFILES($dbAccess,'immagine');
+			if($imagePath){
+				$new_newsImage=new Image($imagePath,$new_newsAlt);
+				$imageOk=true;
+			}else{
+				echo "salvataggio dell'immagine fallito"."<br/>";
+
+			}
 		}else{
+			echo "l'utente non ha inserito una nuova immagine"."<br/>";
+			//prendo la vecchia immagine
 			$new_newsImage=$oldNews->getImage();
+			$imageOk=true;
+		}
+
+
+		if($imageOk){
+			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory);
+			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
+			if($overwriteResult==true){
+				echo "overwrite su db riuscito"."<br/>";
+			}else{
+				echo "overwrite su db fallito"."<br/>";
+			}
+			
 		}
 	
 	
-		$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory);
+		
 
-		$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
-		echo "risultato overwrite: ".$overwriteResult."<br/>";
-
+		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
 		//mancano i replacement delle checkboxes
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle,
-			"<content_ph/>" => $new_newsText
+			"<content_ph/>" => $new_newsText,
+			"<img_alt_ph/>" => $new_newsAlt
 		);
+
+		if($new_newsCategory=='Eventi'){
+			$replacements['<checked_eventi_ph/>'] = "checked=\"checked\" ";
+			$replacements['<checked_giochi_ph/>'] = "";
+			$replacements['<checked_hardware_ph/>'] = ""; 
+		}
+
+		if($new_newsCategory=='Giochi'){
+			$replacements['<checked_eventi_ph/>'] = "";
+			$replacements['<checked_giochi_ph/>'] = "checked=\"checked\" ";
+			$replacements['<checked_hardware_ph/>'] = "";
+		}
+
+		if($new_newsCategory=='Hardware'){
+			$replacements['<checked_eventi_ph/>'] = "";
+			$replacements['<checked_giochi_ph/>'] = "";
+			$replacements['<checked_hardware_ph/>'] = "checked=\"checked\" ";
+		}
 	
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
@@ -133,13 +177,36 @@ if($allOk){
 			echo "titolo non inserito<br/>";
 		}elseif(!isset($_REQUEST['testo'])){
 			echo "testo non inserito<br/>";
+		}elseif(!isset($_REQUEST['alternativo'])){
+			echo "alt non inserito<br/>";
 		}
 
+		//qui faccio i replacement dei placeholder in base ai valori del gioco che si vuole modificare
 		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
 		$replacements = array(
 			"<news_title_ph/>" => $oldNews->getTitle(),
-			"<content_ph/>" => $oldNews->getContent()
+			"<content_ph/>" => $oldNews->getContent(),
+			"<img_alt_ph/>" => $new_newsAlt
 		);
+
+		if($oldImage=$oldNews->getImage()){
+			$replacements['<img_alt_ph/>'] = $oldImage->getAlt();
+		}
+
+		if($oldNews->getCategory()=="Eventi"){
+			$replacements['<checked_eventi_ph/>'] = "checked=\"checked\" ";
+			$replacements['<checked_giochi_ph/>'] = "";
+			$replacements['<checked_hardware_ph/>'] = ""; 
+		}elseif($oldNews->getCategory()=="Giochi"){
+			$replacements['<checked_eventi_ph/>'] = "";
+			$replacements['<checked_giochi_ph/>'] = "checked=\"checked\" ";
+			$replacements['<checked_hardware_ph/>'] = "";
+		}elseif($oldNews->getCategory()=="Hardware"){
+			$replacements['<checked_eventi_ph/>'] = "";
+			$replacements['<checked_giochi_ph/>'] = "";
+			$replacements['<checked_hardware_ph/>'] = "checked=\"checked\" ";
+		}
+
 	
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
