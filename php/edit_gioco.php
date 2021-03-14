@@ -42,7 +42,7 @@ if($authCheck && !$user->isAdmin()){
 $allOk=$authCheck;
 // verifico che sia stato specificato un gioco
 if($allOk && !isset($_REQUEST['game'])){
-	$homePage="Non è stato specificato alcun gioco";
+	$homePage="Non è stato specificato alcun gioco da modificare";
 	$allOk=false;
 }
 
@@ -59,6 +59,18 @@ if($allOk /*&& !correctFormat(gameName) (qui devo controllare che il nel nome de
 if($allOk && !$game=$dbAccess->getGame($gameToBeModifiedName)){
 	$homePage="Il gioco $gameToBeModifiedName specificato non esiste";
 	$allOk=false;
+}
+
+//se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
+if(isset($_REQUEST['elimina'])){
+	$gameToBeDeletedName=$_REQUEST["elimina"];
+	echo "elimina: ".$gameToBeDeletedName."<br/>";
+	$opResult=$dbAccess->deleteGame($gameToBeDeletedName);
+	if($opResult){
+		echo "eliminazione del gioco $gameToBeDeletedName riuscita";
+	}else{
+		echo "eliminazione del gioco $gameToBeDeletedName fallita";
+	}
 }
 	
 if($allOk){
