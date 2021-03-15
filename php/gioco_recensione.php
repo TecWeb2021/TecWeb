@@ -10,6 +10,8 @@ $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 
+echo $_REQUEST['write']."<br/>";
+
 function replacePH($game){
 	global $homePage;
 
