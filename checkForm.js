@@ -168,13 +168,19 @@ function handleClick() {
             else
                 barraDiRicerca.className = "invisibile";
         }
+
+    // Gestisce pagina modifica notizia => uno dei radio puo' avere attributo checked="checked"
+    // se lo possiede l'input 'Giochi' => rendere visibile barra di ricerca titolo
+    var preSelezionato = document.getElementById("Giochi");
+    if(preSelezionato.checked)
+        barraDiRicerca.className = "visibile";
 }
 
 /******************* Script presenti in tutte le pagine *******************/
 
-/* Controlla che l'input della searchbar non sia vuoto o composto da spazi */
-function checkNotEmpty() {
-    var input = document.getElementById("searchbar");
+/* Controlla che l'input del campo input con id='id' non sia vuoto o composto da spazi */
+function checkNotEmpty(id) {
+    var input = document.getElementById(id);
     if (!input.value.search(/^\s*$/))
         return false;
     else
