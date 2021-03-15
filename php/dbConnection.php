@@ -198,10 +198,11 @@ class DBAccess {
                 break;
             
             case 'voto':
-                $orderQueryAppend="ORDER BY games.Vote ASC";
+                $orderQueryAppend="ORDER BY games.Vote DESC";
                 break;
 
             default:
+                //questo caso si applica anche quando metto data come ordine
                 $orderQueryAppend="ORDER BY games.Publication_date DESC";
                 break;
         }

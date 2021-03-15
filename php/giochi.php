@@ -63,10 +63,26 @@ $isAdmin=$user && $user->isAdmin() ? true : false;
 $gameName= isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 #sanitize
 $order= isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
-$possibleOrders=array("alfabetico", "voto", "data_uscita");
-if(!in_array($order, $possibleOrders, true)){
-	$order=null;
+// possibili valori in input dall'html: "Alfabetico", "Voto 4+", "Ultimi usciti"
+
+//converto gli input dell'utente in valori adatti alla funzione getGamesList
+switch($order){
+	case "Alfabetico":
+		$order = "alfabetico";
+		break;
+	case "Voto 4+":
+		$order = "voto";
+		break;
+	case "Ultimi usciti":
+		$order = "data";
+		break;
+	default:
+		$order = null;
+		break;
 }
+
+echo "ordine giochi: ".$order."<br/>";
+
 
 $yearRangeStart= isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
 #sanitize
