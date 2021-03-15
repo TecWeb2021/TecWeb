@@ -2,25 +2,6 @@
 
 
 <?php
- 
-// una differenza tra questo script e quello per l'inserimento di un gioco nuovo sta nel fatto che qui viene accettato il "salva modifiche" anche se non è stata fornita una immagine in input, o almeno credo
-
-//possibile modifica da fare:
-//	per ora metto nei placeholder i valori del gioco che voglio modificare.
-//	l'utente poi può modificare i valori e inviarli
-//	se qualcosa va storto torno alla pagina, ma vengono rimessi nei placeholder i valori del vecchio gioco
-// potrei fare così: se rilevo tutti valori richiesti nel $_REQUEST allora metto quelli, altrimenti metto quelli del vecchio gioco
-
-
-//una buona organizzazione:
-//	se mi mandi tutti i valori:
-//		se va a buon fine: ti mostro i valori che mi hai mandato, che sono anche quelli del gioco come è scritto sul db dopo le modifiche
-//		se non va a buon fine: ti mostro i valori che mi hai inserito, così non perdi quello che stavi scrivendo
-//		(quindi ti mostro sempre quello che mi hai mandato)
-//	se non mi mandi tutto (arrivi da un'altra pagina):
-//		ti mostro i valori del gioco specificato
-
-//ATTENZIONE: questo script ha bisogno che ci sia un input nel form dell'html che invii il nome del gioco. Questo input può essere hidden.
 
 require_once "replacer.php";
 require_once "dbConnection.php";
@@ -35,7 +16,7 @@ $homePage=file_get_contents("../html/templates/formGiocoTemplate.html");
 
 
 
-// verifico che l'utente abbia l'autorizzazione per modificare un gioco
+// verifico che l'utente abbia l'autorizzazione per inserire un nuovo gioco
 $user=getLoggedUser($dbAccess);
 
 $authCheck=true;
@@ -66,7 +47,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['voto']) && isset($_FILES['immagine'])){
+	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['voto']) && isset($_FILES['immagine']) && isset($_REQUEST['prequel']) && isset($_REQUEST['sequel'])){
 		echo "i nuovi valori per il gioco sono stati tutti rilevati<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
 		$new_gameName = $_REQUEST['nome'];
@@ -78,12 +59,8 @@ if($allOk){
 		$new_gameVote = $_REQUEST['voto'];
 		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
 		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
-		echo "console: ";
-		print_r($new_gameConsoles);
-		echo "<br/>";
-		echo "generi: ";
-		print_r($new_gameGenres);
-		echo "<br/>";
+		$new_gamePrequel = $_REQUEST['prequel'];
+		$new_gameSequel = $_REQUEST['sequel'];
 
 
 		
@@ -120,7 +97,7 @@ if($allOk){
 		
 		if($imageOk){
 		
-			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres);
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel);
 
 			$opResult = $dbAccess->addGame($newGame);
 			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
@@ -135,7 +112,9 @@ if($allOk){
 			"<vote_ph/>" => $new_gameVote,
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis,
-			"<review_ph/>" => $new_gameReview
+			"<review_ph/>" => $new_gameReview,
+			"<prequel_ph/>" => $new_gamePrequel,
+			"<sequel_ph/>" => $new_gameSequel
 		);
 
 		//aggiungo ai replacement quelli delle checkboxes
@@ -174,6 +153,10 @@ if($allOk){
 			echo "voto non inserito<br/>";
 		}elseif(!isset($_FILES['immagine'])){
 			echo "immagine non inserita<br/>";
+		}elseif(!isset($_REQUEST['prequel'])){
+			echo "prequel non inserita<br/>";
+		}elseif(!isset($_REQUEST['sequel'])){
+			echo "sequel non inserita<br/>";
 		}
 
 		
@@ -187,7 +170,9 @@ if($allOk){
 			"<age_range_ph/>" => "",
 			"<dlc_ph/>" => "",
 			"<sinopsis_ph/>" => "",
-			"<review_ph/>" => ""
+			"<review_ph/>" => "",
+			"<prequel_ph/>" => "",
+			"<sequel_ph/>" => ""
 		);
 
 

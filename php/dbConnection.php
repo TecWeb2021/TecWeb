@@ -260,18 +260,20 @@ class DBAccess {
     }
 
     public function getGame($name){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
-        $queryResult = mysqli_query($this->connection, $querySelect);
+        //specifico i campi da visualizzare perchè non voglio avere 2 Prequel e 2 Sequel, così possono prendere il sequel semplicemente indicando ['Sequel'] e stessa cosa per il prequel
+        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
+        $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
+            print_r($row);
             $consoles=$this->getConsoles($name);
             $genres=$this->getGenres($name);
 
             $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres, $row['Prequel'], $row['Sequel'] );
 
         return $game;
         }
@@ -551,6 +553,9 @@ class DBAccess {
         $consoles=$game->getConsoles();
         $genres=$game->getGenres();
 
+        $prequel=$game->getPrequel();
+        $sequel=$game->getSequel();
+
         if($image){
             $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
             $result=$this->getResult($query);
@@ -582,6 +587,16 @@ class DBAccess {
                     }
                 }
             }
+
+            if($prequel){
+                $query = "INSERT INTO prequel_sequel VALUES ('$prequel', '$name')";
+                $result=$this->getResult($query);
+            }
+            if($sequel){
+                $query = "INSERT INTO prequel_sequel VALUES ('$name', '$sequel')";
+                $result=$this->getResult($query);
+            }
+
         }
         return $result;
     }
@@ -589,23 +604,24 @@ class DBAccess {
     //sarebbe una cosa buona mettere un count per vedere se c'è un gioco che verrà sovrascritto, per capire se l'operazione andrà a vuoto o se farà qualcosa
     function overwriteGame($oldGameName, $newGame){
         // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
-        $name=$newGame->getName();
-        $date=$newGame->getPublicationDate();
-        $vote=$newGame->getVote();
-        $sinopsis=$newGame->getSinopsis();
-        $age_range=$newGame->getAgeRange();
-        $review=$newGame->getReview();
-        $image=$newGame->getImage();
+        $name = $newGame->getName();
+        $date = $newGame->getPublicationDate();
+        $vote = $newGame->getVote();
+        $sinopsis = $newGame->getSinopsis();
+        $age_range = $newGame->getAgeRange();
+        $review = $newGame->getReview();
+        $image = $newGame->getImage();
         $this->addImage($image);
-        $imagePath= $image ? $image->getPath() : null;
-        $imageAlt= $image ? $image->getAlt() : null;
+        $imagePath =  $image ? $image->getPath() : null;
+        $imageAlt =  $image ? $image->getAlt() : null;
 
-        $consoles=$newGame->getConsoles();
-        $genres=$newGame->getGenres();
-        print_r($consoles);
-        echo "<br/>";
+        $consoles = $newGame->getConsoles();
+        $genres = $newGame->getGenres();
+        
+        $prequel = $newGame->getPrequel();
+        $sequel = $newGame->getSequel();
 
-        $result=true;
+        $result = true;
 
         
 
@@ -652,6 +668,20 @@ class DBAccess {
                         break;
                     }
                 }
+            }
+
+            if($result){
+                $query = "DELETE FROM prequel_sequel WHERE Prequel='$name' OR Sequel='$name' ";
+                $result=$this->getResult($query);
+            }
+
+            if($result && $prequel){
+                $query = "INSERT INTO prequel_sequel VALUES ('$prequel', '$name')";
+                $result=$this->getResult($query);
+            }
+            if($result && $sequel){
+                $query = "INSERT INTO prequel_sequel VALUES ('$name', '$sequel')";
+                $result=$this->getResult($query);
             }
 
             

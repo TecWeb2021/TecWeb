@@ -10,22 +10,26 @@ class Game{
 	protected $image;
 	protected $consoles;
 	protected $genres;
+	protected $prequel;
+	protected $sequel;
 
 	//è importante che i seguenti valori corrispondano a quelli presenti nell'html
 	public static $possible_consoles = array("PS4","XboxOne","Switch","PS5","XboxSeriesX");
 	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
 
 
-	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null){
-		$this->name=$_name;
-		$this->publication_date=$_publication_date;
-		$this->vote=$_vote;
-		$this->sinopsis=$_sinopsis;
-		$this->age_range=$_age_range;
-		$this->review=$_review;
-		$this->image=$_image;
-		$this->consoles=$_consoles;
-		$this->genres=$_genres;
+	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null){
+		$this->name = $_name;
+		$this->publication_date = $_publication_date;
+		$this->vote = $_vote;
+		$this->sinopsis = $_sinopsis;
+		$this->age_range = $_age_range;
+		$this->review = $_review;
+		$this->image = $_image;
+		$this->consoles = $_consoles;
+		$this->genres = $_genres;
+		$this->prequel = $_prequel;
+		$this->sequel = $_sequel;
 	}
 
 	function getName(){
@@ -62,6 +66,14 @@ class Game{
 	
 	function getGenres(){
 		return $this->genres;
+	}
+
+	function getPrequel(){
+		return $this->prequel;
+	}
+
+	function getSequel(){
+		return $this->sequel;
 	}
 }
 

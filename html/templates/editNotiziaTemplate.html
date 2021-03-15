@@ -25,6 +25,7 @@
             <input type="radio" id="Hardware" name="tipologia" value="Hardware" <checked_hardware_ph/> >
             <label for="Hardware">Hardware</label>
         </fieldset>
+        
     
         <fieldset id="cercaTitolo" class="invisibile">
             <label for="searchbar">Gioco trattato nella notizia:</label>
@@ -55,6 +56,15 @@
         </fieldset>
     
       </form>
+
+      <script>
+          var box_giochi = document.getElementById('Giochi');
+          var barraDiRicerca = document.getElementById('cercaTitolo');
+          if (box_giochi.checked==true)
+            barraDiRicerca.className = 'visibile';
+          else
+            barraDiRicerca.className = 'invisibile';
+      </script>
       
       <div id="bottoniOpzionali">
           <form action="profilo.php">

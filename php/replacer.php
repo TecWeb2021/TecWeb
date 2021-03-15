@@ -40,11 +40,11 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 	$base=str_replace("<this_url_ph/>", $url, $base);
 
 	#completare i replacements
-	$titleAndBreadcrumbReplacements=array(
-		"home.php"=>["Home","Home"],
-		"giochi.php"=>["Giochi",""],
-		"notizie.php"=>["Notizie",""],
-		"notizia.php"=>["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"]
+	$titleAndBreadcrumbReplacements = array(
+		"home.php" => ["Home","Home"],
+		"giochi.php" => ["Giochi",""],
+		"notizie.php" => ["Notizie",""],
+		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"]
 	);
 
 	foreach ($titleAndBreadcrumbReplacements as $key => $value) {
@@ -54,6 +54,21 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 			$base=str_replace("<page_breadcrumb_ph/>", $value[1], $base);
 		}
 	}
+
+	//mettere qui tutte le corrispondenze necessarie
+	$onloadReplacements = array(
+		"giochi.php" => "onload=\"preparaFiltri();\"",
+		"form_notizia.php" => "onload=\"handleClick();\"",
+		"edit_notizia.php" => "onload=\"handleClick();\""
+	);
+	foreach ($onloadReplacements as $key => $value) {
+		if(strpos($url, $key)!=false){
+			$base=str_replace("<body_onload_ph/>", $value, $base);
+		}
+	}
+	//se non ha matchato nessuna pagina tolgo semplicemente il placeholder
+	$base=str_replace("<body_onload_ph/>", "", $base);
+
 
 	$possiblePages=array("home","giochi","notizie");
 	if(!in_array($page, $possiblePages)){

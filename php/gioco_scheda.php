@@ -15,7 +15,7 @@ function replacePH($game){
 	global $homePage;
 
 	$platforms= $game->getConsoles() ? implode(", ", $game->getConsoles()) : "";
-	$genres= $game->getConsoles() ? implode(", ", $game->getConsoles()) : "";
+	$genres= $game->getGenres() ? implode(", ", $game->getGenres()) : "";
 	
 	$replacements=array(
 		"<gioco_scheda_ph/>" => "../"."gioco_scheda.php?game=".strtolower($game->getName()),
@@ -27,7 +27,10 @@ function replacePH($game){
 		"<game_name_ph/>" => $game->getName(),
 		"<sinopsis_ph/>" => $game->getSinopsis(),
 		"<platforms_ph/>" => $platforms,
-		"<genres_ph/>" => $genres
+		"<genres_ph/>" => $genres,
+		"<age_range_ph/>" => "PEGI ".$game->getAgeRange(),
+		"<prequel_ph/>" => $game->getPrequel(),
+		"<sequel_ph/>" => $game->getSequel(),
 	);
 
 	foreach ($replacements as $key => $value) {

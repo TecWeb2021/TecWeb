@@ -161,7 +161,7 @@ function checkPassword() {
 function handleClick() {
     var radio = document.getElementById("handler");
     var barraDiRicerca = document.getElementById("cercaTitolo");
-    if (radio) 
+    if (radio)
         radio.onchange = function(event) {
             if(event.target.value == "Giochi")
                 barraDiRicerca.className = "visibile";
