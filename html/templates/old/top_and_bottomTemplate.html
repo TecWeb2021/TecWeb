@@ -19,6 +19,9 @@
   <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
 
   <script type="text/javascript" src="../checkForm.js"></script>
+
+  <!--<noscript> <meta http-equiv="refresh" content="0;url=<this_url_ph/>tendina=false"> </noscript>-->
+
 </head>
 
 <body>
@@ -27,21 +30,30 @@
     <a class="aiutiNascosti" href="#content"> Vai al contenuto </a>
 
     <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
-    <h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
-    <h2 id="titolo2">Tutto sui Videogiochi</h2>
+		<h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
+		<h2 id="titolo2">Recensioni e notizie riguardanti i giochi</h2>
     <div class="loginblock">
-      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="<user_img_path_ph/>" /></a>
+      <a href="profilo.php"><img id="loginPic" alt="foto profilo utente" src="<user_img_path_ph/>" /></a>
       <not_logged_in><span id="login"><a class="link_login" href="login.html">Login</a> | <a class="link_login" href="registrati.html">Registrati</a></span></not_logged_in>
       <logged_in><span id="login"><username_ph/> | <a href="?logout=true">Logout</a></span></logged_in>
     </div>
   </div>
 
   <div class="topnav" id="menu">
-    <button  class="icon" onclick="responsiveMenu()">
+  	<!--<form action="#" method="get">-->
+    <button type="submit" name="tendina" value="<tendina_bool_ph/>" class="icon" onclick="responsiveMenu()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
     </button>
+	<!--</form>-->
 
-    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+  <ul class="menu">
+    <li><a <home_active>class="active"<home_active/> href="Home.html"><span xml:lang="en">Home</span></a></li>
+    <li><a <giochi_active>class="active"<giochi_active/> href="Giochi.html">Giochi</a></li>
+    <li><a <notizie_active>class="active"<notizie_active/> href="Notizie.html">Notizie</a></li>
+  </ul>
+
+
+    <form class="searchbox" action="giochi.php" onsubmit="return checkNotEmpty();" role="search">
       <fieldset>
         <label for="searchbar" class="structural">Cerca gioco:</label>
         <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
@@ -51,24 +63,25 @@
         <button type="submit" class="searchbutton">Cerca</button>
       </fieldset>
     </form>
-
-    <ul id="vociMenu" class="menu">
-        <li><a <home_active>class="active"</home_active> href="Home.html"><span xml:lang="en">Home</span></a></li>
-        <li><a <giochi_active>class="active"</giochi_active> href="Giochi.html">Giochi</a></li>
-        <li><a <notizie_active>class="active"</notizie_active> href="Notizie.html">Notizie</a></li>
-    </ul>
-
   </div>
 
   <div id="breadcrumb">
-      <p>Ti trovi in: <page_breadcrumb_ph/></p>
+      <p>Ti trovi in: <page_breadcrumb_ph/></span></p>
   </div>
 
-<page_content_ph/>
+
+
+
+
+  <page_content_ph/>
+
+
+
+
 
 <div id="footer">
   <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-  <em> Noi4 - Progetto di Tecnologie Web 2020/2021 </em>
+  <em> Noi4 - <span xml:lang="en">All rights Reserved</span> </em>
   <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
 
