@@ -74,16 +74,30 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 			$base=str_replace("<user_img_path_ph/>", "../".$user->getImage()->getPath(), $base);
 		}
 
-		$base=preg_replace("/\<not_logged_in\>.*\<\/not_logged_in\>/","",$base);
-		$base=str_replace("<logged_in>","",$base);
-		$base=str_replace("</logged_in>","",$base);
+		$replacements = array(
+			"/\<not_logged_in\>.*\<\/not_logged_in\>/" => "",
+			"/\<logged\_in\>/" => "",
+			"/\<\/logged\_in\>/" => "",
+			"/\<username\_ph\/\>/" => $user->getUsername(),
+			"/\<profile\_pic\_redirect\_url\_ph\/\>/" => "profilo.php"
+		);
 
-		$base=str_replace("<username_ph/>", $user->getUsername(), $base);
+		foreach ($replacements as $key => $value) {
+			$base = preg_replace($key, $value, $base);
+		}
 		
 	}else{
-		$base=preg_replace("/\<logged_in\>.*\<\/logged_in\>/","",$base);
-		$base=str_replace("<not_logged_in>","",$base);
-		$base=str_replace("</not_logged_in>","",$base);
+
+		$replacements = array(
+			"/\<logged_in\>.*\<\/logged_in\>/" => "",
+			"/\<not\_logged\_in\>/" => "",
+			"/\<\/not\_logged\_in\>/" => "",
+			"/\<profile\_pic\_redirect\_url\_ph\/\>/" => "login.php"
+		);
+
+		foreach ($replacements as $key => $value) {
+			$base = preg_replace($key, $value, $base);
+		}
 	}
 	#la riga qua sotto fa quello che deve solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
 	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
