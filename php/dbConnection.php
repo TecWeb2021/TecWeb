@@ -543,9 +543,9 @@ class DBAccess {
         $name=$game->getName();
         $date=$game->getPublicationDate();
         $vote=$game->getVote();
-        $sinopsis=$game->getSinopsis();
+        $sinopsis=addslashes($game->getSinopsis());
         $age_range=$game->getAgeRange();
-        $review=$game->getReview();
+        $review=addslashes($game->getReview());
         $image=$game->getImage();
         $imagePath= $image ? $image->getPath() : null;
         $imageAlt= $image ? $image->getAlt() : null;
@@ -607,9 +607,9 @@ class DBAccess {
         $name = $newGame->getName();
         $date = $newGame->getPublicationDate();
         $vote = $newGame->getVote();
-        $sinopsis = $newGame->getSinopsis();
+        $sinopsis = addslashes($newGame->getSinopsis());
         $age_range = $newGame->getAgeRange();
-        $review = $newGame->getReview();
+        $review = addslashes($newGame->getReview());
         $image = $newGame->getImage();
         $this->addImage($image);
         $imagePath =  $image ? $image->getPath() : null;

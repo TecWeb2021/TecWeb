@@ -29,8 +29,8 @@ function replacePH($game){
 		"<platforms_ph/>" => $platforms,
 		"<genres_ph/>" => $genres,
 		"<age_range_ph/>" => "PEGI ".$game->getAgeRange(),
-		"<prequel_ph/>" => $game->getPrequel(),
-		"<sequel_ph/>" => $game->getSequel(),
+		"<prequel_ph/>" => $game->getPrequel() ? $game->getPrequel() : "Nessuno",
+		"<sequel_ph/>" => $game->getSequel() ? $game->getSequel() : "Nessuno",
 	);
 
 	foreach ($replacements as $key => $value) {
