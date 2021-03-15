@@ -34,6 +34,7 @@ class DBAccess {
     #altrimenti la sicurezza può essere compromessa
     public function getResult($query, $silent=false){
         $querySelect ="$query";
+        echo "db query: ".$querySelect."<br/>";
         $queryResult = mysqli_query($this->connection, $querySelect);
         /*echo "query result: ".$queryResult;*/
         if($queryResult==true){
@@ -158,9 +159,8 @@ class DBAccess {
     }
 
     public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null, $consoles=null, $genres=null){
-        print_r($consoles);
-        //qui non serve fare il join con le tabelle delle console e dei generi, quelle cose le cerco più in basso.
-        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path";
+        //le console effettive le cerco più in basso, però faccio il join con le rispettive tabelle anche qui perchè voglio trovare solo giochi che abbiano le console specificate (anche nessuna)
+        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
 
         
         // l'operatore LIKE trova valori che rispettano il pattern. In questo caso il pattern è %$gameName% che vuol dire qualsiasi stringa contenente $gameName ($gameName è il nome del parametro, al suo posto ci sarà il valore del parametro)
@@ -173,10 +173,10 @@ class DBAccess {
         $specifyConsoles="";
         if($consoles && count($consoles)>0){
             $value=$consoles[0];
-            $specifyConsoles="WHERE games_consoles.Console='$value'";
+            $specifyConsoles="WHERE Console='$value'";
             for ($i=1;$i<count($consoles);$i++) {
                 $value=$consoles[$i];
-                $specifyConsoles=$specifyConsoles." "."OR games_consoles.Console='$value'";
+                $specifyConsoles=$specifyConsoles." "."OR Console='$value'";
             }
             $query=$query." ".$specifyConsoles;
         }
@@ -218,12 +218,13 @@ class DBAccess {
             }
         }
 
-        
+        //credo che qui bisogni tenere l'ordine group by, order by, se no da errore.
+        $query = $query . " GROUP BY games.Name ";
 
         
 
         $query=$query." ".$orderQueryAppend;
-        $queryResult = mysqli_query($this->connection, $query);
+        $queryResult = $this->getResult($query);
         
         if($queryResult==false){
             echo mysqli_error($this->connection)."<br/>";
@@ -238,9 +239,9 @@ class DBAccess {
                 $consoles=$this->getConsoles($gameName);
                 $genres=$this->getGenres($gameName);
 
-                $image=new Image($row['Path'],$row['Alt']);
+                $image = new Image($row['Path'],$row['Alt']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image, $consoles, $genres);
+                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image, $consoles, $genres);
                 array_push($gamesList, $game);
             }
 

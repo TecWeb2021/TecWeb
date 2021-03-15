@@ -15,14 +15,20 @@ $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 function createGameHTMLItem($game, $isAdmin=false){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
-	$item=preg_replace("/\<game_name_ph\/\>/",$game->getName(),$item);
-	$item=preg_replace("/\<game_date_ph\/\>/",$game->getPublicationDate(),$item);
-	$item=preg_replace("/\<game_vote_ph\/\>/",$game->getVote(),$item);
-	$item=preg_replace("/\<game_sinossi_ph\/\>/",$game->getSinopsis(),$item);
-	$item=preg_replace("/\<img_path_ph\/\>/","../".$game->getImage()->getPath(),$item);
-	$item=preg_replace("/\<img_alt_ph\/\>/",$game->getImage()->getAlt(),$item);
-	$item=preg_replace("/\<game_scheda_url_ph\/\>/","gioco_scheda.php?game=".strtolower($game->getName()),$item);
-	$item=preg_replace("/\<game_edit_ph\/\>/","edit_gioco.php?game=".strtolower($game->getName()),$item);
+	$replacements = array(
+		"<game_name_ph/>" => $game->getName(),
+		"<game_date_ph/>" => $game->getPublicationDate(),
+		"<game_vote_ph/>" => $game->getVote(),
+		"<game_sinossi_ph/>" => $game->getSinopsis(),
+		"<img_path_ph/>" => "../".$game->getImage()->getPath(),
+		"<img_alt_ph/>" => $game->getImage()->getAlt(),
+		"<game_scheda_url_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
+		"<game_edit_ph/>" => "edit_gioco.php?game=".strtolower($game->getName())
+	);
+
+		foreach ($replacements as $key => $value) {
+			$item = str_replace($key, $value, $item);
+		}
 	
 	if($isAdmin){
 		$item=str_replace("<admin_func_ph>","",$item);
@@ -62,10 +68,12 @@ if(!in_array($order, $possibleOrders, true)){
 	$order=null;
 }
 
-$yearRangeStart= isset($_REQUEST['year']) ? $_REQUEST['year'] : null;
+$yearRangeStart= isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
 #sanitize
 $yearRangeEnd= isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
 #sanitize
+
+//echo "anni: ".$yearRangeStart." - ".$yearRangeEnd."<br/>";
 
 $consoles_pre=isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
 #sanitize
