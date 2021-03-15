@@ -17,6 +17,8 @@ class News{
 	protected $image;
 	protected $category;
 
+	public static $possible_categories = array("Hardware", "Giochi", "Eventi");
+
 	function __construct($_title, $_content, $_author, $_last_edit_date_time, $_image, $_category){
 		$this->title=$_title;
 		$this->content=$_content;
