@@ -129,7 +129,8 @@ if($allOk){
 		$new_gameImage=null;
 		$imageOk=false;
 		
-		if(isset($_FILES['immagine'])){
+		//error 4: non è stata caricata alcuna immagine
+		if(isset($_FILES['immagine']) && $_FILES['immagine']['error']!=4){
 			echo "rilevato campo immagine"."<br/>";
 			//prendo l'immagine inserita dall'utente
 			$imagePath = saveImageFromFILES($dbAccess, "immagine");

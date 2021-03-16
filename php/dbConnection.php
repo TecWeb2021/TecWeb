@@ -80,6 +80,21 @@ class DBAccess {
         }
     }
 
+    public function getUser($username){
+        $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path WHERE Username='$username'";
+        $result=mysqli_query($this->connection, $query);
+
+        if(mysqli_num_rows($result) ==0){
+            return null;
+        }else{
+            $row=mysqli_fetch_assoc($result);
+            $image= $row['Image']=="" ? null : new Image($row['Path'], $row['Alt']);
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
+            
+            return $user;
+        }
+    }
+
     public function insertUser($name=null){
         if($name==null){
             return;
@@ -716,10 +731,10 @@ class DBAccess {
 
 
     function addComment($comment){
-        $authorName=$comment->getAuthorName();
-        $gameName=$comment->getGameName();
-        $date_time=$comment->getDateTime();
-        $content=$comment->getContent();
+        $authorName = $comment->getAuthorName();
+        $gameName = $comment->getGameName();
+        $date_time = $comment->getDateTime();
+        $content = addslashes( $comment->getContent() );
 
         $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
         $result=$this->getResult($query);

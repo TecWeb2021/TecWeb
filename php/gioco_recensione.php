@@ -10,7 +10,6 @@ $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 
-echo $_REQUEST['write']."<br/>";
 
 function replacePH($game){
 	global $homePage;
@@ -42,8 +41,20 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 	}
 	$commentsString="";
 	foreach ($commentsList as $com) {
+		$author=$dbAccess->getUser($com->getAuthorName());
 		$s=$commentTemplate;
-		$s=str_replace("<comment_content_ph/>", $com->getContent(), $s);
+
+		$replacements = array(
+			"<comment_content_ph/>" => $com->getContent(),
+			"<comment_author_profile_img_path_ph/>" => $author->getImage() ? $author->getImage()->getPath() : "../images/login.png",
+			"<comment_author_ph/>" => $author->getUsername(),
+			"<comment_date_ph/>" => $com->getDateTime()
+		);
+
+		foreach ($replacements as $key => $value) {
+			$s = str_replace($key, $value, $s);
+		}
+
 		$commentsString=$commentsString.$s;
 	}
 	return $commentsString;

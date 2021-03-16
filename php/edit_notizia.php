@@ -113,7 +113,9 @@ if($allOk){
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 		$new_newsImage=null;
 		$imageOk=false;
-		if(isset($_FILES['immagine'])){
+
+		//errore 4: non è stata caricata alcuna immagine
+		if(isset($_FILES['immagine']) && $_FILES['immagine']['error']!=4 ){
 			echo "l'utente ha inserito una nuova immagine"."<br/>";
 			
 

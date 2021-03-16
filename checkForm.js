@@ -51,6 +51,11 @@ function validazioneCampo(input) {
     var regex = dettagli_form[input.id][0];
     var text = input.value;
 
+    // se il campo input e' opzionale e vuoto non manda nessun messaggio
+    if (input.className === "opzionale" && !text) {
+        return true;
+    }
+
     // 
     if(input.id == "immagine") {
         if (input.files.length == 0)
@@ -68,11 +73,6 @@ function validazioneCampo(input) {
     if(input.id == "repeatpassword")
         return checkPassword();
 
-
-    // se il campo input e' opzionale e vuoto non manda nessun messaggio
-    if (input.className === "opzionale" && !text) {
-        return true;
-    }
 
     // se il contenuto non rispetta l'espr. regolare mosta l'errore
     if (text.search(regex) != 0)
