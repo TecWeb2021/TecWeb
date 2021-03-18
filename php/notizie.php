@@ -15,18 +15,18 @@ function createNewsHTMLItem($news, $isUserAdmin=false){
 	$item=file_get_contents("../html/templates/newsListItemTemplate.html");
 	
 	$replacements = array(
-		"/\<news_date_ph\/\>/" => $news->getLastEditDateTime(),
-		"/\<news_url_ph\/\>/" => "notizia.php?news=".$news->getTitle(),
-		"/\<news_title_ph\/\>/" => $news->getTitle(),
-		"/\<news_author_ph\/\>/" => $news->getAuthor()->getUsername(),
-		"/\<img_path_ph\/\>/" => "../".$news->getImage()->getPath(),
-		"/\<img_alt_ph\/\>/" => $news->getImage()->getAlt(),
-		"/\<news_content_ph\/\>/" => $news->getContent(),
-		"/\<news_edit_ph\/\>/" => "edit_notizia.php?news=".strtolower($news->getTitle())
+		"<news_date_ph/>" => $news->getLastEditDateTime(),
+		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),
+		"<news_title_ph/>" => $news->getTitle(),
+		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
+		"<img_path_ph/>" => "../".$news->getImage()->getPath(),
+		"<img_alt_ph/>" => $news->getImage()->getAlt(),
+		"<news_content_ph/>" => $news->getContent(),
+		"<news_edit_ph/>" => "edit_notizia.php?news=".strtolower($news->getTitle())
 	);
 
 	foreach ($replacements as $key => $value) {
-		$item=preg_replace($key, $value, $item);
+		$item=str_replace($key, $value, $item);
 	}
 
 	if($isUserAdmin){
@@ -65,6 +65,8 @@ $newsPartName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 if( !in_array($category, News::$possible_categories)){
 	$category=null;
 }
+
+$homePage = str_replace("<opzioni_ph/>",createNewsOptions($dbAccess),$homePage);
 
 $list=$dbAccess->getNewsList(null, $category, $newsPartName);
 $newsListString=createNewsList($list, $isAdmin);

@@ -38,6 +38,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 	}
 	$base=file_get_contents($templatePath);
 	$url=$_SERVER['REQUEST_URI'];
+	echo "url1: ".$url."<br/>";
 
 	if (strpos($url, '?') !== false) {
     	$url=$url."&";
@@ -49,14 +50,29 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 	#completare i replacements
 	$titleAndBreadcrumbReplacements = array(
 		"home.php" => ["Home","Home"],
-		"giochi.php" => ["Giochi",""],
-		"notizie.php" => ["Notizie",""],
-		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"]
+		"giochi.php" => ["Giochi","Giochi"],
+		"notizie.php" => ["Notizie","Notizie"],
+		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"],
+		"edit_gioco.php" => ["Modifica gioco",""],
+		"edit_notizia.php" => ["Modifica notizia",""],
+		"form_gioco.php" => ["Aggiungi gioco",""],
+		"form_notizia.php" => ["Aggiungi notizia",""],
+		"form_profilo.php" => ["Modifica profilo",""],
+		"gioco_notizie.php" => ["Notizie sul gioco","Giooco > Notizie"],
+		"gioco_recensione.php" => ["Recensione del gioco",""],
+		"gioco_scheda.php" => ["Scheda del gioco",""],
+		"lista_utenti.php" => ["Lista utenti",""],
+		"login.php" => ["Login",""],
+		"profilo.php" => ["Profilo",""],
+		"registrati.php" => ["Registrati",""]
 	);
 
+	echo "url: ".$url."<br/>";
 	foreach ($titleAndBreadcrumbReplacements as $key => $value) {
-		if(strpos($url, $key)!=false){
-			//echo $key;
+		// il seguente confronto non è proprio una cosa giusta. Per esempio confrontare notizia e notizia_x avrebbe esito positivo.
+		// 5 è la posizione del primo carattere dopo /php/
+		if(strpos($url, $key)==5){
+			echo $url." = ".$key."<br/>";
 			$base=str_replace("<page_title_ph/>", $value[0]." - ALLGames", $base);
 			$base=str_replace("<page_breadcrumb_ph/>", $value[1], $base);
 		}
@@ -237,5 +253,38 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 	$joinedItems=implode("", $stringsArray);
 	return $joinedItems;
 }
+
+
+function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<name_ph/>\" <selected_ph/> />"){
+		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
+
+	$newsList=$dbAccess->getNewsList();
+	if(!$newsList){
+		return "";
+	}
+	$stringsArray=array();
+	//se è selezionato il valore vuoto aggiungo un valore vuoto selezionato, supponendo che non ci siano valori vuoti tra i nomi dei giochi
+	//il selectedName è utile solo se le opzioni verranno usate per un tag select
+	if($selectedName===""){
+		array_push($stringsArray, "<option value=\"\" selected=\"selected\" />");
+	}
+	foreach ($newsList as $news) {
+		$singleString=$template;
+		$replacements = array(
+			"<name_ph/>" => $news->getTitle(),
+			"<selected_ph/>" => $news->getTitle() == $selectedName ? "selected=\"selected\"" : ""
+		);
+		foreach ($replacements as $key => $value) {
+			$singleString = str_replace($key, $value, $singleString);
+		}
+		array_push($stringsArray, $singleString);
+	}
+	$joinedItems=implode("", $stringsArray);
+	return $joinedItems;
+}
+
+
+
+
 
 ?>
