@@ -118,7 +118,7 @@ class DBAccess {
         echo mysqli_error($this->connection)."<br/>";
     }
 
-    public function getNewsList($gameName=null, $category=null) {
+    public function getNewsList($gameName=null, $category=null, $newsName=null) {
         
         $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
         if($gameName != null){
@@ -126,12 +126,18 @@ class DBAccess {
             if($category != null){
                 $query=$query." AND news.Category='$category'";
             }
-        }else{
-            if($category != null){
-                $query=$query." WHERE news.Category='$category'";
+            if($newsName){
+                $query=$query." AND news.Title LIKE '%$newsName%'";
             }
-        }
 
+        }elseif($category != null){
+            $query=$query." WHERE news.Category='$category'";
+            if($newsName){
+                $query=$query." AND news.Title LIKE '%$newsName%'";
+            }
+        }elseif($newsName){
+            $query=$query." WHERE news.Title LIKE '%$newsName%'";
+        }
         
         
         $result=$this->getResult($query);

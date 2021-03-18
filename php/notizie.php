@@ -59,11 +59,14 @@ $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
 $category= isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;
+
+$newsPartName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+
 if( !in_array($category, News::$possible_categories)){
 	$category=null;
 }
 
-$list=$dbAccess->getNewsList(null, $category);
+$list=$dbAccess->getNewsList(null, $category, $newsPartName);
 $newsListString=createNewsList($list, $isAdmin);
 
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
