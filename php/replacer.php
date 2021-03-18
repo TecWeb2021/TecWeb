@@ -71,8 +71,8 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 	foreach ($titleAndBreadcrumbReplacements as $key => $value) {
 		// il seguente confronto non è proprio una cosa giusta. Per esempio confrontare notizia e notizia_x avrebbe esito positivo.
 		// 5 è la posizione del primo carattere dopo /php/
-		if(strpos($url, $key) == 5){
-			echo $url." = ".$key."<br/>";
+		if(strpos(explode("php/",$url)[1], $key) === 0){
+			echo explode("php/",$url)[1]." = ".$key."<br/>";
 			$base=str_replace("<page_title_ph/>", $value[0]." - ALLGames", $base);
 			$base=str_replace("<page_breadcrumb_ph/>", $value[1], $base);
 		}
