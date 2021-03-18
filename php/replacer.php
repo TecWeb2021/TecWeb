@@ -1,4 +1,6 @@
 <?php
+// per adesso questo script contiene un mix di funzioni utili in vari altri script
+
 require_once("dbConnection.php");
 require_once("classes/user.php");
 
@@ -19,6 +21,11 @@ function createBasePage($templatePath, $page, $dbAccess){
 	$user=getLoggedUser($dbAccess);
 
 	$basePage=generatePageTopAndBottom($templatePath, $page, $user);
+	
+	$optionsListString=createGamesOptions($dbAccess);
+	//$optionsListString = $optionsListString.""
+	// inserisco i possibili valori per la barra di ricerca
+	$basePage=str_replace("<opzioni_ph/>", $optionsListString, $basePage);
 
 	return $basePage;
 
@@ -201,6 +208,34 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	}else{
 		return false;
 	}
+}
+
+function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<name_ph/>\" <selected_ph/> />"){
+		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
+
+	$gamesList=$dbAccess->getGamesList();
+	if(!$gamesList){
+		return "";
+	}
+	$stringsArray=array();
+	//se è selezionato il valore vuoto aggiungo un valore vuoto selezionato, supponendo che non ci siano valori vuoti tra i nomi dei giochi
+	//il selectedName è utile solo se le opzioni verranno usate per un tag select
+	if($selectedName===""){
+		array_push($stringsArray, "<option value=\"\" selected=\"selected\" />");
+	}
+	foreach ($gamesList as $game) {
+		$singleString=$template;
+		$replacements = array(
+			"<name_ph/>" => $game->getName(),
+			"<selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
+		);
+		foreach ($replacements as $key => $value) {
+			$singleString = str_replace($key, $value, $singleString);
+		}
+		array_push($stringsArray, $singleString);
+	}
+	$joinedItems=implode("", $stringsArray);
+	return $joinedItems;
 }
 
 ?>

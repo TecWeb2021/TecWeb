@@ -54,7 +54,11 @@ if($allOk){
 		$new_newsAuthor = $user;
 		$new_newsEditDateTime = date("Y-m-d");
 		$new_newsCategory = $_REQUEST['tipologia'];
-		$new_newsAlt= $_REQUEST['alternativo'];
+		$new_newsAlt = $_REQUEST['alternativo'];
+		$new_newsGame = null;
+		if($new_newsCategory == "Giochi"){
+			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+		}
 	
 		//il salvataggio dell'immagine potrebbe fallire quindi inserisco una variabile boolean a per gestire la cosa (sarebbe forse meglio gestire il tutto con le eccezioni)
 		$imageSaved=true;
@@ -69,7 +73,7 @@ if($allOk){
 		}
 
 		if($imageSaved){
-			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory);
+			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
 
 			$opResult = $dbAccess->addNews($newNews);
 			if($opResult && $opResult!=false){
@@ -91,7 +95,9 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle,
 			"<content_ph/>" => $new_newsText,
-			"<img_alt_ph/>" => $new_newsAlt
+			"<img_alt_ph/>" => $new_newsAlt,
+			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<game_name_ph/>" => $new_newsGame
 		);
 
 		if($new_newsCategory=='Eventi'){
@@ -139,7 +145,9 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => "",
 			"<content_ph/>" => "",
-			"<img_alt_ph/>" => ""
+			"<img_alt_ph/>" => "",
+			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<game_name_ph/>" => ""
 		);
 		$replacements['<checked_eventi_ph/>'] = "";
 		$replacements['<checked_giochi_ph/>'] = "";

@@ -107,8 +107,12 @@ if($allOk){
 		// alcuni valori li riprendo dalla vecchia notizia
 		$new_newsAuthor = $oldNews->getAuthor();
 		$new_newsEditDateTime = $oldNews->getLastEditDateTime();
-		$new_newsCategory = isset($_REQUEST['tipologia']);
-		$new_newsAlt=$_REQUEST['alternativo'];
+		$new_newsCategory = $_REQUEST['tipologia'];
+		$new_newsAlt= $_REQUEST['alternativo'];
+		$new_newsGame = null;
+		if($new_newsCategory == "Giochi"){
+			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+		}
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 		$new_newsImage=null;
@@ -136,7 +140,7 @@ if($allOk){
 
 
 		if($imageOk){
-			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory);
+			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
 			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
 			if($overwriteResult==true){
 				echo "overwrite su db riuscito"."<br/>";
@@ -146,7 +150,7 @@ if($allOk){
 			
 		}
 	
-	
+		
 		
 
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
@@ -154,7 +158,9 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle,
 			"<content_ph/>" => $new_newsText,
-			"<img_alt_ph/>" => $new_newsAlt
+			"<img_alt_ph/>" => $new_newsAlt,
+			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : ""
 		);
 
 		if($new_newsCategory=='Eventi'){
@@ -200,6 +206,8 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $oldNews->getTitle(),
 			"<content_ph/>" => $oldNews->getContent(),
+			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : ""
 		);
 
 		if($oldImage=$oldNews->getImage()){

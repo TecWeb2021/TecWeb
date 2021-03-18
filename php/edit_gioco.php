@@ -168,7 +168,9 @@ if($allOk){
 			"<sinopsis_ph/>" => $new_gameSinopsis,
 			"<review_ph/>" => $new_gameReview,
 			"<prequel_ph/>" => $new_gamePrequel,
-			"<sequel_ph/>" => $new_gameSequel
+			"<sequel_ph/>" => $new_gameSequel,
+			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),
+			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
 		);
 
 		//aggiungo ai replacement quelli delle checkboxes
@@ -238,7 +240,9 @@ if($allOk){
 			"<sinopsis_ph/>" => $oldGame->getSinopsis(),
 			"<review_ph/>" => $oldGame->getReview(),
 			"<prequel_ph/>" => $oldGame->getPrequel(),
-			"<sequel_ph/>" => $oldGame->getSequel()
+			"<sequel_ph/>" => $oldGame->getSequel(),
+			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),
+			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
 		);
 
 		//aggiungo ai replacement quelli delle checkboxes

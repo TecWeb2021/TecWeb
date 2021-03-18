@@ -146,7 +146,7 @@ class DBAccess {
             while($row=mysqli_fetch_assoc($result)){
                 $image=new Image($row['Path'], $row['Alt']);
                 $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
-                $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category']);
+                $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category'], $row['Game']);
                 array_push($newsList, $news);
             }
             return $newsList;
@@ -169,7 +169,7 @@ class DBAccess {
             //echo "Image: ".$row['Image']."<br/>";
             $image= $row['newsImage']=='' ? null : new Image($row['Path'],$row['Alt']);
             $author= new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
-            $news= new News($row['Title'], $row['Content'], $author, $row['Last_edit_date'], $image, $row['Category']);
+            $news= new News($row['Title'], $row['Content'], $author, $row['Last_edit_date'], $image, $row['Category'], $row['Game']);
 
             return $news;
         }
@@ -466,19 +466,20 @@ class DBAccess {
     }
 
     public function addNews($news){
-        $title=$news->getTitle();
+        $title = $news->getTitle();
         $content=$news->getContent()==null ? "NULL" : $news->getContent();
-        $author=$news->getAuthor();
-        $authorUsername=$author->getUsername();
-        $last_edit_date_time=$news->getLastEditDateTime();
-        $image=$news->getImage();
-        $imagePath="NULL";
-        $imageAlt="NULL";
+        $author = $news->getAuthor();
+        $authorUsername = $author->getUsername();
+        $last_edit_date_time = $news->getLastEditDateTime();
+        $image = $news->getImage();
+        $imagePath = "NULL";
+        $imageAlt = "NULL";
         if($image){
-            $imagePath=$image->getPath();
-            $imageAlt=$image->getAlt();
+            $imagePath = $image->getPath();
+            $imageAlt = $image->getAlt();
         }
-        $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
+        $category = $news->getCategory()==null ? "NULL" : $news->getCategory();
+        $gameName = $news->getGameName();
 
         $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
         echo "image insertion"."<br/>";
@@ -486,7 +487,7 @@ class DBAccess {
 
         echo "news insertion"."<br/>";
         $content=addslashes($content);
-        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
+        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`, `Game`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category','$gameName')";
 
         echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
@@ -718,13 +719,14 @@ class DBAccess {
         $image=$newNews->getImage();
         $this->addImage($image);
         $category=$newNews->getCategory();
+        $game=$newNews->getGameName();
         
         $imagePath= $image ? $image->getPath() : null;
         $imageAlt= $image ? $image->getAlt() : null;
 
         //manca l'eventuale inserimento dell'immagine
 
-        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image='$imagePath', Category='$category' WHERE Title='$oldNewsTitle'";
+        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image='$imagePath', Category='$category', Game='$game' WHERE Title='$oldNewsTitle'";
         $result=$this->getResult($query);
         return $result;
     }
