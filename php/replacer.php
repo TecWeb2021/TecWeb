@@ -53,25 +53,25 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 		"giochi.php" => ["Giochi","Giochi"],
 		"notizie.php" => ["Notizie","Notizie"],
 		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"],
-		"edit_gioco.php" => ["Modifica gioco",""],
-		"edit_notizia.php" => ["Modifica notizia",""],
-		"form_gioco.php" => ["Aggiungi gioco",""],
-		"form_notizia.php" => ["Aggiungi notizia",""],
-		"form_profilo.php" => ["Modifica profilo",""],
-		"gioco_notizie.php" => ["Notizie sul gioco","Giooco > Notizie"],
-		"gioco_recensione.php" => ["Recensione del gioco",""],
-		"gioco_scheda.php" => ["Scheda del gioco",""],
-		"lista_utenti.php" => ["Lista utenti",""],
-		"login.php" => ["Login",""],
-		"profilo.php" => ["Profilo",""],
-		"registrati.php" => ["Registrati",""]
+		"edit_gioco.php" => ["Modifica gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Modifica gioco"],
+		"edit_notizia.php" => ["Modifica notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica notizia"],
+		"form_gioco.php" => ["Aggiungi gioco","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi gioco"],
+		"form_notizia.php" => ["Aggiungi notizia","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi notizia"],
+		"form_profilo.php" => ["Modifica profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Profilo</a> > Modifica profilo"],
+		"gioco_notizie.php" => ["Notizie sul gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Gioco > Notizie"],
+		"gioco_recensione.php" => ["Recensione del gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Gioco > Recensione"],
+		"gioco_scheda.php" => ["Scheda del gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Gioco >Scheda del gioco"],
+		"lista_utenti.php" => ["Lista utenti","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Lista utenti"],
+		"login.php" => ["Login","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > Login"],
+		"profilo.php" => ["Profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > Profilo"],
+		"registrati.php" => ["Registrati","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > Registrati"]
 	);
 
 	echo "url: ".$url."<br/>";
 	foreach ($titleAndBreadcrumbReplacements as $key => $value) {
 		// il seguente confronto non è proprio una cosa giusta. Per esempio confrontare notizia e notizia_x avrebbe esito positivo.
 		// 5 è la posizione del primo carattere dopo /php/
-		if(strpos($url, $key)==5){
+		if(strpos($url, $key) == 5){
 			echo $url." = ".$key."<br/>";
 			$base=str_replace("<page_title_ph/>", $value[0]." - ALLGames", $base);
 			$base=str_replace("<page_breadcrumb_ph/>", $value[1], $base);
