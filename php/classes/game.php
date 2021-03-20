@@ -12,13 +12,14 @@ class Game{
 	protected $genres;
 	protected $prequel;
 	protected $sequel;
+	protected $developer;
 
 	//è importante che i seguenti valori corrispondano a quelli presenti nell'html
 	public static $possible_consoles = array("PS4","XboxOne","Switch","PS5","XboxSeriesX");
 	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
 
 
-	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null){
+	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
 		$this->name = $_name;
 		$this->publication_date = $_publication_date;
 		$this->vote = $_vote;
@@ -30,6 +31,7 @@ class Game{
 		$this->genres = $_genres;
 		$this->prequel = $_prequel;
 		$this->sequel = $_sequel;
+		$this->developer = $_developer;
 	}
 
 	function getName(){
@@ -74,6 +76,10 @@ class Game{
 
 	function getSequel(){
 		return $this->sequel;
+	}
+
+	function getDeveloper(){
+		return $this->developer;
 	}
 }
 

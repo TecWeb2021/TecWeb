@@ -22,18 +22,18 @@ function createNewsListItem($news){
 	$imageAlt= $image ? $image->getAlt(): "no_alt_present";
 
 	$replacements=array(
-		"/\<news_url_ph\/\>/" => "notizia.php?news=".$news->getTitle(),
-		"/\<news_publication_date_time_ph\/\>/" => $news->getLastEditDateTime(),
-		"/\<news_title_ph\/\>/" => $news->getTitle(),
-		"/\<news_content_ph\/\>/" => $news->getContent(),
-		"/\<news_author_ph\/\>/" => $news->getAuthor()->getUsername(),
-		"/\<img_path_ph\/\>/" => "../".$imagePath,
-		"/\<img_alt_ph\/\>/" => $imageAlt
+		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),
+		"<news_publication_date_time_ph/>" => $news->getLastEditDateTime(),
+		"<news_title_ph/>" => $news->getTitle(),
+		"<news_content_ph/>" => $news->getContent(),
+		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
+		"<img_path_ph/>" => "../".$imagePath,
+		"<img_alt_ph/>" => $imageAlt
 
 	);
 
 	foreach ($replacements as $key => $value) {
-		$item=preg_replace($key, $value, $item);
+		$item=str_replace($key, $value, $item);
 	}
 
 	return $item;
@@ -107,19 +107,26 @@ $homePage=preg_replace("/\<top_5_games_ph\/\>/",$top5GamesString,$homePage);
 
 //usa cosa da implementare: se il top game non esiste bisogna togliere il div relativo, non lasciarlo con i valori vuoti
 
+$consoles= $topGame ? $topGame->getConsoles() : null;
+$genres= $topGame ? $topGame->getGenres() : null;
+
+echo $topGame->getDeveloper()."<br/>";
 //sostituzioni riguardanti il top_game
 $replacements=array(
-		"/\<top_game_url_ph\/\>/" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
-		"/\<top_game_name_ph\/\>/" => $topGame ? $topGame->getName() : "",
-		"/\<top_game_img_path_ph\/\>/" => $topGame ? "../".$topGame->getImage()->getPath() : "",
-		"/\<top_game_img_alt_ph\/\>/" => $topGame ? $topGame->getImage()->getAlt() : "",
-		"/\<top_game_vote_ph\/\>/" => $topGame ? $topGame->getVote() : "",
-		"/\<top_game_publication_date_ph\/\>/" => $topGame ? $topGame->getPublicationDate() : "",
-		"/\<top_game_age_range_ph\/\>/" => $topGame ? $topGame->getAgeRange() : ""
+		"<top_game_url_ph/>" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
+		"<top_game_name_ph/>" => $topGame ? $topGame->getName() : "",
+		"<top_game_img_path_ph/>" => $topGame ? "..".$topGame->getImage()->getPath() : "",
+		"<top_game_img_alt_ph/>" => $topGame ? $topGame->getImage()->getAlt() : "",
+		"<top_game_vote_ph/>" => $topGame ? $topGame->getVote() : "",
+		"<top_game_publication_date_ph/>" => $topGame ? $topGame->getPublicationDate() : "",
+		"<top_game_age_range_ph/>" => $topGame ? $topGame->getAgeRange() : "",
+		"<top_game_platforms_ph/>" => $consoles ? implode(", ",$consoles) : "Nessuna",
+		"<top_game_genres_ph/>" => $genres ? implode(", ",$genres) : "Nessuno",
+		"<top_game_developer/>" => $topGame ? $topGame->getDeveloper() : "Nessuno"
 );
 
 foreach ($replacements as $key => $value) {
-	$homePage=preg_replace($key, $value, $homePage);
+	$homePage=str_replace($key, $value, $homePage);
 }
 
 

@@ -73,7 +73,6 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 			//costruisco le basi del titolo e del breadcrumb
 			$title = $value[0]." - ALLGames";
 			$breadcrumb = $value[1];
-			echo "pageParam: ".$pageParam."<br/>";
 			//metto il parametro passato all'interno del titolo e del breadcrumb
 			$title = str_replace("<page_param_ph/>", $pageParam, $title);
 			$breadcrumb = str_replace("<page_param_ph/>", $pageParam, $breadcrumb);

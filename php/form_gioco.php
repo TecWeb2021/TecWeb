@@ -47,7 +47,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['voto']) && isset($_FILES['immagine']) && isset($_REQUEST['prequel']) && isset($_REQUEST['sequel'])){
+	if(isset($_REQUEST['nome']) && isset($_REQUEST['data']) && isset($_REQUEST['pegi']) && isset($_REQUEST['descrizione']) && isset($_REQUEST['recensione']) && isset($_REQUEST['alternativo']) && isset($_REQUEST['voto']) && isset($_FILES['immagine']) && isset($_REQUEST['prequel']) && isset($_REQUEST['sequel']) && isset($_REQUEST['sviluppo']) ){
 		echo "i nuovi valori per il gioco sono stati tutti rilevati<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
 		$new_gameName = $_REQUEST['nome'];
@@ -61,6 +61,7 @@ if($allOk){
 		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
 		$new_gamePrequel = $_REQUEST['prequel'];
 		$new_gameSequel = $_REQUEST['sequel'];
+		$new_gameDeveloper = $_REQUEST['sviluppo'];
 
 
 		
@@ -97,7 +98,7 @@ if($allOk){
 		
 		if($imageOk){
 		
-			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel);
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 
 			$opResult = $dbAccess->addGame($newGame);
 			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
@@ -105,7 +106,7 @@ if($allOk){
 
 		$replacements = array(
 			"<game_name_ph/>" => $new_gameName,
-			"<developer_ph/>" => "casa di sviluppo", //non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
+			"<developer_ph/>" => $new_gameDeveloper,
 			"<date_ph/>" => $new_gamePublicationDate,
 			"<age_range_ph/>" => $new_gameAgeRange,
 			"<img_alt_ph/>" => $new_gameAlt, //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
@@ -159,6 +160,8 @@ if($allOk){
 			echo "prequel non inserita<br/>";
 		}elseif(!isset($_REQUEST['sequel'])){
 			echo "sequel non inserita<br/>";
+		}elseif(!isset($_REQUEST['sviluppo'])){
+			echo "sviluppo non inserita<br/>";
 		}
 
 		

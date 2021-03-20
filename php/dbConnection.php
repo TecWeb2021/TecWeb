@@ -272,7 +272,7 @@ class DBAccess {
 
                 $image = new Image($row['Path'],$row['Alt']);
 
-                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image, $consoles, $genres);
+                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image, $consoles, $genres, $row['Developer']);
                 array_push($gamesList, $game);
             }
 
@@ -282,7 +282,7 @@ class DBAccess {
 
     public function getGame($name){
         //specifico i campi da visualizzare perchè non voglio avere 2 Prequel e 2 Sequel, così possono prendere il sequel semplicemente indicando ['Sequel'] e stessa cosa per il prequel
-        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
+        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
         $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -294,7 +294,7 @@ class DBAccess {
             $genres=$this->getGenres($name);
 
             $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres, $row['Prequel'], $row['Sequel'] );
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
         return $game;
         }
@@ -347,15 +347,19 @@ class DBAccess {
     }
 
     public function getTopGame(){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path ORDER BY games.Vote DESC LIMIT 1";
-        $queryResult = mysqli_query($this->connection, $querySelect);
+        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path LIMIT 1";
+        $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
+            print_r($row);
+            $consoles=$this->getConsoles($row['Name']);
+            $genres=$this->getGenres($row['Name']);
+
             $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'] );
 
         return $game;
         }
@@ -528,55 +532,24 @@ class DBAccess {
         return $result;
     }
 
-    public function addGameNews(){
-        $title=$news->getTitle();
-        $content=$news->getContent()==null ? "NULL" : $news->getContent();
-        $author=$news->getAuthor();
-        $authorUsername=$author->getUsername();
-        $last_edit_date_time=$news->getLastEditDateTime();
-        $image=$news->getImage();
-        $imagePath="NULL";
-        $imageAlt="NULL";
-        if($image){
-            $imagePath=$image->getPath();
-            $imageAlt=$image->getAlt();
-        }
-        $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
-        $gameName=$news->getGameName()==null ? "NULL" : $news->getGameName();
-
-        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "image insertion"."<br/>";
-        $this->getResult($query);
-
-        echo "news insertion"."<br/>";
-        $content=addslashes($content);
-        $query="INSERT INTO `news`(`Id`,`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES (DEFAULT,'$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
-
-        echo "query: ".$query."<br/>";
-        $result=$this->getResult($query);
-        if($result==null){
-            $query="UPDATE news SET Title='$title', User='$authorUsername', Last_edit_date='$last_edit_date_time', Content='$content', Image='$imagePath', Category='$category' WHERE Title='$title'";
-            $result=$this->getResult($query);
-        }
-        return $result;
-    }
-
     public function addGame($game){
-        $name=$game->getName();
-        $date=$game->getPublicationDate();
-        $vote=$game->getVote();
-        $sinopsis=addslashes($game->getSinopsis());
-        $age_range=$game->getAgeRange();
-        $review=addslashes($game->getReview());
-        $image=$game->getImage();
-        $imagePath= $image ? $image->getPath() : null;
-        $imageAlt= $image ? $image->getAlt() : null;
+        $name = $game->getName();
+        $date = $game->getPublicationDate();
+        $vote = $game->getVote();
+        $sinopsis = addslashes($game->getSinopsis());
+        $age_range = $game->getAgeRange();
+        $review = addslashes($game->getReview());
+        $image = $game->getImage();
+        $imagePath =  $image ? $image->getPath() : null;
+        $imageAlt =  $image ? $image->getAlt() : null;
 
-        $consoles=$game->getConsoles();
-        $genres=$game->getGenres();
+        $consoles = $game->getConsoles();
+        $genres = $game->getGenres();
 
-        $prequel=$game->getPrequel();
-        $sequel=$game->getSequel();
+        $prequel = $game->getPrequel();
+        $sequel = $game->getSequel();
+
+        $developer = $game->getDeveloper();
 
         if($image){
             $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
@@ -588,7 +561,7 @@ class DBAccess {
 
         
 
-        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath')";
+        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath', '$developer')";
         $result=$this->getResult($query);
         if($result){
             if($consoles){
@@ -643,12 +616,14 @@ class DBAccess {
         $prequel = $newGame->getPrequel();
         $sequel = $newGame->getSequel();
 
+        $developer = $newGame->getDeveloper();
+
         $result = true;
 
         
 
         if($result){
-            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath' WHERE Name='$oldGameName'";
+            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath', Developer='$developer' WHERE Name='$oldGameName'";
             $result=$this->getResult($query);
         }
 
