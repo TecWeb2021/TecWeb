@@ -114,7 +114,7 @@ $genres= $topGame ? $topGame->getGenres() : null;
 $replacements=array(
 		"<top_game_url_ph/>" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
 		"<top_game_name_ph/>" => $topGame ? $topGame->getName() : "",
-		"<top_game_img_path_ph/>" => $topGame ? "..".$topGame->getImage()->getPath() : "",
+		"<top_game_img_path_ph/>" => $topGame ? "../".$topGame->getImage()->getPath() : "",
 		"<top_game_img_alt_ph/>" => $topGame ? $topGame->getImage()->getAlt() : "",
 		"<top_game_vote_ph/>" => $topGame ? $topGame->getVote() : "",
 		"<top_game_publication_date_ph/>" => $topGame ? $topGame->getPublicationDate() : "",
