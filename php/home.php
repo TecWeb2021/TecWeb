@@ -110,7 +110,6 @@ $homePage=preg_replace("/\<top_5_games_ph\/\>/",$top5GamesString,$homePage);
 $consoles= $topGame ? $topGame->getConsoles() : null;
 $genres= $topGame ? $topGame->getGenres() : null;
 
-echo $topGame->getDeveloper()."<br/>";
 //sostituzioni riguardanti il top_game
 $replacements=array(
 		"<top_game_url_ph/>" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
