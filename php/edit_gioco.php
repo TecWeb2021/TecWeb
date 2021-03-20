@@ -268,7 +268,7 @@ if($allOk){
 			
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldGame ? $oldGame->getName() : "");
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 

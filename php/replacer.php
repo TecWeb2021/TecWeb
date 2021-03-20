@@ -13,14 +13,14 @@ function replace($subject){
   return $subject;
 }
 
-function createBasePage($templatePath, $page, $dbAccess){
+function createBasePage($templatePath, $page, $dbAccess, $pageParam = ""){
 	if(isset($_REQUEST['logout'])){
 		logout();
 	}
 
 	$user=getLoggedUser($dbAccess);
 
-	$basePage=generatePageTopAndBottom($templatePath, $page, $user);
+	$basePage=generatePageTopAndBottom($templatePath, $page, $user, $pageParam);
 	
 	$optionsListString=createGamesOptions($dbAccess);
 	//$optionsListString = $optionsListString.""
@@ -31,14 +31,13 @@ function createBasePage($templatePath, $page, $dbAccess){
 
 }
 
-function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImagePath="../images/login.png"){
+function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", $defaultUserImagePath="../images/login.png"){
 
 	if(isset($_REQUEST['tendina']) && ($_REQUEST['tendina']=='true' || $_REQUEST['tendina']=='false')){
 		$templatePath="../html/templates/top_and_bottomTemplateNoJS.html";
 	}
 	$base=file_get_contents($templatePath);
 	$url=$_SERVER['REQUEST_URI'];
-	echo "url1: ".$url."<br/>";
 
 	if (strpos($url, '?') !== false) {
     	$url=$url."&";
@@ -52,29 +51,34 @@ function generatePageTopAndBottom($templatePath, $page, $user, $defaultUserImage
 		"home.php" => ["Home","Home"],
 		"giochi.php" => ["Giochi","Giochi"],
 		"notizie.php" => ["Notizie","Notizie"],
-		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Notizia"],
-		"edit_gioco.php" => ["Modifica gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Modifica gioco"],
-		"edit_notizia.php" => ["Modifica notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica notizia"],
+		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > <page_param_ph/>"],
+		"edit_gioco.php" => ["Modifica gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Modifica <page_param_ph/>"],
+		"edit_notizia.php" => ["Modifica notizia - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica <page_param_ph/>"],
 		"form_gioco.php" => ["Aggiungi gioco","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi gioco"],
 		"form_notizia.php" => ["Aggiungi notizia","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi notizia"],
 		"form_profilo.php" => ["Modifica profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Profilo</a> > Modifica profilo"],
-		"gioco_notizie.php" => ["Notizie sul gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Gioco > Notizie"],
-		"gioco_recensione.php" => ["Recensione del gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Gioco > Recensione"],
-		"gioco_scheda.php" => ["Scheda del gioco","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Gioco >Scheda del gioco"],
+		"gioco_notizie.php" => ["Notizie - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Notizie"],
+		"gioco_recensione.php" => ["Recensione - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Recensione"],
+		"gioco_scheda.php" => ["Scheda gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Scheda del gioco"],
 		"lista_utenti.php" => ["Lista utenti","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Lista utenti"],
 		"login.php" => ["Login","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > Login"],
 		"profilo.php" => ["Profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > Profilo"],
 		"registrati.php" => ["Registrati","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > Registrati"]
 	);
 
-	echo "url: ".$url."<br/>";
 	foreach ($titleAndBreadcrumbReplacements as $key => $value) {
 		// il seguente confronto non è proprio una cosa giusta. Per esempio confrontare notizia e notizia_x avrebbe esito positivo.
 		// 5 è la posizione del primo carattere dopo /php/
 		if(strpos(explode("php/",$url)[1], $key) === 0){
-			echo explode("php/",$url)[1]." = ".$key."<br/>";
-			$base=str_replace("<page_title_ph/>", $value[0]." - ALLGames", $base);
-			$base=str_replace("<page_breadcrumb_ph/>", $value[1], $base);
+			//costruisco le basi del titolo e del breadcrumb
+			$title = $value[0]." - ALLGames";
+			$breadcrumb = $value[1];
+			echo "pageParam: ".$pageParam."<br/>";
+			//metto il parametro passato all'interno del titolo e del breadcrumb
+			$title = str_replace("<page_param_ph/>", $pageParam, $title);
+			$breadcrumb = str_replace("<page_param_ph/>", $pageParam, $breadcrumb);
+			$base=str_replace("<page_title_ph/>", $title, $base);
+			$base=str_replace("<page_breadcrumb_ph/>", $breadcrumb, $base);
 		}
 	}
 

@@ -24,6 +24,7 @@ function replacePH($game){
 		"<review_content_ph/>" => $game->getReview(),
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_name_ph/>" => $game->getName(),
+		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName()
 	);
 
 	//applico le sostituzioni
@@ -101,7 +102,7 @@ if(isset($_REQUEST['game'])){
 
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 

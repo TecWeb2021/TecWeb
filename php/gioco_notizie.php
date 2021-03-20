@@ -80,7 +80,7 @@ if(isset($_REQUEST['game'])){
 
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 

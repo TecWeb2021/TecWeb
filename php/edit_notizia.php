@@ -241,7 +241,7 @@ if($allOk){
 			
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldNews ? $oldNews->getTitle() : "");
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 

@@ -25,6 +25,8 @@ if($user){
 	$image=isset($_FILES['immagine']) ? $_FILES['immagine'] : null;
 	#sanitize
 
+	$allOk = true;
+
 	if($username && $password && $email && $image){
 		
 		
@@ -45,36 +47,45 @@ if($user){
 			$result=$dbAccess->addUser($newUser);
 			if($result){
 				setcookie('login',$hashValue);
-				echo "<br/>operazione eseguita con successo<br/>tra 5 secondi verrai portato sulla pagina home";
-				header( "refresh:5;url=home.php" );
+				$redirectInterval = 600;
+				$homePage =  "<br/>operazione eseguita con successo<br/>tra ".$redirectInterval." secondi verrai portato sulla pagina home";
+				header( "refresh:".$redirectInterval.";url=home.php" );
 			}else{
-				echo "salvataggio utente fallito";
-				
+				echo "salvataggio utente fallito"."<br/>";
+				$allOk = false;
 			}
 
 		}else{
-			echo "immagine non caricata";
+			echo "immagine non caricata"."<br/>";
+			$allOk = false;
 		}
 
 		
 	}else{
-		echo "inserire i valori";
+		echo "inserire i valori"."<br/>";
+		$allOk = false;
 	}
-	$replacements=array(
+
+	if($allOk===false){
+		$replacements=array(
 		"<email_ph/>"=>$email,
 		"<username_ph/>"=>$username
 		);
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
 		}
+	}
 }
+
+//rifaccio il controllo dell'utente dopo l'operazione di registrazione
+//credo che questo qua sotto non funzioni perchè il cookie settato può essere rilevato dal php se lo script viene richiamato
 /*
-#rifaccio il controllo dell'utente dopo l'operazione di registrazione
 $user=getLoggedUser($dbAccess);
+echo "user: ".($user ? $user->getUsername() : "nouserfound")."<br/>";
 if($user){
 	$homePage="Sei già registrato e hai già fatto il login";
-}
-*/
+}*/
+
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
 

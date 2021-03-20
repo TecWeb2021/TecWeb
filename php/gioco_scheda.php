@@ -31,6 +31,7 @@ function replacePH($game){
 		"<age_range_ph/>" => "PEGI ".$game->getAgeRange(),
 		"<prequel_ph/>" => $game->getPrequel() ? $game->getPrequel() : "Nessuno",
 		"<sequel_ph/>" => $game->getSequel() ? $game->getSequel() : "Nessuno",
+		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName()
 	);
 
 	foreach ($replacements as $key => $value) {
@@ -52,7 +53,7 @@ if(isset($_REQUEST['game'])){
 }
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 
