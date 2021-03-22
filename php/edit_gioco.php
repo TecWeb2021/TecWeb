@@ -194,7 +194,7 @@ if($allOk){
 		}
 
 		if($error_message != ""){
-			echo $error_message;
+			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 			// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 			$new_gameImage=null;

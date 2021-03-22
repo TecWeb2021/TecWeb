@@ -165,7 +165,7 @@ if($allOk){
 		}
 
 		if($error_message != ""){
-			echo $error_message;
+			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 
 			if($new_newsImage == null){
@@ -197,7 +197,7 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle ? $new_newsTitle : $oldNews->getTitle(),
 			"<content_ph/>" => $new_newsText ? $new_newsText : $oldNews->getContent(),
-			"<img_alt_ph/>" => $new_newsAlt ? $new_newsAlt : $oldNews->getAlt(),
+			"<img_alt_ph/>" => $new_newsAlt ? $new_newsAlt : ($oldNews->getImage() ? $oldNews->getImage()->getAlt() : ""),
 			"<opzioni_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName()
 		);

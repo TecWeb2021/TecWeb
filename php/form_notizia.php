@@ -106,7 +106,7 @@ if($allOk){
 
 		//controllo se c'è stato almeno un errore
 		if($error_message != ""){
-			echo $error_message;
+			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 			echo "non sono presenti errori";
 			//se non ci sono stati errori procedo col salvataggio dei dati su db

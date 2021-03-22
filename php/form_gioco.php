@@ -149,7 +149,7 @@ if($allOk){
 		$selected_genres=array();
 
 		if($error_message != ""){
-			echo $error_message;
+			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 
 			
