@@ -99,16 +99,16 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if( isset($_REQUEST['titolo']) && isset($_REQUEST['testo']) && isset($_REQUEST['tipologia']) && isset($_REQUEST['alternativo']) ){
-		echo "i nuovi valori per la notizia sono stati tutti rilevati<br/>";
+	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo']) ){
+		echo "almeno un valore è stato rilevato<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
-		$new_newsTitle =  $_REQUEST['titolo'];
-		$new_newsText = $_REQUEST['testo'];
+		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
+		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
 		// alcuni valori li riprendo dalla vecchia notizia
 		$new_newsAuthor = $oldNews->getAuthor();
 		$new_newsEditDateTime = $oldNews->getLastEditDateTime();
-		$new_newsCategory = $_REQUEST['tipologia'];
-		$new_newsAlt= $_REQUEST['alternativo'];
+		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
+		$new_newsAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
 		$new_newsGame = null;
 		if($new_newsCategory == "Giochi"){
 			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
@@ -131,13 +131,51 @@ if($allOk){
 				echo "salvataggio dell'immagine fallito"."<br/>";
 
 			}
-		}else{
-			echo "l'utente non ha inserito una nuova immagine"."<br/>";
-			//prendo la vecchia immagine
-			$new_newsImage=$oldNews->getImage();
-			$imageOk=true;
 		}
 
+		$error_messages = array(
+			'titolo' => "Titolo non presente",
+			'testo' => "Testo non presente",
+			'tipologia' => "Tipologia non presente",
+			'immagine' => "Immagine non presente",
+			'alternativo' => "Testo alternativo dell'immagine non presente",
+			'gioco' => "Gioco non inserito"
+		);
+
+		$error_message = "";
+
+		//qui ci dovrò mettere anche un controllo dei campi
+		if($new_newsTitle == null){
+			$error_message = $error_message . $error_messages['titolo'] . "<br/>";
+		}
+		if($new_newsText == null){
+			$error_message = $error_message . $error_messages['testo'] . "<br/>";
+		}
+		if($new_newsCategory == null){
+			$error_message = $error_message . $error_messages['tipologia'] . "<br/>";
+		}
+		if(false /*$new_newsImage == null*/){
+			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		}
+		if($new_newsAlt == null){
+			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		}
+		if($new_newsCategory == "Giochi" && $new_newsGame== null){
+			$error_message = $error_message . $error_messages['gioco'] . "<br/>";
+		}
+
+		if($error_message != ""){
+			echo $error_message;
+		}else{
+
+			if($new_newsImage == null){
+				echo "l'utente non ha inserito una nuova immagine"."<br/>";
+				//prendo la vecchia immagine
+				$new_newsImage=$oldNews->getImage();
+				$imageOk=true;
+			}
+
+		}
 
 		if($imageOk){
 			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
@@ -156,29 +194,29 @@ if($allOk){
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
 		//mancano i replacement delle checkboxes
 		$replacements = array(
-			"<news_title_ph/>" => $new_newsTitle,
-			"<content_ph/>" => $new_newsText,
-			"<img_alt_ph/>" => $new_newsAlt,
+			"<news_title_ph/>" => $new_newsTitle ? $new_newsTitle : $oldNews->getTitle(),
+			"<content_ph/>" => $new_newsText ? $new_newsText : $oldNews->getContent(),
+			"<img_alt_ph/>" => $new_newsAlt ? $new_newsAlt : $oldNews->getAlt(),
 			"<opzioni_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : ""
+			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName()
 		);
 
-		if($new_newsCategory=='Eventi'){
+		if($new_newsCategory == 'Eventi'){
 			$replacements['<checked_eventi_ph/>'] = "checked=\"checked\" ";
 			$replacements['<checked_giochi_ph/>'] = "";
 			$replacements['<checked_hardware_ph/>'] = ""; 
-		}
-
-		if($new_newsCategory=='Giochi'){
+		}elseif($new_newsCategory == 'Giochi'){
 			$replacements['<checked_eventi_ph/>'] = "";
 			$replacements['<checked_giochi_ph/>'] = "checked=\"checked\" ";
 			$replacements['<checked_hardware_ph/>'] = "";
-		}
-
-		if($new_newsCategory=='Hardware'){
+		}elseif($new_newsCategory == 'Hardware'){
 			$replacements['<checked_eventi_ph/>'] = "";
 			$replacements['<checked_giochi_ph/>'] = "";
 			$replacements['<checked_hardware_ph/>'] = "checked=\"checked\" ";
+		}elseif($new_newsCategory == null){
+			$replacements['<checked_eventi_ph/>'] = "";
+			$replacements['<checked_giochi_ph/>'] = "";
+			$replacements['<checked_hardware_ph/>'] = "";
 		}
 	
 		foreach ($replacements as $key => $value) {
@@ -189,9 +227,9 @@ if($allOk){
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "i nuovi valori per il gioco non sono stati rilevati tutti, probabilmente arrivo da un'altra pagina<br/>";
-		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
+		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
+		/*
 		// controllo quale valore non è stato inserito
 		if(!isset($_REQUEST['titolo'])){
 			echo "titolo non inserito<br/>";
@@ -200,6 +238,7 @@ if($allOk){
 		}elseif(!isset($_REQUEST['alternativo'])){
 			echo "alt non inserito<br/>";
 		}
+		*/
 
 		//qui faccio i replacement dei placeholder in base ai valori del gioco che si vuole modificare
 		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
