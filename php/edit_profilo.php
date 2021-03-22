@@ -33,7 +33,7 @@ if($user){
 			echo "almeno un valore è stato inserito"."<br/>";
 			
 			$error_message = "";
-			
+
 			//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
 			$error_messages = array(
 				'email' => "Email non presente",
@@ -78,7 +78,7 @@ if($user){
 				}
 				
 				
-				$newUser = new User($user->getUsername(),$new_hashValue,0, $new_image, $new_email);
+				$newUser = new User($user->getUsername(),$new_hashValue, $user->isAdmin(), $new_image, $new_email);
 		
 				$result = $dbAccess->overwriteUser($newUser);
 				if($result){
