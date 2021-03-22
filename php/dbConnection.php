@@ -124,7 +124,7 @@ class DBAccess {
         
         $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
         if($gameName != null){
-            $query=$query." WHERE news.Game='$gameName'";
+            $query=$query." WHERE news.Category='Giochi' AND news.Game='$gameName'";
             if($category != null){
                 $query=$query." AND news.Category='$category'";
             }
