@@ -450,7 +450,7 @@ class DBAccess {
         return $result;
     }
 
-    public function updateUser($user){
+    public function overwriteUser($user){
         $username=$user->getUsername();
         $hash=$user->getHash();
         $isAdmin=$user->isAdmin();
