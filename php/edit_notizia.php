@@ -175,18 +175,19 @@ if($allOk){
 				$imageOk=true;
 			}
 
+			if($imageOk){
+				$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
+				$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
+				if($overwriteResult==true){
+					echo "overwrite su db riuscito"."<br/>";
+				}else{
+					echo "overwrite su db fallito"."<br/>";
+				}
+			
+			}
 		}
 
-		if($imageOk){
-			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
-			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
-			if($overwriteResult==true){
-				echo "overwrite su db riuscito"."<br/>";
-			}else{
-				echo "overwrite su db fallito"."<br/>";
-			}
-			
-		}
+		
 	
 		
 		

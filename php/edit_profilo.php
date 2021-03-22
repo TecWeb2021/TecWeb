@@ -8,7 +8,7 @@ require_once "dbConnection.php";
 $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
-$homePage=file_get_contents("../html/templates/formProfiloTemplate.html");
+$homePage=file_get_contents("../html/templates/editProfiloTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 

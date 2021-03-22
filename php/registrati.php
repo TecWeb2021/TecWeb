@@ -22,59 +22,99 @@ if($user){
 	#sanitize
 	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 	#sanitize
-	$image=isset($_FILES['immagine']) ? $_FILES['immagine'] : null;
+	$imagePath=saveImageFromFILES($dbAccess, "immagine");
 	#sanitize
 
 	$allOk = true;
 
-	if($username && $password && $email && $image){
-		
+	$error_message = "";
+	if($username || $email || $password || $imagePath){
+		echo "almeno un valore è stato inserito"."<br/>";
 		
 
-		if(isset($_FILE['userfile'])){
-			$name=$_FILE['userfile']['name'];
-			#sanitize
-			echo "nome file caricato: ".$name;
+		//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
+		$error_messages = array(
+			'username' => "Username non presente",
+			'email' => "Email non presente",
+			'password' => "Password non presente",
+			'immagine' => "Immagine non presente",
+		);
+
+		//eseguo i controlli sugli input
+		if($username == null){
+			$error_message = $error_message . $error_messages['username'] . "<br/>";
+		}
+		if($email == null){
+			$error_message = $error_message . $error_messages['email'] . "<br/>";
+		}
+		//controllo di lunghezza temporaneo
+		if($password == null || strlen($password) < 5){
+			$error_message = $error_message . $error_messages['password'] . "<br/>";
+		}
+		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
+		if($imagePath === false){
+			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 		}
 
-		$imagePath=saveImageFromFILES($dbAccess, "immagine");
-		if($imagePath!=false){
-			$image=new Image($imagePath, "immagine utente");
-			$hashValue=getHash($username, $password);
-			$newUser=new User($username,$hashValue,0, $image, $email);
-			#controlla se è già registrato
+		
+		
 
-			$result=$dbAccess->addUser($newUser);
-			if($result){
-				setcookie('login',$hashValue);
-				$redirectInterval = 600;
-				$homePage =  "<br/>operazione eseguita con successo<br/>tra ".$redirectInterval." secondi verrai portato sulla pagina home";
-				header( "refresh:".$redirectInterval.";url=home.php" );
-			}else{
-				echo "salvataggio utente fallito"."<br/>";
-				$allOk = false;
+		if($error_message != ""){
+			//se c'è stato almeno un errore ...
+			echo $error_message;
+
+			
+		}else{
+			echo "non ci sono stati errori" . "<br/>";
+			
+			if($imagePath!=false){
+				$image=new Image($imagePath, "immagine utente");
+				$hashValue=getHash($username, $password);
+				$newUser=new User($username,$hashValue,0, $image, $email);
+				#controlla se è già registrato
+	
+				$result=$dbAccess->addUser($newUser);
+				if($result){
+					setcookie('login',$hashValue);
+					$redirectInterval = 600;
+					$homePage =  "<br/>operazione eseguita con successo<br/>tra ".$redirectInterval." secondi verrai portato sulla pagina home";
+					header( "refresh:".$redirectInterval.";url=home.php" );
+				}else{
+					 echo "salvataggio utente fallito" . "<br/>";
+					$allOk = false;
+				}
+	
 			}
 
-		}else{
-			echo "immagine non caricata"."<br/>";
-			$allOk = false;
 		}
 
-		
-	}else{
-		echo "inserire i valori"."<br/>";
-		$allOk = false;
-	}
-
-	if($allOk===false){
+		//faccio i replacement dove possibile, altrimenti metto valore vuoto
 		$replacements=array(
-		"<email_ph/>"=>$email,
-		"<username_ph/>"=>$username
+		"<email_ph/>"=>$email ? $email : "",
+		"<username_ph/>"=>$username ? $username : ""
 		);
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
 		}
+
+		
+	}else{
+		echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
+
+		//metto tutti i valori alla stringa vuota
+		$replacements=array(
+		"<email_ph/>" => "",
+		"<username_ph/>" => ""
+		);
+
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
+		}
+
+		$allOk = false;
 	}
+
+	
 }
 
 //rifaccio il controllo dell'utente dopo l'operazione di registrazione
