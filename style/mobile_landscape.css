@@ -1,0 +1,87 @@
+body{ max-width: 1024px; }
+
+.topnav a { display: none; }
+
+.topnav button.icon {
+  width: 150px;
+  float: right;
+  display: block;
+}
+
+.topnav.responsive button.icon {
+  float: right;
+  text-align: center;
+}
+
+.topnav.responsive a {
+  width:100%;
+  display: block;
+  text-align: center;
+}
+
+.searchbox {
+  float: none;
+  width: 80%;
+}
+.noborder_home{
+  border-radius: 0px;
+}
+
+.searchbutton { float: none; }
+
+.textbox { width: 76%; }
+
+.leftcolumn, .rightcolumn {
+  overflow: visible;
+  width: 100%;
+  padding: 0;
+  max-height: none;
+}
+
+#ultime_aggiunte {
+  float: right;
+  width: 30%;
+  padding: 0;
+}
+
+#gioco_della_settimana {
+  float: left;
+  width: 69%;
+  padding: 0;
+}
+
+dl.info dd { padding-bottom: 0.5em; }
+
+dl.info_scheda dt {
+  float: none;
+  width: auto;
+  font-weight: bold;
+}
+
+dl.info_scheda dd {
+  display: block;
+  width: 100%;
+  padding-bottom: 0.5em;
+}
+
+.messaggi {
+  padding: 0em;
+  display: block;
+  text-align: center;
+}
+
+.notizia_home{
+  margin-right: 0;
+}
+
+/* gestione JavaScript disattivato */
+
+.no-js .topnav button.icon {
+  display: none;
+}
+
+.no-js .topnav a {
+  width:100%;
+  display: block;
+  text-align: center;
+}

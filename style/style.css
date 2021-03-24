@@ -1,20 +1,26 @@
 * {
-    padding: 0em;
-    margin: 0em;
+  padding: 0em;
+  margin: 0em;
+  line-height: 1.4em;
 }
 
 html {
-    background-image: url('../images/pacman.jpg');
-    background-color: #000;
-    width: 100%;
+  background-image: url('../images/sfondo.jpg');
+  background-color: #252525;
+  background-size: 100%;
+  width: 100%;
+  background-attachment: fixed;
 }
 
 body {
     max-width: 1024px;
-    margin: auto;                       /* centra il body */
-    background-color: #FFF;
-    font-family: "Comic Sans MS", cursive, sans-serif;
-    border: 1px solid #DDD;
+    margin: auto;
+    background-color: #f5f5f5;
+    font-family: "Roboto", Arial, sans-serif;
+}
+
+fieldset{
+  border: 0px;
 }
 
 /*
@@ -23,112 +29,1298 @@ SEZIONE HEADER
 =========================
 */
 
-#header {
-    padding: 1.0em;
-    text-align: center;
-    min-height: 9em;
+#header{
+  background-color: #600000;
+  padding: 1.0em;
+  min-height: 2em;
+}
+
+.aiutiNascosti{
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px,1px,1px,1px);
+}
+
+/*=========================
+SEZIONE TITOLO
+=========================*/
+
+#titolo1 {
+  margin-left: 2.2em;
+  color: #fff;
+  font-size: 3em;
+}
+
+#titolo2 {
+  margin-left: 5.2em;
+  color: #fff;
+  font-size: 1.3em;
+  font-style: italic;
+  font-weight: normal;
+}
+
+/*login*/
+
+#login{ display: block; }
+
+div.loginblock a { color: white; }
+
+div.loginblock {
+  color: white;
+  margin-top: -5.5em;
+  margin-right: -0.4em;
+  float: right;
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  width: 120px;
+}
+
+#loginPic {
+  border-radius: 50%;
+  min-width: 60px;
+  max-width: 60px;
+  min-height: 60px;
+  max-height: 60px;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
 }
 
 #logo {
     float: left;
-    width: 15%;         /* 15% del padre */
+    width: 6em;
     max-width: 9em;
 }
 
-#header h1 {
-    color: blue;
-    font-size: 3.5em;
+/*
+=========================
+SEZIONE MENU
+=========================
+*/
+
+.topnav {
+  background-color: #333;
 }
 
-#header h2 {
-    font-size: 1.3em;
-    font-style: italic;
-    font-weight: normal;
+.topnav a, button.icon {
+    color: #fff;
+    font-weight: bold;
+    line-height: 30px;
+    text-decoration: none;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    background-color: #1b365d;
+    border-bottom: 5px solid #54BAE2;
+    border-radius: 10px;
+    display: block;
+    margin: 2px;
+    float: left;
 }
 
-#breadcrumb {
-    background-color: blue;
+button.icon{
+  height: 36px;
+}
+
+.topnav a.active, .topnav a:hover, button:hover.icon{
+    background-color: #600000;
+    border-bottom: 5px solid #1b365d;
+}
+
+.topnav a.active{
+  pointer-events: none;
+  cursor: default;
+}
+
+.topnav::after{
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.topnav .icon{
+  display: none;
+}
+
+#hamburger{
+    width: 12%;
+    max-width: 13em;
+    margin-bottom: 4px;
+}
+
+#menu{
+    background-color: #2c2c2c;
+    position: sticky;
+    top: 0px;
+    display: block;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    margin-left: 0px;
+    padding-bottom: 1.5px;
+    list-style: none;
+    z-index: 2;
+}
+
+/*barra di ricerca*/
+
+.search_container {
+  width: 100%;
+}
+
+.searchbox{
+  float: right;
+  width: 30%;
+  margin-right: 0.5em;
+}
+
+
+.searchbutton{
+  width: 5em;
+  height: 2.5em;
+}
+
+input{
+  background-color: white;
+  width: 70%;
+  height: 30px;
+  margin: 2px;
+  padding-left: 0.5em;
+  border-radius: 5px;
+}
+
+button{
+  color: white;
+  background-color: #1b365d;
+  padding: 0.5em;
+  margin: 2px;
+  border-radius: 5px;
+  margin-top: 0.3em;
+  cursor: pointer;
+}
+
+.menu{
+  list-style-type: none;
+}
+
+.structural {
+position:absolute;
+left:-9999px;
+}
+
+/*
+=========================
+SEZIONE BREADCRUM
+=========================
+*/
+
+#breadcrumb{
+    background-color: #333;
     color: white;
-    padding: 0.5em 0 0.5em 1.0em;
+    padding: 0.3em 0 0.3em 0.5em;
     font-weight: bold;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
 
-#menu {
-    float: left;
-    width: 20%;
-    padding: 0.8em;
-    font-size: 1.1em;
+.link_breadcrumb{
+  color: white;
 }
-
-#menu ul {
-    list-style-type: none;
-}
-
-#menu ul li {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-}
-
 
 /*
 =========================
-SEZIONE CONTENUTO
+SEZIONE SUBMENU
 =========================
 */
 
-.contenutoGenerale {
-    margin-left: 20%;
-    width: 70%;
-    padding: 1.5em 1.0em 3.0em 2em;
-    border-left: 1px solid #ddd;
+#submenu{
+    background-color: #2c2c2c;
+    position: sticky;
+    top:41px;
+    display: block;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    margin-left: 0px;
+    padding-bottom: 1.5px;
+    list-style: none;
 }
 
-.contenutoGenerale h1 {
-    font-size: 2em;
-    margin-bottom: 1.3em;
+.leftnav a{
+    color: #fff;
+    font-weight: bold;
+    line-height: 30px;
+    text-decoration: none;
+    width: 9.7em;
+    height: 30px;
     text-align: center;
+    background-color: #1b365d;
+    border-bottom: 5px solid #54BAE2;
+    border-radius: 10px;
+    display: block;
+    margin: 2px;
+    float: left;
 }
 
-.contenutoGenerale h2 {
-    font-size: 1.2em;
+.leftnav{
+  display:inline-block;
+  background-color: #333;
+  overflow: hidden;
 }
 
-.contenutoGenerale p {
-    margin-left: 1.0em;
-    margin-bottom: 1em;
+.leftnav a.active, .leftnav a:hover {
+    background-color: #600000;
+    border-bottom: 5px solid #1b365d;
+}
+.leftnav a.active{
+  pointer-events: none;
+  cursor: default;
+}
+.leftnav::after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
 }
 
-.contenutoGenerale h1 {
-    text-align: center;
-}
+/*
+=========================
+SEZIONE FOOTER
+=========================
+*/
 
-#titolo {
-    text-align: center;
-}
-
-#footer {
+#footer{
+    position: relative;
     text-align: center;
     font-size: 0.7em;
-    padding: 0.5em;
+    padding: 1.5em;
     padding-top: 1.3em;
     font-style: italic;
     border-top: 1px solid #ddd;
 }
 
-#imgValidCode {
+#imgValidCode{
+    margin-top: -0.5em;
     float: left;
 }
 
-#imgValidCSS {
-    float: right;
+#imgValidCSS{
+  margin-top: -0.5em;
+  float: right;
 }
 
-.aiutiNascosti {
-    position: absolute;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    clip: rect(1px,1px,1px,1px);
+/*
+=========================
+SEZIONE LINK
+=========================
+*/
+
+a.link{
+    font-weight: bold;
+    color: black;
+}
+
+a.link:visited{
+    color: #676767;
+}
+
+a.link:hover,a.link_login:hover{
+    color: white;
+    background-color: #313131;
+}
+
+a.linktop{
+  height: 5rem;
+}
+
+/*
+=========================
+SEZIONE IMMAGINI
+=========================
+*/
+
+.img_cover{
+  border-radius: 10px;
+  min-width: 130.61px;
+  min-height: 202.02px;
+  width: 126.61px;
+  height: auto;
+  margin-right: 0.5em;
+  float: left;
+}
+
+.img_sfondo{
+  width: 100%;
+  height: inherit;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+}
+
+.sfondo{
+  width: 100%;
+  height: inherit;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+}
+.noborder{
+  border-radius: 0px;
+}
+
+.img_cover:hover, .img_sfondo:hover{
+  opacity: 0.8;
+}
+
+/*
+=========================
+SEZIONE DROPDOWN FILTRI
+=========================
+*/
+
+.dropdown{
+  display: inline-block;
+}
+
+.dropdown-content{
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a{
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropbtn{
+  background-color: #74c243;
+  color: black;
+  padding: 0.4em;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-filter{
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropbtn:hover {background-color: #3e8e41;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropdown-filter, .show {display: block;}
+
+/*==================================
+ELEMENTI DI PAGINE CONTENENTI FORM
+==================================*/
+
+label, input { display: inline-block; }
+
+.schedaForm label {
+  width: 28%;
+  text-align: right;
+}
+
+.schedaForm input {
+  width: 40%;
+  margin: 5px;
+}
+
+.schedaForm>p { margin-left: 0.5em; }
+
+.invisibile { display: none; }
+
+.no-js .invisibile { display: block; }
+
+.schedaForm {
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+}
+
+.schedaForm em { font-weight: bold;}
+
+.schedaForm fieldset {
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  padding: 0.5em;
+  border-radius: 10px;
+  margin: 0.2em;
+}
+
+.schedaForm button {
+  width: 20%;
+  font-weight: bold;
+  float:left;
+}
+
+.schedaForm button+p {
+  padding: 0.5em;
+  margin-left: 22%;
+}
+
+.schedaForm input[type=radio], .schedaForm input[type=checkbox] {
+  width: 16px;
+  height: 1.2em;
+  padding-left: 0;
+}
+
+.schedaForm input[type=radio]+label {
+  width: 14%;
+  text-align: left;
+}
+
+.gruppoCheck {
+  margin-left: 5%;
+}
+
+.gruppoRadio {
+  margin-left: 18%;
+}
+
+.schedaForm input[type=file] {
+  padding-top: 0.5em;
+}
+
+.schedaForm input[type=file] {
+  background-color: #f5f5f5;
+}
+
+fieldset .textAreaLabel {
+  width: 23%;
+}
+
+textarea {
+  resize: none;
+  vertical-align: top;
+  width: 60%;
+}​
+
+input[type=text], textarea {
+  padding: 5px;
+}
+
+.messaggi {
+  padding-top: 0.5em;
+  display: inline-block;
+  text-align: left;
+}
+
+p+p.messaggi {
+  float: none;
+  clear: both;
+  display: inline-block;
+  margin-left: 0.5em;
+  width: auto;
+}
+
+.spuntabili {
+  width: auto;
+  display: inline-block;
+}
+
+.erroreBox { border: 2px solid red; }
+
+.correttoBox { border: 2px solid green; }
+
+.messaggio {
+  float: right;
+  padding-right: 1em;
+}
+
+textarea.correttoBox+p {
+  width: 13%;
+  display: inline;
+  padding-left: 1em;
+}
+
+textarea.erroreBox+p {
+  padding: 0em;
+  display: block;
+  text-align: center;
+}
+
+ul.checkbox  {
+  margin-left: 20px;
+  list-style: none;
+}
+
+ul.checkbox li {
+  border: transparent solid;
+  display: inline-block;
+  width: 30%;
+}
+
+.titolo_form{
+  font-size: x-large;
+  padding-left: 0.2em;
+}
+
+/*
+=========================
+SEZIONE PROFILO
+=========================
+*/
+
+.schedaAdmin{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+}
+
+#imgProfilo{
+  width: 35%;
+  border-radius: 5%;
+  float: left;
+  border: solid;
+  color: black;
+  border-width: 2px;
+}
+
+.infoUtente{
+  float: left;
+  padding-left: 1em;
+}
+
+.schedaAdmin dt{
+  font-weight: bold;
+}
+
+#subContent .AdminBox{
+  max-width:100%;
+  border:0em;
+}
+
+.AdminBox{
+  width:30%;
+  margin:auto;
+  float: left;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.AdminImage{
+  width: 55%;
+  height: 55%;
+}
+
+.nuovoUtente{
+  clear: both;
+  text-align: center;
+}
+
+/*name*/
+
+a.name{
+  max-width: 80%;
+  font-weight: bold;
+  font-size: larger;
+  color: black;
+}
+
+a.active.name, a:hover.name {
+    color: white;
+    background-color: #313131;
+}
+
+a:visited.name{
+  color: #676767;
+}
+
+/*
+=========================
+SEZIONE LOGIN
+=========================
+*/
+
+.titolo_login_registrati{
+  text-align: center;
+  font-size: x-large;
+}
+
+.loginButton,#login_credential{
+  display: flex;
+  justify-content: center;
+}
+
+.loginButton{
+  margin-bottom: 0.5em;
+}
+
+/*
+=========================
+SEZIONE REGISTRATI
+=========================
+*/
+
+.dati_personali{
+  font-weight: bold;
+  font-size: large;
+}
+
+.avviso_importante{
+  color: red;
+  margin-bottom: 0.5em;
+}
+
+/*
+=========================
+SEZIONE LISTA UTENTI
+=========================
+*/
+
+.utente{
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  padding:1em;
+  margin-bottom: 0.4em;
+}
+
+.info_utente{
+    float: right;
+    width: 84%;
+    padding-top: 0.8em;
+}
+
+#fotoUtente{
+  border-radius: 50%;
+  width: 50%;
+  max-width: 4em;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+}
+
+.azioni_admin_utente{
+  float: right;
+  padding-right: 1em;
+}
+
+.nome_utente{
+  padding-top: 0.2em;
+  float: left;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+/*
+=========================
+SEZIONE HOME
+=========================
+*/
+
+.container{
+  background-color: #414141;
+  padding: 0.2em;
+}
+
+.container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/*parte notizie*/
+
+.leftcolumn{
+  float: left;
+  width:70%;
+  max-height: 1290px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.notizia_home{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+  padding-right: 1em;
+  margin-right: 0.5em;
+}
+
+/*parte ultimi aggiunti e gioco settimana*/
+
+.rightcolumn{
+  float: right;
+  width:30%;
+}
+
+.sidebox{
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  border: 1px solid #000;
+  padding: 0.5em;
+  display: inline-block;
+}
+
+.sidebox h4{
+  text-align: center;
+}
+
+li.giocotop{
+  height: 5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+}
+
+.sidebox h5{
+  text-align: center;
+  font-size: inherit;
+}
+
+#titolo_gioco_della_settimana{
+  text-align: center;
+  font-size: larger;
+}
+
+#voto_home{
+  float: none;
+  font-weight: bold;
+  text-align: center;
+}
+
+dl.info{
+  padding: 0.5em;
+}
+
+dl.info dt{
+  float: left;
+  width: 50%;
+  font-weight: bold;
+  display: inline-block;
+}
+
+dl.info dd{
+  display: inline-block;
+  width: 50%;
+  padding-bottom: 1.5em;
+}
+
+/*
+=========================
+SEZIONE GIOCHI
+=========================
+*/
+
+/*conteiner from home*/
+
+/*filtri giochi*/
+
+
+.filtri_categorie, .searchbox_notizie{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-top: 0.2em;
+  display: inline-block;
+  float: left;
+  margin-right: 0.4em;
+}
+
+.tipo_categorie {
+  float: left;
+  margin-top: 0.7em;
+  margin-right: 0.4em;
+}
+
+.filtri{
+  display: inline-flex;
+}
+
+.barra_ricerca_notizie {
+    width: 68%;
+    display: inline-block;
+}
+
+.filtri_ordine{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.3em;
+  margin-top: 0.2em;
+  display: inline-block;
+}
+
+.tipo_ordine{
+  float: left;
+  margin-top: 0.7em;
+  margin-right: 0.4em;
+}
+
+.bottoniOrdine { display: inline-block; }
+
+.erroriFiltri{
+  color: red;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+  margin-top: 0.2em;
+  border: 1px solid #000;
+}
+
+.customLabel{
+  display: block;
+  position: relative;
+  padding: 0.2em 1em 0.4em 1.7em;
+  margin-bottom: -1.5em;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+.customLabel:hover{
+  background-color: #ccc;
+}
+
+.customLabel input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/*checkbox*/
+
+.checkmark{
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  height: 13px;
+  width: 13px;
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #000;
+}
+
+.customLabel:hover input ~ .checkmark{
+  background-color: #ccc;
+}
+
+.customLabel input:checked ~ .checkmark{
+  background-color: #2196F3;
+}
+
+.checkmark:after{
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.customLabel input:checked ~ .checkmark:after{
+  display: block;
+}
+
+.customLabel .checkmark:after{
+  left: 3px;
+  top: 1px;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+ul.checkbox  {
+  margin-left: 20px;
+  list-style: none;
+}
+
+ul.checkbox li {
+  border: transparent solid;
+  display: inline-block;
+  width: 30%;
+}
+
+/*radio*/
+
+.radiomark{
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  height: 13px;
+  width: 13px;
+  background-color: #eee;
+  border-radius: 50%;
+  border: 1px solid #000;
+}
+
+.customLabel:hover input ~ .radiomark{
+  background-color: #ccc;
+}
+
+.customLabel input:checked ~ .radiomark{
+  background-color: #2196F3;
+}
+
+.radiomark:after{
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.customLabel input:checked ~ .radiomark:after{
+  display: block;
+}
+
+.customLabel .radiomark:after{
+  top: 3px;
+  left: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: white;
+}
+
+/*giochi*/
+
+.spazio_contenuto{
+  margin-top: 1em;
+}
+
+.game{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+}
+
+p.valutazione{
+  float: right;
+  font-weight: bold;
+}
+
+p.data_pubblicazione_gioco{
+    display: inline-block;
+    margin: 0.5em 0em 0.5em 0em;
+    text-align: left;
+    width: 100%;
+}
+
+p.descrizione{
+    column-count: 3;
+    column-rule: 1px solid #ccccb3;
+    border-radius: 25px;
+    border: 1px solid #000;
+    background-color:#f5f5f5;
+    text-align: left;
+    padding: 1em;
+}
+
+.torna_su{
+  margin: 1.1em 1em 0 0;
+  float: right;
+}
+
+.modifica {
+  margin: 1.1em 1em 0 0;
+  float: left;
+}
+
+/*
+=========================
+SEZIONE NOTIZIE
+=========================
+*/
+
+/*conteiner da home*/
+
+/*filtri notizie*/
+
+/*spazio_contenuto da giochi*/
+
+.notizia{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+}
+
+p.data{
+  text-align: right;
+  font-size: smaller;
+}
+
+.titoli_notizie{
+  float: left;
+  padding: 0.2em;
+  border-radius: 5px;
+  font-size: 1.2em;
+  margin-top: 0.5em;
+  display: inline-block;
+  padding-left: 0.4em;
+}
+
+p.autore{
+  display: inline-block;
+  margin: 0.5em 0em 0.5em 0em;
+  text-align: left;
+  width: 100%;
+  margin-left: 0.5em;
+}
+
+/*descrizione,torna_su,modifica da giochi*/
+
+/*
+=========================
+SEZIONE SCHEDA GIOCO
+=========================
+*/
+
+/*conteiner da home*/
+
+.info_gioco_scheda{
+  background-color: #f5f5f5;
+  border: 1px solid;
+  border-radius: 25px;
+  float: left;
+  display: inline-block;
+  width: 29%;
+  margin-right: 5px;
+}
+
+.titolo_info_scheda{
+  padding: 0.5em 0.5em 0em;
+  text-align: center;
+}
+
+.info_scheda{
+  padding: 0.5em;
+}
+
+dl.info_scheda dt{
+  float: left;
+  width: 50%;
+  font-weight: bold;
+  display: inline-block;
+}
+
+dl.info_scheda dd{
+  display: inline-block;
+  width: 50%;
+  padding-bottom: 1.5em;
+}
+
+#modifica_scheda_gioco{
+  text-align: center;
+  padding-bottom: 0.5em;
+  margin: 0 0 0 0;
+  float: none;
+}
+
+p.testo{
+  column-count: 2;
+  column-rule: 1px solid #ccccb3;
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  text-align: left;
+  padding: 1em;
+  margin-top: 0.5em;
+}
+
+/*
+=========================
+SEZIONE RECENSIONE
+=========================
+*/
+
+.recensione{
+    background-color: #f5f5f5;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+.titolo_recensione_notizia{
+  display: inline-block;
+}
+
+.autore_recensione{
+  display: inline-block;
+  margin-left: 0.5em;
+}
+
+/*testo,valutazione da scheda giochi*/
+
+#modifica_scheda_recensione{
+  float: none;
+  text-align: right;
+  padding-right: 1em;
+}
+
+/*commenti*/
+
+.commenti{
+    background-color: #f5f5f5;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+.miocommento{
+  margin-bottom: 0.5em;
+}
+
+.textbox{
+  width: 90%;
+  margin-left: 0.5em;
+  min-height: 40px;
+}
+
+/*structural dall menu*/
+#foto_commentatore{
+  float: left;
+    max-width: 10%;
+    min-width: 2em;
+    width: 3em;
+    margin-right: 1em;
+    border-radius: 50%;
+}
+
+.insertcomment{
+  min-height: 40px;
+  margin-top: 1.5em;
+  margin-left: 0.5em;
+}
+
+.intestazione_commento{
+  border: solid;
+  color: white;
+  background-color: #600000;
+  border-radius: 25px;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.lista_commenti{
+  background-color: #414141;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+}
+
+.commento_singolo{
+  border-radius: 25px;
+  border: 1px solid #000;
+  background-color:#f5f5f5;
+  margin-bottom: 0.4em;
+}
+
+.commentatore{
+  padding-top: 0.6em;
+  display: inline-block;
+  width:30%;
+  font-weight: bold;
+  font-size: large;
+}
+
+.data_post{
+  padding-top: 0.6em;
+  font-size: 1.2em;
+  font-family: monospace;
+  float: right;
+  display: inline-block;
+}
+
+.testo_commento{
+  padding: 0.5em 0.5em 1em 0.5em;
+  overflow: hidden;
+}
+
+/*
+=========================
+SEZIONE NOTIZIE GIOCO
+=========================
+*/
+
+/*conteiner da home*/
+
+/*notizia,data,autore da notizie*/
+
+/*descrizione,torna_su,modifica da giochi*/
+
+/*
+=========================
+SEZIONE NOTIZIA SINGOLA
+=========================
+*/
+
+.notizia_singola{
+    background-color: #f5f5f5;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 0.5em;
+    margin-bottom: 0.2em;
+}
+
+#modifica_scheda_notizia {
+  float: none;
+  text-align: right;
+  padding-right: 1em;
+}
+
+li:focus-within {
+  background: #ccc;
+  cursor: pointer;
+}
+
+li:focus-within a {
+  outline: none;
+}
+li{
+  list-style-type: none;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #252525;
+  border-radius: 10px;
 }

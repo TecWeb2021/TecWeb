@@ -1,0 +1,29 @@
+
+
+  <div id="content" class="container">
+    <div class="advance_filter" id="categorie">
+          <form class="barra_ricerca_notizie" action="notizie.php" onsubmit="return checkNotEmpty();" role="search">
+            <fieldset>
+              <label for="searchbar" class="structural">Cerca notizia:</label>
+              <input list="titleInput_notizie" name="searchbar" id="searchbar_notizie" class="searchbar" placeholder="Cerca notizia..." aria-label="Campo per la ricerca di notizie" />
+              <datalist id="titleInput_notizie" class="formText">
+                <opzioni_ph/>
+              </datalist>
+              <button type="submit" class="searchbutton">Cerca</button>
+            </fieldset>
+          </form>
+        <div class="filtri_ordine">
+          <span class="tipo_ordine">Tipologia: |</span>
+          <form class="bottoniOrdine" action="notizie.php">
+            <fieldset>
+              <button class="dropbtn" name="categoria" value="Hardware">Hardware</button>
+              <button class="dropbtn" name="categoria" value="Giochi">Giochi</button>
+              <button class="dropbtn" name="categoria" value="Eventi">Eventi</button>
+            </fieldset>
+          </form>
+        </div>
+    </div>
+    <div class="spazio_contenuto">
+      <news_divs_ph/>
+    </div>
+</div>

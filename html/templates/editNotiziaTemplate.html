@@ -1,0 +1,95 @@
+
+
+  <div id="content" class="contenutoGenerale">
+    <div class="schedaForm">
+      <h1>Form per la modifica di una notizia</h1>
+      <p>I campi marcati con * sono obbligatori</p>
+      <form id="formNotizia" method="post" action="edit_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+      
+        <messaggi_form_ph/>
+    
+        <fieldset>
+            <label for="titolo">*Titolo: </label>
+            <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
+        </fieldset>
+    
+        <fieldset id="handler">
+            <p>*Tipologia: </p>
+    
+            <input type="radio" id="Eventi" name="tipologia" value="Eventi" <checked_eventi_ph/> >
+            <label for="Eventi">Eventi</label>
+    
+            <input type="radio" id="Giochi" name="tipologia" value="Giochi" <checked_giochi_ph/> >
+            <label for="Giochi">Giochi</label>
+    
+            <input type="radio" id="Hardware" name="tipologia" value="Hardware" <checked_hardware_ph/> >
+            <label for="Hardware">Hardware</label>
+        </fieldset>
+        
+    
+        <fieldset id="cercaTitolo" class="invisibile">
+        	
+            <label for="searchbar">Gioco trattato nella notizia:</label>
+            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
+            <datalist id="listaTitoli" class="formText">
+              <opzioni_ph/>
+            </datalist>
+            
+            <!--
+            <label for="searchbar">Gioco trattato nella notizia:</label>
+            <select list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" aria-label="Cerca gioco trattato nella notizia">
+            	<option value="" selected="selected"></option>
+            	<option value="volvo">Volvo</option>
+ 			  	<option value="saab">Saab</option>
+ 			  	<option value="opel">Opel</option>
+ 			  	<option value="audi">Audi</option>
+ 			</select>
+ 			-->
+        </fieldset>
+    
+        <fieldset>
+            <label for="immagine">*Immagine: </label>
+            <input type="file" id="immagine" class="opzionale" name="immagine" /><br />
+    
+            <label for="alternativo">Alt immagine: </label>
+            <span><input type="text" id="alternativo" name="alternativo" value="<img_alt_ph/>" placeholder="Testo alternativo" /></span>
+        </fieldset>
+    
+        <fieldset>
+            <label for="testo">*Testo: </label>
+            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia"><content_ph/></textarea></span>
+        </fieldset>
+
+        <!--uso il seguente input per tenere menoria della notizia che voglio modificare-->
+        <input type="hidden" id="news" name="news" value="<news_title_ph/>" placeholder="supporto" /></span><br />
+    
+        <fieldset id="corto">
+            <button type="submit" name="submit">Salva Modifiche</button>
+        </fieldset>
+    
+      </form>
+
+      <script>
+          var box_giochi = document.getElementById('Giochi');
+          var barraDiRicerca = document.getElementById('cercaTitolo');
+          if (box_giochi.checked==true)
+            barraDiRicerca.className = 'visibile';
+          else
+            barraDiRicerca.className = 'invisibile';
+      </script>
+      
+      <div id="bottoniOpzionali">
+          <form action="profilo.php">
+            <fieldset>
+              <button type="submit">Annulla Modifiche</button>
+            </fieldset>
+          </form>
+          <form method="post" action="edit_notizia.php">
+            <fieldset>
+              <button type="submit" name="elimina" value="<news_title_ph/>">Elimina Notizia</button>
+            </fieldset>
+          </form>
+      </div>
+    
+    </div>
+  </div>

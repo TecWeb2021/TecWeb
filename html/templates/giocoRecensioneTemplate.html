@@ -1,0 +1,41 @@
+
+
+  <ul class="leftnav" id="submenu">
+    <li><a href="<gioco_scheda_ph/>">Scheda Gioco</a></li>
+    <li><a class="active" href="<gioco_recensione_ph/>">Recensione Gioco</a></li>
+    <li><a href="<gioco_notizie_ph/>">Notizie Gioco</a></li>
+  </ul>
+
+<div class="container" id="content">
+  <div class="recensione">
+    <div class="info_gioco">
+      <img class="sfondo" src="<img_path_ph/>" alt="<img_alt_ph/>">
+    </div>
+    <div class="recensione_gioco">
+      <p class="valutazione">Voto: <game_vote_ph/> / 5</p>
+      <h3 class="titolo_recensione_notizia">Recensione di <game_name_ph/></h3>
+      <p class="autore_recensione">by <review_author_ph/></p>
+      <p class="data_pubblicazione">Pubblicata il <review_date_ph/></p>
+      <p class="testo">
+        <review_content_ph/>
+      </p>
+      <p class="modifica" id="modifica_scheda_recensione"><a class="link" href="<game_edit_ph/>">Modifica recensione</a></p>
+    </div>
+  </div>
+  <div class="commenti">
+    <div class="miocommento">
+      <form class="spazio_testo" id="inserisci_commento" action="gioco_recensione.php" onsubmit="return checkNotEmpty('textbox');">
+        <fieldset>
+          <label for="textbox" class="structural">Inserisci Commento:</label>
+          <!--uso il seguente input per tenere menoria del gioco che sto visualizzando che voglio modificare-->
+          <input type="hidden" name="game" value="<game_name_ph/>">
+          <textarea id="textbox" class="textbox" name="write" rows="4" cols="100" placeholder="Inserisci commento..."></textarea>
+          <button class="insertcomment" type="submit">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+    <ul class="lista_commenti">
+      <comments_divs_ph/>
+    </ul>
+  </div>
+</div>

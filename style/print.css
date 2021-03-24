@@ -1,0 +1,123 @@
+* {
+    padding: 0em;
+    margin: 0em;
+}
+
+html { margin: auto; }
+
+body{ font-family: Georgia, "Times New Roman", serif; }
+
+.aiutiNascosti { display: none; }
+
+img { display: none; }
+
+/*=========================
+SEZIONE HEADER
+=========================*/
+
+#header {
+    padding: 1.0em 0em 1.0em 0em;
+    text-align: left;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#header h1 { font-size: 2.5em; }
+
+#header h2 {
+    font-size: 1.1em;
+    font-style: italic;
+    font-weight: normal;
+}
+
+#breadcrumb {
+    padding: 0.5em 0 0.5em 1.0em;
+    font-size: 1.0em;
+    font-weight: bold;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+#menu { display: none; }
+
+/*=========================
+SEZIONE CONTENUTO
+=========================*/
+
+.contenutoGenerale h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.contenutoGenerale h2 { font-size: 1.2em; }
+
+.contenutoGenerale p {
+    margin-left: 0em;
+    margin-bottom: 1em;
+}
+
+.contenutoGenerale ul {
+    margin-left: 2em;
+    margin-bottom: 1em;
+}
+
+p {
+    margin-left: 0em;
+    margin-bottom: 1em;
+    text-align: justify;
+}
+
+.aiutoTornaSu { display: none; }
+
+.leftcolumn { width: 100%; }
+
+/*=========================
+SEZIONE FOOTER
+=========================*/
+
+#footer {
+    text-align: center;
+    font-size: 0.7em;
+    padding: 0.5em;
+    padding-top: 1.3em;
+    font-style: italic;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+#imgValidCode { display: none; }
+
+#imgValidCSS { display: none; }
+
+.leftcolumn, .rightcolumn {
+  width: 100%;
+  padding: 0;
+  max-height: none;
+}
+
+#ultime_aggiunte {
+  float: right;
+  width: 30%;
+  padding: 0;
+}
+
+#gioco_della_settimana {
+  float: left;
+  width: 69%;
+  padding: 0;
+}
+
+p.trama, p.testo {
+  column-count: 1;
+}
+
+.info_gioco_scheda {
+  width: 100%;
+  text-align: center;
+}
+#imgProfilo, #fotoUtente{
+  display: inline-block;
+}
+.modifica, .aiutoTornaSu, #login, #registrati, #loginPic, .filtri_ordine, .filtri_categorie, #submenu, #inserisci_commento, .messaggioLogin, #loginButton, .barra_ricerca_notizie, #bottoniOpzionali, #salva, #immagine, #label_immagine, button, #schedaAdmin{
+  display: none;
+}

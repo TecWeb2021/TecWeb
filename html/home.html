@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Home - ALLGames</title>
+  <meta name="title" content="Sito Recensioni Videogiochi" />
+  <meta name="description" content="Home Page del sito di Recensioni" />
+  <meta name="keywords" content="Videogiochi games gaming recensioni" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="author" content="Noi4" />
+  <meta name="language" content="italian it" />
+
+  <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
+  <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
+
+  <script type="text/javascript" src="../checkForm.js"></script>
+</head>
+
+<body onload="removeNoJs();">
+  <div id="header">
+    <a class="aiutiNascosti" href="#vociMenu"> Vai al menù </a>
+    <a class="aiutiNascosti" href="#content"> Vai al contenuto </a>
+
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
+		<h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
+		<h2 id="titolo2">Tutto sui Videogiochi</h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a class="link_login" href="login.html">Login</a> | <a class="link_login" href="registrati.html">Registrati</a></span>
+    </div>
+  </div>
+
+  <div class="topnav" id="menu">
+    <button  class="icon" onclick="responsiveMenu()">
+      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+    </button>
+
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty('searchbar');" role="search">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph/>
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
+    </form>
+
+    <ul id="vociMenu" class="menu">
+        <li><a class="active" href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a href="Notizie.html">Notizie</a></li>
+    </ul>
+
+  </div>
+
+  <div id="breadcrumb">
+      <p>Ti trovi in: <span xml:lang="en">Home</span></p>
+  </div>
+
+<div class="container" id="content">
+  <div class="leftcolumn">
+    <div class="notizia_home">
+      <div class="news_top_bar">
+        <p class="data"> Pubblicata il 10 gennaio 2021 </p>
+		    <h3 class="titoli_notizie"><a class="link" href="notizia_DS3.html"> Dark Souls 3: streamer Twitch lo finisce usando il controller di Guitar Hero, senza subire un colpo </a></h3>
+        <p class="autore"> By Nome Cognome </p>
+      </div>
+        <a class="link" href="notizia_DS3.html"><img class="img_cover" src="../images/darksouls3.png" alt="" /></a>
+          <p class="descrizione">
+          Lo streamer Twitch MezzPlays ha finito Dark Souls 3 usando il controller di Guitar Hero, senza subire un colpo. Nemmeno il boss finale ha potuto niente contro di lui e la sua chitarrina di plastica. A rendere la già clamorosa impresa ancora più sorprendente il fatto che abbia anche corso parecchio, impiegando appena quattro ore per arrivare ai titoli di coda.
+          Considerando che secondo il sito HowLongToBeat ci vogliono più di trenta ore solo per finire la storia principale, si tratta di un risultato davvero incredibile. Naturalmente MezzPlays conosce a menadito Dark Souls 3, altrimenti sarebbe stato impossibile giocarci in questo modo...
+        </p>
+        <p class="torna_su"><a class="link" href="#top">Torna su</a></p>
+        <p class="modifica"><a class="link" href="">Modifica notizia</a></p>
+    </div>
+  </div>
+  <div class="rightcolumn">
+    <div id="ultime_aggiunte" class="sidebox">
+      <h4>ULTIME AGGIUNTE:</h4>
+        <ul>
+          <li class="giocotop">
+            <a tabindex="-1" class="linktop" href="DarkSouls3_scheda.html">
+            <img class="img_sfondo" alt="" src="../images/darksouls3_banner.jpg" /></a>
+            <h5><a class="link" href="DarkSouls3_scheda.html">Dark Souls 3</a></h5>
+          </li>
+        </ul>
+    </div>
+    <div id="gioco_della_settimana" class="sidebox">
+        <h4> GIOCO DELLA SETTIMANA </h4>
+          <div class="info_gioco">
+            <h5 id="titolo_gioco_della_settimana"><a class="link" href="DarkSouls3_scheda.html">DARK SOULS 3</a></h5><a tabindex="-1" href="DarkSouls3_scheda.html"><img class="img_sfondo noborder_home" src="../images/darksouls3_banner.jpg" alt=""></a>
+                <p class="valutazione" id="voto_home">Voto: 4,3/5</p>
+                <dl class="info">
+                  <dt>Piattaforma:</dt><dd>PS4,Xbox One,PC</dd>
+                  <dt>Data pubblicazione:</dt><dd>12 aprile 2016</dd>
+                  <dt>Genere:</dt><dd>Action,RPG</dd>
+                  <dt>Sviluppo:</dt><dd>FromSoftware</dd>
+                  <dt>Pubblicazione:</dt><dd>FromSoftware, Bandai Namco</dd>
+                  <dt>Fascia di età:</dt><dd>PEGI 16</dd>
+                  <dt>Espansioni:</dt><dd>Ashes of Ariandel, The Ringed City</dd>
+                  <dt>Prequel:</dt><dd>Dark Souls 2, Dark Souls</dd>
+                  <dt>Sequel:</dt><dd>Nessuno</dd>
+                </dl>
+          </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<em> Noi4 - Progetto di Tecnologie Web 2020/2021 </em>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+</div>
+
+</body>
+</html>

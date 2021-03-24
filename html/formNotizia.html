@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Nuova Notizia - ALLGames</title>
+  <meta name="title" content="Inserisci nuova Notizia - ALLGames" />
+  <meta name="description" content="Pagina per l'inserimento di una nuova notizia" />
+  <meta name="keywords" content="videogiochi, notizia" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="author" content="Federico Chiarello" />
+  <meta name="language" content="italian it" />
+
+  <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
+  <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
+
+  <script type="text/javascript" src="../checkForm.js"></script>
+</head>
+
+<body onload="handleClick();">
+  <div id="header">
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
+    <h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
+		<h2 id="titolo2">Tutto sui Videogiochi</h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a href="../php/profilo.php"><nomeProfilo_ph /></a> | <a href="../php/logout.php">Logout</a></span>
+    </div>
+  </div>
+
+  <div class="topnav" id="menu">
+    <button  class="icon" onclick="responsiveMenu()">
+      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+    </button>
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph/>
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
+    </form>
+
+    <ul class="menu">
+        <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a href="Notizie.html">Notizie</a></li>
+    </ul>
+  </div>
+
+  <div id="breadcrumb">
+      <p>Ti trovi in: <a class="link_breadcrumb" href="home.html"><span xml:lang="en">Home</span></a> : <a class="link_breadcrumb" href="esempioAdmin.html"><span xml:lang="en">Admin</span></a> : Inserisci Notizia</p>
+  </div>
+
+
+  <div class="container" id="content">
+    <div class="schedaForm">
+      <h3 class="titolo_form">Form per l'inserimento di una nuova notizia</h3>
+      <p class="avviso_importante">I campi marcati con * sono opzionali</p>
+      <form id="formNotizia" method="post" action="formNotizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+
+        <messaggiForm_ph />
+
+        <fieldset>
+            <label for="titolo">Titolo: </label>
+            <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" placeholder="Titolo della notizia" /></span><br />
+        </fieldset>
+
+        <fieldset id="handler" onchange="handleClick(event);">
+            <span><p id="labelTipologia" class="spuntabili">Tipologia: </p></span>
+            <div class="gruppoRadio">
+              <ul class="checkbox">
+                <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <valoreEventi_ph /> >
+                    <label for="Eventi">Eventi</label></li>
+
+                  <li><input type="radio" id="Giochi" name="tipologia" value="Giochi" <valoreGiochi_ph /> >
+                    <label for="Giochi">Giochi</label></li>
+
+                <li><input type="radio" id="Hardware" name="tipologia" value="Hardware" <valoreHardware_ph /> >
+                    <label for="Hardware">Hardware</label></li>
+              </ul>
+            </div>
+        </fieldset>
+
+        <fieldset id="cercaTitolo" class="">
+            <p>Inserire il titolo <em>solo</em> se è stata selezionata la categoria <em>Giochi</em></p>
+            <label for="searchbar">*Gioco trattato:</label>
+            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia"/>
+            <datalist id="listaTitoli" class="formText">
+              <opzioni_form_ph />
+            </datalist>
+        </fieldset>
+
+        <fieldset>
+            <label id="label_immagine" for="immagine">Immagine: </label>
+            <span><input type="file" id="immagine" name="immagine" /></span><br />
+
+            <label for="alternativo">*Alt immagine: </label>
+            <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
+        </fieldset>
+
+        <fieldset>
+            <label for="testo" class="textAreaLabel">Testo: </label>
+            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><valoreTesto_ph /></textarea></span>
+        </fieldset>
+
+        <fieldset id="salva">
+            <button type="submit" name="submit">Salva Modifiche</button>
+            <p>Salva le modifiche e torna alla pagina principale Admin</p>
+        </fieldset>
+
+      </form>
+
+      <div id="bottoniOpzionali">
+          <form action="../php/admin.php">
+            <fieldset>
+              <button type="submit">Annulla Modifiche</button>
+              <p>Annulla le modifiche apportate e torna alla pagina principale Admin</p>
+            </fieldset>
+          </form>
+          <form method="post" action="../php/eliminaNotizia.php">
+            <fieldset>
+              <button type="submit" value="<titolo_ph />">Elimina Notizia</button>
+              <p>Elimina la notizia e torna alla pagina Admin. Non sarà possibile annullare questa azione.</p>
+            </fieldset>
+          </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="footer">
+    <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+    <em> Noi4 - <span xml:lang="en">All rights Reserved</span> </em>
+    <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+  </div>
+
+</body>
+</html>

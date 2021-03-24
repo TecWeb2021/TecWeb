@@ -1,0 +1,134 @@
+* {
+  padding: 0em;
+  margin: 0em;
+  line-height: 1.4em;
+}
+
+html {
+  background-image: url('../images/sfondo.jpg');
+  background-color: #252525;
+  background-size: 100%;
+  width: 100%;
+  background-attachment: fixed;
+}
+
+body {
+  min-width: 420px;
+  max-width: 480px;
+  margin: auto;
+  background-color: #f5f5f5;
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+#titolo1 { font-size: 2.5em; }
+
+#titolo2 { display: none; }
+
+#logo {
+  width: 4.5em;
+  margin-top: -0.5em;
+}
+
+#loginPic {
+  min-width: 48px;
+  max-width: 48px;
+  min-height: 48px;
+  max-height: 48px; 
+}
+
+div.loginblock{
+  margin-top: -68px;
+  margin-right: -10px;
+}
+
+.topnav a {display: none;}
+
+.topnav button.icon {
+  width: 85px;
+  float: right;
+  display: block;
+}
+
+#hamburger { width: 23%; }
+
+p.testo { width: 92%; }
+
+.topnav.responsive a.icon {
+  float: right;
+  width: 85px;
+  text-align: center;
+}
+
+.topnav.responsive a {
+  width:100%;
+  display: block;
+  text-align: center;
+}
+
+.searchbox {
+  float: left;
+  width: 65%;
+}
+.searchbutton { width: 4em; }
+
+.titoli_notizie { font-size: 0.9em; }
+
+p.autore { font-size: 0.9em; }
+
+.img_cover { margin-left: 0em; }
+
+#ultime_aggiunte{ width: 49%; }
+
+p.descrizione {
+  position: relative;
+  line-height: 1.2em;
+  max-height: 3.6em;
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  max-height: 10em;
+  overflow: hidden;
+  column-count: 1;
+  column-rule: 0px;
+}
+
+p.sinossi{
+  width: 90%;
+  overflow: hidden;
+  column-count: 1;
+  column-rule: 0px;
+}
+
+dl.info dt {
+  float: none;
+  width: auto;
+  font-weight: bold;
+}
+
+dl.info dd {
+  float: none;
+  width: auto;
+  padding-bottom: 0.5em;
+}
+
+.info_gioco_scheda{
+  width: 100%;
+  text-align: center;
+}
+
+.schedaForm input {
+  width: 55%;
+  margin: 5px;
+}
+
+
+#gioco_della_settimana {width: 50%;}
+
+.autore_recensione{
+  display: block;
+  margin-left: 0;
+}
+
+.info_utente{
+    width: 80%;
+}

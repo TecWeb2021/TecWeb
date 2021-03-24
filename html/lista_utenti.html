@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Lista Utenti - ALLGames</title>
+  <meta name="title" content="Sito Recensioni Videogiochi" />
+  <meta name="description" content="Home Page del sito di Recensioni" />
+  <meta name="keywords" content="Videogiochi games gaming recensioni" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="author" content="Noi4" />
+  <meta name="language" content="italian it" />
+
+  <link rel="stylesheet" type="text/css" href="../style/style.css" media="all" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_landscape.css" media="handheld, screen and (max-width: 1024px), only screen and (max-device-width: 1024px)" />
+  <link rel="stylesheet" type="text/css" href="../style/mobile_portrait.css" media="handheld, screen and (max-width: 480px), only screen and (max-device-width: 480px)" />
+  <link rel="stylesheet" type="text/css" href="../style/print.css" media="print" />
+
+  <script type="text/javascript" src="../checkForm.js"></script>
+</head>
+
+<body>
+  <div id="header">
+    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
+    <h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
+		<h2 id="titolo2">Tutto sui Videogiochi</h2>
+    <div class="loginblock">
+      <a href="login.html"><img id="loginPic" alt="foto profilo utente" src="../images/login.png" /></a>
+      <span id="login"><a href="login.html">Login</a> | <a href="registrati.html">Registrati</a></span>
+    </div>
+  </div>
+
+  <div class="topnav" id="menu">
+    <button  class="icon" onclick="responsiveMenu()">
+      <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
+    </button>
+
+    <form class="searchbox" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
+      <fieldset>
+        <label for="searchbar" class="structural">Cerca gioco:</label>
+        <input list="titleInput" name="searchbar" id="searchbar" class="searchbar" placeholder="Cerca gioco..." aria-label="Campo per la ricerca di giochi" />
+        <datalist id="titleInput" class="formText">
+          <opzioni_ph/>
+        </datalist>
+        <button type="submit" class="searchbutton">Cerca</button>
+      </fieldset>
+    </form>
+
+    <ul class="menu">
+        <li><a href="Home.html"><span xml:lang="en">Home</span></a></li>
+        <li><a href="Giochi.html">Giochi</a></li>
+        <li><a href="Notizie.html">Notizie</a></li>
+    </ul>
+  </div>
+
+  <div id="breadcrumb">
+      <p>Ti trovi in: <a class="link_breadcrumb" href="home.html"><span xml:lang="en">Home</span></a> : <a class="link_breadcrumb" href="esempioAdmin.html"><span xml:lang="en">Admin</span></a> : Lista Utenti</p>
+  </div>
+
+  <div class="container" id="content">
+    <div class="utente">
+        <img id="fotoUtente" src="../images/login.png" alt="foto profilo utente">
+      <div class="info_utente">
+        <form class="azioni_admin_utente" action="../php/action_page.php">
+          <fieldset>
+            <button class="elimina_utente" type="button" name="delete" value="0">Elimina Utente</button>
+          </fieldset>
+        </form>
+        <p class="nome_utente">Gino Pippo</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer">
+  	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+  	<em> Noi4 - <span xml:lang="en">All rights Reserved</span> </em>
+  	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+  </div>
+
+  </body>
+  </html>
