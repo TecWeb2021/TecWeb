@@ -157,23 +157,26 @@ function checkPassword() {
     }
 }
 
-// Fa comparire il campo "gioco" se viene selezionata la categoria giochi in FormNotizie
+// Fa comparire il campo "Gioco trattato" se viene selezionata la categoria 'Giochi' in Tipologia notizia
 function handleClick() {
+
+    removeNoJs();
+
     var radio = document.getElementById("handler");
     var barraDiRicerca = document.getElementById("cercaTitolo");
     if (radio)
         radio.onchange = function(event) {
             if(event.target.value == "Giochi")
-                barraDiRicerca.className = "visibile";
+                barraDiRicerca.className = "";
             else
                 barraDiRicerca.className = "invisibile";
         }
 
-    // Gestisce pagina modifica notizia => uno dei radio puo' avere attributo checked="checked"
-    // se lo possiede l'input 'Giochi' => rendere visibile barra di ricerca titolo
+    // Gestisce il caricamento della pagina
+    // se l'input 'Giochi' non possiede l'attributo checked => rende invisibile "Gioco trattato"
     var preSelezionato = document.getElementById("Giochi");
-    if(preSelezionato.checked)
-        barraDiRicerca.className = "visibile";
+    if(!preSelezionato.checked)
+        barraDiRicerca.className = "invisibile";
 }
 
 /******************* Script presenti in tutte le pagine *******************/
@@ -195,6 +198,12 @@ function responsiveMenu() {
     } else {
       x.className = "topnav";
     }
+}
+
+function removeNoJs() {
+    var rootNodeEl = document.documentElement;
+    if (rootNodeEl)
+        rootNodeEl.className = rootNodeEl.className.replace(/(^|\s)no-js(\s|$)/, '$1');
 }
 
 /******************* Script dalla pagina giochi *******************/

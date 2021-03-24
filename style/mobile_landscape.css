@@ -73,3 +73,15 @@ dl.info_scheda dd {
 .notizia_home{
   margin-right: 0;
 }
+
+/* gestione JavaScript disattivato */
+
+.no-js .topnav button.icon {
+  display: none;
+}
+
+.no-js .topnav a {
+  width:100%;
+  display: block;
+  text-align: center;
+}

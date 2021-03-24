@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -72,7 +72,7 @@
             <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
 
-        <fieldset id="handler">
+        <fieldset id="handler" onchange="handleClick(event);">
             <span><p id="labelTipologia" class="spuntabili">Tipologia: </p></span>
             <div class="gruppoRadio">
               <ul class="checkbox">
@@ -88,7 +88,8 @@
             </div>
         </fieldset>
 
-        <fieldset id="cercaTitolo" class="invisibile">
+        <fieldset id="cercaTitolo" class="">
+            <p>Inserire il titolo <em>solo</em> se è stata selezionata la categoria <em>Giochi</em></p>
             <label for="searchbar">*Gioco trattato:</label>
             <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia"/>
             <datalist id="listaTitoli" class="formText">
