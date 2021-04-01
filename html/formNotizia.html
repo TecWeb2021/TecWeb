@@ -69,20 +69,20 @@
 
         <fieldset>
             <label for="titolo">Titolo: </label>
-            <span><input type="text" id="titolo" name="titolo" value="<valoreTitolo_ph />" placeholder="Titolo della notizia" /></span><br />
+            <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
 
         <fieldset id="handler" onchange="handleClick(event);">
             <span><p id="labelTipologia" class="spuntabili">Tipologia: </p></span>
             <div class="gruppoRadio">
               <ul class="checkbox">
-                <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <valoreEventi_ph /> >
+                <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <checked_eventi_ph/> >
                     <label for="Eventi">Eventi</label></li>
 
-                  <li><input type="radio" id="Giochi" name="tipologia" value="Giochi" <valoreGiochi_ph /> >
+                  <li><input type="radio" id="Giochi" name="tipologia" value="Giochi" <checked_giochi_ph/> >
                     <label for="Giochi">Giochi</label></li>
 
-                <li><input type="radio" id="Hardware" name="tipologia" value="Hardware" <valoreHardware_ph /> >
+                <li><input type="radio" id="Hardware" name="tipologia" value="Hardware" <checked_hardware_ph/> >
                     <label for="Hardware">Hardware</label></li>
               </ul>
             </div>
@@ -91,7 +91,7 @@
         <fieldset id="cercaTitolo" class="">
             <p>Inserire il titolo <em>solo</em> se è stata selezionata la categoria <em>Giochi</em></p>
             <label for="searchbar">*Gioco trattato:</label>
-            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia"/>
+            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
             <datalist id="listaTitoli" class="formText">
               <opzioni_form_ph />
             </datalist>
@@ -102,12 +102,12 @@
             <span><input type="file" id="immagine" name="immagine" /></span><br />
 
             <label for="alternativo">*Alt immagine: </label>
-            <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<valoreAlt_ph />" placeholder="Testo alternativo" /></span>
+            <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<img_alt_ph/>" placeholder="Testo alternativo" /></span>
         </fieldset>
 
         <fieldset>
             <label for="testo" class="textAreaLabel">Testo: </label>
-            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><valoreTesto_ph /></textarea></span>
+            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><content_ph/></textarea></span>
         </fieldset>
 
         <fieldset id="salva">
@@ -126,7 +126,7 @@
           </form>
           <form method="post" action="../php/eliminaNotizia.php">
             <fieldset>
-              <button type="submit" value="<titolo_ph />">Elimina Notizia</button>
+              <button type="submit" value="<news_title_ph/>">Elimina Notizia</button>
               <p>Elimina la notizia e torna alla pagina Admin. Non sarà possibile annullare questa azione.</p>
             </fieldset>
           </form>
