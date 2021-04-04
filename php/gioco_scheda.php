@@ -11,7 +11,7 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giocoSchedaTemplate.html");
 $homePage=replace($homePage);
 
-function replacePH($game){
+function replacePH($game, $isUserAdmin){
 	global $homePage;
 
 	$platforms= $game->getConsoles() ? implode(", ", $game->getConsoles()) : "";
@@ -38,7 +38,17 @@ function replacePH($game){
 	foreach ($replacements as $key => $value) {
 		$homePage=str_replace($key, $value, $homePage);
 	}
+
+	if($isUserAdmin){
+		$homePage=str_replace("<admin_func_ph>","",$homePage);
+		$homePage=str_replace("</admin_func_ph>","",$homePage);
+	}else{
+		$homePage=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$homePage);
+	}
 }
+
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
 
 if(isset($_REQUEST['game'])){
 	$gameName=$_REQUEST['game'];
@@ -47,7 +57,7 @@ if(isset($_REQUEST['game'])){
 	if($game==null){
 		echo "il gioco specificato non è stato trovato";
 	}else{
-		replacePH($game);
+		replacePH($game, $isAdmin);
 	}
 }else{
 	echo "non è specificato un gioco";

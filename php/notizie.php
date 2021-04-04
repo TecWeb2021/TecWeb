@@ -35,6 +35,7 @@ function createNewsHTMLItem($news, $isUserAdmin=false){
 	}else{
 		$item=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$item);
 	}
+	
 	return $item;
 }
 
@@ -55,7 +56,6 @@ function createNewsList($list, $isUserAdmin=false){
 
 
 $user=getLoggedUser($dbAccess);
-
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
 $category= isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;

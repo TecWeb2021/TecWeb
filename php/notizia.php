@@ -11,7 +11,7 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/notiziaTemplate.html");
 $homePage=replace($homePage);
 
-function replacePH($news){
+function replacePH($news, $isUserAdmin){
 	global $homePage;
 
 	$image=$news->getImage();
@@ -29,7 +29,17 @@ function replacePH($news){
 	foreach ($replacements as $key  =>  $value) {
 		$homePage=str_replace($key, $value, $homePage);
 	}
+
+	if($isUserAdmin){
+		$item=str_replace("<admin_func_ph>","",$item);
+		$item=str_replace("</admin_func_ph>","",$item);
+	}else{
+		$item=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$item);
+	}
 }
+
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
 
 $news = null;
 
@@ -40,7 +50,7 @@ if(isset($_REQUEST['news'])){
 	if($news==null){
 		echo "la notizia specificata non è stata trovata";
 	}else{
-		replacePH($news);
+		replacePH($news, $isAdmin);
 	}
 }else{
 	echo "non è specificata una notizia";

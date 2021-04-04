@@ -11,7 +11,7 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 
 
-function replacePH($game){
+function replacePH($game, $isUserAdmin){
 	global $homePage;
 
 	// questa è la lista delle sostituzioni da applicare
@@ -31,6 +31,14 @@ function replacePH($game){
 	foreach ($replacements as $key => $value) {
 		$homePage = str_replace($key, $value, $homePage);
 	}
+
+	if($isUserAdmin){
+		$homePage=str_replace("<admin_func_ph>","",$homePage);
+		$homePage=str_replace("</admin_func_ph>","",$homePage);
+	}else{
+		$homePage=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$homePage);
+	}
+
 }
 
 
@@ -62,12 +70,15 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 
 }
 
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
+
 if(isset($_REQUEST['game'])){
 	$gameName=$_REQUEST['game'];
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
 	if($game){
-		replacePH($game);
+		replacePH($game, $isAdmin);
 
 		
 
