@@ -13,7 +13,7 @@ $homePage=file_get_contents("../html/templates/homeTemplate.html");
 
 
 
-function createNewsListItem($news){
+function createNewsListItem($news, $isUserAdmin=false){
 	
 	$item=file_get_contents("../html/templates/homeNewsTemplate.html");
 	
@@ -28,7 +28,8 @@ function createNewsListItem($news){
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
 		"<img_path_ph/>" => "../".$imagePath,
-		"<img_alt_ph/>" => $imageAlt
+		"<img_alt_ph/>" => $imageAlt,
+		"<news_edit_ph/>" => "edit_notizia.php?news=".strtolower($news->getTitle())
 
 	);
 
@@ -36,18 +37,25 @@ function createNewsListItem($news){
 		$item=str_replace($key, $value, $item);
 	}
 
+	if($isUserAdmin){
+		$item=str_replace("<admin_func_ph>","",$item);
+		$item=str_replace("</admin_func_ph>","",$item);
+	}else{
+		$item=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$item);
+	}
+
 	return $item;
 }
 
 
 
-function createNewsList($list){
+function createNewsList($list, $isUserAdmin=false){
 	if(!$list){
 		return "";
 	}
 	$stringsArray=array();
 	foreach($list as $news){
-		$s=createNewsListItem($news);
+		$s=createNewsListItem($news, $isUserAdmin);
 		array_push($stringsArray, $s);
 	}
 	$joinedItems=implode( " ", $stringsArray);
@@ -88,6 +96,8 @@ function createTop5Games($list){
 }
 
 
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
 
 # Chiedo al server una lista delle notizie
 $newsList=$dbAccess->getNewsList();
@@ -99,7 +109,7 @@ $topGame=$dbAccess->getTopGame();
 
 
 # Unisco le notizie in una lista html 
-$newsListString=createNewsList($newsList);
+$newsListString=createNewsList($newsList, $isAdmin);
 $top5GamesString=createTop5Games($top5GamesList);
 # Metto la lista al posto del placeholder
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);

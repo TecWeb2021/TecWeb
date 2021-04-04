@@ -16,9 +16,9 @@ $user=getLoggedUser($dbAccess);
 if($user){
 	$homePage="Hai già fatto il login";
 }else{
-	if(isset($_POST['nomeLogin']) && isset($_POST['pw'])){
-		$username=$_POST['nomeLogin'];
-		$password=$_POST['pw'];
+	if(isset($_REQUEST['nomeUtente']) && isset($_REQUEST['password'])){
+		$username=$_REQUEST['nomeUtente'];
+		$password=$_REQUEST['password'];
 		$hashValue=getHash($username, $password);
 		$user=$dbAccess->getUserByHash($hashValue);
 		if($user){
@@ -29,13 +29,13 @@ if($user){
 			header('Location: home.php');
 		}else{
 			echo "Nome utente o password non corretti";
-			$replacements=array("<username_placeholder_ph/>"=>$username);
+			$replacements=array("<username_ph/>"=>$username);
 			foreach ($replacements as $key => $value) {
 				$homePage=str_replace($key, $value, $homePage);
 			}
 		}
 	}else{
-		$replacements=array("<username_placeholder_ph/>"=>"");
+		$replacements=array("<username_ph/>"=>"");
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
 		}

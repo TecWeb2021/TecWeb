@@ -26,9 +26,9 @@ function createGameHTMLItem($game, $isAdmin=false){
 		"<game_edit_ph/>" => "edit_gioco.php?game=".strtolower($game->getName())
 	);
 
-		foreach ($replacements as $key => $value) {
-			$item = str_replace($key, $value, $item);
-		}
+	foreach ($replacements as $key => $value) {
+		$item = str_replace($key, $value, $item);
+	}
 	
 	if($isAdmin){
 		$item=str_replace("<admin_func_ph>","",$item);
@@ -84,16 +84,16 @@ switch($order){
 echo "ordine giochi: ".$order."<br/>";
 
 
-$yearRangeStart= isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
+$yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
 #sanitize
-$yearRangeEnd= isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
+$yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
 #sanitize
 
 //echo "anni: ".$yearRangeStart." - ".$yearRangeEnd."<br/>";
 
-$consoles_pre=isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
+$consoles_pre =isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
 #sanitize
-$genres_pre=isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
+$genres_pre =isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
 #sanitize
 
 

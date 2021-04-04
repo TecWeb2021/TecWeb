@@ -3,16 +3,16 @@
     <div class="container" id="content">
       <div class="schedaForm">
         <h3 class="titolo_login_registrati">Crea il tuo account ALLGames</h3>
-        <form action="../php/registrazione.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+        <form action="registrati.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
           <fieldset>
             <p class="dati_personali">Dati personali<p>
             <p class="avviso_importante">Tutti i campi sono obbligatori</p>
 
             <label for="email">E-mail</label>
-            <span><input type="text" name="eemail" id="email" value="<email_ph/>" placeholder="Inserisci la tua e-mail" /></span><br />
+            <span><input type="text" name="email" id="email" value="<email_ph/>" placeholder="Inserisci la tua e-mail" /></span><br />
 
             <label for="nomeUtente">Nome utente</label>
-            <span><input type="text" name="nomeUtente" id="nomeUtente" value="<username_ph/>" placeholder="Da 5 a 15 caratteri alfanumerici" /></span><br />
+            <span><input type="text" name="username" id="nomeUtente" value="<username_ph/>" placeholder="Da 5 a 15 caratteri alfanumerici" /></span><br />
 
             <label for="immagine">Immagine profilo</label>
             <span><input type="file" id="immagine" name="immagine" /></span><br />
