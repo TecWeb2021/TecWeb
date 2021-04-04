@@ -1,5 +1,6 @@
 <?php
 // per adesso questo script contiene un mix di funzioni utili in vari altri script
+// potrebbe convenire separare le funzionalità in più script diversi
 
 require_once("dbConnection.php");
 require_once("classes/user.php");

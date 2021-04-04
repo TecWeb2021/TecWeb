@@ -20,12 +20,12 @@ function createUserHTMLItem($user){
 	return $template;
 }
 
-$dbAccess=new DBAccess;
+$dbAccess = new DBAccess;
 $dbAccess->openDBConnection();
 
 
-$user=null;
-$homePage="<p>Non sei autenticato</p>";
+$user = null;
+$homePage = "<p>Non sei autenticato</p>";
 
 if(isset($_COOKIE['login'])){
 	$hash=$_COOKIE['login'];
