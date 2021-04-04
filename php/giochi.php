@@ -15,6 +15,7 @@ $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 function createGameHTMLItem($game, $isAdmin=false){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
 	
+	echo "gamevoe: ".$game->getVote();
 	$replacements = array(
 		"<game_name_ph/>" => $game->getName(),
 		"<game_date_ph/>" => $game->getPublicationDate(),
