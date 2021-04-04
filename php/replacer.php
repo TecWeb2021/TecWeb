@@ -86,6 +86,8 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	//mettere qui tutte le corrispondenze necessarie
 	$onloadReplacements = array(
 		"giochi.php" => "onload=\"preparaFiltri();\"",
+		"notizia.php" => "onload=\"preparaFiltri();\"",
+		"home.php" => "onload=\"removeNoJs();\"",
 		"form_notizia.php" => "onload=\"handleClick();\"",
 		"edit_notizia.php" => "onload=\"handleClick();\""
 	);

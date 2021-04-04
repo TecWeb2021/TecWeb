@@ -193,7 +193,7 @@ if($allOk){
 		
 
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
-		//mancano i replacement delle checkboxes
+		//se c'è una stringa data dall'utente metto quella, altrimenti metto quella vechia, presa dal db
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle ? $new_newsTitle : $oldNews->getTitle(),
 			"<content_ph/>" => $new_newsText ? $new_newsText : $oldNews->getContent(),
