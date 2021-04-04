@@ -51,7 +51,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		"home.php" => ["Home","Home"],
 		"giochi.php" => ["Giochi","Giochi"],
 		"notizie.php" => ["Notizie","Notizie"],
-		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > <page_param_ph/>"],
+		"notizia.php" => ["<page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > <page_param_ph/>"],
 		"edit_gioco.php" => ["Modifica gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Modifica <page_param_ph/>"],
 		"edit_notizia.php" => ["Modifica notizia - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica <page_param_ph/>"],
 		"form_gioco.php" => ["Aggiungi gioco","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi gioco"],
@@ -71,6 +71,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		// 5 è la posizione del primo carattere dopo /php/
 		if(strpos(explode("php/",$url)[1], $key) === 0){
 			//costruisco le basi del titolo e del breadcrumb
+			//aggiungo ad ogni titolo la scritta ALLGames, cioò il nome del sito"
 			$title = $value[0]." - ALLGames";
 			$breadcrumb = $value[1];
 			//metto il parametro passato all'interno del titolo e del breadcrumb
