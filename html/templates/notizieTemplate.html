@@ -2,7 +2,7 @@
 
   <div id="content" class="container">
     <div class="advance_filter" id="categorie">
-          <form class="barra_ricerca_notizie" action="notizie.php" onsubmit="return checkNotEmpty();" role="search">
+          <form class="barra_ricerca_notizie" action="action_page.php" onsubmit="return checkNotEmpty();" role="search">
             <fieldset>
               <label for="searchbar" class="structural">Cerca notizia:</label>
               <input list="titleInput_notizie" name="searchbar" id="searchbar_notizie" class="searchbar" placeholder="Cerca notizia..." aria-label="Campo per la ricerca di notizie" />
@@ -14,7 +14,7 @@
           </form>
         <div class="filtri_ordine">
           <span class="tipo_ordine">Tipologia: |</span>
-          <form class="bottoniOrdine" action="notizie.php">
+          <form class="bottoniOrdine" action="../php/action_page.php">
             <fieldset>
               <button class="dropbtn" name="categoria" value="Hardware">Hardware</button>
               <button class="dropbtn" name="categoria" value="Giochi">Giochi</button>
@@ -27,3 +27,4 @@
       <news_divs_ph/>
     </div>
 </div>
+

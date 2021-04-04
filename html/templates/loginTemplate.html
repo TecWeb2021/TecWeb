@@ -1,19 +1,28 @@
 
-  
-  <div id="content" class="main">
-    <h1>Accedi al tuo account ALLGames</h1>
-    <form id="loginForm" action="login.php" method="post" onsubmit="return validateForm();">
-      <fieldset>
 
-        <erroreLogin />
 
-        <label for="nomeLogin">Nome:</label>
-        <span><input type="text" id="nomeLogin"  name="nomeLogin" value="<username_placeholder_ph/>" /></span><br />
+  <div class="container">
+    <div class="schedaForm">
+      <h3 class="titolo_login_registrati">Accedi al tuo account ALLGames</h3>
+      <form id="loginForm" action="../php/login.php" onsubmit="return validateForm();">
 
-        <label for="pw">Password:</label>
-        <span><input type="password" id="pw" name="pw" value="" /></span><br />
+        <fieldset>
 
-        <input type="submit" value="Login" />
-      </fieldset>
-    </form>
+          <erroreLogin_ph />
+
+          <label for="nomeUtente">Nome utente:</label>
+          <span><input type="text" id="nomeUtente"  name="nomeUtente" value="<username_ph/>" placeholder="Nome utente" /></span><br />
+
+          <label for="password">Password:</label>
+          <span><input type="password" id="password" name="password" value="" placeholder="Password" /></span><br />
+          <div class="loginButton" ><button type="submit" name="login">Login</button></div>
+
+          <div class="nuovoUtente">
+            <p class="messaggioLogin">Non hai un profilo? <a href="../php/registrati.php">Creane subito uno</a></p>
+          </div>
+        </fieldset>
+      </form>
+    </div>
   </div>
+
+  

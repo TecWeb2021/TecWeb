@@ -5,16 +5,16 @@
     <div class="schedaForm">
       <h3 class="titolo_form">Form per l'inserimento di una nuova notizia</h3>
       <p class="avviso_importante">I campi marcati con * sono opzionali</p>
-      <form id="formNotizia" method="post" action="form_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+      <form id="formNotizia" method="post" action="formNotizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
-        <messaggi_form_ph/>
+        <messaggiForm_ph />
 
         <fieldset>
             <label for="titolo">Titolo: </label>
             <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
 
-        <fieldset id="handler">
+        <fieldset id="handler" onchange="handleClick(event);">
             <span><p id="labelTipologia" class="spuntabili">Tipologia: </p></span>
             <div class="gruppoRadio">
               <ul class="checkbox">
@@ -30,11 +30,12 @@
             </div>
         </fieldset>
 
-        <fieldset id="cercaTitolo" class="invisibile">
+        <fieldset id="cercaTitolo" class="">
+            <p>Inserire il titolo <em>solo</em> se è stata selezionata la categoria <em>Giochi</em></p>
             <label for="searchbar">*Gioco trattato:</label>
             <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
             <datalist id="listaTitoli" class="formText">
-              <opzioni_ph/>
+              <opzioni_form_ph />
             </datalist>
         </fieldset>
 
@@ -59,7 +60,7 @@
       </form>
 
       <div id="bottoniOpzionali">
-          <form action="profilo.php">
+          <form action="../php/admin.php">
             <fieldset>
               <button type="submit">Annulla Modifiche</button>
               <p>Annulla le modifiche apportate e torna alla pagina principale Admin</p>
@@ -69,3 +70,5 @@
 
     </div>
   </div>
+
+  

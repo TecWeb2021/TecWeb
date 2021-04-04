@@ -4,9 +4,9 @@
         <div class="schedaForm">
             <h3 class="titolo_form">Form per l'inserimento di un nuovo gioco</h3>
             <p class="avviso_importante">I campi marcati con * sono opzionali</p>
-            <form id="formGioco" method="post" action="form_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
+            <form id="formGioco" method="post" action="formGioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
-                <messaggi_form_ph/>
+                <messaggiForm_ph />
 
                 <fieldset>
                     <label for="nome">Nome: </label>
@@ -74,15 +74,15 @@
                     <span><input type="text" id="voto" name="voto" value="<vote_ph/>" placeholder="Voto da 0 a 5" /></span><br />
 
                     <label for="searchbar">*Prequel:</label>
-                    <span><input list="listaPrequel" name="prequel" id="prequel" class="opzionale" value="<prequel_ph/>" placeholder="Cerca prequel" aria-label="Campo per la ricerca del prequel del gioco" /></span><br />
+                    <span><input list="listaPrequel" name="prequel" id="prequel" class="opzionale" value="<prequel_ph/>" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span><br />
                     <datalist id="listaPrequel" class="formText">
-                      <opzioni_prequel_ph/>
+                      <opzioni_form_ph />
                     </datalist>
 
                     <label for="searchbar">*Sequel:</label>
-                    <span><input list="listaSequel" name="sequel" id="sequel" class="opzionale" value="<sequel_ph/>" placeholder="Cerca sequel" aria-label="Campo per la ricerca del sequel del gioco" /></span><br />
+                    <span><input list="listaSequel" name="sequel" id="sequel" class="opzionale" value="<sequel_ph/>" placeholder="Cerca sequel" aria-label="Campo per la ricerca del prequel del gioco" /></span><br />
                     <datalist id="listaSequel" class="formText">
-                      <opzioni_sequel_ph/>
+                      <opzioni_form_ph />
                     </datalist>
 
                     <label for="dlc"><abbr title="downloadable content" xml:lang="en">*DLC:</abbr> </label>
@@ -107,7 +107,7 @@
             </form>
 
             <div id="bottoniOpzionali">
-                <form action="profilo.php">
+                <form action="../php/admin.php">
                   <fieldset>
                     <button type="submit">Annulla Modifiche</button>
                     <p>Annulla le modifiche apportate e torna alla pagina principale Admin</p>
