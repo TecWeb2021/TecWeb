@@ -15,8 +15,8 @@ class Game{
 	protected $developer;
 
 	//è importante che i seguenti valori corrispondano a quelli presenti nell'html
-	public static $possible_consoles = array("PS4","XboxOne","Switch","PS5","XboxSeriesX");
-	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
+	public static $possible_consoles = array("PS4","PS5","Xbox One","Xbox Series X/S","Nintendo Switch");
+	public static $possible_genres = array("FPS","Horror","GDR","Avventura","Puzzle","Azione");
 
 
 	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
