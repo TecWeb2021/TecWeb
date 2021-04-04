@@ -30,16 +30,17 @@ function replacePH($news, $isUserAdmin){
 		$homePage=str_replace($key, $value, $homePage);
 	}
 
+	echo "isuseradmin: ".$isUserAdmin;
 	if($isUserAdmin){
-		$item=str_replace("<admin_func_ph>","",$item);
-		$item=str_replace("</admin_func_ph>","",$item);
+		$homePage = str_replace("<admin_func_ph>","",$homePage);
+		$homePage = str_replace("</admin_func_ph>","",$homePage);
 	}else{
-		$item=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$item);
+		$homePage = preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$homePage);
 	}
 }
 
 $user=getLoggedUser($dbAccess);
-$isAdmin=$user && $user->isAdmin() ? true : false; 
+$isAdmin = $user && $user->isAdmin() ? true : false; 
 
 $news = null;
 

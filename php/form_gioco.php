@@ -91,7 +91,7 @@ if($allOk){
 			'descrizione' => "descrizione non inserita",
 			'recensione' => "Recensione non inserita",
 			'immagine' => "Immagine non inserita",
-			'alternativo' => "Testo alternativo dell'immaagine non inserito",
+			'alternativo' => "Testo alternativo dell'immagine non inserito",
 			'voto' => "Voto non inserito",
 			'console' => "Console non inserita",
 			'genere' => "Genere non inserito",

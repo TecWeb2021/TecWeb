@@ -62,9 +62,9 @@ if($allOk){
 		}
 
 		//il salvataggio dell'immagine potrebbe fallire quindi inserisco una variabile boolean a per gestire la cosa (sarebbe forse meglio gestire il tutto con le eccezioni)
-		$imageSaved=true;
+		$imageSaved = true;
 
-		$new_newsImage=null;
+		$new_newsImage = null;
 		$imagePath=saveImageFromFILES($dbAccess,'immagine');
 		if($imagePath){
 			$new_newsImage=new Image($imagePath,$new_newsAlt);
@@ -84,7 +84,8 @@ if($allOk){
 
 		$error_message = "";
 
-		//qui ci dovrò mettere anche un controllo dei campi
+		//di seguito uso il doppio uguale per considerare mancante anche un campo in realtà presente ma uguale a ""
+		//di seguito ci dovrò mettere anche un controllo dei campi
 		if($new_newsTitle == null){
 			$error_message = $error_message . $error_messages['titolo'] . "<br/>";
 		}
@@ -100,7 +101,7 @@ if($allOk){
 		if($new_newsAlt == null){
 			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
 		}
-		if($new_newsCategory == "Giochi" && $new_newsGame== null){
+		if($new_newsCategory == "Giochi" && $new_newsGame == null){
 			$error_message = $error_message . $error_messages['gioco'] . "<br/>";
 		}
 
