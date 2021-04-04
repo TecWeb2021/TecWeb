@@ -290,6 +290,39 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 
 
 
+function checkString($string, $type){
+
+	$patterns = array(
+	    "nome" => ["/^([\w\s]){2,20}$/", "Inserire il nome del gioco"],
+	    "sviluppo" => ["/^([\w\s]){5,30}$/", "Inserire il nome della casa di sviluppo"],
+	    "pegi" => ["/^(3|7)$|^1(2|6|8)$/", "Possibili valori di PEGI: 3,7,12,16,18"],
+	    "voto" => ["/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/", "Voto da 0 a 5"],
+	    "prequel" => ["/^([\w\s]){2,20}$/", "Inserire il nome del prequel"],
+	    "sequel" => ["/^([\w\s]){2,20}$/", "Inserire il nome del sequel"],
+	    "dlc" => ["/^([\w\s]){2,20}$/", "Inserire il nome del dlc"],
+	    "data" => ["/./", "Data non valida"],
+
+	    "descrizione" => ["/.{25,}/", "Inserire la descrizione"],
+	    "recensione" => ["/.{25,}/", "Inserire la recensione"],
+	    "alternativo" => ["/^([\w\s]){0,50}$/", "Alt lungo massimo 50 caratteri"],
+
+	    "titolo" => ["/^([\w\s\'\,\.\"]){10,40}$/", "Inserire il titolo della notizia"],
+	    "testo" => ["/.{25,}/", "Inserire il testo della notizia"],
+	    "immagine" => ["/./", "Nessun file selezionato"],
+
+	    "nomeUtente" => ["/^([\w]){4,15}$/", "Inserire il nome utente"],
+	    "password" => [ "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/", "Inserire la password"],
+	    "repeatpassword" => [ "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/", "Le password non combaciano"],
+	    "email" => ["/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/", "Inserire la mail"]
+	);
+
+	if(!array_key_exists($type, $patterns)){
+		return false;
+	}
+	return preg_match($patterns[$type][0], $string) === 1 ? true : false;
+}
+
+
 
 
 ?>

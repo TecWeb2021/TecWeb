@@ -41,14 +41,14 @@ if($user){
 		);
 
 		//eseguo i controlli sugli input
-		if($username == null){
+		if($username == null || !checkString($email, "nomeUtente")){
 			$error_message = $error_message . $error_messages['username'] . "<br/>";
 		}
-		if($email == null){
+		if($email == null || !checkString($email, "email")){
 			$error_message = $error_message . $error_messages['email'] . "<br/>";
 		}
 		//controllo di lunghezza temporaneo
-		if($password == null || strlen($password) < 5){
+		if($password == null  || !checkString($email, "password")){
 			$error_message = $error_message . $error_messages['password'] . "<br/>";
 		}
 		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
@@ -60,8 +60,7 @@ if($user){
 		
 
 		if($error_message != ""){
-			//se c'è stato almeno un errore ...
-			echo $error_message;
+			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 			
 		}else{
