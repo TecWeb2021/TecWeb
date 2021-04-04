@@ -32,7 +32,7 @@ class DBAccess {
 
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
-    public function getResult($query, $silent = true){
+    public function getResult($query, $silent = false){
         $querySelect ="$query";
         if(!$silent){
             echo "db query: ".$querySelect."<br/>";
@@ -196,69 +196,99 @@ class DBAccess {
 
         $to_append_strings = array();
 
-        
-        // l'operatore LIKE trova valori che rispettano il pattern. In questo caso il pattern è %$gameName% che vuol dire qualsiasi stringa contenente $gameName ($gameName è il nome del parametro, al suo posto ci sarà il valore del parametro)
-        $specifyGameNameAppend= $gameName ? "games.Name LIKE '%$gameName%'" : null;
 
+        // l'operatore LIKE trova valori che rispettano il pattern. In questo caso il pattern è %$gameName% che vuol dire qualsiasi stringa contenente $gameName ($gameName è il nome del parametro, al suo posto ci sarà il valore del parametro)
+        //specifico un gioco
+        $specifyGameNameAppend = $gameName ? " games.Name LIKE '%$gameName%'" : null;
+        if($specifyGameNameAppend){
+        	array_push($to_append_strings, $specifyGameNameAppend);
+    	}
+
+    	//specifico il range di anni
         $isYearRangeGiven= $yearRangeStart && $yearRangeEnd;
         $yearRangeStart=$yearRangeStart."-01-01";
         $yearRangeEnd=$yearRangeEnd."-12-31";
-        $specifyYearRangeAppend= $isYearRangeGiven ? "games.Publication_date >= '$yearRangeStart' AND games.Publication_date <= '$yearRangeEnd'" : null;
+        $specifyYearRangeAppend= $isYearRangeGiven ? " games.Publication_date >= '$yearRangeStart' AND games.Publication_date <= '$yearRangeEnd'" : null;
+        if($specifyYearRangeAppend){
+        	array_push($to_append_strings, $specifyYearRangeAppend);
+    	}
+
+    	//specifico le console
         $specifyConsoles="";
         if($consoles && count($consoles)>0){
             $value=$consoles[0];
-            $specifyConsoles="WHERE Console='$value'";
+            $specifyConsoles = " (Console='$value'";
             for ($i=1;$i<count($consoles);$i++) {
                 $value=$consoles[$i];
-                $specifyConsoles=$specifyConsoles." "."OR Console='$value'";
+                $specifyConsoles=$specifyConsoles." OR Console='$value'";
             }
-            $query=$query." ".$specifyConsoles;
+            $specifyConsoles = $specifyConsoles . " )";
+        }
+        if($specifyConsoles!==""){
+        	array_push($to_append_strings, $specifyConsoles);
         }
 
+        //specifico i generi
         $specifyGenres="";
         if($genres && count($genres)>0){
             $value=$genres[0];
-            $specifyGenres="WHERE games_genres.Genre='$value'";
+            $specifyGenres = " (games_genres.Genre='$value'";
             for ($i=1;$i<count($genres);$i++) {
                 $value=$genres[$i];
-                $specifyGenres=$specifyGenres." "."OR games_genres.Genre='$value'";
+                $specifyGenres=$specifyGenres." OR games_genres.Genre='$value'";
             }
-            $query=$query." ".$specifyGenres;
+            $specifyGenres = $specifyGenres." )";
+        }
+        if($specifyGenres!==""){
+        	array_push($to_append_strings, $specifyGenres);
         }
 
+
+        $orderQueryAppend="";
+        //specifico l'ordine. L'ORDER BY va aggiunto per ultimo insieme eventualmente al group by
         switch ($order) {
             case 'alfabetico':
-                $orderQueryAppend="ORDER BY games.Name ASC";
+                $orderQueryAppend=" ORDER BY games.Name ASC";
+                
                 break;
             
             case 'voto':
-                $orderQueryAppend="ORDER BY games.Vote DESC";
+            	//considero solo i voti >= 4
+            	$specifyTopVotes = " games.Vote >= 4";
+            	array_push($to_append_strings, $specifyTopVotes);
+                $orderQueryAppend=" ORDER BY games.Vote DESC";
+                
                 break;
 
             default:
                 //questo caso si applica anche quando metto data come ordine
-                $orderQueryAppend="ORDER BY games.Publication_date DESC";
+                $orderQueryAppend=" ORDER BY games.Publication_date DESC";
+                
                 break;
         }
 
-        if($specifyGameNameAppend){
-            $query=$query." WHERE ".$specifyGameNameAppend; 
+        $assembledString = "";
 
-            if($specifyYearRangeAppend){
-                $query=$query." AND ".$specifyYearRangeAppend;
-            }
-        }else{
-            if($specifyYearRangeAppend){
-                $query=$query." WHERE ".$specifyYearRangeAppend;
-            }
+        //compongo assembledString mettendo un WHERE all'inizio e AND per separare le clausole
+        if(count($to_append_strings)>0){
+        	$assembledString = " WHERE ".$to_append_strings[0];
+        	for($i=1;$i<count($to_append_strings);$i++){
+        		$assembledString = $assembledString . " AND " . $to_append_strings[$i];
+        	}
         }
 
-        //credo che qui bisogni tenere l'ordine group by, order by, se no da errore.
-        $query = $query . " GROUP BY games.Name ";
-
+        echo "assembledString : " . $assembledString . "<br/>";
+        $query = $query . " " . $assembledString;
         
 
-        $query=$query." ".$orderQueryAppend;
+        //credo che qui bisogni tenere l'ordine group by, order by, se no da errore.
+        $groupByAppend = " GROUP BY games.Name ";
+        $query = $query . " " . $groupByAppend;
+
+        //qui metto order by che va alla fine. E' staccato dallo switch perchè lì metto solo il >= 4
+        $query = $query . " " . $orderQueryAppend;
+
+
         $queryResult = $this->getResult($query);
         
         if($queryResult==false){
