@@ -14,9 +14,9 @@ class Game{
 	protected $sequel;
 	protected $developer;
 
-	//è importante che i seguenti valori corrispondano a quelli presenti nell'html
-	public static $possible_consoles = array("PS4","PS5","Xbox One","Xbox Series X/S","Nintendo Switch");
-	public static $possible_genres = array("FPS","Horror","GDR","Avventura","Puzzle","Azione");
+	//è importante che i seguenti valori corrispondano a quelli presenti nell'html. Credo che debbano avere la stessa stringa che sta nel value e che debbano essere nello stesso ordine.
+	public static $possible_consoles = array("PS4","XboxOne","Switch","PS5","XboxSeriesX");
+	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
 
 
 	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){

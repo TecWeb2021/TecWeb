@@ -32,7 +32,7 @@ class DBAccess {
 
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
-    public function getResult($query, $silent = false){
+    public function getResult($query, $silent = true){
         $querySelect ="$query";
         if(!$silent){
             echo "db query: ".$querySelect."<br/>";
@@ -277,7 +277,7 @@ class DBAccess {
         	}
         }
 
-        echo "assembledString : " . $assembledString . "<br/>";
+        
         $query = $query . " " . $assembledString;
         
 

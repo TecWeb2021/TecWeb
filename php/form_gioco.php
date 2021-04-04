@@ -148,25 +148,20 @@ if($allOk){
 		$selected_consoles=array();
 		$selected_genres=array();
 
+		//creo un array che per ogni posizione indica se la console in quella posizione è stata selezionata
+		foreach (Game::$possible_consoles as $key => $value) {
+			$selected_consoles[$key] = in_array($value, $new_gameConsoles);
+			echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
+		}
+		
+		//creo un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
+		foreach (Game::$possible_genres as $key => $value) {
+			$selected_genres[$key] = in_array($value, $new_gameGenres);
+		}
+
 		if($error_message != ""){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
-
-			
-			//creao un array che per ogni posizione indica se la console in quella posizione è stata selezionata
-			foreach (Game::$possible_consoles as $key => $value) {
-	
-				$selected_consoles[$key] = in_array($value, $new_gameConsoles);
-				echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
-			}
-	
-			
-			
-			//creao un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
-			foreach (Game::$possible_genres as $key => $value) {
-				$selected_genres[$key] = in_array($value, $new_gameGenres);
-			}
-			
 		
 			
 			
@@ -181,7 +176,7 @@ if($allOk){
 		}
 
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
-		//metto i valori che sono stati rilevati. Se quelcosa non è stato rilevato metto il nulla
+		//metto i valori che sono stati rilevati. Se qualcosa non è stato rilevato metto il nulla
 		$replacements = array(
 			"<game_name_ph/>" => $new_gameName  ? $new_gameName  : "",
 			"<developer_ph/>" => $new_gameDeveloper ? $new_gameDeveloper : "",
@@ -199,6 +194,13 @@ if($allOk){
 			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
 		);
 
+		/*
+		foreach ($replacements as $value) {
+			echo " => " . $value. "<br/>";
+		}*/
+
+		print_r($selected_consoles);
+
 		//aggiungo ai replacement quelli delle checkboxes
 		foreach ($selected_consoles as $key => $value) {
 			$replacements["<checked_console_".$key."/>"] = $value ? "checked=\"checked\"" : "";
@@ -206,6 +208,8 @@ if($allOk){
 		foreach ($selected_genres as $key => $value) {
 			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
+
+
 	
 		foreach ($replacements as $key => $value) {
 			$homePage=str_replace($key, $value, $homePage);
