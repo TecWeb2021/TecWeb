@@ -144,25 +144,34 @@ if($allOk){
 
 		$error_message = "";
 
-		//qui ci dovrò mettere anche un controllo dei campi
-		if($new_newsTitle == null){
+		//controllo i campi obbligatori
+
+		if( $new_newsTitle === null || ($errorText = checkString($new_newsTitle, 'titolo')) !== true){
 			$error_message = $error_message . $error_messages['titolo'] . "<br/>";
 		}
-		if($new_newsText == null){
+		if( $new_newsText === null || ($errorText = checkString($new_newsText, 'testo')) !== true){
 			$error_message = $error_message . $error_messages['testo'] . "<br/>";
 		}
-		if($new_newsCategory == null){
+		if($new_newsCategory === null || !in_array($new_newsCategory, News::$possible_categories)){
 			$error_message = $error_message . $error_messages['tipologia'] . "<br/>";
 		}
-		if(false /*$new_newsImage == null*/){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}
-		if($new_newsAlt == null){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
-		}
+
+		// controllo i campi obbligatori derivati
+
 		if($new_newsCategory == "Giochi" && $new_newsGame== null){
 			$error_message = $error_message . $error_messages['gioco'] . "<br/>";
 		}
+
+		// controllo i campi opzionali
+
+		if( $new_newsImage !== null && $imageOk === false){
+			$error_message = $error_messages . $error_messages['immagine'] . "<br/>";
+		}
+
+		if( $new_newsAlt !== null && strlen($new_newsAlt) > 0 && ($errorText = checkString($new_newsAlt, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		}
+
 
 		if($error_message != ""){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
@@ -174,8 +183,6 @@ if($allOk){
 				$new_newsImage=$oldNews->getImage();
 				$imageOk=true;
 			}
-
-			if($imageOk){
 				$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
 				$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
 				if($overwriteResult==true){
@@ -183,14 +190,7 @@ if($allOk){
 				}else{
 					echo "overwrite su db fallito"."<br/>";
 				}
-			
-			}
 		}
-
-		
-	
-		
-		
 
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
 		//se c'è una stringa data dall'utente metto quella, altrimenti metto quella vechia, presa dal db
@@ -230,19 +230,7 @@ if($allOk){
 	}else{
 		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
-		/*
-		// controllo quale valore non è stato inserito
-		if(!isset($_REQUEST['titolo'])){
-			echo "titolo non inserito<br/>";
-		}elseif(!isset($_REQUEST['testo'])){
-			echo "testo non inserito<br/>";
-		}elseif(!isset($_REQUEST['alternativo'])){
-			echo "alt non inserito<br/>";
-		}
-		*/
 
-		//qui faccio i replacement dei placeholder in base ai valori del gioco che si vuole modificare
-		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
 		$replacements = array(
 			"<news_title_ph/>" => $oldNews->getTitle(),
 			"<content_ph/>" => $oldNews->getContent(),

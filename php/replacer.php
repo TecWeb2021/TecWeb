@@ -57,7 +57,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		"edit_notizia.php" => ["Modifica notizia - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica <page_param_ph/>"],
 		"form_gioco.php" => ["Aggiungi gioco","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi gioco"],
 		"form_notizia.php" => ["Aggiungi notizia","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi notizia"],
-		"form_profilo.php" => ["Modifica profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Profilo</a> > Modifica profilo"],
+		"edit_profilo.php" => ["Modifica profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Profilo</a> > Modifica profilo"],
 		"gioco_notizie.php" => ["Notizie - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Notizie"],
 		"gioco_recensione.php" => ["Recensione - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Recensione"],
 		"gioco_scheda.php" => ["Scheda gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Scheda del gioco"],
@@ -197,8 +197,10 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	//print_r($_FILES);
 	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
 	//print_r($image);
-	if(!$image){
-		return false;
+	
+	//errore 4: non è stata caricata alcuna immagine
+	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
+		return null;
 	}
 	#Recupero il percorso temporaneo del file
 	$image_tmp_location = $image['tmp_name'];
@@ -291,7 +293,7 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 }
 
 
-
+// si può utilizzare per controllare la correttezza delle stringhe
 function checkString($string, $type){
 
 	$patterns = array(
@@ -302,7 +304,7 @@ function checkString($string, $type){
 	    "prequel" => ["/^([\w\s]){2,20}$/", "Inserire il nome del prequel"],
 	    "sequel" => ["/^([\w\s]){2,20}$/", "Inserire il nome del sequel"],
 	    "dlc" => ["/^([\w\s]){2,20}$/", "Inserire il nome del dlc"],
-	    "data" => ["/./", "Data non valida"],
+	    "data" => ["/.*/", "Data non valida"],
 
 	    "descrizione" => ["/.{25,}/", "Inserire la descrizione"],
 	    "recensione" => ["/.{25,}/", "Inserire la recensione"],
@@ -310,6 +312,7 @@ function checkString($string, $type){
 
 	    "titolo" => ["/^([\w\s\'\,\.\"]){10,40}$/", "Inserire il titolo della notizia"],
 	    "testo" => ["/.{25,}/", "Inserire il testo della notizia"],
+	    "tipologia" => News::$possible_categories,
 	    "immagine" => ["/./", "Nessun file selezionato"],
 
 	    "nomeUtente" => ["/^([\w]){4,15}$/", "Inserire il nome utente"],
@@ -319,9 +322,22 @@ function checkString($string, $type){
 	);
 
 	if(!array_key_exists($type, $patterns)){
-		return false;
+		return null;
 	}
-	return preg_match($patterns[$type][0], $string) === 1 ? true : false;
+	$res = preg_match($patterns[$type][0], $string) === 1 ? true : false;
+	if($res === false){
+		return $patterns[$type][1];
+	}
+	return $res;
+}
+
+function getOriginPage(){
+	if(isset($_SERVER['HTTP_REFERER'])){
+		// sanitize
+		return $_SERVER['HTTP_REFERER'];
+	}else{
+		return null;
+	}
 }
 
 

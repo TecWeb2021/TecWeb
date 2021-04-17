@@ -30,7 +30,8 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/editGiocoTemplate.html");
 
 
-
+$originPage = getOriginPage();
+echo "originPage: ".$originPage;
 
 // verifico che l'utente abbia l'autorizzazione per modificare un gioco
 $user=getLoggedUser($dbAccess);
@@ -98,7 +99,7 @@ if($allOk){
 	//devo ancora implementare la gestione dell'alt dell'immagine
 	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
 		echo "almeno un valore è stato rilevato<br/>";
-		//i nuovi valori per il gioco sono stati tutti rilevati
+		
 		$new_gameName = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
 		$new_gamePublicationDate = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
 		$new_gameAgeRange = isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
@@ -116,9 +117,9 @@ if($allOk){
 
 		$new_gameImage = null;
 
-		$imageOk=false;
+		$imageOk = false;
 		//error 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine']) && $_FILES['immagine']['error']!=4){
+		if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] != 4){
 			echo "rilevato campo immagine"."<br/>";
 			//prendo l'immagine inserita dall'utente
 			$imagePath = saveImageFromFILES($dbAccess, "immagine");
@@ -152,46 +153,55 @@ if($allOk){
 
 		$error_message = "";
 
-		//qui ci dovrò mettere anche un controllo dei campi
-		if($new_gameName == null){
+		// controllo i campi obbligatori
+
+		if($new_gameName === null || ($errorText = checkString($new_gameName,'nome')) !== true ){
 			$error_message = $error_message . $error_messages['nome'] . "<br/>";
 		}
-		if($new_gamePublicationDate == null){
-			$error_message = $error_message . $error_messages['data'] . "<br/>";
-		}
-		if($new_gameAgeRange == null){
-			$error_message = $error_message . $error_messages['pegi'] . "<br/>";
-		}
-		if($new_gameSinopsis == null){
-			$error_message = $error_message . $error_messages['descrizione'] . "<br/>";
-		}
-		if($new_gameReview == null){
-			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
-		}
-		if(false /*$new_gameImage == null*/){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}
-		if(false /*$new_gameAlt == null*/){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
-		}
-		if($new_gameVote == null){
-			$error_message = $error_message . $error_messages['voto'] . "<br/>";
-		}
-		if(count($new_gameConsoles) == 0){
-			$error_message = $error_message . $error_messages['console'] . "<br/>";
-		}
-		if(count($new_gameGenres) == 0){
-			$error_message = $error_message . $error_messages['genere'] . "<br/>";
-		}
-		if($new_gamePrequel == null){
-			$error_message = $error_message . $error_messages['prequel'] . "<br/>";
-		}
-		if($new_gameSequel == null){
-			$error_message = $error_message . $error_messages['sequel'] . "<br/>";
-		}
-		if($new_gameDeveloper == null){
+		if($new_gameDeveloper === null || ($errorText = checkString($new_gameDeveloper,'sviluppo')) !== true){
 			$error_message = $error_message . $error_messages['sviluppo'] . "<br/>";
 		}
+		if($new_gameAgeRange === null || ($errorText = checkString($new_gameAgeRange,'pegi')) !== true){
+			$error_message = $error_message . $error_messages['pegi'] . "<br/>";
+		}
+		if($new_gamePublicationDate === null || ($errorText = checkString($new_gamePublicationDate,'data')) !== true){
+			$error_message = $error_message . $error_messages['data'] . "<br/>";
+		}
+		if(count($new_gameConsoles) === 0){
+			$error_message = $error_message . $error_messages['console'] . "<br/>";
+		}
+		if(count($new_gameGenres) === 0){
+			$error_message = $error_message . $error_messages['genere'] . "<br/>";
+		}
+		if($new_gameVote === null || ($errorText = checkString($new_gameVote,'voto')) !== true){
+			$error_message = $error_message . $error_messages['voto'] . "<br/>";
+		}
+		if($new_gameSinopsis === null || ($errorText = checkString($new_gameSinopsis,'descrizione')) !== true){
+			$error_message = $error_message . $error_messages['descrizione'] . "<br/>";
+		}
+
+		// controllo i campi obbligatori derivati
+
+		// controllo i campi opzionali
+
+		if($new_gameImage !== null && $imageOk === false){
+			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		}
+		if($new_gamePrequel !== null && strlen($new_gamePrequel) > 0 && ($errorText = checkString($new_gamePrequel, 'prequel')) !== true){
+			$error_message = $error_message . $error_messages['prequel'] . "<br/>";
+		}
+		if($new_gameSequel !== null && strlen($new_gameSequel) > 0 &&($errorText = checkString($new_gameSequel, 'sequel')) !== true){
+			$error_message = $error_message . $error_messages['sequel'] . "<br/>";
+		}
+
+		if($new_gameReview !== null && strlen($new_gameReview) > 0 && ($errorText = checkString($new_gameReview, 'recensione')) !== true){
+			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
+		}
+		
+		if($new_gameAlt !== null && strlen($new_gameAlt) > 0 && ($errorText = checkString($new_gameAlt, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		}
+		
 
 		if($error_message != ""){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);

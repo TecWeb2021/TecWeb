@@ -16,23 +16,49 @@ $user=getLoggedUser($dbAccess);
 if($user){
 	$homePage="Hai già fatto il login";
 }else{
-	if(isset($_REQUEST['nomeUtente']) && isset($_REQUEST['password'])){
-		$username=$_REQUEST['nomeUtente'];
-		$password=$_REQUEST['password'];
-		$hashValue=getHash($username, $password);
-		$user=$dbAccess->getUserByHash($hashValue);
-		if($user){
-			$username=$user->getUsername();
-			
-			echo "Benvenuto ".$username;
-			setcookie("login",$hashValue);
-			header('Location: home.php');
+	if(isset($_REQUEST['nomeUtente'])){
+		echo "almeno un valore rilevato";
+
+		$username = $_REQUEST['nomeUtente'];
+		$password = $_REQUEST['password'];
+
+		$error_message = "";
+		
+		$error_messages = array(
+			'username' => "Nome utente non presente",
+			'password' => "Password non presente"
+		);
+
+		// controllo i campi obbligatori
+
+		if($username === null || $username === ""){
+			$error_message = $error_message . $error_messages['username'] . "<br/>";
+			echo "username";
+		}
+		if($password === null || $password === ""){
+			$error_message = $error_message . $error_messages['password'] . "<br/>";
+			echo "pass";
+		}
+
+		if($error_message !== ""){
+			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
-			echo "Nome utente o password non corretti";
-			$replacements=array("<username_ph/>"=>$username);
-			foreach ($replacements as $key => $value) {
-				$homePage=str_replace($key, $value, $homePage);
+			$hashValue=getHash($username, $password);
+			$user=$dbAccess->getUserByHash($hashValue);
+			if($user){
+				
+				$homePage = str_replace("<messaggi_form_ph/>", "Benvenuto" . $username, $homePage);
+				setcookie("login",$hashValue);
+				header('Location: home.php');
+			}else{
+				$homePage = str_replace("<messaggi_form_ph/>", "Nome utente o password non corretti", $homePage);
 			}
+			
+		}
+
+		$replacements=array("<username_ph/>"=>$username);
+		foreach ($replacements as $key => $value) {
+			$homePage=str_replace($key, $value, $homePage);
 		}
 	}else{
 		$replacements=array("<username_ph/>"=>"");

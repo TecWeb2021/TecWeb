@@ -16,44 +16,56 @@ $user=getLoggedUser($dbAccess);
 if($user){
 	$homePage="Sei già registrato e hai già fatto il login";
 }else{
-	$username=isset($_REQUEST['username']) ? $_REQUEST['username'] : null;
-	#sanitize
-	$password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
-	#sanitize
-	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-	#sanitize
-	$imagePath=saveImageFromFILES($dbAccess, "immagine");
-	#sanitize
+	
 
 	$allOk = true;
 
 	$error_message = "";
-	if($username || $email || $password || $imagePath){
+	if(isset($_REQUEST['email'])){
 		echo "almeno un valore è stato inserito"."<br/>";
 		
+		$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+		#sanitize
+		$username=isset($_REQUEST['username']) ? $_REQUEST['username'] : null;
+		#sanitize
+		$imagePath=saveImageFromFILES($dbAccess, "immagine");
+		#sanitize
+		$password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
+		#sanitize
+		$repeatPassword=isset($_REQUEST['repeatpassword']) ? $_REQUEST['repeatpassword'] : null;
+		#sanitize
 
 		//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
 		$error_messages = array(
 			'username' => "Username non presente",
 			'email' => "Email non presente",
 			'password' => "Password non presente",
+			'repeatpassword' => "Le password non combaciano",
 			'immagine' => "Immagine non presente",
 		);
 
-		//eseguo i controlli sugli input
-		if($username == null || !checkString($email, "nomeUtente")){
+		//controllo i campi obbligatori
+
+		if($username === null || ($errorText = checkString($username, "nomeUtente")) !== true){
 			$error_message = $error_message . $error_messages['username'] . "<br/>";
 		}
-		if($email == null || !checkString($email, "email")){
+		if($email === null || ($errorText = checkString($email, "email")) !== true){
 			$error_message = $error_message . $error_messages['email'] . "<br/>";
-		}
-		//controllo di lunghezza temporaneo
-		if($password == null  || !checkString($email, "password")){
-			$error_message = $error_message . $error_messages['password'] . "<br/>";
 		}
 		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
 		if($imagePath === false){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		}
+		if($password === null  || ($errorText = checkString($password, "password")) !== true){
+
+			$error_message = $error_message . $error_messages['password'] . "<br/>";
+		}
+		
+
+		// controllo i campi obbligatori derivati
+
+		if($password !== null && $repeatPassword !== $password){
+			$error_message = $error_message . $error_messages['repeatpassword'] . "<br/>";
 		}
 
 		

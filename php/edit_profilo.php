@@ -21,16 +21,20 @@ if($user){
 	}else{
 
 
-		$new_password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
-		#sanitize
-		$new_email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-		#sanitize
-		$new_imagePath=saveImageFromFILES($dbAccess, "immagine");
-		#sanitize
+		
 
 		
-		if($new_email || $new_password || $new_imagePath){
+		if(isset($_REQUEST['email'])){
 			echo "almeno un valore è stato inserito"."<br/>";
+
+			$new_password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
+			#sanitize
+			$new_passwordRepeat=isset($_REQUEST['passwordrepeat']) ? $_REQUEST['passwordrepeat'] : null;
+			#sanitize
+			$new_email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+			#sanitize
+			$new_imagePath=saveImageFromFILES($dbAccess, "immagine");
+			#sanitize
 			
 			$error_message = "";
 
@@ -38,25 +42,37 @@ if($user){
 			$error_messages = array(
 				'email' => "Email non presente",
 				'password' => "Password non presente",
+				'repeatpassword' => "Le password non combaciano",
 				'immagine' => "Immagine non presente",
 			);
 
-			if($new_email == null){
+			// controllo i campi obbligatori
+
+			if($new_email === null || checkString($new_email, 'email') !== true){
 				$error_message = $error_message . $error_messages['email'] . "<br/>";
 			}
-			//controllo di lunghezza temporaneo
-			if(false /*$new_password == null || strlen($new_password) < 5*/){
+
+			// controllo i campi opzionali
+
+			if( $new_password !== null && strlen($new_password) > 0 && checkString($new_password, 'password') !== true){
 				$error_message = $error_message . $error_messages['password'] . "<br/>";
 			}
-			//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
-			if(false /*$new_imagePath === false*/){
+
+			if( $new_imagePath === false){
 				$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 			}
 
+			// controllo i campi obbligatori derivati
+
+			if( $new_password !== null && strlen($new_password) > 0 && $new_passwordRepeat !== $new_password){
+				$error_message = $error_message . $error_messages['repeatpassword'] . "<br/>";
+			}
+				
+
 			
-			if($error_message != ""){
+			if($error_message !== ""){
 				//se c'è stato almeno un errore ...
-				echo $error_message;
+				$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 			}else{
 				echo "non ci sono stati errori" . "<br/>";
