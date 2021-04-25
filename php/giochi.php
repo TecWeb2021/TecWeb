@@ -1,6 +1,7 @@
 <?php
 require_once "replacer.php";
 require_once "dbConnection.php";
+require_once "classes/game.php";
 
 # Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un altra.
 
@@ -8,9 +9,6 @@ $dbAccess=new DBAccess;
 $dbAccess->openDBConnection();
 
 $homePage=file_get_contents("../html/templates/giochiTemplate.html");
-
-
-
 
 function createGameHTMLItem($game, $isAdmin=false){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
@@ -57,6 +55,36 @@ function createGamesDivs($gamesList, $isAdmin=false){
 	return $joinedItems;
 }
 
+function replaceConsoleCheckboxes($selectedArray, &$page){
+	// print_r($selectedArray);
+	// questo array deve corrispondere ai valori delle checkboxes, anche nell'ordine
+	$possible_consoles = array("PS4","PS5","Xbox One","Xbox Series X/S","Nintendo Switch");
+	foreach ($possible_consoles as $key => $value) {
+		$isChecked = in_array($value, $selectedArray);
+		$to_substitute = "";
+		if($isChecked === true){
+			$to_substitute = "checked = \"checked\"";
+		}
+		$page = str_replace("<checked_console_".$key."/>", $to_substitute, $page);
+	}
+
+}
+
+function replaceGenresCheckboxes($selectedArray, &$page){
+	// questo array deve corrispondere ai valori delle checkboxes, anche nell'ordine
+	$possible_genres = array("FPS","Horror","GDR","Avventura","Puzzle","Azione");
+	foreach ($possible_genres as $key => $value) {
+		$isChecked = in_array($value, $selectedArray);
+		$to_substitute = "";
+		if($isChecked === true){
+			$to_substitute = "checked = \"checked\"";
+			
+		}
+		$page = str_replace("<checked_genere_".$key."/>", $to_substitute, $page);
+	}
+
+}
+
 $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
@@ -84,6 +112,7 @@ switch($order){
 
 echo "ordine giochi: ".$order."<br/>";
 
+// FILTRI
 
 $yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
 #sanitize
@@ -92,24 +121,26 @@ $yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
 
 //echo "anni: ".$yearRangeStart." - ".$yearRangeEnd."<br/>";
 
-$consoles_pre =isset($_REQUEST['console']) ? $_REQUEST['console'] : null;
+$consoles_pre = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
+replaceConsoleCheckboxes($consoles_pre, $homePage);
 #sanitize
-$genres_pre =isset($_REQUEST['genere']) ? $_REQUEST['genere'] : null;
+$genres_pre = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+replaceGenresCheckboxes($genres_pre, $homePage);
 #sanitize
 
 
 # Chiedo al server una lista delle notizie
-$list=$dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order, $consoles_pre, $genres_pre);
+$list = $dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order, $consoles_pre, $genres_pre);
 # Unisco le notizie in una lista html 
-$gamesDivsString=createGamesDivs($list, $isAdmin);
+$gamesDivsString = createGamesDivs($list, $isAdmin);
 # Metto la lista al posto del placeholder
-$homePage=preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
+$homePage = preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "giochi", $dbAccess);
+$basePage = createBasePage("../html/templates/top_and_bottomTemplate.html", "giochi", $dbAccess);
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+$basePage = str_replace("<page_content_ph/>", $homePage, $basePage);
 
-$basePage=replace($basePage);
+$basePage = replace($basePage);
 
 echo $basePage;
 ?>
