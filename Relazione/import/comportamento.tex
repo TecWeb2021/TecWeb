@@ -1,31 +1,46 @@
 \section{Comportamento}
-Per comporamento del sito è gestito lato server da PHP e lato client da JavaScript.
+Il comporamento del sito è gestito lato server da PHP e lato client da JavaScript.
 
 \subsection{Javascript}
-Abbiamo usato un unico file per contenere tutte le funzioni implementate. Il file è stato nominato checkForm.js in quanto le funzioni presenti svolgono principalmente controlli sull'input delle form presenti.
+Abbiamo usato un unico file per contenere tutte le funzioni implementate. Il file è stato nominato checkForm.js in quanto le funzioni presenti svolgono principalmente controlli sull'input delle form.
 Di seguito riportiamo le funzioni con una breve spiegazione:
 
 \begin{itemize}
-	\item \textbf{validateForm(): } esegue un controllo sull'input della form (lato client). Viene chiamata in tutte le pagine che contengono delle form di inserimento/modifica dei dati lato admin (Form Notizie e Form Giochi) e nelle pagine di login e registrazione lato utente.
-	Per facilitare eventuali future aggiunte di campi input nel sito, la funzione si appoggia ad un array (dettagliform) contenente come chiavi gli id dei campi input a cui viene associato un array contenente le espressioni regolari per la verifica dell'input e il corrispondente messaggio d'errore.
-	La funzione procede chiamando prima validazioneCampo(input) per ogni input presente nell'array di supporto trovato nella pagina di invocazione ed in seguito chiama checkChecked(), che effettua un controllo dei campi checkbox e radio.\\
-	\item \textbf{validazioneCampo(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o conferma dell'inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file o data, il campo "repeatedpassword" e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in dettagliform e procede a invocare la funzione mostraMessaggio(input,stato), dove stato è rispettivamente true o false se la value rispetta o meno le caratteristiche volute. \\
-	\item \textbf{mostraMessaggio(input, stato): } mostra un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le categorie di utenti.\\
-	\item \textbf{checkChecked(): } descrizione.....\\
-	\item \textbf{checkPassword(): } descrizione.....\\
-	\item \textbf{checkPassword(): } descrizione.....\\
-	\item \textbf{checkNotEmpty(): } descrizione.....\\
-	\item \textbf{responsiveMenu(): } questa funzione assegna un evento di click al pulsante del menu nella versione mobile.
-	Abbiamo scelto l'evento onclick perchè gestisce anche l'evento ontouch per dispositivi mobile.
-	Il pulsante è situato nel top-right della pagina, dove è più facilmente raggiungibile da un utente mobile;\\
-	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina giochi. Gestisce l'evento onclick dei button tramite event delegation nel container. All'onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del container la richiude.\\
-	\item \textbf{checkAnni(): } effettua un controllo sull'intevallo selezionato di anni di uscita dei videogiochi nella pagina giochi.
-	Inserisce un messaggio d'errore se l'intervallo è inamissibile (es: da 2020 a 2016) e blocca il submit.\\
+	\item \textbf{validateForm(): } esegue un controllo lato client dell'input della form. Viene chiamata in tutte le pagine che contengono delle form per l'inserimento o la modifica dei dati lato admin e nelle pagine di login e registrazione lato utente.
+	Per facilitare eventuali aggiunte di campi input nel sito, la funzione si appoggia all'array \texttt{dettagliForm} contenente come chiavi gli id dei campi input a cui vengono associati array contenenti le espressioni regolari per la verifica dell'input e i corrispondenti messaggi d'errore.
+	La funzione procede chiamando \texttt{validateInput(input)} per ogni elemento di \texttt{dettagliForm} trovato nella pagina di invocazione, prosegue chiamendo \texttt{checkChecked()} ed infine ritorna un valore booleano in base all'esito dei controlli effettuati; \\
+
+	\item \textbf{validateInput(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o di conferma del corretto inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file o data, il campo \texttt{repeatedpassword} e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in \texttt{dettagliForm} e procede ritornando il valore ricevuto dall'invocazione di \texttt{showMessage(input,stato)}; \\
+
+	\item \textbf{showMessage(input, stato): } crea un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le classi di utenti. Per l'inserimento di messaggi di errore sfrutta l'array di supporto \texttt{dettagliForm}; \\
+
+	\item \textbf{checkPassword(): } controlla che gli input in \texttt{password} e in \texttt{repetedpassword} siano uguali e invoca opportunamente \texttt{showMessage(input,stato)}; \\
+
+	\item \textbf{checkChecked(): } effettua un controllo dei campi checkbox e radio sfruttando l'array di supporto \texttt{spuntabili} in modo analogo a \texttt{validateForm()}. Crea un array contenente coppie chiave-valore nella forma: id del campo input, valore booleano (che indica se il rispettivo campo input è stato spuntato). Tale array viene poi fornito come parametro a \texttt{showMessageCheckbox(sezioni)}; \\
+
+	\item \textbf{showMessageCheckbox(sezioni): } opera in modo analogo a \texttt{showMessage(input, stato)}, creando però dei messaggi che comunicano all'utente se i campi input (di tipo checkbox o radio) sono stati spuntati o meno; \\
+
+	\item \textbf{handleClick(): } fa comparire/scomparire il campo ''\texttt{Gioco trattato}" se viene selezionata/deselezionata la categoria '\texttt{Giochi}' in \texttt{Tipologia} nella form per l'inserimento di una notizia; \\
+
+	\item \textbf{removeNoJs(): }  viene invocata al completamento del caricamento della pagina, rimuove la classe ''no-js" dal tag \texttt{<html>}. Tale classe è stata utilizzata per la definizione di alcune regole \texttt{css} che gestiscono la casistica in cui JavaScript è disattivato. Ad esempio nel caso del menù principale nella versione mobile, con JS disattivato, viene rimosso il pulsante e viene mostrata la tendina aperta; \\
+
+	\item \textbf{checkNotEmpty(id): } controlla che il campo \texttt{input} con id = ''id" non sia vuoto o composto da spazi; \\
+
+	\item \textbf{responsiveMenu(): } gestisce l'apertura e chiusura del menù a tendina nella versione mobile.
+	E' associata ad un evento \texttt{onclick}, scelto perchè gestisce anche l'evento \texttt{ontouch} per dispositivi mobile.
+	Il pulsante è situato nel top-right della pagina, dove è più facilmente raggiungibile da un utente mobile; \\
+
+	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina \texttt{Giochi}. Gestisce l'evento onclick dei button tramite event delegation nel \texttt{div} con classe ''container". All'evento onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del ''container" la richiude; \\
+
+	\item \textbf{checkAnni(): } effettua un controllo sull'intevallo degli anni di uscita dei videogiochi selezionato nella pagina giochi.
+	Inserisce un messaggio d'errore se l'intervallo è inamissibile (es: da 2020 a 2016) e blocca il submit. \\
 \end{itemize}
 
-\subsection{BackEnd}
-Il backend del server è stato sviluppato con script PHP e database relazionale MariaDB;
 
+
+
+\subsection{BackEnd}
+Il backend del server è stato sviluppato con script PHP e database relazionale MariaDB.
 
 \subsubsection{Classi}
 \begin{itemize}
