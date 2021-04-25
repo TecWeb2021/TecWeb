@@ -197,7 +197,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	//print_r($_FILES);
 	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
 	//print_r($image);
-	
+
 	//errore 4: non è stata caricata alcuna immagine
 	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
 		return null;

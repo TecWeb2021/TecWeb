@@ -101,41 +101,56 @@ $isAdmin=$user && $user->isAdmin() ? true : false;
 
 # Chiedo al server una lista delle notizie
 $newsList=$dbAccess->getNewsList();
-
-$top5GamesList=$dbAccess->getTop5Games();
-$topGame=$dbAccess->getTopGame();
-
-
-
-
 # Unisco le notizie in una lista html 
 $newsListString=createNewsList($newsList, $isAdmin);
-$top5GamesString=createTop5Games($top5GamesList);
 # Metto la lista al posto del placeholder
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
-$homePage=preg_replace("/\<top_5_games_ph\/\>/",$top5GamesString,$homePage);
 
-//usa cosa da implementare: se il top game non esiste bisogna togliere il div relativo, non lasciarlo con i valori vuoti
+$games = $dbAccess->getGamesList();
+$gamesNum = $games !== null ? count($games) : 0;
 
-$consoles= $topGame ? $topGame->getConsoles() : null;
-$genres= $topGame ? $topGame->getGenres() : null;
+if($gamesNum > 0){
 
-//sostituzioni riguardanti il top_game
-$replacements=array(
-		"<top_game_url_ph/>" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
-		"<top_game_name_ph/>" => $topGame ? $topGame->getName() : "",
-		"<top_game_img_path_ph/>" => $topGame ? "../".$topGame->getImage()->getPath() : "",
-		"<top_game_img_alt_ph/>" => $topGame ? $topGame->getImage()->getAlt() : "",
-		"<top_game_vote_ph/>" => $topGame ? $topGame->getVote() : "",
-		"<top_game_publication_date_ph/>" => $topGame ? $topGame->getPublicationDate() : "",
-		"<top_game_age_range_ph/>" => $topGame ? $topGame->getAgeRange() : "",
-		"<top_game_platforms_ph/>" => $consoles ? implode(", ",$consoles) : "Nessuna",
-		"<top_game_genres_ph/>" => $genres ? implode(", ",$genres) : "Nessuno",
-		"<top_game_developer/>" => $topGame ? $topGame->getDeveloper() : "Nessuno"
-);
+	$top5GamesList=$dbAccess->getTop5Games();
+	$topGame=$dbAccess->getTopGame();
 
-foreach ($replacements as $key => $value) {
-	$homePage=str_replace($key, $value, $homePage);
+
+
+
+
+	$top5GamesString=createTop5Games($top5GamesList);
+
+	$homePage=preg_replace("/\<top_5_games_ph\/\>/",$top5GamesString,$homePage);
+
+	//usa cosa da implementare: se il top game non esiste bisogna togliere il div relativo, non lasciarlo con i valori vuoti
+
+	$consoles= $topGame ? $topGame->getConsoles() : null;
+	$genres= $topGame ? $topGame->getGenres() : null;
+
+	//sostituzioni riguardanti il top_game
+	$replacements=array(
+			"<top_game_url_ph/>" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
+			"<top_game_name_ph/>" => $topGame ? $topGame->getName() : "",
+			"<top_game_img_path_ph/>" => $topGame ? "../".$topGame->getImage()->getPath() : "",
+			"<top_game_img_alt_ph/>" => $topGame ? $topGame->getImage()->getAlt() : "",
+			"<top_game_vote_ph/>" => $topGame ? $topGame->getVote() : "",
+			"<top_game_publication_date_ph/>" => $topGame ? $topGame->getPublicationDate() : "",
+			"<top_game_age_range_ph/>" => $topGame ? $topGame->getAgeRange() : "",
+			"<top_game_platforms_ph/>" => $consoles ? implode(", ",$consoles) : "Nessuna",
+			"<top_game_genres_ph/>" => $genres ? implode(", ",$genres) : "Nessuno",
+			"<top_game_developer/>" => $topGame ? $topGame->getDeveloper() : "Nessuno",
+
+			"<top_games_ph>" => "", // rimuovo i placeholder al limite dei topgames
+			"</top_games_ph>" => ""
+	);
+
+	foreach ($replacements as $key => $value) {
+		$homePage = str_replace($key, $value, $homePage);
+	}
+
+}else{
+	echo "no games<br/>";
+	$homePage = preg_replace("/<top_games_ph>(.*\n)*.*<\/top_games_ph>/", "", $homePage);
 }
 
 

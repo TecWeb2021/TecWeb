@@ -74,15 +74,18 @@ if($allOk && !$game=$dbAccess->getGame($gameToBeModifiedName)){
 
 //se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
 if(isset($_REQUEST['elimina'])){
-	$gameToBeDeletedName=$_REQUEST["elimina"];
+	$gameToBeDeletedName = $_REQUEST["elimina"];
 	echo "elimina: ".$gameToBeDeletedName."<br/>";
-	$opResult=$dbAccess->deleteGame($gameToBeDeletedName);
+	$opResult = $dbAccess->deleteGame($gameToBeDeletedName);
+	echo "delete result: ".$opResult."<br/>";
 	if($opResult){
 		$homePage = "eliminazione del gioco $gameToBeDeletedName riuscita";
 	}else{
 		$homePage = "eliminazione del gioco $gameToBeDeletedName fallita";
 	}
 }
+
+$oldGame = null;
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -370,11 +373,11 @@ if($allOk){
 			
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldGame ? $oldGame->getName() : "");
+$basePage = createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldGame ? $oldGame->getName() : "");
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+$basePage = str_replace("<page_content_ph/>", $homePage, $basePage);
 
-$basePage=replace($basePage);
+$basePage = replace($basePage);
 
 echo $basePage;
 
