@@ -1,6 +1,6 @@
-\section{Fase di Progettazione - OLD}
-Nella fase di progettazione ci siamo basati sul Responsive Web Design, tramite la definizione di Media Query e di
-breakpoint per gestire la problematica della variabilità dell'interfaccia, ottimizzando la visualizzazione in base al dispositivo.
+\section{ Fase di Progettazione}
+
+Il sito si basa sul concetto di Responsive Web Design. Tutte le pagine sono fatte in modo tale da adattarsi ai diversi contesti di utilizzo, mantenendo una coerenza estetica e di leggibilità in ogni occasione. Questo è reso possibile grazie al concetto di media query che rende il layout della pagina fluido tramite punti di rottura e ridimensionamenti dinamici. 
 Abbiamo deciso di utilizzare HTML5, rispettando la sintassi XML, garantendo in questo modo il supporto al passato e predisponendo un'ottimizzazione verso il futuro.
 In particolare abbiamo utilizzato dei tag input introdotti con HTML5, come ad esempio datalist, per suppotrare le fasi di ricerca degli utenti e di inserimento e modifica dei contenuti degli admin. 
 
@@ -12,33 +12,19 @@ Nella fasi di progettazione e sviluppo del sito sono stati perseguiti i seguenti
 	\item  \textbf{Accessibilità:} il sito deve essere accessibile a tutte le categorie di utenti.
 \end{itemize}
 
-\subsection{Attori}
-Sono stati individuati tre tipi di attori:
-\begin{itemize}
-	\item \textbf{Utente non registrato:} può visitare tutti i contenuti del sito, ma non può commentare le pagine. Può effettuare la registrazione attraverso un form apposito e diventare così un utente registrato;
-	\item \textbf{Utente registrato:} ha il permesso di accedere alla propria area riservata, dove può modificare le informazioni relative al suo account, può inoltre commentare nelle sezioni apposite;
-	\item \textbf{Admin:} è un utente registrato con dei permessi aggiuntivi. Può eliminare utenti e inserire, modificare ed eliminare giochi e notizie.
-\end{itemize}
-
-
-\section{ Fase di Progettazione}
-
-Il sito si basa sul concetto di Responsive Web Design. Tutte le pagine sono fatte in modo tale da adattarsi ai diversi contesti di utilizzo, mantenendo una coerenza estetica e di leggibilità in ogni occasione. Questo è reso possibile grazie al concetto di media query che rende il layout della pagina fluido tramite punti di rottura e ridimensionamenti dinamici.  
-
-
 \subsection{Classi di utenti:}
 Le possibili classi di utenti presenti nel sito sono tre:
 \begin{itemize}
-	\item Utente non registrato: Ha accesso a tutti i contenuti presenti nel sito ma non ha la possibilità di commentare. Può comunque ottenere questa funzionalità registrandosi al sito tramite l'apposito form “Registrati”.
-	\item Utente registrato: E' in grado di commentare sotto le recensioni dei giochi ed ha accesso alla propria area riservata dove può modificare i propri dati come e-mail, password e immagine del profilo.
-	\item Amministratore: E' l'utente con più privilegi in assoluto. Eredita tutte le funzionalità possedute da un normale utente registrato. Può aggiungere inoltre giochi e notizie al sito così come può anche modificare quelle già esistenti.
+	\item \textbf{Utente non registrato:} Ha accesso a tutti i contenuti presenti nel sito ma non ha la possibilità di commentare. Può comunque ottenere questa funzionalità registrandosi al sito tramite l'apposito form “Registrati”;
+	\item \textbf{Utente registrato:} E' in grado di commentare sotto le recensioni dei giochi ed ha accesso alla propria area riservata dove può modificare i propri dati come e-mail, password e immagine del profilo;
+	\item  \textbf{Admin:} E' l'utente con più privilegi in assoluto. Eredita tutte le funzionalità possedute da un normale utente registrato. Può aggiungere inoltre giochi e notizie al sito così come può anche modificare quelle già esistenti.
 \end{itemize}
 
 \subsection{Struttura del sito}
 
 Il sito si sviluppa in ampiezza piuttosto che in profondità per migliorare la navigabilità e ridurre il senso di disorientamento. La struttura si basa su due livelli di profondità (fatta eccezione del lato amministratore che ne può avere massimo quattro) per fare in modo che l'utente sia in grado di esplorare il sito in maniera veloce ed intuitiva. Nonostante l'organizzazione gerarchica molto semplice l'utente ha anche a disposizione degli strumenti per velocizzare ulteriormente la ricerca di un'informazione specifica.
 
-\subsubsection{Header:}
+\subsubsection{Header}
 All'interno dell'header, sulla sinistra, è presente il logo, il titolo ed il sottotitolo del sito. Sulla destra è presente una sezione che contiente l'immagine del profilo dell'utente (se presente), con due pulsanti login e registrati. Al di sotto di questi elementi è presente una barra orizzontale contenente il menu e la barra di ricerca.
 Il logo contiene un link che rimanda alla home del sito in quanto convenzione esterna presente in molti siti.
 L'immagine del profilo è un link con due comportamenti distinti a seconda se l'utente è loggato o meno.
@@ -51,9 +37,9 @@ L'immagine del profilo è un link con due comportamenti distinti a seconda se l'
 Il menu disposto orizzontalmente contiente tre link (home, giochi, notizie) che portano alle sezioni principali del sito.
 La barra di ricerca posta sulla destra dà la possibilità all'utente di cercare un gioco specifico e mostra i suggerimenti in base a quanto l'utente sta digitando. Questa funzionalità fa sì che chi vuole avere più informazioni riguardo un gioco in particolare lo possa fare direttamente senza dover visitare più pagine del sito.
 
-\subsubsection{Breadcrumb:}
+\subsubsection{Breadcrumb}
 Il breadcrumb è presente in tutte le pagine del sito, sia mobile che desktop.
 E' posto sotto l'header e mostra la posizione dell'utente all'interno del sito. Si struttura come una serie di link partendo dalla pagina con gerarchica più alta scendendo fino alla pagina in cui ci si trova. La pagina corrente non è un link in modo tale da evitare la presenza di link circolari.
 
-\subsubsection{Contenuto:}
+\subsubsection{Contenuto}
 Pagina Home: Questa pagina contiene le ultime notizie e alcune funzionalità

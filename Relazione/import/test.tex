@@ -1,5 +1,5 @@
 \section{Fase di Test}
-Tutte le pagine e il relativo codice sono stati sottoposti a una validazione attraverso alcuni strumenti:
+Tutte le pagine e il relativo codice sono stati sottoposti a una validazione attraverso i seguenti strumenti:
 \begin{itemize}
 	\item \textbf{TotalValidator Test:} per la validazione dei file HTML;
 	\item \textbf{Validatore CSS:} \url{https://validator.w3.org/};
@@ -14,21 +14,23 @@ I colori principali del sito sono il blu, il rosso, il nero ed il bianco. Come b
 \begin{center}
 	\renewcommand{\arraystretch}{1.8}
 	%\rowcolors{3}{cyan!100!black!15}{}
-	\begin{longtable}[H]{l l l}
+	\begin{longtable}[H]{| p{.18\hsize} | p{.18\hsize} | p{.18\hsize} |}
 		\caption{Valutazione contrasti}\\
-		\rowcolor[HTML]{FF9933}
+		\rowcolor[HTML]{C14638}
 		\multicolumn{1}{c}{\color[HTML]{FFFFFF} \textbf{Colore sfondo}} &
 		\multicolumn{1}{c}{\color[HTML]{FFFFFF} \textbf{Colore testo}} &
 		\multicolumn{1}{c}{\color[HTML]{FFFFFF} \textbf{Rapporto}} \\
-		\endhead
-		\#001840 & \#FFFFFF & 17.43:1\\
+		
+		\#600000 & \#FFFFFF & 14.02 \\
+		\hline
+		\#1B365D & \#FFFFFF & 12.12 \\
+		\hline
+		\#FFFFFF & \#000000 & 21 \\
+		\hline
+		\#FFFFFF & \#676767 & 5.65 \\
+		\hline
+		\#000000 & \#74C243 & 9.54 \\
+		\hline
 	\end{longtable}
 \end{center}
 
-
-
-SFONDO  \#600000    \#1B365D   \#FFFFFF    \#FFFFFF   \#000000
-
-LETTERE \#FFFFFF     \#FFFFFF   \#000000    \#676767   \#74C243
-
-RATIO   14.02       12.12     21         5.65       9.54
