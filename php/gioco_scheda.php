@@ -23,7 +23,7 @@ function replacePH($game, $isUserAdmin){
 		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
 		"<img_path_ph/>" => "../".$game->getImage()->getPath(),
 		"<img_alt_ph/>" => $game->getImage()->getAlt(),
-		"<publication_date_ph/>" => $game->getPublicationDate(),
+		"<publication_date_ph/>" => dateToText($game->getPublicationDate()),
 		"<game_name_ph/>" => $game->getName(),
 		"<sinopsis_ph/>" => $game->getSinopsis(),
 		"<platforms_ph/>" => $platforms,

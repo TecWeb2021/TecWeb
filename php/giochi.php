@@ -16,7 +16,7 @@ function createGameHTMLItem($game, $isAdmin=false){
 	echo "gamevoe: ".$game->getVote();
 	$replacements = array(
 		"<game_name_ph/>" => $game->getName(),
-		"<game_date_ph/>" => $game->getPublicationDate(),
+		"<game_date_ph/>" => dateToText($game->getPublicationDate()),
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_sinossi_ph/>" => $game->getSinopsis(),
 		"<img_path_ph/>" => "../".$game->getImage()->getPath(),

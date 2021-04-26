@@ -15,7 +15,7 @@ function createNewsHTMLItem($news, $isUserAdmin=false){
 	$item=file_get_contents("../html/templates/newsListItemTemplate.html");
 	
 	$replacements = array(
-		"<news_date_ph/>" => $news->getLastEditDateTime(),
+		"<news_date_ph/>" => dateToText($news->getLastEditDateTime()),
 		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),
 		"<news_title_ph/>" => $news->getTitle(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),

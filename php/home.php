@@ -23,7 +23,7 @@ function createNewsListItem($news, $isUserAdmin=false){
 
 	$replacements=array(
 		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),
-		"<news_publication_date_time_ph/>" => $news->getLastEditDateTime(),
+		"<news_publication_date_time_ph/>" => dateToText($news->getLastEditDateTime()),
 		"<news_title_ph/>" => $news->getTitle(),
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
@@ -134,7 +134,7 @@ if($gamesNum > 0){
 			"<top_game_img_path_ph/>" => $topGame ? "../".$topGame->getImage()->getPath() : "",
 			"<top_game_img_alt_ph/>" => $topGame ? $topGame->getImage()->getAlt() : "",
 			"<top_game_vote_ph/>" => $topGame ? $topGame->getVote() : "",
-			"<top_game_publication_date_ph/>" => $topGame ? $topGame->getPublicationDate() : "",
+			"<top_game_publication_date_ph/>" => $topGame ? dateToText($topGame->getPublicationDate()) : "",
 			"<top_game_age_range_ph/>" => $topGame ? $topGame->getAgeRange() : "",
 			"<top_game_platforms_ph/>" => $consoles ? implode(", ",$consoles) : "Nessuna",
 			"<top_game_genres_ph/>" => $genres ? implode(", ",$genres) : "Nessuno",

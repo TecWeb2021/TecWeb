@@ -22,7 +22,7 @@ function replacePH($news, $isUserAdmin){
 		"<img_alt_ph/>" => $imageAlt,
 		"<news_title_ph/>" => $news->getTitle(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
-		"<news_publication_date_ph/>" => $news->getLastEditDateTime(),
+		"<news_publication_date_ph/>" => dateToText($news->getLastEditDateTime()),
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_edit_ph/>" => "edit_notizia.php?news=".$news->getTitle()
 	);

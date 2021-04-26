@@ -340,6 +340,55 @@ function getOriginPage(){
 	}
 }
 
+function dateToText($date){
+	$parts = explode("-", $date);
+	$monthString = "";
+	switch($parts[1]){
+		case "01":
+			$monthString = "gennaio";
+			break;
+		case "02":
+			$monthString = "febbraio";
+			break;
+		case "03":
+			$monthString = "marzo";
+			break;
+		case "04":
+			$monthString = "aprile";
+			break;
+		case "05":
+			$monthString = "maggio";
+			break;
+		case "06":
+			$monthString = "giugno";
+			break;
+		case "07":
+			$monthString = "luglio";
+			break;
+		case "08":
+			$monthString = "agosto";
+			break;
+		case "09":
+			$monthString = "settembre";
+			break;
+		case "10":
+			$monthString = "ottobre";
+			break;
+		case "11":
+			$monthString = "novembre";
+			break;
+		case "12":
+			$monthString = "dicembre";
+			break;
+	}
+	return $parts[2] . " " . $monthString . " " . $parts[0];
+}
+
+function dateTimeToText($dateTime){
+	$parts = explode(" ", $dateTime);
+	return dateToText($parts[0]) . " " . $parts[1];
+}
+
 
 
 

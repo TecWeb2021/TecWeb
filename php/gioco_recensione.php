@@ -22,6 +22,7 @@ function replacePH($game, $isUserAdmin){
 		"<img_path_ph/>" => "../".$game->getImage()->getPath(),
 		"<img_alt_ph/>" => $game->getImage()->getAlt(),
 		"<review_content_ph/>" => $game->getReview(),
+		"<review_date_ph/>" => dateToText($game->getPublicationDate()),
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_name_ph/>" => $game->getName(),
 		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName()
@@ -57,7 +58,7 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 			"<comment_content_ph/>" => $com->getContent(),
 			"<comment_author_profile_img_path_ph/>" => $author->getImage() ? $author->getImage()->getPath() : "../images/login.png",
 			"<comment_author_ph/>" => $author->getUsername(),
-			"<comment_date_ph/>" => $com->getDateTime()
+			"<comment_date_ph/>" => dateTimeToText($com->getDateTime())
 		);
 
 		foreach ($replacements as $key => $value) {
