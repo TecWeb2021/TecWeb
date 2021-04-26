@@ -58,11 +58,12 @@ function createGamesDivs($gamesList, $isAdmin=false){
 function replaceConsoleCheckboxes($selectedArray, &$page){
 	// print_r($selectedArray);
 	// questo array deve corrispondere ai valori delle checkboxes, anche nell'ordine
-	$possible_consoles = array("PS4","PS5","Xbox One","Xbox Series X/S","Nintendo Switch");
-	foreach ($possible_consoles as $key => $value) {
+	// $possible_consoles = array("PS4","PS5","Xbox One","Xbox Series X/S","Nintendo Switch");
+	foreach (Game::$possible_consoles as $key => $value) {
 		$isChecked = in_array($value, $selectedArray);
 		$to_substitute = "";
 		if($isChecked === true){
+			echo $value ."<br/>";
 			$to_substitute = "checked = \"checked\"";
 		}
 		$page = str_replace("<checked_console_".$key."/>", $to_substitute, $page);
@@ -72,8 +73,8 @@ function replaceConsoleCheckboxes($selectedArray, &$page){
 
 function replaceGenresCheckboxes($selectedArray, &$page){
 	// questo array deve corrispondere ai valori delle checkboxes, anche nell'ordine
-	$possible_genres = array("FPS","Horror","GDR","Avventura","Puzzle","Azione");
-	foreach ($possible_genres as $key => $value) {
+	// $possible_genres = array("FPS","Horror","GDR","Avventura","Puzzle","Azione");
+	foreach (Game::$possible_genres as $key => $value) {
 		$isChecked = in_array($value, $selectedArray);
 		$to_substitute = "";
 		if($isChecked === true){
@@ -81,6 +82,34 @@ function replaceGenresCheckboxes($selectedArray, &$page){
 			
 		}
 		$page = str_replace("<checked_genere_".$key."/>", $to_substitute, $page);
+	}
+
+}
+
+function replaceYear1Checkboxes($selectedYear, &$page){
+	// questo array deve corrispondere ai valori delle checkboxes, anche nell'ordine
+	$possible_years = array("2020","2019","2018","2017","2016");
+	foreach ($possible_years as $key => $value) {
+		$isChecked = $value === $selectedYear;
+		$to_substitute = "";
+		if($isChecked === true){
+			$to_substitute = "checked = \"checked\"";
+		}
+		$page = str_replace("<checked_anno1_".$key."/>", $to_substitute, $page);
+	}
+
+}
+
+function replaceYear2Checkboxes($selectedYear, &$page){
+	// questo array deve corrispondere ai valori delle checkboxes, anche nell'ordine
+	$possible_years = array("2020","2019","2018","2017","2016");
+	foreach ($possible_years as $key => $value) {
+		$isChecked = $value === $selectedYear;
+		$to_substitute = "";
+		if($isChecked === true){
+			$to_substitute = "checked = \"checked\"";
+		}
+		$page = str_replace("<checked_anno2_".$key."/>", $to_substitute, $page);
 	}
 
 }
@@ -115,8 +144,10 @@ echo "ordine giochi: ".$order."<br/>";
 // FILTRI
 
 $yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
+replaceYear1Checkboxes($yearRangeStart, $homePage);
 #sanitize
 $yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
+replaceYear2Checkboxes($yearRangeEnd, $homePage);
 #sanitize
 
 //echo "anni: ".$yearRangeStart." - ".$yearRangeEnd."<br/>";
