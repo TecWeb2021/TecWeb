@@ -48,7 +48,7 @@ if(isset($_REQUEST['news'])){
 	$newsTitle=$_REQUEST['news'];
 	#sanitize;
 	$news = $dbAccess->getNews($newsTitle);
-	if($news==null){
+	if($news === null){
 		echo "la notizia specificata non è stata trovata";
 	}else{
 		replacePH($news, $isAdmin);
