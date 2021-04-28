@@ -184,7 +184,7 @@ function getLoggedUser($dbAccess){
 	if(isset($_COOKIE['login'])){
 		$hash=$_COOKIE['login'];
 		#sanitize
-		$user=$dbAccess->getUserByHash($hash);
+		$user = $dbAccess->getUserByHash($hash);
 	}
 	return $user;
 }

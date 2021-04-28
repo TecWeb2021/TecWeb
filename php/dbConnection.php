@@ -64,6 +64,10 @@ class DBAccess {
 
     }
 
+    ////////////////////
+    // USER
+    ///////////////////
+
     public function getUsersList(){
         $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path";
         $result=mysqli_query($this->connection, $query);
@@ -83,6 +87,7 @@ class DBAccess {
     }
 
     public function getUser($username){
+        $username = mysqli_real_escape_string($this->connection, $username);
         $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path WHERE Username='$username'";
         $result=mysqli_query($this->connection, $query);
 
@@ -97,28 +102,80 @@ class DBAccess {
         }
     }
 
-    public function insertUser($name=null){
-        if($name==null){
-            return;
+    public function getUserByHash($hashValue){
+        $hashValue = mysqli_real_escape_string($this->connection, $hashValue);
+        $query="SELECT * FROM users LEFT JOIN images ON users.Image=images.Path WHERE hash='$hashValue'"; // ' ' or ''=' '
+        // echo "getUserByHash query: " . $query. "<br/>";
+        $queryResult = mysqli_query($this->connection, $query);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult);
+            $image=null;
+            if($row['Image']!=null){
+                $image=new Image($row['Path'], $row['Alt']);
+            }
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
+
+        return $user;
         }
-        $querySelect="SELECT MAX(id) FROM users WHERE true";
-        $queryResult = mysqli_query($this->connection, $querySelect);
-        $riga = mysqli_fetch_assoc($queryResult);
-        foreach ($riga as $field => $value) { // I you want you can right this line like this: foreach($row as $value) {
-            echo "<td>" ."ciao". $value . "</td>"; // I just did not use "htmlspecialchars()" function. 
-            $maxId=$value;
+    }
+
+    public function addUser($user){
+        $name=$user->getUsername();
+        $hash=$user->getHash();
+        $isAdmin=$user->IsAdmin();
+        $image=$user->getImage();
+        $email=$user->getEmail();
+
+        $imagePath="";
+        $imageAlt="";
+        #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
+        $result=null;
+        if($image){
+            $imagePath=$image->getPath();
+            $imageAlt=$image->getAlt();
+            echo "imageAlt: ".$imageAlt."<br/>";
+            $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+            $result=$this->getResult($query);
+            if($result==null){
+                return null;
+            }
         }
-        $querySelect ="INSERT INTO users (id,name) VALUES ('$maxId'+1,'$name');";
-        $queryResult = mysqli_query($this->connection, $querySelect);
+
+        $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, '$imagePath', '$email');";
+        echo "query: ".$query."<br/>";
+        $result=$this->getResult($query);
+        return $result;
     }
 
     public function deleteUser($username){
+        $username = mysqli_real_escape_string($this->connection, $username);
         $query="DELETE FROM users WHERE Username='$username'";
         $queryResult = mysqli_query($this->connection, $query);
         $sq=$queryResult==null? "null":"not null";
         echo "delete query result: ".$sq."<br/>"."<br/>";
         echo mysqli_error($this->connection)."<br/>";
     }
+
+    public function overwriteUser($user){
+        $username=$user->getUsername();
+        $hash=$user->getHash();
+        $isAdmin=$user->isAdmin();
+        $image=$user->getImage();
+        $imagePath= $image ? $image->getPath() : null;
+        $this->addImage($image);
+        $email=$user->getEmail();
+
+        $query="UPDATE users SET Hash='$hash', IsAdmin=$isAdmin, Image='$imagePath', Email='$email' WHERE Username='$username'";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    //////////////////
+    ////NEWS
+    //////////////////
 
     public function getNewsList($gameName=null, $category=null, $newsName=null) {
         
@@ -183,12 +240,65 @@ class DBAccess {
         }
     }
 
-    public function getTableList($name){
-        $name=preg_replace("/[^a-zA-Z0-9_]/","",$name);
-        $query ="SELECT * FROM $name";
+    public function addNews($news){
+        $title = $news->getTitle();
+        $content=$news->getContent()==null ? "NULL" : $news->getContent();
+        $author = $news->getAuthor();
+        $authorUsername = $author->getUsername();
+        $last_edit_date_time = $news->getLastEditDateTime();
+        $image = $news->getImage();
+        $imagePath = "NULL";
+        $imageAlt = "NULL";
+        if($image){
+            $imagePath = $image->getPath();
+            $imageAlt = $image->getAlt();
+        }
+        $category = $news->getCategory()==null ? "NULL" : $news->getCategory();
+        $gameName = $news->getGameName();
+
+        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+        echo "image insertion"."<br/>";
+        $this->getResult($query);
+
+        echo "news insertion"."<br/>";
+        $content=addslashes($content);
+        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`, `Game`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category','$gameName')";
+
+        echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
         return $result;
     }
+
+    function deleteNews($newsTitle){
+        $query="DELETE FROM news WHERE Title='$newsTitle'";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function overwriteNews($oldNewsTitle, $newNews){
+        // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
+        $title=$newNews->getTitle();
+        $content=$newNews->getContent();
+        $author=$newNews->getAuthor()->getUsername();
+        $edit_date_time=$newNews->getLastEditDateTime();
+        $image=$newNews->getImage();
+        $this->addImage($image);
+        $category=$newNews->getCategory();
+        $game=$newNews->getGameName();
+        
+        $imagePath= $image ? $image->getPath() : null;
+        $imageAlt= $image ? $image->getAlt() : null;
+
+        //manca l'eventuale inserimento dell'immagine
+
+        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image='$imagePath', Category='$category', Game='$game' WHERE Title='$oldNewsTitle'";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    //////////////////
+    ////GAME
+    //////////////////
 
     public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null, $consoles=null, $genres=null){
         //le console effettive le cerco più in basso, però faccio il join con le rispettive tabelle anche qui perchè voglio trovare solo giochi che abbiano le console specificate (anche nessuna)
@@ -418,154 +528,6 @@ class DBAccess {
         }
     }
 
-    public function getImages($order=null){
-
-        $query ="SELECT * FROM images";
-
-        $orderQueryAppend= $order=="path asc" ? "ORDER BY images.Path ASC" : "";
-        $query=$query." ".$orderQueryAppend;
-        $queryResult = mysqli_query($this->connection, $query);
-        
-        if(mysqli_num_rows($queryResult) == 0) {
-            return null;
-        }else {
-            $imagesList = array();
-            while ($row = mysqli_fetch_assoc($queryResult)) {
-                $image=new Image($row['Path'],$row['Alt']);
-                array_push($imagesList, $image);
-            }
-            return $imagesList;
-        }
-    }
-
-    public function getUserByHash($hashValue){
-        $query="SELECT * FROM users LEFT JOIN images ON users.Image=images.Path WHERE hash='$hashValue'";
-        $queryResult = mysqli_query($this->connection, $query);
-        
-        if(mysqli_num_rows($queryResult) == 0) {
-            return null;
-        }else {
-            $row = mysqli_fetch_assoc($queryResult);
-            $image=null;
-            if($row['Image']!=null){
-                $image=new Image($row['Path'], $row['Alt']);
-            }
-            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
-
-        return $user;
-        }
-    }
-
-    public function addUser($user){
-        $name=$user->getUsername();
-        $hash=$user->getHash();
-        $isAdmin=$user->IsAdmin();
-        $image=$user->getImage();
-        $email=$user->getEmail();
-
-        $imagePath="";
-        $imageAlt="";
-        #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
-        $result=null;
-        if($image){
-            $imagePath=$image->getPath();
-            $imageAlt=$image->getAlt();
-            echo "imageAlt: ".$imageAlt."<br/>";
-            $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-            $result=$this->getResult($query);
-            if($result==null){
-                return null;
-            }
-        }
-
-        $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, '$imagePath', '$email');";
-        echo "query: ".$query."<br/>";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-    public function overwriteUser($user){
-        $username=$user->getUsername();
-        $hash=$user->getHash();
-        $isAdmin=$user->isAdmin();
-        $image=$user->getImage();
-        $imagePath= $image ? $image->getPath() : null;
-        $this->addImage($image);
-        $email=$user->getEmail();
-
-        $query="UPDATE users SET Hash='$hash', IsAdmin=$isAdmin, Image='$imagePath', Email='$email' WHERE Username='$username'";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-    public function addImage($image){
-        if(!$image){
-            return null;
-        }
-        $imagePath=$image->getPath();
-        $imageAlt=$image->getAlt();
-        $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-    public function addNews($news){
-        $title = $news->getTitle();
-        $content=$news->getContent()==null ? "NULL" : $news->getContent();
-        $author = $news->getAuthor();
-        $authorUsername = $author->getUsername();
-        $last_edit_date_time = $news->getLastEditDateTime();
-        $image = $news->getImage();
-        $imagePath = "NULL";
-        $imageAlt = "NULL";
-        if($image){
-            $imagePath = $image->getPath();
-            $imageAlt = $image->getAlt();
-        }
-        $category = $news->getCategory()==null ? "NULL" : $news->getCategory();
-        $gameName = $news->getGameName();
-
-        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "image insertion"."<br/>";
-        $this->getResult($query);
-
-        echo "news insertion"."<br/>";
-        $content=addslashes($content);
-        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`, `Game`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category','$gameName')";
-
-        echo "query: ".$query."<br/>";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-    public function updateNews($news){
-        $title=$news->getTitle();
-        $content=$news->getContent()==null ? "NULL" : $news->getContent();
-        $author=$news->getAuthor();
-        $authorUsername=$author->getUsername();
-        $last_edit_date_time=$news->getLastEditDateTime();
-        $image=$news->getImage();
-        $imagePath="NULL";
-        $imageAlt="NULL";
-        if($image){
-            $imagePath=$image->getPath();
-            $imageAlt=$image->getAlt();
-        }
-        $category=$news->getCategory()==null ? "NULL" : $news->getCategory();
-
-        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "image insertion"."<br/>";
-        $this->getResult($query);
-
-        echo "news insertion"."<br/>";
-        $content=addslashes($content);
-        $query="UPDATE news SET User='$authorUsername', Last_edit_date='$last_edit_date_time', Image='$imagePath', Category='$category', Content='$content' WHERE Title='$title'";
-
-        echo "query: ".$query."<br/>";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
     public function addGame($game){
         $name = $game->getName();
         $date = $game->getPublicationDate();
@@ -627,6 +589,12 @@ class DBAccess {
             }
 
         }
+        return $result;
+    }
+
+    function deleteGame($gameName){
+        $query="DELETE FROM games WHERE Name='$gameName'";
+        $result=$this->getResult($query);
         return $result;
     }
 
@@ -721,42 +689,51 @@ class DBAccess {
         return $result;
     }
 
-    /*
-    $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category')";
-    */
+    //////////////////
+    ////IMAGE
+    //////////////////
 
-    function overwriteNews($oldNewsTitle, $newNews){
-        // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
-        $title=$newNews->getTitle();
-        $content=$newNews->getContent();
-        $author=$newNews->getAuthor()->getUsername();
-        $edit_date_time=$newNews->getLastEditDateTime();
-        $image=$newNews->getImage();
-        $this->addImage($image);
-        $category=$newNews->getCategory();
-        $game=$newNews->getGameName();
+    public function getImages($order=null){
+
+        $query ="SELECT * FROM images";
+
+        $orderQueryAppend= $order=="path asc" ? "ORDER BY images.Path ASC" : "";
+        $query=$query." ".$orderQueryAppend;
+        $queryResult = mysqli_query($this->connection, $query);
         
-        $imagePath= $image ? $image->getPath() : null;
-        $imageAlt= $image ? $image->getAlt() : null;
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $imagesList = array();
+            while ($row = mysqli_fetch_assoc($queryResult)) {
+                $image=new Image($row['Path'],$row['Alt']);
+                array_push($imagesList, $image);
+            }
+            return $imagesList;
+        }
+    }
 
-        //manca l'eventuale inserimento dell'immagine
 
-        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image='$imagePath', Category='$category', Game='$game' WHERE Title='$oldNewsTitle'";
+    public function addImage($image){
+        if(!$image){
+            return null;
+        }
+        $imagePath=$image->getPath();
+        $imageAlt=$image->getAlt();
+        $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
         $result=$this->getResult($query);
         return $result;
     }
 
-
-    function addComment($comment){
-        $authorName = $comment->getAuthorName();
-        $gameName = $comment->getGameName();
-        $date_time = $comment->getDateTime();
-        $content = addslashes( $comment->getContent() );
-
-        $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
+    function deleteImage($imagePath){
+        $query="DELETE FROM images WHERE Path='$imagePath'";
         $result=$this->getResult($query);
         return $result;
     }
+
+    ////////////////
+    ///////COMMENT
+    ////////////////
 
     function getCommentsList($gameName=null, $order="date_time desc"){
         $query="SELECT * FROM comments";
@@ -776,27 +753,18 @@ class DBAccess {
             return $commentsList;
         }
 
-
     }
 
-    //the three functions below just remove things from the db
-    function deleteNews($newsTitle){
-        $query="DELETE FROM news WHERE Title='$newsTitle'";
+    function addComment($comment){
+        $authorName = $comment->getAuthorName();
+        $gameName = $comment->getGameName();
+        $date_time = $comment->getDateTime();
+        $content = addslashes( $comment->getContent() );
+
+        $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
         $result=$this->getResult($query);
         return $result;
     }
-
-    function deleteGame($gameName){
-        $query="DELETE FROM games WHERE Name='$gameName'";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
-    function deleteImage($imagePath){
-        $query="DELETE FROM images WHERE Path='$imagePath'";
-        $result=$this->getResult($query);
-        return $result;
-    }
-
+    
 }
 ?>

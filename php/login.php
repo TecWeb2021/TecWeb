@@ -17,7 +17,7 @@ if($user){
 	$homePage="Hai già fatto il login";
 }else{
 	if(isset($_REQUEST['nomeUtente'])){
-		echo "almeno un valore rilevato";
+		echo "almeno un valore rilevato" . "<br/>";
 
 		$username = $_REQUEST['nomeUtente'];
 		$password = $_REQUEST['password'];
@@ -33,11 +33,9 @@ if($user){
 
 		if($username === null || $username === ""){
 			$error_message = $error_message . $error_messages['username'] . "<br/>";
-			echo "username";
 		}
 		if($password === null || $password === ""){
 			$error_message = $error_message . $error_messages['password'] . "<br/>";
-			echo "pass";
 		}
 
 		if($error_message !== ""){
