@@ -32,14 +32,18 @@ class DBAccess {
 
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
+    // questa funzione fa solo la chiamata al database e restituisce qualunque cosa riceva
     public function getResult($query, $silent = true){
         $querySelect ="$query";
         if(!$silent){
             echo "db query: ".$querySelect."<br/>";
         }
         $queryResult = mysqli_query($this->connection, $querySelect);
-        /*echo "query result: ".$queryResult;*/
-        if($queryResult==true){
+        return $queryResult;
+        /*
+        echo "query result: <br/>";
+        print_r($queryResult) . "<br/>";
+        if($queryResult === true){
             return $queryResult;
         }
 
@@ -55,14 +59,27 @@ class DBAccess {
 
             //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
             //mysqli_fetch_assoc (in maniera associativa)
-            while ($row = mysql_fetch_assoc($resultList)) {
+            while ($row = mysqli_fetch_assoc($resultList)) {
                 array_push($resultList, $row);
             }
             #restituisce un array di array. Gli array contenutivi sono le righe del database.
             return $resultList;
-        }
-
+        }*/
     }
+
+
+    // se possibile, converte un mysqli_result in un array associativo
+    // ogni elemento dell'array sarà una riga del database, con i nomi delle colonne preservati
+    /*public function mySqliResultToArray($result){
+        if($result === null || $result === true || $result === false){
+            return null;
+        }
+        $newArr = array();
+        while($row = mysqli_fetch_assoc($result)){
+            array_push($newArr, $row);
+        }
+        return $newArr;
+    }*/
 
     ////////////////////
     // USER
@@ -70,35 +87,49 @@ class DBAccess {
 
     public function getUsersList(){
         $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path";
-        $result=mysqli_query($this->connection, $query);
-
-        if(mysqli_num_rows($result) ==0){
+        $result = $this->getResult($query);
+        if($result === null){
             return null;
-        }else{
-            $usersList=array();
-            while($row=mysqli_fetch_assoc($result)){
-                //print_r($row);
-                $image= $row['Image']=="" ? null : new Image($row['Path'], $row['Alt']);
-                $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
-                array_push($usersList, $user);
-            }
-            return $usersList;
         }
+        if($result === true){
+            return null;
+        }
+        if($result === false){
+            return null;
+        }
+
+        $usersList=array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $image= $row['Image']=="" ? null : new Image($row['Path'], $row['Alt']);
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
+            array_push($usersList, $user);
+        }
+        return $usersList;
     }
 
     public function getUser($username){
         $username = mysqli_real_escape_string($this->connection, $username);
         $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path WHERE Username='$username'";
-        $result=mysqli_query($this->connection, $query);
+        $result = $this->getResult($query);
+        switch ($result) {
+            case null:
+                return null;
+                break;
+            case true:
+                return null;
+                break;
+            case false;
+                return null;
+                break;
+        }
 
-        if(mysqli_num_rows($result) ==0){
-            return null;
-        }else{
+        if(mysqli_num_rows($result) > 0){
             $row=mysqli_fetch_assoc($result);
             $image= $row['Image']=="" ? null : new Image($row['Path'], $row['Alt']);
             $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], $image, $row['Email']);
-            
             return $user;
+        }else{
+            return null;
         }
     }
 
@@ -106,9 +137,9 @@ class DBAccess {
         $hashValue = mysqli_real_escape_string($this->connection, $hashValue);
         $query="SELECT * FROM users LEFT JOIN images ON users.Image=images.Path WHERE hash='$hashValue'"; // ' ' or ''=' '
         // echo "getUserByHash query: " . $query. "<br/>";
-        $queryResult = mysqli_query($this->connection, $query);
+        $queryResult = $this->getResult($query);
         
-        if(mysqli_num_rows($queryResult) == 0) {
+        if(mysqli_num_rows($queryResult) < 1) {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
@@ -177,7 +208,7 @@ class DBAccess {
     ////NEWS
     //////////////////
 
-    public function getNewsList($gameName=null, $category=null, $newsName=null) {
+    /*public function getNewsList($gameName=null, $category=null, $newsName=null) {
         
         $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
         if($gameName != null){
@@ -216,6 +247,49 @@ class DBAccess {
             }
             return $newsList;
         }
+    }*/
+    public function getNewsList($gameName=null, $category=null, $newsName=null) {
+        
+        $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
+        if($gameName != null){
+            $query=$query." WHERE news.Category='Giochi' AND news.Game='$gameName'";
+            if($category != null){
+                $query=$query." AND news.Category='$category'";
+            }
+            if($newsName){
+                $query=$query." AND news.Title LIKE '%$newsName%'";
+            }
+
+        }elseif($category != null){
+            $query=$query." WHERE news.Category='$category'";
+            if($newsName){
+                $query=$query." AND news.Title LIKE '%$newsName%'";
+            }
+        }elseif($newsName){
+            $query=$query." WHERE news.Title LIKE '%$newsName%'";
+        }
+        
+        
+        $result = $this->getResult($query);
+        if($result === null){
+            return null;
+        }
+        if($result === true){
+            return null;
+        } 
+        if($result === false){
+            return null;
+        }
+
+        $newsList = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $image=new Image($row['Path'], $row['Alt']);
+            $user=new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
+            $news=new News($row['Title'], $row['Content'], $user, $row['Last_edit_date'], $image, $row['Category'], $row['Game']);
+            array_push($newsList, $news);
+            
+        }
+        return $newsList;
     }
 
     public function getNews($title){
@@ -498,7 +572,7 @@ class DBAccess {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
-            print_r($row);
+            // print_r($row);
             $consoles=$this->getConsoles($row['Name']);
             $genres=$this->getGenres($row['Name']);
 
@@ -628,26 +702,22 @@ class DBAccess {
             $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image='$imagePath', Developer='$developer' WHERE Name='$oldGameName'";
             $result=$this->getResult($query);
         }
-
-        echo "step1"."<br/>";
         if($result){
             if($result){
-                echo "step2"."<br/>";
                 $query="DELETE FROM games_consoles WHERE Game='$oldGameName'";
                 $result=$this->getResult($query);
             }
-            echo "partial result".($result==true ? "true" : "false")."<br/>";
+
             if($result){
-                echo "step3"."<br/>";
                 $query="DELETE FROM games_genres WHERE Game='$oldGameName'";
                 $result=$this->getResult($query);
             }
 
-            echo "comincio a inserire i nuovi valori per le console e i generi"."<br/>";
+
             if($result && $consoles){
-                echo "step4"."<br/>";
+
                 foreach ($consoles as $value) {
-                    echo "$name : $value"."<br/>";
+
                     $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
                     $result=$this->getResult($query);
                     if(!$result){
@@ -657,13 +727,10 @@ class DBAccess {
                 }
             }
             if($result && $genres){
-                echo "step5"."<br/>";
                 foreach ($genres as $value) {
-                    echo "$name : $value"."<br/>";
                     $query="INSERT INTO games_genres VALUES ('$name', '$value')";
                     $result=$this->getResult($query);
                     if(!$result){
-                        echo "problem"."<br/>";
                         break;
                     }
                 }
@@ -746,6 +813,7 @@ class DBAccess {
             return null;
         }else {
             $commentsList = array();
+            echo "commentsDBResult: " . "";
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 $comment=new Comment($row['Author'],$row['Game'], $row['Date_time'],$row['Content']);
                 array_push($commentsList, $comment);
