@@ -51,7 +51,7 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 	}
 	$commentsString="";
 	foreach ($commentsList as $com) {
-		$author=$dbAccess->getUser($com->getAuthorName());
+		$author = $dbAccess->getUser($com->getAuthorName());
 		$s=$commentTemplate;
 
 		$replacements = array(

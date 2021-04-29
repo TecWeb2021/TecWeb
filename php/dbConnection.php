@@ -111,16 +111,13 @@ class DBAccess {
         $username = mysqli_real_escape_string($this->connection, $username);
         $query="SELECT * FROM users LEFT JOIN images ON users.image=images.path WHERE Username='$username'";
         $result = $this->getResult($query);
-        switch ($result) {
-            case null:
-                return null;
-                break;
-            case true:
-                return null;
-                break;
-            case false;
-                return null;
-                break;
+
+        if($result === null){
+            return null;
+        } elseif ($result === true){
+            return null;
+        } elseif ($result === false){
+            return null;
         }
 
         if(mysqli_num_rows($result) > 0){
