@@ -1,0 +1,24 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {section}{\numberline {1}Analisi}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Analisi dell'utenza}{2}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Ricerca}{2}{subsubsection.1.1.1}%
+\contentsline {section}{\numberline {2} Fase di Progettazione}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Obiettivi}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Classi di utenti:}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Struttura del sito}{3}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Header}{4}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Breadcrumb}{4}{subsubsection.2.3.2}%
+\contentsline {subsubsection}{\numberline {2.3.3}Contenuto}{4}{subsubsection.2.3.3}%
+\contentsline {section}{\numberline {3}Fase di Realizzazione}{5}{section.3}%
+\contentsline {section}{\numberline {4}Presentazione}{6}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Desktop}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Mobile}{6}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Print}{6}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Comportamento}{7}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Javascript}{7}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}BackEnd}{8}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Classi}{8}{subsubsection.5.2.1}%
+\contentsline {paragraph}{DBAccess}{9}{section*.4}%
+\contentsline {section}{\numberline {6}Fase di Test}{10}{section.6}%
+\contentsline {subsubsection}{\numberline {6.0.1}Colori}{10}{subsubsection.6.0.1}%
