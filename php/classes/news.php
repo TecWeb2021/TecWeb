@@ -14,18 +14,20 @@ class News{
 	protected $content;
 	protected $author;
 	protected $last_edit_date_time;
-	protected $image;
+	protected $image1;
+	protected $image2;
 	protected $category;
 	protected $gameName;
 
 	public static $possible_categories = array("Hardware", "Giochi", "Eventi");
 
-	function __construct($_title, $_content, $_author, $_last_edit_date_time, $_image, $_category, $_gameName = null){
+	function __construct($_title, $_content, $_author, $_last_edit_date_time, $_image1, $_image2, $_category, $_gameName = null){
 		$this->title = $_title;
 		$this->content = $_content;
 		$this->author = $_author;
 		$this->last_edit_date_time = $_last_edit_date_time;
-		$this->image = $_image;
+		$this->image1 = $_image1;
+		$this->image2 = $_image2;
 		$this->category = $_category;
 		$this->gameName = $_gameName;
 	}
@@ -46,8 +48,12 @@ class News{
 		return $this->last_edit_date_time;
 	}
 
-	function getImage(){
-		return $this->image;
+	function getImage1(){
+		return $this->image1;
+	}
+
+	function getImage2(){
+		return $this->image2;
 	}
 
 	function getCategory(){

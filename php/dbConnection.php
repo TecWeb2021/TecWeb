@@ -444,7 +444,7 @@ class DBAccess {
         }
 
         //le console effettive le cerco più in basso, però faccio il join con le rispettive tabelle anche qui perchè voglio trovare solo giochi che abbiano le console specificate (anche nessuna)
-        $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
+        $query="SELECT games.*, i1.Path as Path1, i1.Alt as Alt1, i2.Path as Path2, i2.Alt as Alt2 FROM games LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
 
         $to_append_strings = array();
 
@@ -556,9 +556,10 @@ class DBAccess {
                 $consoles=$this->getConsoles($gameName);
                 $genres=$this->getGenres($gameName);
 
-                $image = new Image($row['Path'],$row['Alt']);
+                $image1 = new Image($row['Path1'],$row['Alt1']);
+                $image2 = new Image($row['Path2'],$row['Alt2']);
 
-                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image, $consoles, $genres, $row['Developer']);
+                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image1 , $image2, $consoles, $genres, $row['Developer']);
                 array_push($gamesList, $game);
             }
 
@@ -570,7 +571,7 @@ class DBAccess {
 
         $name = mysqli_real_escape_string($this->connection, $name);
         //specifico i campi da visualizzare perchè non voglio avere 2 Prequel e 2 Sequel, così possono prendere il sequel semplicemente indicando ['Sequel'] e stessa cosa per il prequel
-        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
+        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, i1.Path as Path1, i1.Alt as Alt1, i2.Path as Path2, i2.Alt as Alt2 FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path WHERE games.Name='$name'";
         $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -581,8 +582,9 @@ class DBAccess {
             $consoles=$this->getConsoles($name);
             $genres=$this->getGenres($name);
 
-            $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
+            $image1 = new Image($row['Path1'],$row['Alt1']);
+            $image2 = new Image($row['Path2'],$row['Alt2']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
         return $game;
         }
@@ -640,7 +642,7 @@ class DBAccess {
     }
 
     public function getTopGame(){
-        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path LIMIT 1";
+        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, i1.Path as Path1, i1.Alt as Alt1, i2.Path as Path2, i2.Alt as Alt2 FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path LIMIT 1";
         $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -651,15 +653,16 @@ class DBAccess {
             $consoles=$this->getConsoles($row['Name']);
             $genres=$this->getGenres($row['Name']);
 
-            $image=new Image($row['Path'],$row['Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'] );
+            $image1 = new Image($row['Path1'],$row['Alt1']);
+            $image2 = new Image($row['Path2'],$row['Alt2']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'] );
 
         return $game;
         }
     }
 
     public function getTop5Games(){
-        $querySelect ="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path ORDER BY games.Vote DESC LIMIT 5";
+        $querySelect ="SELECT games.*, i1.Path, i2.Alt, i2.Path, i2.Alt FROM games LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path ORDER BY games.Vote DESC LIMIT 5";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
