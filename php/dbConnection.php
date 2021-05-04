@@ -151,14 +151,20 @@ class DBAccess {
     }
 
     public function addUser($user){
-        $name=$user->getUsername();
-        $hash=$user->getHash();
-        $isAdmin=$user->IsAdmin();
-        $image=$user->getImage();
-        $email=$user->getEmail();
+        $name = $user->getUsername();
+		$name = mysqli_real_escape_string($this->connection, $name);
+        $hash = $user->getHash();
+		$hash = mysqli_real_escape_string($this->connection, $hash);
+        $isAdmin = $user->IsAdmin();
+		$isAdmin = mysqli_real_escape_string($this->connection, $isAdmin);
+        $image = $user->getImage();
+		$image = mysqli_real_escape_string($this->connection, $image);
+        $email = $user->getEmail();
+		$email = mysqli_real_escape_string($this->connection, $email);
 
-        $imagePath="";
-        $imageAlt="";
+        $imagePath = "";
+        $imageAlt = "";
+
         #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
         $result=null;
         if($image){
@@ -171,6 +177,9 @@ class DBAccess {
                 return null;
             }
         }
+
+        $imagePath = mysqli_real_escape_string($this->connection, $imagePath);
+        $imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
 
         $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, '$imagePath', '$email');";
         echo "query: ".$query."<br/>";
@@ -189,12 +198,19 @@ class DBAccess {
 
     public function overwriteUser($user){
         $username=$user->getUsername();
+		$username = mysqli_real_escape_string($this->connection, $username);
         $hash=$user->getHash();
+		$hash = mysqli_real_escape_string($this->connection, $hash);
         $isAdmin=$user->isAdmin();
+		$isAdmin = mysqli_real_escape_string($this->connection, $isAdmin);
         $image=$user->getImage();
+		$image = mysqli_real_escape_string($this->connection, $image);
         $imagePath= $image ? $image->getPath() : null;
-        $this->addImage($image);
+		$imagePath = mysqli_real_escape_string($this->connection, $imagePath);
         $email=$user->getEmail();
+		$email = mysqli_real_escape_string($this->connection, $email);
+
+        $this->addImage($image);
 
         $query="UPDATE users SET Hash='$hash', IsAdmin=$isAdmin, Image='$imagePath', Email='$email' WHERE Username='$username'";
         $result=$this->getResult($query);
@@ -246,6 +262,10 @@ class DBAccess {
         }
     }*/
     public function getNewsList($gameName=null, $category=null, $newsName=null) {
+
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+        $category = mysqli_real_escape_string($this->connection, $category);
+        $newName = mysqli_real_escape_string($this->connection, $newsName);
         
         $query="SELECT * FROM news LEFT JOIN images ON news.image=images.path LEFT JOIN users ON news.User=users.Username";
         if($gameName != null){
@@ -290,6 +310,9 @@ class DBAccess {
     }
 
     public function getNews($title){
+
+        $title = mysqli_real_escape_string($this->connection, $title);
+
         $query="SELECT *, news.Image as newsImage FROM news LEFT JOIN users ON news.User=users.Username LEFT JOIN images ON news.Image=images.Path WHERE news.Title='$title'";
 
         $queryResult = mysqli_query($this->connection, $query);
@@ -313,19 +336,31 @@ class DBAccess {
 
     public function addNews($news){
         $title = $news->getTitle();
+		$title  = mysqli_real_escape_string($this->connection, $title );
         $content=$news->getContent()==null ? "NULL" : $news->getContent();
+		$content = mysqli_real_escape_string($this->connection, $content);
         $author = $news->getAuthor();
+		$author  = mysqli_real_escape_string($this->connection, $author );
         $authorUsername = $author->getUsername();
+		$authorUsername  = mysqli_real_escape_string($this->connection, $authorUsername );
         $last_edit_date_time = $news->getLastEditDateTime();
         $image = $news->getImage();
+		$image  = mysqli_real_escape_string($this->connection, $image );
+
         $imagePath = "NULL";
         $imageAlt = "NULL";
         if($image){
             $imagePath = $image->getPath();
             $imageAlt = $image->getAlt();
         }
+
+        $imagePath  = mysqli_real_escape_string($this->connection, $imagePath );
+        $imageAlt  = mysqli_real_escape_string($this->connection, $imageAlt );
+
         $category = $news->getCategory()==null ? "NULL" : $news->getCategory();
+		$category  = mysqli_real_escape_string($this->connection, $category );
         $gameName = $news->getGameName();
+		$gameName  = mysqli_real_escape_string($this->connection, $gameName );
 
         $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
         echo "image insertion"."<br/>";
@@ -341,24 +376,38 @@ class DBAccess {
     }
 
     function deleteNews($newsTitle){
+        $newsTitle = mysqli_real_escape_string($this->connection, $newsTitle);
+
         $query="DELETE FROM news WHERE Title='$newsTitle'";
         $result=$this->getResult($query);
         return $result;
     }
 
+    // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
     function overwriteNews($oldNewsTitle, $newNews){
-        // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
+        $oldNewsTitle = mysqli_real_escape_string($this->connection, $oldNewsTitle);
+        
         $title=$newNews->getTitle();
+		$title = mysqli_real_escape_string($this->connection, $title);
         $content=$newNews->getContent();
+		$content = mysqli_real_escape_string($this->connection, $content);
         $author=$newNews->getAuthor()->getUsername();
+		$author = mysqli_real_escape_string($this->connection, $author);
         $edit_date_time=$newNews->getLastEditDateTime();
+		$edit_date_time = mysqli_real_escape_string($this->connection, $edit_date_time);
         $image=$newNews->getImage();
-        $this->addImage($image);
+		$image = mysqli_real_escape_string($this->connection, $image);
         $category=$newNews->getCategory();
+		$category = mysqli_real_escape_string($this->connection, $category);
         $game=$newNews->getGameName();
+		$game = mysqli_real_escape_string($this->connection, $game);
+
+        $this->addImage($image);
         
         $imagePath= $image ? $image->getPath() : null;
+		$imagePath = mysqli_real_escape_string($this->connection, $imagePath);
         $imageAlt= $image ? $image->getAlt() : null;
+		$imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
 
         //manca l'eventuale inserimento dell'immagine
 
@@ -372,6 +421,28 @@ class DBAccess {
     //////////////////
 
     public function getGamesList($gameName=null, $yearRangeStart=null, $yearRangeEnd=null, $order=null, $consoles=null, $genres=null){
+
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+        $yearRangeStart = mysqli_real_escape_string($this->connection, $yearRangeStart);
+        $yearRangeEnd = mysqli_real_escape_string($this->connection, $yearRangeEnd);
+        $order = mysqli_real_escape_string($this->connection, $order);
+
+        if($consoles){
+            $sanConsoles = array();
+            foreach ($consoles as $key => $value) {
+                $sanConsoles[$key] = mysqli_real_escape_string($this->connection, $value);
+            }
+            $consoles = $sanConsoles;
+        }
+
+        if($genres){
+            $sanGenres = array();
+            foreach ($genres as $key => $value) {
+                $sanGenres[$key] = mysqli_real_escape_string($this->connection, $value);
+            }
+            $genres = $sanGenres;
+        }
+
         //le console effettive le cerco più in basso, però faccio il join con le rispettive tabelle anche qui perchè voglio trovare solo giochi che abbiano le console specificate (anche nessuna)
         $query="SELECT * FROM games LEFT JOIN images ON games.Image=images.Path LEFT JOIN games_consoles ON games.Name=games_consoles.Game LEFT JOIN games_genres ON games.Name=games_genres.Game";
 
@@ -496,6 +567,8 @@ class DBAccess {
     }
 
     public function getGame($name){
+
+        $name = mysqli_real_escape_string($this->connection, $name);
         //specifico i campi da visualizzare perchè non voglio avere 2 Prequel e 2 Sequel, così possono prendere il sequel semplicemente indicando ['Sequel'] e stessa cosa per il prequel
         $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, Path, Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images ON games.Image=images.Path WHERE games.Name='$name'";
         $queryResult = $this->getResult($querySelect);
@@ -516,6 +589,8 @@ class DBAccess {
     }
 
     public function getConsoles($gameName){
+
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
         if(!$gameName){
             return null;
         }
@@ -539,6 +614,9 @@ class DBAccess {
     }
 
     public function getGenres($gameName){
+
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+
         if(!$gameName){
             return null;
         }
@@ -601,22 +679,44 @@ class DBAccess {
 
     public function addGame($game){
         $name = $game->getName();
+		$name  = mysqli_real_escape_string($this->connection, $name );
         $date = $game->getPublicationDate();
+		$date  = mysqli_real_escape_string($this->connection, $date );
         $vote = $game->getVote();
+		$vote  = mysqli_real_escape_string($this->connection, $vote );
         $sinopsis = addslashes($game->getSinopsis());
+		$sinopsis  = mysqli_real_escape_string($this->connection, $sinopsis );
         $age_range = $game->getAgeRange();
+		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
         $review = addslashes($game->getReview());
+		$review  = mysqli_real_escape_string($this->connection, $review );
         $image = $game->getImage();
+		$image  = mysqli_real_escape_string($this->connection, $image );
         $imagePath =  $image ? $image->getPath() : null;
+		$imagePath  = mysqli_real_escape_string($this->connection, $imagePath );
         $imageAlt =  $image ? $image->getAlt() : null;
+		$imageAlt  = mysqli_real_escape_string($this->connection, $imageAlt );
 
         $consoles = $game->getConsoles();
+        $sanConsoles = array();
+        foreach ($consoles as $key => $value) {
+            $sanConsoles[$key] = mysqli_real_escape_string($this->connection, $value);
+        }
+        $consoles = $sanConsoles;
+
         $genres = $game->getGenres();
+        $sanGenres = array();
+        foreach ($genres as $key => $value) {
+            $sanGenres[$key] = mysqli_real_escape_string($this->connection, $value);
+        }
+        $genres = $sanGenres;
 
         $prequel = $game->getPrequel();
+		$prequel  = mysqli_real_escape_string($this->connection, $prequel );
         $sequel = $game->getSequel();
-
+		$sequel  = mysqli_real_escape_string($this->connection, $sequel );
         $developer = $game->getDeveloper();
+		$developer  = mysqli_real_escape_string($this->connection, $developer );
 
         if($image){
             $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
@@ -664,6 +764,8 @@ class DBAccess {
     }
 
     function deleteGame($gameName){
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+
         $query="DELETE FROM games WHERE Name='$gameName'";
         $result=$this->getResult($query);
         return $result;
@@ -671,25 +773,51 @@ class DBAccess {
 
     //sarebbe una cosa buona mettere un count per vedere se c'è un gioco che verrà sovrascritto, per capire se l'operazione andrà a vuoto o se farà qualcosa
     function overwriteGame($oldGameName, $newGame){
+
+        $oldGameName = mysqli_real_escape_string($this->connection, $oldGameName);
         // questa funzione individua il gioco con nome $oldGameName e ne sovrascrive i dati con quelli di $newGame, anche il nome
         $name = $newGame->getName();
+		$name  = mysqli_real_escape_string($this->connection, $name );
         $date = $newGame->getPublicationDate();
+		$date  = mysqli_real_escape_string($this->connection, $date );
         $vote = $newGame->getVote();
+		$vote  = mysqli_real_escape_string($this->connection, $vote );
         $sinopsis = addslashes($newGame->getSinopsis());
+		$sinopsis  = mysqli_real_escape_string($this->connection, $sinopsis );
         $age_range = $newGame->getAgeRange();
+		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
         $review = addslashes($newGame->getReview());
+		$review  = mysqli_real_escape_string($this->connection, $review );
         $image = $newGame->getImage();
-        $this->addImage($image);
+		$image  = mysqli_real_escape_string($this->connection, $image );
+        
         $imagePath =  $image ? $image->getPath() : null;
+		$imagePath  = mysqli_real_escape_string($this->connection, $imagePath );
         $imageAlt =  $image ? $image->getAlt() : null;
+		$imageAlt  = mysqli_real_escape_string($this->connection, $imageAlt );
 
         $consoles = $newGame->getConsoles();
+        $sanConsoles = array();
+        foreach ($consoles as $key => $value) {
+            $sanConsoles[$key] = mysqli_real_escape_string($this->connection, $value);
+        }
+        $consoles = $sanConsoles;
+
         $genres = $newGame->getGenres();
+        $sanGenres = array();
+        foreach ($genres as $key => $value) {
+            $sanGenres[$key] = mysqli_real_escape_string($this->connection, $value);
+        }
+        $genres = $sanGenres;
         
         $prequel = $newGame->getPrequel();
+		$prequel  = mysqli_real_escape_string($this->connection, $prequel );
         $sequel = $newGame->getSequel();
-
+		$sequel  = mysqli_real_escape_string($this->connection, $sequel );
         $developer = $newGame->getDeveloper();
+		$developer  = mysqli_real_escape_string($this->connection, $developer );
+
+        $this->addImage($image);
 
         $result = true;
 
@@ -759,6 +887,8 @@ class DBAccess {
 
     public function getImages($order=null){
 
+        $order = mysqli_real_escape_string($this->connection, $order);
+
         $query ="SELECT * FROM images";
 
         $orderQueryAppend= $order=="path asc" ? "ORDER BY images.Path ASC" : "";
@@ -783,13 +913,18 @@ class DBAccess {
             return null;
         }
         $imagePath=$image->getPath();
+		$imagePath = mysqli_real_escape_string($this->connection, $imagePath);
         $imageAlt=$image->getAlt();
+		$imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
+
         $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
         $result=$this->getResult($query);
         return $result;
     }
 
     function deleteImage($imagePath){
+        $imagePath = mysqli_real_escape_string($this->connection, $imagePath);
+
         $query="DELETE FROM images WHERE Path='$imagePath'";
         $result=$this->getResult($query);
         return $result;
@@ -800,6 +935,9 @@ class DBAccess {
     ////////////////
 
     function getCommentsList($gameName=null, $order="date_time desc"){
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+        $oder = mysqli_real_escape_string($this->connection, $order);
+
         $query="SELECT * FROM comments";
         $gameNameQueryAppend= $gameName ? "WHERE comments.Game='$gameName'" : "";
         $orderQueryAppend= $order=="date_time desc" ? "ORDER BY comments.Date_time DESC" : "";
@@ -822,9 +960,13 @@ class DBAccess {
 
     function addComment($comment){
         $authorName = $comment->getAuthorName();
+		$authorName  = mysqli_real_escape_string($this->connection, $authorName );
         $gameName = $comment->getGameName();
+		$gameName  = mysqli_real_escape_string($this->connection, $gameName );
         $date_time = $comment->getDateTime();
+		$date_time  = mysqli_real_escape_string($this->connection, $date_time );
         $content = addslashes( $comment->getContent() );
+		$content  = mysqli_real_escape_string($this->connection, $content );
 
         $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
         $result=$this->getResult($query);
