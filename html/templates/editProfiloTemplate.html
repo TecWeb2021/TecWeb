@@ -7,7 +7,7 @@
       <form action="edit_profilo.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
 
         <messaggi_form_ph/>
-        
+
         <fieldset>
           <h2>Dati personali</h2>
           <p class="required">I campi marcati con * sono obbligatori</p>
@@ -21,12 +21,12 @@
         </fieldset>
 
         <fieldset>
-          <label for="password">Password : se vuoi cambiare password scrivi quella nuova nei due form seguenti</label>
-          <input type="password" name="password" id="password" class="opzionale" /><br />
+          <p> Se vuoi cambiare password scrivi quella nuova nei due form seguenti </p>
+          <label for="password">Password </label>
+          <span><input type="password" name="password" id="password" class="opzionale" /></span><br />
 
-          <label for="repeatpassword">Ripeti password</label>
-          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
-
+          <label for="repeatpassword">Ripeti password </label>
+          <span><input type="password" name="repeatpassword" id="repeatpassword" /></span><br />
           <button type="submit" name="salva">Salva modifiche</button>
           <button type="submit" name="annulla">Annulla modifiche</button>
           <button type="submit" name="elimina">Elimina profilo</button>
