@@ -32,7 +32,7 @@ SEZIONE HEADER
 #header{
   background-color: #600000;
   padding: 1.0em;
-  min-height: 2em;
+  min-height: 7em;
 }
 
 .aiutiNascosti{
@@ -63,7 +63,7 @@ SEZIONE TITOLO
 
 /*login*/
 
-#login{ display: block; }
+#login{display: block;}
 
 div.loginblock a { color: white; }
 
@@ -325,7 +325,13 @@ a.link{
 a.link:visited{
     color: #676767;
 }
-
+a.link_login{
+  display:inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 10ch;
+}
 a.link:hover,a.link_login:hover{
     color: white;
     background-color: #313131;

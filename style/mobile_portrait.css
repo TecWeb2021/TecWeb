@@ -23,7 +23,7 @@ body {
 #titolo1 { font-size: 2.5em; }
 
 #titolo2 { display: none; }
-
+#header{ min-height: 5em;}
 #logo {
   width: 4.5em;
   margin-top: -0.5em;
@@ -33,7 +33,7 @@ body {
   min-width: 48px;
   max-width: 48px;
   min-height: 48px;
-  max-height: 48px; 
+  max-height: 48px;
 }
 
 div.loginblock{
