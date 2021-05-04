@@ -25,9 +25,11 @@ function createGameHTMLItem($game, $isAdmin=false){
 		"<game_edit_ph/>" => "edit_gioco.php?game=".strtolower($game->getName())
 	);
 
-	foreach ($replacements as $key => $value) {
+	$item = str_replace(array_keys($replacements), array_values($replacements), $item);
+
+	/*foreach ($replacements as $key => $value) {
 		$item = str_replace($key, $value, $item);
-	}
+	}*/
 	
 	if($isAdmin){
 		$item=str_replace("<admin_func_ph>","",$item);

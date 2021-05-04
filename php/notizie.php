@@ -25,9 +25,7 @@ function createNewsHTMLItem($news, $isUserAdmin=false){
 		"<news_edit_ph/>" => "edit_notizia.php?news=".strtolower($news->getTitle())
 	);
 
-	foreach ($replacements as $key => $value) {
-		$item=str_replace($key, $value, $item);
-	}
+	$item = str_replace(array_keys($replacements), array_values($replacements), $item);
 
 	if($isUserAdmin){
 		$item=str_replace("<admin_func_ph>","",$item);
