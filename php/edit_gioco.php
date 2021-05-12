@@ -108,7 +108,8 @@ if($allOk){
 		$new_gameAgeRange = isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
 		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
 		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
-		$new_gameAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$new_gameAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
+		$new_gameAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
 		$new_gameVote = isset($_REQUEST['voto']) ? $_REQUEST['voto'] : null;
 
 		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
@@ -124,13 +125,13 @@ if($allOk){
 		$image1Ok = false;
 		$image2Ok = false;
 		//error 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] != 4){
-			echo "rilevato campo immagine"."<br/>";
+		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error'] != 4){
+			echo "rilevato campo immagine1"."<br/>";
 			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine");
+			$imagePath = saveImageFromFILES($dbAccess, "immagine1");
 			if($imagePath){
-				echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
-				$new_gameImage1 = new Image($imagePath,$new_gameAlt);
+				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath."<br/>";
+				$new_gameImage1 = new Image($imagePath,$new_gameAlt1);
 				$image1Ok=true;
 				
 			}else{
@@ -139,12 +140,12 @@ if($allOk){
 		}
 
 		//error 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] != 4){
-			echo "rilevato campo immagine"."<br/>";
+		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error'] != 4){
+			echo "rilevato campo immagine2"."<br/>";
 			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine");
+			$imagePath = saveImageFromFILES($dbAccess, "immagine2");
 			if($imagePath){
-				echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
+				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath."<br/>";
 				$new_gameImage2 = new Image($imagePath,$new_gameAlt);
 				$image2Ok=true;
 				
@@ -163,7 +164,8 @@ if($allOk){
 			'recensione' => "Recensione non inserita",
 			'immagine1' => "Immagine1 non inserita",
 			'immagine2' => "Immagine2 non inserita",
-			'alternativo' => "Testo alternativo dell'immaagine non inserito",
+			'alternativo1' => "Testo alternativo dell'immaagine1 non inserito",
+			'alternativo2' => "Testo alternativo dell'immaagine2 non inserito",
 			'voto' => "Voto non inserito",
 			'console' => "Console non inserita",
 			'genere' => "Genere non inserito",
@@ -222,8 +224,12 @@ if($allOk){
 			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
 		}
 		
-		if($new_gameAlt !== null && strlen($new_gameAlt) > 0 && ($errorText = checkString($new_gameAlt, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo1')) !== true){
+			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		}
+
+		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo1')) !== true){
+			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
 		}
 		
 
@@ -289,7 +295,8 @@ if($allOk){
 			"<developer_ph/>" => $new_gameDeveloper ? $new_gameDeveloper : $oldGame->getDeveloper(),
 			"<date_ph/>" => $new_gamePublicationDate ? $new_gamePublicationDate : $oldGame->getPublicationDate(),
 			"<age_range_ph/>" => $new_gameAgeRange ? $new_gameAgeRange : $oldGame->getAgeRange(),
-			"<img1_alt_ph/>" => $new_gameAlt ? $new_gameAlt : $oldGame->getAlt(), //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<img1_alt_ph/>" => $new_gameAlt1 ? $new_gameAlt1 : $oldGame->getImage1()->getAlt(), 
+			"<img2_alt_ph/>" => $new_gameAlt2 ? $new_gameAlt2 : $oldGame->getImage2()->getAlt(), 
 			"<vote_ph/>" => $new_gameVote ? $new_gameVote : $oldGame->getVote(),
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis ? $new_gameSinopsis : $oldGame->getSinopsis(),
@@ -318,32 +325,6 @@ if($allOk){
 		//Non controllo che l'utente abbia inserito valori diversi da quelli preesistenti
 	}else{
 		echo "nessu valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
-		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
-
-		/*
-		// controllo quale valore non è stato inserito
-		if(!isset($_REQUEST['nome'])){
-			echo "nome non inserito<br/>";
-		}elseif(!isset($_REQUEST['data'])){
-			echo "data non inserito<br/>";
-		}elseif(!isset($_REQUEST['pegi'])){
-			echo "pegi non inserito<br/>";
-		}elseif(!isset($_REQUEST['descrizione'])){
-			echo "descrizione non inserito<br/>";
-		}elseif(!isset($_REQUEST['recensione'])){
-			echo "recensione non inserito<br/>";
-		}elseif(!isset($_REQUEST['alternativo'])){
-			echo "alt non inserito<br/>";
-		}elseif(!isset($_REQUEST['voto'])){
-			echo "voto non inserito<br/>";
-		}elseif(!isset($_REQUEST['prequel'])){
-			echo "prequel non inserita<br/>";
-		}elseif(!isset($_REQUEST['sequel'])){
-			echo "sequel non inserita<br/>";
-		}elseif(!isset($_REQUEST['sviluppo'])){
-			echo "sviluppo non inserita<br/>";
-		}
-		*/
 
 
 		$old_gameConsoles = $oldGame->getConsoles();
@@ -386,9 +367,14 @@ if($allOk){
 			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
 
-		//se il vecchio gioco aveva un immagine inserisco il suo alt nel campo di input per l'alt
-		if($oldImage = $oldGame->getImage()){
-			$replacements["<img_alt_ph/>"] = $oldImage->getAlt();
+		//se il vecchio gioco aveva un immagine1 inserisco il suo alt nel campo di input per l'alt
+		if($oldImage1 = $oldGame->getImage1()){
+			$replacements["<img1_alt_ph/>"] = $oldImage1->getAlt();
+		}
+
+		//se il vecchio gioco aveva un immagine2 inserisco il suo alt nel campo di input per l'alt
+		if($oldImage2 = $oldGame->getImage2()){
+			$replacements["<img2_alt_ph/>"] = $oldImage2->getAlt();
 		}
 	
 		foreach ($replacements as $key => $value) {
