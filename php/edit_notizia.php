@@ -99,7 +99,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo']) ){
+	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) ){
 		echo "almeno un valore è stato rilevato<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
 		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
@@ -108,27 +108,46 @@ if($allOk){
 		$new_newsAuthor = $oldNews->getAuthor();
 		$new_newsEditDateTime = $oldNews->getLastEditDateTime();
 		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
-		$new_newsAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$new_newsAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
+		$new_newsAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
 		$new_newsGame = null;
 		if($new_newsCategory == "Giochi"){
 			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 		}
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-		$new_newsImage=null;
-		$imageOk=false;
+		$new_newsImage1=null;
+		$image1Ok=false;
+
+		$new_newsImage2=null;
+		$image2Ok=false;
 
 		//errore 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine']) && $_FILES['immagine']['error']!=4 ){
-			echo "l'utente ha inserito una nuova immagine"."<br/>";
+		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error']!=4 ){
+			echo "l'utente ha inserito una nuova immagine1"."<br/>";
 			
 
-			$imagePath=saveImageFromFILES($dbAccess,'immagine');
+			$imagePath=saveImageFromFILES($dbAccess,'immagine1');
 			if($imagePath){
-				$new_newsImage=new Image($imagePath,$new_newsAlt);
-				$imageOk=true;
+				$new_newsImage1=new Image($imagePath,$new_newsAlt1);
+				$image1Ok=true;
 			}else{
-				echo "salvataggio dell'immagine fallito"."<br/>";
+				echo "salvataggio dell'immagine1 fallito"."<br/>";
+
+			}
+		}
+
+		//errore 4: non è stata caricata alcuna immagine
+		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error']!=4 ){
+			echo "l'utente ha inserito una nuova immagine2"."<br/>";
+			
+
+			$imagePath=saveImageFromFILES($dbAccess,'immagine2');
+			if($imagePath){
+				$new_newsImage2=new Image($imagePath,$new_newsAlt2);
+				$image2Ok=true;
+			}else{
+				echo "salvataggio dell'immagine2 fallito"."<br/>";
 
 			}
 		}
@@ -137,8 +156,10 @@ if($allOk){
 			'titolo' => "Titolo non presente",
 			'testo' => "Testo non presente",
 			'tipologia' => "Tipologia non presente",
-			'immagine' => "Immagine non presente",
-			'alternativo' => "Testo alternativo dell'immagine non presente",
+			'immagine1' => "Immagine1 non presente",
+			'immagine2' => "Immagine2 non presente",
+			'alternativo1' => "Testo alternativo dell'immagine1 non presente",
+			'alternativo2' => "Testo alternativo dell'immagine2 non presente",
 			'gioco' => "Gioco non inserito"
 		);
 
@@ -164,12 +185,20 @@ if($allOk){
 
 		// controllo i campi opzionali
 
-		if( $new_newsImage !== null && $imageOk === false){
-			$error_message = $error_messages . $error_messages['immagine'] . "<br/>";
+		if( $new_newsImage1 !== null && $image1Ok === false){
+			$error_message = $error_messages . $error_messages['immagine1'] . "<br/>";
 		}
 
-		if( $new_newsAlt !== null && strlen($new_newsAlt) > 0 && ($errorText = checkString($new_newsAlt, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		if( $new_newsImage2 !== null && $image2Ok === false){
+			$error_message = $error_messages . $error_messages['immagine2'] . "<br/>";
+		}
+
+		if( $new_newsAlt1 !== null && strlen($new_newsAlt1) > 0 && ($errorText = checkString($new_newsAlt1, 'alternativo1')) !== true){
+			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		}
+
+		if( $new_newsAlt2 !== null && strlen($new_newsAlt2) > 0 && ($errorText = checkString($new_newsAlt2, 'alternativo2')) !== true){
+			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
 		}
 
 
@@ -177,19 +206,27 @@ if($allOk){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 
-			if($new_newsImage == null){
-				echo "l'utente non ha inserito una nuova immagine"."<br/>";
+			if($new_newsImage1 == null){
+				echo "l'utente non ha inserito una nuova immagine1"."<br/>";
 				//prendo la vecchia immagine
-				$new_newsImage=$oldNews->getImage();
-				$imageOk=true;
+				$new_newsImage1=$oldNews->getImage1();
+				$image1Ok=true;
 			}
-				$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
-				$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
-				if($overwriteResult==true){
-					echo "overwrite su db riuscito"."<br/>";
-				}else{
-					echo "overwrite su db fallito"."<br/>";
-				}
+
+			if($new_newsImage2 == null){
+				echo "l'utente non ha inserito una nuova immagine2"."<br/>";
+				//prendo la vecchia immagine
+				$new_newsImage2=$oldNews->getImage2();
+				$image2Ok=true;
+			}
+
+			$newNews = new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
+			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
+			if($overwriteResult == true){
+				echo "overwrite su db riuscito" . "<br/>";
+			}else{
+				echo "overwrite su db fallito" . "<br/>";
+			}
 		}
 
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
@@ -197,7 +234,8 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle ? $new_newsTitle : $oldNews->getTitle(),
 			"<content_ph/>" => $new_newsText ? $new_newsText : $oldNews->getContent(),
-			"<img_alt_ph/>" => $new_newsAlt ? $new_newsAlt : ($oldNews->getImage() ? $oldNews->getImage()->getAlt() : ""),
+			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : ($oldNews->getImage1() ? $oldNews->getImage1()->getAlt() : ""),
+			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : ($oldNews->getImage2() ? $oldNews->getImage2()->getAlt() : ""),
 			"<opzioni_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName()
 		);
@@ -238,10 +276,16 @@ if($allOk){
 			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : ""
 		);
 
-		if($oldImage=$oldNews->getImage()){
-			$replacements['<img_alt_ph/>'] = $oldImage->getAlt();
+		if($oldImage1 = $oldNews->getImage1()){
+			$replacements['<img1_alt_ph/>'] = $oldImage1->getAlt();
 		}else{
-			$replacements['<img_alt_ph/>'] = "";
+			$replacements['<img1_alt_ph/>'] = "";
+		}
+
+		if($oldImage2 = $oldNews->getImage2()){
+			$replacements['<img2_alt_ph/>'] = $oldImage2->getAlt();
+		}else{
+			$replacements['<img2_alt_ph/>'] = "";
 		}
 
 		if($oldNews->getCategory()=="Eventi"){

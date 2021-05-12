@@ -274,7 +274,7 @@ class DBAccess {
 
         $title = mysqli_real_escape_string($this->connection, $title);
 
-        $query="SELECT *, news.Image as newsImage FROM news LEFT JOIN users ON news.User=users.Username LEFT JOIN images ON news.Image=images.Path WHERE news.Title='$title'";
+        $query="SELECT news.*, users.*, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM news LEFT JOIN users ON news.User=users.Username LEFT JOIN images as i1 ON news.Image1=i1.Path LEFT JOIN images as i2 ON news.Image2=i2.Path WHERE news.Title='$title'";
 
         $queryResult = mysqli_query($this->connection, $query);
         if($queryResult==false){
@@ -287,9 +287,10 @@ class DBAccess {
         }else {
             $row = mysqli_fetch_assoc($queryResult);
             //echo "Image: ".$row['Image']."<br/>";
-            $image= $row['newsImage']=='' ? null : new Image($row['Path'],$row['Alt']);
-            $author= new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
-            $news= new News($row['Title'], $row['Content'], $author, $row['Last_edit_date'], $image, $row['Category'], $row['Game']);
+            $image1 = new Image($row['i1Path'],$row['i1Alt']);
+            $image2 = new Image($row['i2Path'],$row['i2Alt']);
+            $author = new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
+            $news = new News($row['Title'], $row['Content'], $author, $row['Last_edit_date'], $image1, $image2, $row['Category'], $row['Game']);
 
             return $news;
         }
@@ -356,23 +357,29 @@ class DBAccess {
 		$author = mysqli_real_escape_string($this->connection, $author);
         $edit_date_time=$newNews->getLastEditDateTime();
 		$edit_date_time = mysqli_real_escape_string($this->connection, $edit_date_time);
-        $image=$newNews->getImage();
-		$image = mysqli_real_escape_string($this->connection, $image);
+        $image1=$newNews->getImage1();
+        $image2=$newNews->getImage2();
         $category=$newNews->getCategory();
 		$category = mysqli_real_escape_string($this->connection, $category);
         $game=$newNews->getGameName();
 		$game = mysqli_real_escape_string($this->connection, $game);
 
-        $this->addImage($image);
+        $this->addImage($image1);
+        $this->addImage($image2);
         
-        $imagePath= $image ? $image->getPath() : null;
-		$imagePath = mysqli_real_escape_string($this->connection, $imagePath);
-        $imageAlt= $image ? $image->getAlt() : null;
-		$imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
+        $imagePath1 = $image1 ? $image1->getPath() : null;
+		$imagePath1 = mysqli_real_escape_string($this->connection, $imagePath1);
+        $imageAlt1 = $image1 ? $image1->getAlt() : null;
+		$imageAlt1 = mysqli_real_escape_string($this->connection, $imageAlt1);
+
+        $imagePath2 = $image2 ? $image2->getPath() : null;
+        $imagePath2 = mysqli_real_escape_string($this->connection, $imagePath2);
+        $imageAlt2 = $image2 ? $image2->getAlt() : null;
+        $imageAlt2 = mysqli_real_escape_string($this->connection, $imageAlt2);
 
         //manca l'eventuale inserimento dell'immagine
 
-        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image='$imagePath', Category='$category', Game='$game' WHERE Title='$oldNewsTitle'";
+        $query="UPDATE news SET Title='$title', User='$author', Last_edit_date='$edit_date_time', Content='$content', Image1='$imagePath1', Image2='$imagePath2', Category='$category', Game='$game' WHERE Title='$oldNewsTitle'";
         $result=$this->getResult($query);
         return $result;
     }
