@@ -100,7 +100,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
+	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
 		echo "almeno un valore è stato rilevato<br/>";
 		
 		$new_gameName = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
@@ -118,9 +118,11 @@ if($allOk){
 		$new_gameSequel = isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
 		$new_gameDeveloper = isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
 
-		$new_gameImage = null;
+		$new_gameImage1 = null;
+		$new_gameImage2 = null;
 
-		$imageOk = false;
+		$image1Ok = false;
+		$image2Ok = false;
 		//error 4: non è stata caricata alcuna immagine
 		if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] != 4){
 			echo "rilevato campo immagine"."<br/>";
@@ -128,8 +130,23 @@ if($allOk){
 			$imagePath = saveImageFromFILES($dbAccess, "immagine");
 			if($imagePath){
 				echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
-				$new_gameImage = new Image($imagePath,$new_gameAlt);
-				$imageOk=true;
+				$new_gameImage1 = new Image($imagePath,$new_gameAlt);
+				$image1Ok=true;
+				
+			}else{
+				echo "Salvataggio immagine fallito"."<br/>";
+			}
+		}
+
+		//error 4: non è stata caricata alcuna immagine
+		if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] != 4){
+			echo "rilevato campo immagine"."<br/>";
+			//prendo l'immagine inserita dall'utente
+			$imagePath = saveImageFromFILES($dbAccess, "immagine");
+			if($imagePath){
+				echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
+				$new_gameImage2 = new Image($imagePath,$new_gameAlt);
+				$image2Ok=true;
 				
 			}else{
 				echo "Salvataggio immagine fallito"."<br/>";
@@ -144,7 +161,8 @@ if($allOk){
 			'pegi' => "Pegi non inserito",
 			'descrizione' => "descrizione non inserita",
 			'recensione' => "Recensione non inserita",
-			'immagine' => "Immagine non inserita",
+			'immagine1' => "Immagine1 non inserita",
+			'immagine2' => "Immagine2 non inserita",
 			'alternativo' => "Testo alternativo dell'immaagine non inserito",
 			'voto' => "Voto non inserito",
 			'console' => "Console non inserita",
@@ -187,7 +205,10 @@ if($allOk){
 
 		// controllo i campi opzionali
 
-		if($new_gameImage !== null && $imageOk === false){
+		if($new_gameImage1 !== null && $image1Ok === false){
+			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		}
+		if($new_gameImage2 !== null && $image2Ok === false){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 		}
 		if($new_gamePrequel !== null && strlen($new_gamePrequel) > 0 && ($errorText = checkString($new_gamePrequel, 'prequel')) !== true){
@@ -206,24 +227,31 @@ if($allOk){
 		}
 		
 
-		if($error_message != ""){
+		if($error_message != ""){// sono presenti errori
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 			// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-			$new_gameImage=null;
+			$new_gameImage1 = null;
+			$new_gameImage2 = null;
 			
 			
 			
-			if($new_gameImage == null){
-				echo "campo immagine non rilevato"."<br/>";
+			if($new_gameImage1 == null){
+				echo "campo immagine1 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
-				$new_gameImage = $oldGame->getImage();
-				$imageOk=true;
+				$new_gameImage1 = $oldGame->getImage1();
+				$image1Ok = true;
+			}
+			if($new_gameImage2 == null){
+				echo "campo immagine2 non rilevato"."<br/>";
+				//prendo l'immagine già presente per il gioco prima delle modifiche
+				$new_gameImage2 = $oldGame->getImage2();
+				$image2Ok = true;
 			}
 			
-			if($imageOk){
+			if($image1Ok && $image2Ok){
 			
-				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
 				$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
 				echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
@@ -261,7 +289,7 @@ if($allOk){
 			"<developer_ph/>" => $new_gameDeveloper ? $new_gameDeveloper : $oldGame->getDeveloper(),
 			"<date_ph/>" => $new_gamePublicationDate ? $new_gamePublicationDate : $oldGame->getPublicationDate(),
 			"<age_range_ph/>" => $new_gameAgeRange ? $new_gameAgeRange : $oldGame->getAgeRange(),
-			"<img_alt_ph/>" => $new_gameAlt ? $new_gameAlt : $oldGame->getAlt(), //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<img1_alt_ph/>" => $new_gameAlt ? $new_gameAlt : $oldGame->getAlt(), //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
 			"<vote_ph/>" => $new_gameVote ? $new_gameVote : $oldGame->getVote(),
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis ? $new_gameSinopsis : $oldGame->getSinopsis(),
