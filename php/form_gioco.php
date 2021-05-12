@@ -51,7 +51,8 @@ if($allOk){
 		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
 		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
 
-		$new_gameAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$new_gameAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
+		$new_gameAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
 		$new_gameVote = isset($_REQUEST['voto']) ? $_REQUEST['voto'] : null;
 		$new_gamePrequel = isset($_REQUEST['prequel']) ? $_REQUEST['prequel'] : null;
 		$new_gameSequel = isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
@@ -60,19 +61,32 @@ if($allOk){
 
 
 
-		$new_gameImage=null;
-		$imageOk=false;
+		$new_gameImage1=null;
+		$image1Ok=false;
+
+		$new_gameImage2=null;
+		$image2Ok=false;
 		
 		echo "rilevato campo immagine"."<br/>";
 		//prendo l'immagine inserita dall'utente
-		$imagePath = saveImageFromFILES($dbAccess, "immagine");
-		if($imagePath){
-			echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
-			$new_gameImage = new Image($imagePath,$new_gameAlt);
-			$imageOk=true;
+		$imagePath1 = saveImageFromFILES($dbAccess, "immagine1");
+		if($imagePath1){
+			echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
+			$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
+			$image1Ok=true;
 			
 		}else{
-			echo "Salvataggio immagine fallito"."<br/>";
+			echo "Salvataggio immagine1 fallito"."<br/>";
+		}
+
+		$imagePath2 = saveImageFromFILES($dbAccess, "immagine2");
+		if($imagePath2){
+			echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
+			$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
+			$image2Ok=true;
+			
+		}else{
+			echo "Salvataggio immagine2 fallito"."<br/>";
 		}
 
 
@@ -83,8 +97,10 @@ if($allOk){
 			'pegi' => "Pegi non inserito",
 			'descrizione' => "descrizione non inserita",
 			'recensione' => "Recensione non inserita",
-			'immagine' => "Immagine non inserita",
-			'alternativo' => "Testo alternativo dell'immagine non inserito",
+			'immagine1' => "Immagine1 non inserita",
+			'immagine2' => "Immagine2 non inserita",
+			'alternativo1' => "Testo alternativo dell'immagine1 non inserito",
+			'alternativo2' => "Testo alternativo dell'immagine2 non inserito",
 			'voto' => "Voto non inserito",
 			'console' => "Console non inserita",
 			'genere' => "Genere non inserito",
@@ -115,8 +131,11 @@ if($allOk){
 		if(count($new_gameGenres) === 0){
 			$error_message = $error_message . $error_messages['genere'] . "<br/>";
 		}
-		if($new_gameImage === null){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		if($new_gameImage1 === null){
+			$error_message = $error_message . $error_messages['immagine1'] . "<br/>";
+		}
+		if($new_gameImage2 === null){
+			$error_message = $error_message . $error_messages['immagine2'] . "<br/>";
 		}
 		if($new_gameVote === null || ($errorText = checkString($new_gameVote,'voto')) !== true){
 			$error_message = $error_message . $error_messages['voto'] . "<br/>";
@@ -140,8 +159,12 @@ if($allOk){
 			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
 		}
 		
-		if($new_gameAlt !== null && strlen($new_gameAlt) > 0 && ($errorText = checkString($new_gameAlt, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		}
+
+		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
 		}
 		
 		
@@ -168,7 +191,7 @@ if($allOk){
 		if($error_message != ""){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
-			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
 			$opResult = $dbAccess->addGame($newGame);
 			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
@@ -182,7 +205,8 @@ if($allOk){
 			"<developer_ph/>" => $new_gameDeveloper ? $new_gameDeveloper : "",
 			"<date_ph/>" => $new_gamePublicationDate ? $new_gamePublicationDate : "",
 			"<age_range_ph/>" => $new_gameAgeRange ? $new_gameAgeRange : "",
-			"<img_alt_ph/>" => $new_gameAlt ? $new_gameAlt : "",
+			"<img1_alt_ph/>" => $new_gameAlt1 ? $new_gameAlt1 : "",
+			"<img2_alt_ph/>" => $new_gameAlt2 ? $new_gameAlt2 : "",
 			"<vote_ph/>" => $new_gameVote ? $new_gameVote : "",
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis ? $new_gameSinopsis : "",
@@ -227,7 +251,8 @@ if($allOk){
 			"<game_name_ph/>" => "",
 			"<developer_ph/>" => "", 
 			"<date_ph/>" => "",
-			"<img_alt_ph/>" => "",
+			"<img1_alt_ph/>" => "",
+			"<img2_alt_ph/>" => "",
 			"<vote_ph/>" => "",
 			"<age_range_ph/>" => "",
 			"<dlc_ph/>" => "",

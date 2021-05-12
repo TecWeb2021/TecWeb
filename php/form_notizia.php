@@ -47,7 +47,8 @@ if($allOk){
 		
 		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
 		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
-		$new_newsAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$new_newsAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
+		$new_newsAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
 		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
 		$new_newsGame = null;
 		if($new_newsCategory == "Giochi"){
@@ -58,12 +59,20 @@ if($allOk){
 
 		//il salvataggio dell'immagine potrebbe fallire quindi inserisco una variabile booleana per gestire la cosa (sarebbe forse meglio gestire il tutto con le eccezioni)
 
-		$new_newsImage = null;
-		$imagePath = saveImageFromFILES($dbAccess,'immagine');
-		if($imagePath){
-			$new_newsImage = new Image($imagePath,$new_newsAlt);
+		$new_newsImage1 = null;
+		$imagePath1 = saveImageFromFILES($dbAccess,'immagine1');
+		if($imagePath1){
+			$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
 		}else{
-			echo "salvataggio dell'immagine fallito"."<br/>";
+			echo "salvataggio dell'immagine1 fallito"."<br/>";
+		}
+
+		$new_newsImage2 = null;
+		$imagePath2 = saveImageFromFILES($dbAccess,'immagine2');
+		if($imagePath2){
+			$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
+		}else{
+			echo "salvataggio dell'immagine2 fallito"."<br/>";
 		}
 
 		// ho raccolto tutti i dati che potevo raccogliere
@@ -72,8 +81,10 @@ if($allOk){
 			'titolo' => "Titolo non presente",
 			'tipologia' => "Tipologia non presente o non corretta",
 			'gioco' => "Gioco non inserito",
-			'immagine' => "Immagine non presente",
-			'alternativo' => "Testo alternativo dell'immagine non presente",
+			'immagine1' => "Immagine1 non presente",
+			'immagine2' => "Immagine2 non presente",
+			'alternativo1' => "Testo alternativo dell'immagine1 non presente",
+			'alternativo2' => "Testo alternativo dell'immagine2 non presente",
 			'testo' => "Testo non presente"
 		);
 
@@ -87,8 +98,11 @@ if($allOk){
 		if($new_newsCategory === null || !in_array($new_newsCategory, News::$possible_categories)){
 			$error_message = $error_message . $error_messages['tipologia'] . "<br/>";
 		}
-		if($new_newsImage === null){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		if($new_newsImage1 === null){
+			$error_message = $error_message . $error_messages['immagine1'] . "<br/>";
+		}
+		if($new_newsImage2 === null){
+			$error_message = $error_message . $error_messages['immagine2'] . "<br/>";
 		}
 		
 		if( $new_newsText === null || ($errorText = checkString($new_newsText, 'testo')) !== true){
@@ -103,8 +117,11 @@ if($allOk){
 
 		// controllo i campi opzionali
 
-		if( $new_newsAlt !== null && strlen($new_newsAlt) > 0 && ($errorText = checkString($new_newsAlt, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		if( $new_newsAlt1 !== null && strlen($new_newsAlt1) > 0 && ($errorText = checkString($new_newsAlt1, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		}
+		if( $new_newsAlt2 !== null && strlen($new_newsAlt2) > 0 && ($errorText = checkString($new_newsAlt2, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
 		}
 
 
@@ -115,7 +132,7 @@ if($allOk){
 		}else{
 			echo "non sono presenti errori";
 			//se non ci sono stati errori procedo col salvataggio dei dati su db
-			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
+			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 	
 			$opResult = $dbAccess->addNews($newNews);
 			if($opResult && $opResult!=false){
@@ -123,8 +140,11 @@ if($allOk){
 			}else{
 				echo "salvataggio su db fallito"."<br/>";
 				//visto che l'operazione di salvataggio su db della news non è andata a buon fine rimuovo l'immagine sia dal db che dal filesystem
-				$dbAccess->deleteImage($imagePath);
-				unlink("../".$imagePath);
+				$dbAccess->deleteImage($imagePath1);
+				unlink("../".$imagePath1);
+
+				$dbAccess->deleteImage($imagePath2);
+				unlink("../".$imagePath2);
 			}
 		}
 			
@@ -135,7 +155,8 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle ? $new_newsTitle : "",
 			"<content_ph/>" => $new_newsText ? $new_newsText : "",
-			"<img_alt_ph/>" => $new_newsAlt ? $new_newsAlt : "",
+			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : "",
+			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : "",
 			"<opzioni_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : ""
 		);
@@ -174,7 +195,8 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => "",
 			"<content_ph/>" => "",
-			"<img_alt_ph/>" => "",
+			"<img_alt1_ph/>" => "",
+			"<img_alt2_ph/>" => "",
 			"<opzioni_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => ""
 		);

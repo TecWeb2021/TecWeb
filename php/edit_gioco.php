@@ -224,11 +224,11 @@ if($allOk){
 			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
 		}
 		
-		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo1')) !== true){
+		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo')) !== true){
 			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
 		}
 
-		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo1')) !== true){
+		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo')) !== true){
 			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
 		}
 		

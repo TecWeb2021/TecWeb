@@ -33,7 +33,7 @@ class DBAccess {
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
     // questa funzione fa solo la chiamata al database e restituisce qualunque cosa riceva
-    public function getResult($query, $silent = false){
+    public function getResult($query, $silent = true){
         $querySelect ="$query";
         if(!$silent){
             echo "db query: ".$querySelect."<br/>";
@@ -306,31 +306,46 @@ class DBAccess {
         $authorUsername = $author->getUsername();
 		$authorUsername  = mysqli_real_escape_string($this->connection, $authorUsername );
         $last_edit_date_time = $news->getLastEditDateTime();
-        $image = $news->getImage();
-		$image  = mysqli_real_escape_string($this->connection, $image );
+        $image1 = $news->getImage1();
 
-        $imagePath = "NULL";
-        $imageAlt = "NULL";
-        if($image){
-            $imagePath = $image->getPath();
-            $imageAlt = $image->getAlt();
+        $image2 = $news->getImage2();
+
+        $imagePath1 = "NULL";
+        $imageAlt1 = "NULL";
+        if($image1){
+            $imagePath1 = $image1->getPath();
+            $imageAlt1 = $image1->getAlt();
         }
 
-        $imagePath  = mysqli_real_escape_string($this->connection, $imagePath );
-        $imageAlt  = mysqli_real_escape_string($this->connection, $imageAlt );
+        $imagePath1  = mysqli_real_escape_string($this->connection, $imagePath1 );
+        $imageAlt1  = mysqli_real_escape_string($this->connection, $imageAlt1 );
+
+        $imagePath2 = "NULL";
+        $imageAlt2 = "NULL";
+        if($image2){
+            $imagePath2 = $image2->getPath();
+            $imageAlt2 = $image2->getAlt();
+        }
+
+        $imagePath2  = mysqli_real_escape_string($this->connection, $imagePath2 );
+        $imageAlt2  = mysqli_real_escape_string($this->connection, $imageAlt2 );
 
         $category = $news->getCategory()==null ? "NULL" : $news->getCategory();
 		$category  = mysqli_real_escape_string($this->connection, $category );
         $gameName = $news->getGameName();
 		$gameName  = mysqli_real_escape_string($this->connection, $gameName );
 
-        $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
-        echo "image insertion"."<br/>";
+        $query="INSERT INTO images VALUES ('$imagePath1','$imageAlt1');";
+        echo "image1 insertion"."<br/>";
+        $this->getResult($query);
+
+        $query="INSERT INTO images VALUES ('$imagePath2','$imageAlt2');";
+        echo "image2 insertion"."<br/>";
         $this->getResult($query);
 
         echo "news insertion"."<br/>";
         $content=addslashes($content);
-        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image`, `Category`, `Game`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath','$category','$gameName')";
+        $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image1`, `Image2`,`Category`, `Game`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath1','$imagePath2','$category','$gameName')";
 
         echo "query: ".$query."<br/>";
         $result=$this->getResult($query);
@@ -662,12 +677,17 @@ class DBAccess {
 		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
         $review = addslashes($game->getReview());
 		$review  = mysqli_real_escape_string($this->connection, $review );
-        $image = $game->getImage();
-		$image  = mysqli_real_escape_string($this->connection, $image );
-        $imagePath =  $image ? $image->getPath() : null;
-		$imagePath  = mysqli_real_escape_string($this->connection, $imagePath );
-        $imageAlt =  $image ? $image->getAlt() : null;
-		$imageAlt  = mysqli_real_escape_string($this->connection, $imageAlt );
+        $image1 = $game->getImage1();
+        $imagePath1 =  $image1 ? $image1->getPath() : null;
+		$imagePath1  = mysqli_real_escape_string($this->connection, $imagePath1 );
+        $imageAlt1 =  $image1 ? $image1->getAlt() : null;
+		$imageAlt1  = mysqli_real_escape_string($this->connection, $imageAlt1 );
+        $image2 = $game->getImage2();
+        $imagePath2 =  $image2 ? $image2->getPath() : null;
+        $imagePath2  = mysqli_real_escape_string($this->connection, $imagePath2 );
+        $imageAlt2 =  $image2 ? $image2->getAlt() : null;
+        $imageAlt2  = mysqli_real_escape_string($this->connection, $imageAlt2 );
+
 
         $consoles = $game->getConsoles();
         $sanConsoles = array();
@@ -690,8 +710,16 @@ class DBAccess {
         $developer = $game->getDeveloper();
 		$developer  = mysqli_real_escape_string($this->connection, $developer );
 
-        if($image){
-            $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
+        if($image1){
+            $query="INSERT INTO images VALUES ('$imagePath1', '$imageAlt1')";
+            $result=$this->getResult($query);
+            if($result==null){
+                return $result;
+            }
+        }
+
+        if($image2){
+            $query="INSERT INTO images VALUES ('$imagePath2', '$imageAlt2')";
             $result=$this->getResult($query);
             if($result==null){
                 return $result;
@@ -700,7 +728,7 @@ class DBAccess {
 
         
 
-        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath', '$developer')";
+        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath1', '$imagePath2','$developer')";
         $result=$this->getResult($query);
         if($result){
             if($consoles){

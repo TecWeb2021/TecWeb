@@ -193,11 +193,11 @@ if($allOk){
 			$error_message = $error_messages . $error_messages['immagine2'] . "<br/>";
 		}
 
-		if( $new_newsAlt1 !== null && strlen($new_newsAlt1) > 0 && ($errorText = checkString($new_newsAlt1, 'alternativo1')) !== true){
+		if( $new_newsAlt1 !== null && strlen($new_newsAlt1) > 0 && ($errorText = checkString($new_newsAlt1, 'alternativo')) !== true){
 			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
 		}
 
-		if( $new_newsAlt2 !== null && strlen($new_newsAlt2) > 0 && ($errorText = checkString($new_newsAlt2, 'alternativo2')) !== true){
+		if( $new_newsAlt2 !== null && strlen($new_newsAlt2) > 0 && ($errorText = checkString($new_newsAlt2, 'alternativo')) !== true){
 			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
 		}
 
