@@ -218,11 +218,6 @@ if($allOk){
 			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
 		);
 
-		/*
-		foreach ($replacements as $value) {
-			echo " => " . $value. "<br/>";
-		}*/
-
 		print_r($selected_consoles);
 
 		//aggiungo ai replacement quelli delle checkboxes
@@ -234,10 +229,7 @@ if($allOk){
 		}
 
 
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
@@ -273,10 +265,8 @@ if($allOk){
 		for($i=0;$i<count(Game::$possible_genres);$i++){
 			$replacements["<checked_genere_".$i."/>"] = "";
 		}
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		echo "replacements completati<br/>";
 	}
 

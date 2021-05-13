@@ -127,9 +127,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 			"/\<profile\_pic\_redirect\_url\_ph\/\>/" => "profilo.php"
 		);
 
-		foreach ($replacements as $key => $value) {
-			$base = preg_replace($key, $value, $base);
-		}
+		$base = preg_replace(array_keys($replacements), array_values($replacements), $base);
 		
 	}else{
 
@@ -140,9 +138,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 			"/\<profile\_pic\_redirect\_url\_ph\/\>/" => "login.php"
 		);
 
-		foreach ($replacements as $key => $value) {
-			$base = preg_replace($key, $value, $base);
-		}
+		$base = preg_replace(array_keys($replacements), array_values($replacements), $base);
 	}
 	#la riga qua sotto fa quello che deve solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
 	$base=str_replace("<user_img_path_ph/>","../".getSafeImage($defaultUserImagePath),$base);
@@ -257,9 +253,7 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 			"<name_ph/>" => $game->getName(),
 			"<selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
 		);
-		foreach ($replacements as $key => $value) {
-			$singleString = str_replace($key, $value, $singleString);
-		}
+		$singleString = preg_replace(array_keys($replacements), array_values($replacements), $singleString);
 		array_push($stringsArray, $singleString);
 	}
 	$joinedItems=implode("", $stringsArray);
@@ -286,9 +280,7 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 			"<name_ph/>" => $news->getTitle(),
 			"<selected_ph/>" => $news->getTitle() == $selectedName ? "selected=\"selected\"" : ""
 		);
-		foreach ($replacements as $key => $value) {
-			$singleString = str_replace($key, $value, $singleString);
-		}
+		$singleString = preg_replace(array_keys($replacements), array_values($replacements), $singleString);
 		array_push($stringsArray, $singleString);
 	}
 	$joinedItems=implode("", $stringsArray);

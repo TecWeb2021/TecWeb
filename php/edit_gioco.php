@@ -315,10 +315,8 @@ if($allOk){
 		foreach ($selected_genres as $key => $value) {
 			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
@@ -376,10 +374,8 @@ if($allOk){
 		if($oldImage2 = $oldGame->getImage2()){
 			$replacements["<img2_alt_ph/>"] = $oldImage2->getAlt();
 		}
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		echo "replacements completati<br/>";
 	}
 

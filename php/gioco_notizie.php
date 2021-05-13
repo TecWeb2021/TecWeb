@@ -30,10 +30,7 @@ function createNewsHTMLItem($news, $isAdmin=false){
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_edit_ph/>" => "edit_notizia.php?news=".strtolower($news->getTitle())
 	);
-
-	foreach ($replacements as $key => $value) {
-		$item = str_replace($key, $value, $item);
-	}
+	$item = str_replace(array_keys($replacements), array_values($replacements), $item);
 
 	if($isAdmin){
 		$item=str_replace("<admin_func_ph>","",$item);

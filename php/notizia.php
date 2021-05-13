@@ -31,9 +31,7 @@ function replacePH($news, $isUserAdmin){
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_edit_ph/>" => "edit_notizia.php?news=".$news->getTitle()
 	);
-	foreach ($replacements as $key  =>  $value) {
-		$homePage=str_replace($key, $value, $homePage);
-	}
+	$homePage=str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 	echo "isuseradmin: ".$isUserAdmin;
 	if($isUserAdmin){

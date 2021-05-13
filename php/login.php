@@ -55,14 +55,12 @@ if($user){
 		}
 
 		$replacements=array("<username_ph/>"=>$username);
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 	}else{
 		$replacements=array("<username_ph/>"=>"");
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 	}
 
 	

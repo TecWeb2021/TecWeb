@@ -35,9 +35,7 @@ function replacePH($game, $isUserAdmin){
 		"<developer_ph/>" => $game->getDeveloper()
 	);
 
-	foreach ($replacements as $key => $value) {
-		$homePage=str_replace($key, $value, $homePage);
-	}
+	$homePage=str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 	if($isUserAdmin){
 		$homePage=str_replace("<admin_func_ph>","",$homePage);

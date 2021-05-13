@@ -104,9 +104,8 @@ if($user){
 		"<email_ph/>"=>$email ? $email : "",
 		"<username_ph/>"=>$username ? $username : ""
 		);
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 		
 	}else{
@@ -118,9 +117,7 @@ if($user){
 		"<username_ph/>" => ""
 		);
 
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 		$allOk = false;
 	}

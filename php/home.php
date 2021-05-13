@@ -18,10 +18,10 @@ function createNewsListItem($news, $isUserAdmin=false){
 	$item=file_get_contents("../html/templates/homeNewsTemplate.html");
 	
 	$image = $news->getImage1();
-	$imagePath= $image ? $image->getPath() : "no_image_present";
-	$imageAlt= $image ? $image->getAlt(): "no_alt_present";
+	$imagePath = $image ? $image->getPath() : "no_image_present";
+	$imageAlt = $image ? $image->getAlt(): "no_alt_present";
 
-	$replacements=array(
+	$replacements = array(
 		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),
 		"<news_publication_date_time_ph/>" => dateToText($news->getLastEditDateTime()),
 		"<news_title_ph/>" => $news->getTitle(),
@@ -33,9 +33,7 @@ function createNewsListItem($news, $isUserAdmin=false){
 
 	);
 
-	foreach ($replacements as $key => $value) {
-		$item=str_replace($key, $value, $item);
-	}
+	$item = str_replace(array_keys($replacements), array_values($replacements), $item);
 
 	if($isUserAdmin){
 		$item=str_replace("<admin_func_ph>","",$item);
@@ -73,9 +71,7 @@ function createTop5GamesItem($game, $positionNumber){
 		"/\<img_alt_ph\/\>/" => $game ? $game->getImage1()->getAlt() : ""
 	);
 
-	foreach ($replacements as $key => $value) {
-		$item=preg_replace($key, $value, $item);
-	}
+	$item = str_replace(array_keys($replacements), array_values($replacements), $item);
 
 	return $item;
 }
@@ -144,9 +140,7 @@ if($gamesNum > 0){
 			"</top_games_ph>" => ""
 	);
 
-	foreach ($replacements as $key => $value) {
-		$homePage = str_replace($key, $value, $homePage);
-	}
+	$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 }else{
 	echo "no games<br/>";

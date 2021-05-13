@@ -12,8 +12,6 @@ $homePage=file_get_contents("../html/templates/editProfiloTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
-echo $user->getImage()->getPath();
-
 if($user){
 
 	if(isset($_REQUEST['elimina'])){
@@ -114,9 +112,8 @@ if($user){
 			$replacements=array(
 			"<email_ph/>"=>$new_email ? $new_email : $user->getEmail(),
 			);
-			foreach ($replacements as $key => $value) {
-				$homePage=str_replace($key, $value, $homePage);
-			}
+
+			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 			
 		}else{
@@ -126,9 +123,8 @@ if($user){
 			$replacements=array(
 			"<email_ph/>" => $user->getEmail(),
 			);
-			foreach ($replacements as $key => $value) {
-				$homePage=str_replace($key, $value, $homePage);
-			}
+
+			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		}
 	}
 	

@@ -29,9 +29,7 @@ function replacePH($game, $isUserAdmin){
 	);
 
 	//applico le sostituzioni
-	foreach ($replacements as $key => $value) {
-		$homePage = str_replace($key, $value, $homePage);
-	}
+	$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 	if($isUserAdmin){
 		$homePage=str_replace("<admin_func_ph>","",$homePage);
@@ -61,9 +59,7 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 			"<comment_date_ph/>" => dateTimeToText($com->getDateTime())
 		);
 
-		foreach ($replacements as $key => $value) {
-			$s = str_replace($key, $value, $s);
-		}
+		$s = str_replace(array_keys($replacements), array_values($replacements), $s);
 
 		$commentsString=$commentsString.$s;
 	}

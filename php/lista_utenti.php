@@ -13,9 +13,8 @@ function createUserHTMLItem($user){
 		"<usr_img_path_ph/>"=>"../".getSafeImage($imagePath),
 		"<username_ph/>"=>$user->getUsername()
 	);
-	foreach ($replacements as $key => $value) {
-		$template=str_replace($key, $value, $template);
-	}
+
+	$template = str_replace(array_keys($replacements), array_values($replacements), $template);
 
 	return $template;
 }
@@ -58,9 +57,8 @@ if($user){
 		$replacements=array(
 		"<users_divs_ph/>"=>$divsString
 		);
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 
 	}else{

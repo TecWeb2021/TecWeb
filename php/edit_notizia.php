@@ -257,10 +257,8 @@ if($allOk){
 			$replacements['<checked_giochi_ph/>'] = "";
 			$replacements['<checked_hardware_ph/>'] = "";
 		}
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
@@ -302,10 +300,7 @@ if($allOk){
 			$replacements['<checked_hardware_ph/>'] = "checked=\"checked\" ";
 		}
 
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		echo "replacements completati<br/>";
 	}
 
