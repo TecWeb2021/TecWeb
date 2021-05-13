@@ -175,6 +175,12 @@ $genres_pre = array();
 if(!isset($_REQUEST['resetFiltri'])){
 $yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
 $yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
+$y1Num = (int) $yearRangeStart;
+$y2Num = (int) $yearRangeEnd;
+
+if($y1Num > $y2Num){
+	$homePage = str_replace('<messaggi_form_ph/>', '<div class="erroriFiltri">Intervallo temporale sbagliato</div>', $homePage);
+}
 
 $consoles_pre = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
 $genres_pre = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
