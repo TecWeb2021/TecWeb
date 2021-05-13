@@ -19,7 +19,7 @@ function replacePH($game, $isUserAdmin){
 		"<gioco_scheda_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
 		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
 		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
-		"<img_path_ph/>" => "../".$game->getImage1()->getPath(),
+		"<img_path_ph/>" => "../".getSafeImage($game->getImage1()->getPath()),
 		"<img_alt_ph/>" => $game->getImage1()->getAlt(),
 		"<review_content_ph/>" => $game->getReview(),
 		"<review_date_ph/>" => dateToText($game->getPublicationDate()),
@@ -56,7 +56,7 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 
 		$replacements = array(
 			"<comment_content_ph/>" => $com->getContent(),
-			"<comment_author_profile_img_path_ph/>" => $author->getImage() ? $author->getImage()->getPath() : "../images/login.png",
+			"<comment_author_profile_img_path_ph/>" => $author->getImage() ? "../".getSafeImage($author->getImage()->getPath()) : "../". getSafeImage("images/login.png"),
 			"<comment_author_ph/>" => $author->getUsername(),
 			"<comment_date_ph/>" => dateTimeToText($com->getDateTime())
 		);

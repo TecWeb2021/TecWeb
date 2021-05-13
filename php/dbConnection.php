@@ -197,17 +197,16 @@ class DBAccess {
     }
 
     public function overwriteUser($user){
-        $username=$user->getUsername();
+        $username = $user->getUsername();
 		$username = mysqli_real_escape_string($this->connection, $username);
-        $hash=$user->getHash();
+        $hash = $user->getHash();
 		$hash = mysqli_real_escape_string($this->connection, $hash);
-        $isAdmin=$user->isAdmin();
+        $isAdmin = $user->isAdmin();
 		$isAdmin = mysqli_real_escape_string($this->connection, $isAdmin);
-        $image=$user->getImage();
-		$image = mysqli_real_escape_string($this->connection, $image);
-        $imagePath= $image ? $image->getPath() : null;
+        $image = $user->getImage();
+        $imagePath = $image ? $image->getPath() : null;
 		$imagePath = mysqli_real_escape_string($this->connection, $imagePath);
-        $email=$user->getEmail();
+        $email = $user->getEmail();
 		$email = mysqli_real_escape_string($this->connection, $email);
 
         $this->addImage($image);
@@ -302,7 +301,6 @@ class DBAccess {
         $content=$news->getContent()==null ? "NULL" : $news->getContent();
 		$content = mysqli_real_escape_string($this->connection, $content);
         $author = $news->getAuthor();
-		$author  = mysqli_real_escape_string($this->connection, $author );
         $authorUsername = $author->getUsername();
 		$authorUsername  = mysqli_real_escape_string($this->connection, $authorUsername );
         $last_edit_date_time = $news->getLastEditDateTime();
@@ -914,18 +912,31 @@ class DBAccess {
         }
     }
 
+    public function getLastImageId(){
+        $query = "SELECT Id FROM Images ORDER BY Images.Id DESC LIMIT 1";
+        $queryResult = $this->getResult($query);
+        if(mysqli_num_rows($queryResult) === 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult);
+            $id = $row['Id'];
+            return $id;
+        }
+    }
+
 
     public function addImage($image){
         if(!$image){
             return null;
         }
-        $imagePath=$image->getPath();
+        $imagePath = $image->getPath();
 		$imagePath = mysqli_real_escape_string($this->connection, $imagePath);
-        $imageAlt=$image->getAlt();
+        $imageAlt = $image->getAlt();
 		$imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
 
-        $query="INSERT INTO images VALUES ('$imagePath', '$imageAlt')";
-        $result=$this->getResult($query);
+        $query = "INSERT INTO images (`Path`, `Alt`) VALUES ('$imagePath', '$imageAlt')";
+        $result = $this->getResult($query);
+        echo "result" . $result;
         return $result;
     }
 

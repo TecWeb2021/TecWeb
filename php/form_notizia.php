@@ -63,6 +63,7 @@ if($allOk){
 		$imagePath1 = saveImageFromFILES($dbAccess,'immagine1');
 		if($imagePath1){
 			$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
+			$result1 = $dbAccess->addImage($new_newsImage1);
 		}else{
 			echo "salvataggio dell'immagine1 fallito"."<br/>";
 		}
@@ -71,6 +72,7 @@ if($allOk){
 		$imagePath2 = saveImageFromFILES($dbAccess,'immagine2');
 		if($imagePath2){
 			$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
+			$dbAccess->addImage($new_newsImage2);
 		}else{
 			echo "salvataggio dell'immagine2 fallito"."<br/>";
 		}
@@ -140,11 +142,11 @@ if($allOk){
 			}else{
 				echo "salvataggio su db fallito"."<br/>";
 				//visto che l'operazione di salvataggio su db della news non è andata a buon fine rimuovo l'immagine sia dal db che dal filesystem
-				$dbAccess->deleteImage($imagePath1);
+				/*$dbAccess->deleteImage($imagePath1);
 				unlink("../".$imagePath1);
 
 				$dbAccess->deleteImage($imagePath2);
-				unlink("../".$imagePath2);
+				unlink("../".$imagePath2);*/
 			}
 		}
 			
@@ -195,8 +197,8 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => "",
 			"<content_ph/>" => "",
-			"<img_alt1_ph/>" => "",
-			"<img_alt2_ph/>" => "",
+			"<img1_alt_ph/>" => "",
+			"<img2_alt_ph/>" => "",
 			"<opzioni_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => ""
 		);

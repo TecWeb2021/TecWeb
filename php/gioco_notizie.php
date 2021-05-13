@@ -25,7 +25,7 @@ function createNewsHTMLItem($news, $isAdmin=false){
 		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),	
 		"<news_title_ph/>" => $news->getTitle(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
-		"<img_path_ph/>" => "../".$news->getImage1()->getPath(),
+		"<img_path_ph/>" => "../".getSafeImage($news->getImage1()->getPath()),
 		"<img_alt_ph/>" => $news->getImage1()->getAlt(),
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_edit_ph/>" => "edit_notizia.php?news=".strtolower($news->getTitle())

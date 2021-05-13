@@ -21,7 +21,7 @@ function replacePH($game, $isUserAdmin){
 		"<gioco_scheda_ph/>" => "../"."gioco_scheda.php?game=".strtolower($game->getName()),
 		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
 		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
-		"<img_path_ph/>" => "../".$game->getImage1()->getPath(),
+		"<img_path_ph/>" => "../".getSafeImage($game->getImage1()->getPath()),
 		"<img_alt_ph/>" => $game->getImage1()->getAlt(),
 		"<publication_date_ph/>" => dateToText($game->getPublicationDate()),
 		"<game_name_ph/>" => $game->getName(),

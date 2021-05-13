@@ -27,7 +27,7 @@ function createNewsListItem($news, $isUserAdmin=false){
 		"<news_title_ph/>" => $news->getTitle(),
 		"<news_content_ph/>" => $news->getContent(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
-		"<img_path_ph/>" => "../".$imagePath,
+		"<img_path_ph/>" => "../".getSafeImage($imagePath),
 		"<img_alt_ph/>" => $imageAlt,
 		"<news_edit_ph/>" => "edit_notizia.php?news=".strtolower($news->getTitle())
 
@@ -69,7 +69,7 @@ function createTop5GamesItem($game, $positionNumber){
 		"/\<game_url_ph\/\>/" => $game ? "gioco_scheda.php?game=".strtolower($game->getName()) : "#",
 		"/\<game_position_ph\/\>/" => $positionNumber."°",
 		"/\<game_name_ph\/\>/" => $game ? $game->getName() : "",
-		"/\<img_path_ph\/\>/" => $game ? "../".$game->getImage1()->getPath() : "",
+		"/\<img_path_ph\/\>/" => $game ? "../".getSafeImage($game->getImage1()->getPath()) : "",
 		"/\<img_alt_ph\/\>/" => $game ? $game->getImage1()->getAlt() : ""
 	);
 
@@ -131,7 +131,7 @@ if($gamesNum > 0){
 	$replacements=array(
 			"<top_game_url_ph/>" => $topGame ? "gioco_scheda.php?game=".strtolower($topGame->getName()) : "#",
 			"<top_game_name_ph/>" => $topGame ? $topGame->getName() : "",
-			"<top_game_img_path_ph/>" => $topGame ? "../".$topGame->getImage1()->getPath() : "",
+			"<top_game_img_path_ph/>" => $topGame ? "../".getSafeImage($topGame->getImage1()->getPath()) : "",
 			"<top_game_img_alt_ph/>" => $topGame ? $topGame->getImage1()->getAlt() : "",
 			"<top_game_vote_ph/>" => $topGame ? $topGame->getVote() : "",
 			"<top_game_publication_date_ph/>" => $topGame ? dateToText($topGame->getPublicationDate()) : "",
