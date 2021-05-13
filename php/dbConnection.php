@@ -941,7 +941,7 @@ class DBAccess {
             $commentsList = array();
             echo "commentsDBResult: " . "";
             while ($row = mysqli_fetch_assoc($queryResult)) {
-                $comment=new Comment($row['Author'],$row['Game'], $row['Date_time'],$row['Content']);
+                $comment=new Comment($row['Author'], $row['Game'], $row['Date_time'], $row['Content'], $row['Id']);
                 array_push($commentsList, $comment);
             }
             return $commentsList;
@@ -960,6 +960,14 @@ class DBAccess {
 		$content  = mysqli_real_escape_string($this->connection, $content );
 
         $query="INSERT INTO comments VALUES (DEFAULT, '$authorName', '$gameName', '$date_time', '$content')";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function deleteComment($commentId){
+        $commentId = mysqli_real_escape_string($this->connection, $commentId);
+
+        $query="DELETE FROM comments WHERE Id='$commentId'";
         $result=$this->getResult($query);
         return $result;
     }

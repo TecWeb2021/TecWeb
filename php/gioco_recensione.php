@@ -43,7 +43,7 @@ function replacePH($game, $isUserAdmin){
 }
 
 
-function generateGameCommentsDivs($gameName,$dbAccess){
+function generateGameCommentsDivs($gameName, $dbAccess, $isUserAdmin){
 	$commentTemplate=file_get_contents("../html/templates/commentDivTemplate.html");
 	$commentsList=$dbAccess->getCommentsList($gameName);
 	if(!$commentsList){
@@ -63,7 +63,21 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 
 		$s = str_replace(array_keys($replacements), array_values($replacements), $s);
 
-		$commentsString=$commentsString.$s;
+		if($isUserAdmin){
+			$replacements = array(
+				'<admin_func_ph>' => '',
+				'<admin_func_ph/>' => '',
+				'<comment_delete_ph/>' => $com->getId()
+			);
+			$s = str_replace(array_keys($replacements), array_values($replacements), $s);
+		}else{
+			$replacements = array(
+				"/\<admin_func_ph\>.*\<\/admin_func_ph\>/" => ""
+			);
+			$s = preg_replace(array_keys($replacements), array_values($replacements), $s);
+		}
+
+		$commentsString = $commentsString.$s;
 	}
 	return $commentsString;
 
@@ -82,10 +96,10 @@ if(isset($_REQUEST['game'])){
 		
 
 		
-		$write=isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
+		$write = isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
 		#sanitize;
 		if($write){
-			$user=getLoggedUser($dbAccess);
+			$user = getLoggedUser($dbAccess);
 			if($user){
 				$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
 				$result=$dbAccess->addComment($comment);
@@ -100,7 +114,19 @@ if(isset($_REQUEST['game'])){
 			
 		}
 
-		$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess);
+		$deleteComment = isset($_REQUEST['deleteComment']) ? $_REQUEST['deleteComment'] : null;
+		if($isAdmin){
+			$result = $dbAccess->deleteComment($deleteComment);
+			if($result){
+				echo "commento eleiminato<br/>";
+			}else{
+				echo "commento non eleiminato<br/>";
+			}
+		}else{
+			echo "Per eliminare commenti devi essere autenticato come amministratore";
+		}
+
+		$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess, $isAdmin);
 		$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
 
 	}else{
