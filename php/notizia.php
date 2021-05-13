@@ -14,12 +14,19 @@ $homePage=replace($homePage);
 function replacePH($news, $isUserAdmin){
 	global $homePage;
 
-	$image=$news->getImage();
-	$imagePath=  $image ? "../".$image->getPath() : "no_data";
-	$imageAlt=  $image ? $image->getAlt() : "no_data";
+	$image1 = $news->getImage1();
+	$imagePath1 = $image1 ? "../".$image1->getPath() : "no_data";
+	$imageAlt1 = $image1 ? $image1->getAlt() : "no_data";
+
+	$image2 = $news->getImage2();
+	$imagePath2 = $image2 ? "../".$image2->getPath() : "no_data";
+	$imageAlt2 = $image2 ? $image2->getAlt() : "no_data";
+
 	$replacements=array(
-		"<img_path_ph/>" => $imagePath,
-		"<img_alt_ph/>" => $imageAlt,
+		"<img1_path_ph/>" => $imagePath1,
+		"<img1_alt_ph/>" => $imageAlt1,
+		"<img2_path_ph/>" => $imagePath2,
+		"<img2_alt_ph/>" => $imageAlt2,
 		"<news_title_ph/>" => $news->getTitle(),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
 		"<news_publication_date_ph/>" => dateToText($news->getLastEditDateTime()),
