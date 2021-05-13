@@ -32,7 +32,7 @@ function createBasePage($templatePath, $page, $dbAccess, $pageParam = ""){
 
 }
 
-function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", $defaultUserImagePath="../images/login.png"){
+function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", $defaultUserImagePath="images/login.png"){
 
 	if(isset($_REQUEST['tendina']) && ($_REQUEST['tendina']=='true' || $_REQUEST['tendina']=='false')){
 		$templatePath="../html/templates/top_and_bottomTemplateNoJS.html";
@@ -116,7 +116,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	
 	if($user){
 		if($user->getImage()){
-			$base=str_replace("<user_img_path_ph/>", "../".$user->getImage()->getPath(), $base);
+			$base=str_replace("<user_img_path_ph/>", "../".getSafeImage($user->getImage()->getPath()), $base);
 		}
 
 		$replacements = array(
@@ -145,7 +145,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		}
 	}
 	#la riga qua sotto fa quello che deve solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
-	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
+	$base=str_replace("<user_img_path_ph/>","../".getSafeImage($defaultUserImagePath),$base);
 
 
 
@@ -209,16 +209,9 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 	$originalName=$image['name'];
 
 	#ricavo nome immagine col numero più alto presente nel database
-	$imagesList=$dbAccess->getImages();
-	$numArray=array();
-	foreach ($imagesList as $image) {
-		//echo $image->getPath()."<br/>";
-		$a=explode("/",$image->getPath())[1];
-		//echo $a."<br/>";
-		$num= explode(".",$a)[0];
-		array_push($numArray, $num);
-	}
-	$maxNum= count($numArray)>0 ? max($numArray) : -1;
+	$rawNum = $dbAccess->getLastImageId();
+	$maxNum = $rawNum !== null ? $rawNum : -1;
+	echo "lastNum: " . $maxNum;
 
 	#ricavo il nome da assegnare al nuovo file
 	$newNumber=$maxNum+1;
@@ -232,6 +225,16 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 		return $filePath;
 	}else{
 		return false;
+	}
+}
+
+// returns the path if it corresponds to an image saved on the server, a "not available" image else 
+// the path is supposed to be given relativto the root directory
+function getSafeImage($path, $defaultPath = "images/imagenotavailable.png"){
+	if(is_file("../".$path)){
+		return $path;
+	}else{
+		return $defaultPath;
 	}
 }
 

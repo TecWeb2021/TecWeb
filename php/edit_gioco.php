@@ -100,7 +100,7 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
+	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
 		echo "almeno un valore è stato rilevato<br/>";
 		
 		$new_gameName = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
@@ -108,7 +108,8 @@ if($allOk){
 		$new_gameAgeRange = isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
 		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
 		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
-		$new_gameAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$new_gameAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
+		$new_gameAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
 		$new_gameVote = isset($_REQUEST['voto']) ? $_REQUEST['voto'] : null;
 
 		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
@@ -118,18 +119,35 @@ if($allOk){
 		$new_gameSequel = isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
 		$new_gameDeveloper = isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
 
-		$new_gameImage = null;
+		$new_gameImage1 = null;
+		$new_gameImage2 = null;
 
-		$imageOk = false;
+		$image1Ok = false;
+		$image2Ok = false;
 		//error 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] != 4){
-			echo "rilevato campo immagine"."<br/>";
+		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error'] != 4){
+			echo "rilevato campo immagine1"."<br/>";
 			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine");
+			$imagePath = saveImageFromFILES($dbAccess, "immagine1");
 			if($imagePath){
-				echo "Salvataggio immagine riuscito nel percorso:".$imagePath."<br/>";
-				$new_gameImage = new Image($imagePath,$new_gameAlt);
-				$imageOk=true;
+				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath."<br/>";
+				$new_gameImage1 = new Image($imagePath,$new_gameAlt1);
+				$image1Ok=true;
+				
+			}else{
+				echo "Salvataggio immagine fallito"."<br/>";
+			}
+		}
+
+		//error 4: non è stata caricata alcuna immagine
+		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error'] != 4){
+			echo "rilevato campo immagine2"."<br/>";
+			//prendo l'immagine inserita dall'utente
+			$imagePath = saveImageFromFILES($dbAccess, "immagine2");
+			if($imagePath){
+				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath."<br/>";
+				$new_gameImage2 = new Image($imagePath,$new_gameAlt);
+				$image2Ok=true;
 				
 			}else{
 				echo "Salvataggio immagine fallito"."<br/>";
@@ -144,8 +162,10 @@ if($allOk){
 			'pegi' => "Pegi non inserito",
 			'descrizione' => "descrizione non inserita",
 			'recensione' => "Recensione non inserita",
-			'immagine' => "Immagine non inserita",
-			'alternativo' => "Testo alternativo dell'immaagine non inserito",
+			'immagine1' => "Immagine1 non inserita",
+			'immagine2' => "Immagine2 non inserita",
+			'alternativo1' => "Testo alternativo dell'immaagine1 non inserito",
+			'alternativo2' => "Testo alternativo dell'immaagine2 non inserito",
 			'voto' => "Voto non inserito",
 			'console' => "Console non inserita",
 			'genere' => "Genere non inserito",
@@ -187,7 +207,10 @@ if($allOk){
 
 		// controllo i campi opzionali
 
-		if($new_gameImage !== null && $imageOk === false){
+		if($new_gameImage1 !== null && $image1Ok === false){
+			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+		}
+		if($new_gameImage2 !== null && $image2Ok === false){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 		}
 		if($new_gamePrequel !== null && strlen($new_gamePrequel) > 0 && ($errorText = checkString($new_gamePrequel, 'prequel')) !== true){
@@ -201,29 +224,40 @@ if($allOk){
 			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
 		}
 		
-		if($new_gameAlt !== null && strlen($new_gameAlt) > 0 && ($errorText = checkString($new_gameAlt, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
+		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		}
+
+		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo')) !== true){
+			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
 		}
 		
 
-		if($error_message != ""){
+		if($error_message != ""){// sono presenti errori
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 			// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-			$new_gameImage=null;
+			$new_gameImage1 = null;
+			$new_gameImage2 = null;
 			
 			
 			
-			if($new_gameImage == null){
-				echo "campo immagine non rilevato"."<br/>";
+			if($new_gameImage1 == null){
+				echo "campo immagine1 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
-				$new_gameImage = $oldGame->getImage();
-				$imageOk=true;
+				$new_gameImage1 = $oldGame->getImage1();
+				$image1Ok = true;
+			}
+			if($new_gameImage2 == null){
+				echo "campo immagine2 non rilevato"."<br/>";
+				//prendo l'immagine già presente per il gioco prima delle modifiche
+				$new_gameImage2 = $oldGame->getImage2();
+				$image2Ok = true;
 			}
 			
-			if($imageOk){
+			if($image1Ok && $image2Ok){
 			
-				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
 				$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
 				echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
@@ -261,7 +295,8 @@ if($allOk){
 			"<developer_ph/>" => $new_gameDeveloper ? $new_gameDeveloper : $oldGame->getDeveloper(),
 			"<date_ph/>" => $new_gamePublicationDate ? $new_gamePublicationDate : $oldGame->getPublicationDate(),
 			"<age_range_ph/>" => $new_gameAgeRange ? $new_gameAgeRange : $oldGame->getAgeRange(),
-			"<img_alt_ph/>" => $new_gameAlt ? $new_gameAlt : $oldGame->getAlt(), //non l'ho messo perchè non è detto che l'immagine esista quindi ci vuole un controllo
+			"<img1_alt_ph/>" => $new_gameAlt1 ? $new_gameAlt1 : $oldGame->getImage1()->getAlt(), 
+			"<img2_alt_ph/>" => $new_gameAlt2 ? $new_gameAlt2 : $oldGame->getImage2()->getAlt(), 
 			"<vote_ph/>" => $new_gameVote ? $new_gameVote : $oldGame->getVote(),
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis ? $new_gameSinopsis : $oldGame->getSinopsis(),
@@ -290,32 +325,6 @@ if($allOk){
 		//Non controllo che l'utente abbia inserito valori diversi da quelli preesistenti
 	}else{
 		echo "nessu valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
-		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
-
-		/*
-		// controllo quale valore non è stato inserito
-		if(!isset($_REQUEST['nome'])){
-			echo "nome non inserito<br/>";
-		}elseif(!isset($_REQUEST['data'])){
-			echo "data non inserito<br/>";
-		}elseif(!isset($_REQUEST['pegi'])){
-			echo "pegi non inserito<br/>";
-		}elseif(!isset($_REQUEST['descrizione'])){
-			echo "descrizione non inserito<br/>";
-		}elseif(!isset($_REQUEST['recensione'])){
-			echo "recensione non inserito<br/>";
-		}elseif(!isset($_REQUEST['alternativo'])){
-			echo "alt non inserito<br/>";
-		}elseif(!isset($_REQUEST['voto'])){
-			echo "voto non inserito<br/>";
-		}elseif(!isset($_REQUEST['prequel'])){
-			echo "prequel non inserita<br/>";
-		}elseif(!isset($_REQUEST['sequel'])){
-			echo "sequel non inserita<br/>";
-		}elseif(!isset($_REQUEST['sviluppo'])){
-			echo "sviluppo non inserita<br/>";
-		}
-		*/
 
 
 		$old_gameConsoles = $oldGame->getConsoles();
@@ -358,9 +367,14 @@ if($allOk){
 			$replacements["<checked_genere_".$key."/>"] = $value ? "checked=\"checked\"" : "";
 		}
 
-		//se il vecchio gioco aveva un immagine inserisco il suo alt nel campo di input per l'alt
-		if($oldImage = $oldGame->getImage()){
-			$replacements["<img_alt_ph/>"] = $oldImage->getAlt();
+		//se il vecchio gioco aveva un immagine1 inserisco il suo alt nel campo di input per l'alt
+		if($oldImage1 = $oldGame->getImage1()){
+			$replacements["<img1_alt_ph/>"] = $oldImage1->getAlt();
+		}
+
+		//se il vecchio gioco aveva un immagine2 inserisco il suo alt nel campo di input per l'alt
+		if($oldImage2 = $oldGame->getImage2()){
+			$replacements["<img2_alt_ph/>"] = $oldImage2->getAlt();
 		}
 	
 		foreach ($replacements as $key => $value) {

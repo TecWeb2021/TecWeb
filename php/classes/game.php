@@ -7,7 +7,8 @@ class Game{
 	protected $sinopsis;
 	protected $age_range;
 	protected $review;
-	protected $image;
+	protected $image1;
+	protected $image2;
 	protected $consoles;
 	protected $genres;
 	protected $prequel;
@@ -19,14 +20,15 @@ class Game{
 	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
 
 
-	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
+	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image1, $_image2, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
 		$this->name = $_name;
 		$this->publication_date = $_publication_date;
 		$this->vote = $_vote;
 		$this->sinopsis = $_sinopsis;
 		$this->age_range = $_age_range;
 		$this->review = $_review;
-		$this->image = $_image;
+		$this->image1 = $_image1;
+		$this->image2 = $_image2;
 		$this->consoles = $_consoles;
 		$this->genres = $_genres;
 		$this->prequel = $_prequel;
@@ -58,8 +60,12 @@ class Game{
 		return $this->review;
 	}
 	
-	function getImage(){
-		return $this->image;
+	function getImage1(){
+		return $this->image1;
+	}
+
+	function getImage2(){
+		return $this->image2;
 	}
 
 	function getConsoles(){

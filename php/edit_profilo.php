@@ -12,6 +12,8 @@ $homePage=file_get_contents("../html/templates/editProfiloTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+echo $user->getImage()->getPath();
+
 if($user){
 
 	if(isset($_REQUEST['elimina'])){
