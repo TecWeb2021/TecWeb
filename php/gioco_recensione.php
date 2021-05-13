@@ -14,6 +14,7 @@ $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 function replacePH($game, $isUserAdmin){
 	global $homePage;
 
+	echo $game->getLast_review_date();
 	// questa è la lista delle sostituzioni da applicare
 	$replacements=array(
 		"<gioco_scheda_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
@@ -22,7 +23,8 @@ function replacePH($game, $isUserAdmin){
 		"<img_path_ph/>" => "../".getSafeImage($game->getImage2()->getPath()),
 		"<img_alt_ph/>" => $game->getImage2()->getAlt(),
 		"<review_content_ph/>" => $game->getReview(),
-		"<review_date_ph/>" => dateToText($game->getPublicationDate()),
+		"<review_author_ph/>" => $game->getReview_author(),
+		"<review_date_ph/>" => dateToText($game->getLast_review_date()),
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_name_ph/>" => $game->getName(),
 		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName()

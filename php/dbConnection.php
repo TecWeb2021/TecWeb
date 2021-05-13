@@ -187,7 +187,7 @@ class DBAccess {
         $category = mysqli_real_escape_string($this->connection, $category);
         $newName = mysqli_real_escape_string($this->connection, $newsName);
         
-        $query="SELECT news.*, users.*, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM news LEFT JOIN images as i1 ON news.image1=i1.path LEFT JOIN images as i2 ON news.image2=i2.path LEFT JOIN users ON news.User=users.Username";
+        $query="SELECT news.*, users.*, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM ((news LEFT JOIN images as i1 ON news.image1=i1.path) LEFT JOIN images as i2 ON news.image2=i2.path) LEFT JOIN users ON news.User=users.Username";
         if($gameName != null){
             $query=$query." WHERE news.Category='Giochi' AND news.Game='$gameName'";
             if($category != null){
@@ -299,11 +299,11 @@ class DBAccess {
 
         $query="INSERT INTO images VALUES ('$imagePath1','$imageAlt1');";
         echo "image1 insertion"."<br/>";
-        $this->getResult($query);
+        //$this->getResult($query);
 
         $query="INSERT INTO images VALUES ('$imagePath2','$imageAlt2');";
         echo "image2 insertion"."<br/>";
-        $this->getResult($query);
+        //$this->getResult($query);
 
         echo "news insertion"."<br/>";
         $content=addslashes($content);
@@ -341,8 +341,8 @@ class DBAccess {
         $game=$newNews->getGameName();
 		$game = mysqli_real_escape_string($this->connection, $game);
 
-        $this->addImage($image1);
-        $this->addImage($image2);
+        //$this->addImage($image1);
+        //$this->addImage($image2);
         
         $imagePath1 = $image1 ? $image1->getPath() : null;
 		$imagePath1 = mysqli_real_escape_string($this->connection, $imagePath1);
@@ -504,7 +504,7 @@ class DBAccess {
                 $image1 = new Image($row['Path1'],$row['Alt1']);
                 $image2 = new Image($row['Path2'],$row['Alt2']);
 
-                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'],$image1 , $image2, $consoles, $genres, $row['Developer']);
+                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2, $consoles, $genres, $row['Developer']);
                 array_push($gamesList, $game);
             }
 
@@ -516,7 +516,7 @@ class DBAccess {
 
         $name = mysqli_real_escape_string($this->connection, $name);
         //specifico i campi da visualizzare perchè non voglio avere 2 Prequel e 2 Sequel, così possono prendere il sequel semplicemente indicando ['Sequel'] e stessa cosa per il prequel
-        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, i1.Path as Path1, i1.Alt as Alt1, i2.Path as Path2, i2.Alt as Alt2 FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path WHERE games.Name='$name'";
+        $querySelect ="SELECT ps1.Prequel, games.*, ps2.Sequel, i1.Path as Path1, i1.Alt as Alt1, i2.Path as Path2, i2.Alt as Alt2 FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path WHERE games.Name='$name'";
         $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -529,7 +529,7 @@ class DBAccess {
 
             $image1 = new Image($row['Path1'],$row['Alt1']);
             $image2 = new Image($row['Path2'],$row['Alt2']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
         return $game;
         }
@@ -587,7 +587,7 @@ class DBAccess {
     }
 
     public function getTopGame(){
-        $querySelect ="SELECT ps1.Prequel, Name, Publication_date, Vote, Sinopsis, Age_range, Review, Developer, ps2.Sequel, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path LIMIT 1";
+        $querySelect ="SELECT ps1.Prequel, games.*, ps2.Sequel, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path LIMIT 1";
         $queryResult = $this->getResult($querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
@@ -600,7 +600,7 @@ class DBAccess {
 
             $image1 = new Image($row['i1Path'],$row['i1Alt']);
             $image2 = new Image($row['i2Path'],$row['i2Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'] );
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'] );
 
         return $game;
         }
@@ -618,7 +618,7 @@ class DBAccess {
                 $image1 = new Image($row['i1Path'],$row['i1Alt']);
                 $image2 = new Image($row['i2Path'],$row['i2Alt']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $image1, $image2);
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2);
                 array_push($gamesList, $game);
             }
 
@@ -639,6 +639,11 @@ class DBAccess {
 		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
         $review = addslashes($game->getReview());
 		$review  = mysqli_real_escape_string($this->connection, $review );
+        $last_review_date = $game->getLast_review_date();
+        $last_review_date = mysqli_real_escape_string($this->connection, $last_review_date );
+        $review_author = $game->getReview_author();
+        $review_authorUsername = $review_author->getUsername();
+        $review_authorUsername = mysqli_real_escape_string($this->connection, $review_authorUsername );
         $image1 = $game->getImage1();
         $imagePath1 =  $image1 ? $image1->getPath() : null;
 		$imagePath1  = mysqli_real_escape_string($this->connection, $imagePath1 );
@@ -674,7 +679,7 @@ class DBAccess {
 
         if($image1){
             $query="INSERT INTO images VALUES ('$imagePath1', '$imageAlt1')";
-            $result=$this->getResult($query);
+            //$result=$this->getResult($query);
             /*if($result==null){
                 return $result;
             }*/
@@ -682,7 +687,7 @@ class DBAccess {
 
         if($image2){
             $query="INSERT INTO images VALUES ('$imagePath2', '$imageAlt2')";
-            $result=$this->getResult($query);
+            //$result=$this->getResult($query);
             /*if($result==null){
                 return $result;
             }*/
@@ -690,7 +695,7 @@ class DBAccess {
 
         
 
-        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$imagePath1', '$imagePath2','$developer')";
+        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$last_review_date', '$review_authorUsername', $imagePath1', '$imagePath2','$developer')";
         $result=$this->getResult($query);
         if($result){
             if($consoles){
@@ -750,6 +755,11 @@ class DBAccess {
 		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
         $review = addslashes($newGame->getReview());
 		$review  = mysqli_real_escape_string($this->connection, $review );
+        $last_review_date = $newGame->getLast_review_date();
+        $last_review_date = mysqli_real_escape_string($this->connection, $last_review_date);
+        $review_author = $newGame->getReview_author();
+        $review_authorUsername = $review_author->getUsername();
+        $review_authorUsername = mysqli_real_escape_string($this->connection, $review_authorUsername );
         $image1 = $newGame->getImage1();
         
         $imagePath1 =  $image1 ? $image1->getPath() : null;
@@ -785,15 +795,15 @@ class DBAccess {
         $developer = $newGame->getDeveloper();
 		$developer  = mysqli_real_escape_string($this->connection, $developer );
 
-        $this->addImage($image1);
-        $this->addImage($image2);
+        //$this->addImage($image1);
+        //$this->addImage($image2);
 
         $result = true;
 
         
 
         if($result){
-            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Image1='$imagePath1', Image2='$imagePath2', Developer='$developer' WHERE Name='$oldGameName'";
+            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Last_review_date='$last_review_date', Review_author='$review_authorUsername', Image1='$imagePath1', Image2='$imagePath2', Developer='$developer' WHERE Name='$oldGameName'";
             $result=$this->getResult($query);
         }
         if($result){

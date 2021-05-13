@@ -108,6 +108,8 @@ if($allOk){
 		$new_gameAgeRange = isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
 		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
 		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
+		$new_gameLast_review_date = date("Y-m-d");
+		$new_gameReview_author = $user;
 		$new_gameAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
 		$new_gameAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
 		$new_gameVote = isset($_REQUEST['voto']) ? $_REQUEST['voto'] : null;
@@ -147,7 +149,7 @@ if($allOk){
 			$imagePath = saveImageFromFILES($dbAccess, "immagine2", Game::$img2MinRatio, Game::$img2MaxRatio);
 			if($imagePath){
 				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath."<br/>";
-				$new_gameImage2 = new Image($imagePath,$new_gameAlt);
+				$new_gameImage2 = new Image($imagePath,$new_gameAlt2);
 				$dbAccess->addImage($new_gameImage2);
 				$image2Ok=true;
 				
@@ -209,12 +211,13 @@ if($allOk){
 
 		// controllo i campi opzionali
 
+		/*
 		if($new_gameImage1 !== null && $image1Ok === false){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 		}
 		if($new_gameImage2 !== null && $image2Ok === false){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}
+		}*/
 		if($new_gamePrequel !== null && strlen($new_gamePrequel) > 0 && ($errorText = checkString($new_gamePrequel, 'prequel')) !== true){
 			$error_message = $error_message . $error_messages['prequel'] . "<br/>";
 		}
@@ -239,18 +242,16 @@ if($allOk){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
 			// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-			$new_gameImage1 = null;
-			$new_gameImage2 = null;
 			
 			
 			
-			if($new_gameImage1 == null){
+			if($new_gameImage1 === null){
 				echo "campo immagine1 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
 				$new_gameImage1 = $oldGame->getImage1();
 				$image1Ok = true;
 			}
-			if($new_gameImage2 == null){
+			if($new_gameImage2 === null){
 				echo "campo immagine2 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
 				$new_gameImage2 = $oldGame->getImage2();
@@ -259,7 +260,7 @@ if($allOk){
 			
 			if($image1Ok && $image2Ok){
 			
-				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameLast_review_date, $new_gameReview_author, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
 				$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
 				echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";

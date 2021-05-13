@@ -36,7 +36,7 @@ $homePage=file_get_contents("../html/templates/editNotiziaTemplate.html");
 
 
 // verifico che l'utente abbia l'autorizzazione per modificare un gioco
-$user=getLoggedUser($dbAccess);
+$user = getLoggedUser($dbAccess);
 
 $authCheck=true;
 
@@ -105,8 +105,8 @@ if($allOk){
 		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
 		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
 		// alcuni valori li riprendo dalla vecchia notizia
-		$new_newsAuthor = $oldNews->getAuthor();
-		$new_newsEditDateTime = $oldNews->getLastEditDateTime();
+		$new_newsAuthor = $user;
+		$new_newsEditDateTime = date("Y-m-d");
 		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
 		$new_newsAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
 		$new_newsAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
@@ -116,11 +116,11 @@ if($allOk){
 		}
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-		$new_newsImage1=null;
-		$image1Ok=false;
+		$new_newsImage1 = null;
+		$image1Ok = false;
 
-		$new_newsImage2=null;
-		$image2Ok=false;
+		$new_newsImage2 = null;
+		$image2Ok = false;
 
 		//errore 4: non è stata caricata alcuna immagine
 		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error']!=4 ){

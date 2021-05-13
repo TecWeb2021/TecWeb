@@ -67,8 +67,8 @@ function createTop5GamesItem($game, $positionNumber){
 		"/\<game_url_ph\/\>/" => $game ? "gioco_scheda.php?game=".strtolower($game->getName()) : "#",
 		"/\<game_position_ph\/\>/" => $positionNumber."°",
 		"/\<game_name_ph\/\>/" => $game ? $game->getName() : "",
-		"/\<img_path_ph\/\>/" => $game ? "../".getSafeImage($game->getImage1()->getPath()) : "",
-		"/\<img_alt_ph\/\>/" => $game ? $game->getImage1()->getAlt() : ""
+		"/\<img_path_ph\/\>/" => $game ? "../".getSafeImage($game->getImage2()->getPath()) : "",
+		"/\<img_alt_ph\/\>/" => $game ? $game->getImage2()->getAlt() : ""
 	);
 
 	$item = preg_replace(array_keys($replacements), array_values($replacements), $item);

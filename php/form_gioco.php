@@ -58,6 +58,8 @@ if($allOk){
 		$new_gameSequel = isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
 		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
 		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
+		$new_gameLast_review_date = date("Y-m-d");
+		$new_gameReview_author = $user;
 
 
 
@@ -193,7 +195,7 @@ if($allOk){
 		if($error_message != ""){
 			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 		}else{
-			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameLast_review_date, $new_gameReview_author, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
 			$opResult = $dbAccess->addGame($newGame);
 			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";

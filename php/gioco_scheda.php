@@ -28,7 +28,7 @@ function replacePH($game, $isUserAdmin){
 		"<sinopsis_ph/>" => $game->getSinopsis(),
 		"<platforms_ph/>" => $platforms,
 		"<genres_ph/>" => $genres,
-		"<age_range_ph/>" => "PEGI ".$game->getAgeRange(),
+		"<age_range_ph/>" => $game->getAgeRange(),
 		"<prequel_ph/>" => $game->getPrequel() ? $game->getPrequel() : "Nessuno",
 		"<sequel_ph/>" => $game->getSequel() ? $game->getSequel() : "Nessuno",
 		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName(),

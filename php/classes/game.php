@@ -7,6 +7,8 @@ class Game{
 	protected $sinopsis;
 	protected $age_range;
 	protected $review;
+	protected $last_review_date;
+	protected $review_author;
 	protected $image1;
 	protected $image2;
 	protected $consoles;
@@ -24,13 +26,15 @@ class Game{
 	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
 
 
-	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_image1, $_image2, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
+	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_review, $_last_review_date, $_review_author, $_image1, $_image2, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
 		$this->name = $_name;
 		$this->publication_date = $_publication_date;
 		$this->vote = $_vote;
 		$this->sinopsis = $_sinopsis;
 		$this->age_range = $_age_range;
 		$this->review = $_review;
+		$this->last_review_date = $_last_review_date;
+		$this->review_author = $_review_author;
 		$this->image1 = $_image1;
 		$this->image2 = $_image2;
 		$this->consoles = $_consoles;
@@ -62,6 +66,14 @@ class Game{
 
 	function getReview(){
 		return $this->review;
+	}
+
+	function getLast_review_date(){
+		return $this->last_review_date;
+	}
+
+	function getReview_author(){
+		return $this->review_author;
 	}
 	
 	function getImage1(){
