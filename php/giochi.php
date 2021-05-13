@@ -116,9 +116,9 @@ $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
 
-$gameName= isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+$gameName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 #sanitize
-$order= isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
+$order = isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
 // possibili valori in input dall'html: "Alfabetico", "Voto 4+", "Ultimi usciti"
 
 //converto gli input dell'utente in valori adatti alla funzione getGamesList
@@ -136,6 +136,33 @@ switch($order){
 		$order = null;
 		break;
 }
+
+$replacements = array();
+switch ($order) {
+	case 'alfabetico':
+		$replacements = array(
+			'<ordine_alfabetico_attivo_ph/>' => 'class="dropbtn_attivo"',
+			'<ordine_voto_attivo_ph/>' => 'class="dropbtn"',
+			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn"'
+		);
+		break;
+	case 'voto':
+		$replacements = array(
+			'<ordine_alfabetico_attivo_ph/>' => 'class="dropbtn"',
+			'<ordine_voto_attivo_ph/>' => 'class="dropbtn_attivo"',
+			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn"'
+		);
+		break;
+	default: // ordine cronologico e comunque di default
+		$replacements = array(
+			'<ordine_alfabetico_attivo_ph/>' => 'class="dropbtn"',
+			'<ordine_voto_attivo_ph/>' => 'class="dropbtn"',
+			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn_attivo"'
+		);
+		break;
+}
+
+$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 // FILTRI
 

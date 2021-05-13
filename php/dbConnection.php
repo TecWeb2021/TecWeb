@@ -40,46 +40,7 @@ class DBAccess {
         }
         $queryResult = mysqli_query($this->connection, $querySelect);
         return $queryResult;
-        /*
-        echo "query result: <br/>";
-        print_r($queryResult) . "<br/>";
-        if($queryResult === true){
-            return $queryResult;
-        }
-
-        if($queryResult==false && !$silent){
-            echo mysqli_error($this->connection)."<br/>";
-            return null;
-        }
-
-        if($queryResult==null || mysqli_num_rows($queryResult) == 0) {
-            return null;
-        }else {
-            $resultList = array();
-
-            //mysqli_fetch muove l'iteratore. Ogni volta che lo eseguo va alla successiva, fino a quando arriva alla fine e restituisce null.
-            //mysqli_fetch_assoc (in maniera associativa)
-            while ($row = mysqli_fetch_assoc($resultList)) {
-                array_push($resultList, $row);
-            }
-            #restituisce un array di array. Gli array contenutivi sono le righe del database.
-            return $resultList;
-        }*/
     }
-
-
-    // se possibile, converte un mysqli_result in un array associativo
-    // ogni elemento dell'array sarà una riga del database, con i nomi delle colonne preservati
-    /*public function mySqliResultToArray($result){
-        if($result === null || $result === true || $result === false){
-            return null;
-        }
-        $newArr = array();
-        while($row = mysqli_fetch_assoc($result)){
-            array_push($newArr, $row);
-        }
-        return $newArr;
-    }*/
 
     ////////////////////
     // USER
@@ -487,8 +448,8 @@ class DBAccess {
             
             case 'voto':
             	//considero solo i voti >= 4
-            	$specifyTopVotes = " games.Vote >= 4";
-            	array_push($to_append_strings, $specifyTopVotes);
+            	// $specifyTopVotes = " games.Vote >= 4";
+            	// array_push($to_append_strings, $specifyTopVotes);
                 $orderQueryAppend=" ORDER BY games.Vote DESC";
                 
                 break;
