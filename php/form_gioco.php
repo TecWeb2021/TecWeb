@@ -73,6 +73,7 @@ if($allOk){
 		if($imagePath1){
 			echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
 			$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
+			$dbAccess->addImage($new_gameImage1);
 			$image1Ok=true;
 			
 		}else{
@@ -83,6 +84,7 @@ if($allOk){
 		if($imagePath2){
 			echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
 			$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
+			$dbAccess->addImage($new_gameImage2);
 			$image2Ok=true;
 			
 		}else{

@@ -711,17 +711,17 @@ class DBAccess {
         if($image1){
             $query="INSERT INTO images VALUES ('$imagePath1', '$imageAlt1')";
             $result=$this->getResult($query);
-            if($result==null){
+            /*if($result==null){
                 return $result;
-            }
+            }*/
         }
 
         if($image2){
             $query="INSERT INTO images VALUES ('$imagePath2', '$imageAlt2')";
             $result=$this->getResult($query);
-            if($result==null){
+            /*if($result==null){
                 return $result;
-            }
+            }*/
         }
 
         
@@ -936,7 +936,6 @@ class DBAccess {
 
         $query = "INSERT INTO images (`Path`, `Alt`) VALUES ('$imagePath', '$imageAlt')";
         $result = $this->getResult($query);
-        echo "result" . $result;
         return $result;
     }
 

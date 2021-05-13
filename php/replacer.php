@@ -185,7 +185,7 @@ function getLoggedUser($dbAccess){
 	return $user;
 }
 
-function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/'){
+function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0, $maxResolutionRateo =INF, $uploaddir = '../images/'){
 	//questa funzione ritorna il percorso in cui l'immagine è salvata
 	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
 
@@ -196,6 +196,18 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/')
 
 	//errore 4: non è stata caricata alcuna immagine
 	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
+		return null;
+	}
+
+	echo "image dimensions: <br/>";
+	$imageSizeDetails = getimagesize($_FILES[$imgReceiveName]['tmp_name']);
+	$xSize = $imageSizeDetails[0];
+	$ySize = $imageSizeDetails[1];
+	$resRateo = $ySize / $xSize;
+	echo "image dimensions. x: $xSize y: $ySize rateo: $resRateo";
+	echo "<br/>";
+	
+	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
 		return null;
 	}
 	#Recupero il percorso temporaneo del file
@@ -234,7 +246,7 @@ function getSafeImage($path, $defaultPath = "images/imagenotavailable.png"){
 	}
 }
 
-function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<name_ph/>\" <selected_ph/> />"){
+function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> />"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$gamesList=$dbAccess->getGamesList();
@@ -250,18 +262,22 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 	foreach ($gamesList as $game) {
 		$singleString=$template;
 		$replacements = array(
-			"<name_ph/>" => $game->getName(),
-			"<selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
+			"<option_name_ph/>" => $game->getName(),
+			"<option_selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
 		);
-		$singleString = preg_replace(array_keys($replacements), array_values($replacements), $singleString);
+
+		$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
+		echo $game->getName(). "<br/>";
+		echo htmlspecialchars($singleString) . "<br/>";
 		array_push($stringsArray, $singleString);
 	}
-	$joinedItems=implode("", $stringsArray);
+	$joinedItems = implode("", $stringsArray);
+	//echo htmlspecialchars($joinedItems);
 	return $joinedItems;
 }
 
 
-function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<name_ph/>\" <selected_ph/> />"){
+function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> />"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$newsList=$dbAccess->getNewsList();
@@ -277,10 +293,10 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 	foreach ($newsList as $news) {
 		$singleString=$template;
 		$replacements = array(
-			"<name_ph/>" => $news->getTitle(),
-			"<selected_ph/>" => $news->getTitle() == $selectedName ? "selected=\"selected\"" : ""
+			"<option_name_ph/>" => $news->getTitle(),
+			"<option_selected_ph/>" => $news->getTitle() == $selectedName ? "selected=\"selected\"" : ""
 		);
-		$singleString = preg_replace(array_keys($replacements), array_values($replacements), $singleString);
+		$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
 		array_push($stringsArray, $singleString);
 	}
 	$joinedItems=implode("", $stringsArray);

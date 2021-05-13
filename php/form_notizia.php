@@ -60,7 +60,7 @@ if($allOk){
 		//il salvataggio dell'immagine potrebbe fallire quindi inserisco una variabile booleana per gestire la cosa (sarebbe forse meglio gestire il tutto con le eccezioni)
 
 		$new_newsImage1 = null;
-		$imagePath1 = saveImageFromFILES($dbAccess,'immagine1');
+		$imagePath1 = saveImageFromFILES($dbAccess, 'immagine1', Image::$img1MinRateo, Image::$img1MaxRateo);
 		if($imagePath1){
 			$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
 			$result1 = $dbAccess->addImage($new_newsImage1);
@@ -69,7 +69,7 @@ if($allOk){
 		}
 
 		$new_newsImage2 = null;
-		$imagePath2 = saveImageFromFILES($dbAccess,'immagine2');
+		$imagePath2 = saveImageFromFILES($dbAccess, 'immagine2', Image::$img2MinRateo, Image::$img2MaxRateo);
 		if($imagePath2){
 			$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
 			$dbAccess->addImage($new_newsImage2);

@@ -71,7 +71,7 @@ function createTop5GamesItem($game, $positionNumber){
 		"/\<img_alt_ph\/\>/" => $game ? $game->getImage1()->getAlt() : ""
 	);
 
-	$item = str_replace(array_keys($replacements), array_values($replacements), $item);
+	$item = preg_replace(array_keys($replacements), array_values($replacements), $item);
 
 	return $item;
 }

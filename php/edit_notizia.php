@@ -236,7 +236,7 @@ if($allOk){
 			"<content_ph/>" => $new_newsText ? $new_newsText : $oldNews->getContent(),
 			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : ($oldNews->getImage1() ? $oldNews->getImage1()->getAlt() : ""),
 			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : ($oldNews->getImage2() ? $oldNews->getImage2()->getAlt() : ""),
-			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName()
 		);
 
@@ -270,7 +270,7 @@ if($allOk){
 		$replacements = array(
 			"<news_title_ph/>" => $oldNews->getTitle(),
 			"<content_ph/>" => $oldNews->getContent(),
-			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : ""
 		);
 
