@@ -92,18 +92,22 @@
         </fieldset>
       </form>
     </div>
-    <ul class="lista_commenti">
-      <li class="commento_singolo">
-        <div class="intestazione_commento">
-          <img id="foto_commentatore" src="../images/login.png">
-          <span class="commentatore"> Gigio </span>
-          <span class="data_post"> 18 Gennaio 2021 </span>
-        </div>
-        <div class="contenuto_commento">
-          <p class="testo_commento"> Nel regno di Lothric il suono di una campana preavvisa che l'Era del Fuoco sta terminando: la Prima Fiamma, ravvivata per la prima volta dal primo Signore dei Tizzoni, Lord Gwyn, è sul punto di spegnersi per sempre. In conseguenza di questo riappare la maledizione dei non morti e le ere spazio-temporali convergono tutte nello stesso punto: Lothric. L'Era del Fuoco potrà essere prolungata con un rituale in cui grandi signori ed eroi sacrificano le loro anime per ripristinare la Prima Fiamma. Tuttavia, il principe Lothric ha abbandonato il suo dovere e sceglie invece di guardare </p>
-        </div>
-      </li>
-    </ul>
+    <form action="gioco_recensione.php" method="get">
+      <input type="hidden" name="game" value="Dark Souls 3"/>
+      <ul class="lista_commenti">
+        <li class="commento_singolo">
+          <div class="intestazione_commento">
+            <img id="foto_commentatore" src="../images/login.png">
+            <span class="commentatore"> Gigio </span>
+            <span class="data_post"> 18 Gennaio 2021 </span>
+          </div>
+          <div class="contenuto_commento">
+            <p class="testo_commento"> Nel regno di Lothric il suono di una campana preavvisa che l'Era del Fuoco sta terminando: la Prima Fiamma, ravvivata per la prima volta dal primo Signore dei Tizzoni, Lord Gwyn, è sul punto di spegnersi per sempre. In conseguenza di questo riappare la maledizione dei non morti e le ere spazio-temporali convergono tutte nello stesso punto: Lothric. L'Era del Fuoco potrà essere prolungata con un rituale in cui grandi signori ed eroi sacrificano le loro anime per ripristinare la Prima Fiamma. Tuttavia, il principe Lothric ha abbandonato il suo dovere e sceglie invece di guardare </p>
+            <button type="submit" name="deleteComment" value="0">Elimina commento</button>
+          </div>
+        </li>
+      </ul>
+    </form>
   </div>
 </div>
 

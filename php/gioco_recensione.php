@@ -14,14 +14,14 @@ $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 function replacePH($game, $isUserAdmin){
 	global $homePage;
 
-	echo $game->getLast_review_date();
+	$image = $game ? $game->getImage2() : null;
 	// questa è la lista delle sostituzioni da applicare
 	$replacements=array(
 		"<gioco_scheda_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
 		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
 		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
-		"<img_path_ph/>" => "../".getSafeImage($game->getImage2()->getPath()),
-		"<img_alt_ph/>" => $game->getImage2()->getAlt(),
+		"<img_path_ph/>" => "../". ( $image ? getSafeImage($image->getPath()) : getSafeImage("")),
+		"<img_alt_ph/>" => $image ? $image->getAlt() : "",
 		"<review_content_ph/>" => $game->getReview(),
 		"<review_author_ph/>" => $game->getReview_author(),
 		"<review_date_ph/>" => dateToText($game->getLast_review_date()),
@@ -83,6 +83,8 @@ function generateGameCommentsDivs($gameName, $dbAccess, $isUserAdmin){
 
 }
 
+$game = null;
+
 $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
@@ -134,6 +136,7 @@ if(isset($_REQUEST['game'])){
 	}
 }else{
 	echo "non è specificato un gioco";
+	header('Location: home.php');
 }
 
 
