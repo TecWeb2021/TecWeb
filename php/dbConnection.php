@@ -205,9 +205,12 @@ class DBAccess {
         }elseif($newsName){
             $query=$query." WHERE news.Title LIKE '%$newsName%'";
         }
+
+        $query = $query . " ORDER BY news.Last_edit_date DESC";
         
         
         $result = $this->getResult($query);
+        echo mysqli_error($this->connection)."<br/>";
         if($result === null){
             return null;
         }
