@@ -15,6 +15,10 @@ class Game{
 	protected $sequel;
 	protected $developer;
 
+	public static $img1MinRatio = 1.3;
+	public static $img1MaxRatio = 1.6;
+	public static $img2MinRatio = 0.1;
+	public static $img2MaxRatio = 0.5;
 	//è importante che i seguenti valori corrispondano a quelli presenti nell'html. Credo che debbano avere la stessa stringa che sta nel value e che debbano essere nello stesso ordine.
 	public static $possible_consoles = array("PS4","XboxOne","Switch","PS5","XboxSeriesX");
 	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");

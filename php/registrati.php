@@ -28,7 +28,7 @@ if($user){
 		#sanitize
 		$username=isset($_REQUEST['username']) ? $_REQUEST['username'] : null;
 		#sanitize
-		$imagePath=saveImageFromFILES($dbAccess, "immagine");
+		$imagePath=saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
 		#sanitize
 		$password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
 		#sanitize

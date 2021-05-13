@@ -33,7 +33,7 @@ if($user){
 			#sanitize
 			$new_email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 			#sanitize
-			$new_imagePath=saveImageFromFILES($dbAccess, "immagine");
+			$new_imagePath=saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
 			#sanitize
 			
 			$error_message = "";

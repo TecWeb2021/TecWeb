@@ -128,10 +128,11 @@ if($allOk){
 		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error'] != 4){
 			echo "rilevato campo immagine1"."<br/>";
 			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine1");
+			$imagePath = saveImageFromFILES($dbAccess, "immagine1", Game::$img1MinRatio, Game::$img1MaxRatio);
 			if($imagePath){
 				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath."<br/>";
 				$new_gameImage1 = new Image($imagePath,$new_gameAlt1);
+				$dbAccess->addImage($new_gameImage1);
 				$image1Ok=true;
 				
 			}else{
@@ -143,10 +144,11 @@ if($allOk){
 		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error'] != 4){
 			echo "rilevato campo immagine2"."<br/>";
 			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine2");
+			$imagePath = saveImageFromFILES($dbAccess, "immagine2", Game::$img2MinRatio, Game::$img2MaxRatio);
 			if($imagePath){
 				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath."<br/>";
 				$new_gameImage2 = new Image($imagePath,$new_gameAlt);
+				$dbAccess->addImage($new_gameImage2);
 				$image2Ok=true;
 				
 			}else{

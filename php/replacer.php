@@ -267,12 +267,9 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 		);
 
 		$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
-		echo $game->getName(). "<br/>";
-		echo htmlspecialchars($singleString) . "<br/>";
 		array_push($stringsArray, $singleString);
 	}
 	$joinedItems = implode("", $stringsArray);
-	//echo htmlspecialchars($joinedItems);
 	return $joinedItems;
 }
 

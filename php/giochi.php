@@ -137,25 +137,26 @@ switch($order){
 		break;
 }
 
-echo "ordine giochi: ".$order."<br/>";
-
 // FILTRI
 
-$yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
-replaceYear1Checkboxes($yearRangeStart, $homePage);
-#sanitize
-$yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
-replaceYear2Checkboxes($yearRangeEnd, $homePage);
-#sanitize
+$yearRangeStart = null;
+$yearRangeEnd = null;
+$consoles_pre = array();
+$genres_pre = array();
 
-//echo "anni: ".$yearRangeStart." - ".$yearRangeEnd."<br/>";
+// se non è stato dato il comando di resettare i filtri, raccolgo i filtri passati
+if(!isset($_REQUEST['resetFiltri'])){
+$yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
+$yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
 
 $consoles_pre = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
-replaceConsoleCheckboxes($consoles_pre, $homePage);
-#sanitize
 $genres_pre = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+}
+
+replaceYear1Checkboxes($yearRangeStart, $homePage);
+replaceYear2Checkboxes($yearRangeEnd, $homePage);
+replaceConsoleCheckboxes($consoles_pre, $homePage);
 replaceGenresCheckboxes($genres_pre, $homePage);
-#sanitize
 
 
 # Chiedo al server una lista delle notizie

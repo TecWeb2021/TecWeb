@@ -127,9 +127,10 @@ if($allOk){
 			echo "l'utente ha inserito una nuova immagine1"."<br/>";
 			
 
-			$imagePath=saveImageFromFILES($dbAccess,'immagine1');
+			$imagePath=saveImageFromFILES($dbAccess,'immagine1', News::$img1MinRatio, News::$img1MaxRatio);
 			if($imagePath){
 				$new_newsImage1=new Image($imagePath,$new_newsAlt1);
+				$dbAccess->addImage($new_newsImage1);
 				$image1Ok=true;
 			}else{
 				echo "salvataggio dell'immagine1 fallito"."<br/>";
@@ -142,9 +143,10 @@ if($allOk){
 			echo "l'utente ha inserito una nuova immagine2"."<br/>";
 			
 
-			$imagePath=saveImageFromFILES($dbAccess,'immagine2');
+			$imagePath=saveImageFromFILES($dbAccess,'immagine2', News::$img2MinRatio, News::$img2MaxRatio);
 			if($imagePath){
 				$new_newsImage2=new Image($imagePath,$new_newsAlt2);
+				$dbAccess->addImage($new_newsImage2);
 				$image2Ok=true;
 			}else{
 				echo "salvataggio dell'immagine2 fallito"."<br/>";
