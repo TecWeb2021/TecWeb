@@ -43,7 +43,7 @@ if($allOk){
 
 	// verifico che uno qualsiasi dei campi di testo sia stato passato. Se sì vuol dire che l'utente è tornato sulla pagina per inviare i dati, e non è appena arrivato da un altra pagina
 	if( isset($_REQUEST['titolo']) ){
-		//echo "almeno uno dei valori è stato rilevato<br/>";
+		echo "almeno uno dei valori è stato rilevato<br/>";
 		
 		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
 		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
@@ -60,21 +60,21 @@ if($allOk){
 		//il salvataggio dell'immagine potrebbe fallire quindi inserisco una variabile booleana per gestire la cosa (sarebbe forse meglio gestire il tutto con le eccezioni)
 
 		$new_newsImage1 = null;
-		$imagePath1 = saveImageFromFILES($dbAccess, 'immagine1', Image::$img1MinRateo, Image::$img1MaxRateo);
+		$imagePath1 = saveImageFromFILES($dbAccess, 'immagine1', News::$img1MinRatio, News::$img1MaxRatio);
 		if($imagePath1){
 			$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
 			$result1 = $dbAccess->addImage($new_newsImage1);
 		}else{
-			//echo "salvataggio dell'immagine1 fallito"."<br/>";
+			echo "salvataggio dell'immagine1 fallito"."<br/>";
 		}
 
 		$new_newsImage2 = null;
-		$imagePath2 = saveImageFromFILES($dbAccess, 'immagine2', Image::$img2MinRateo, Image::$img2MaxRateo);
+		$imagePath2 = saveImageFromFILES($dbAccess, 'immagine2', News::$img2MinRatio, News::$img2MaxRatio);
 		if($imagePath2){
 			$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
 			$dbAccess->addImage($new_newsImage2);
 		}else{
-			//echo "salvataggio dell'immagine2 fallito"."<br/>";
+			echo "salvataggio dell'immagine2 fallito"."<br/>";
 		}
 
 		// ho raccolto tutti i dati che potevo raccogliere
@@ -132,15 +132,15 @@ if($allOk){
 		if($error_message != ""){
 			
 		}else{
-			//echo "non sono presenti errori";
+			echo "non sono presenti errori<br/>";
 			//se non ci sono stati errori procedo col salvataggio dei dati su db
 			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 	
 			$opResult = $dbAccess->addNews($newNews);
 			if($opResult && $opResult!=false){
-				//echo "salvataggio su db riuscito"."<br/>";
+				echo "salvataggio su db riuscito"."<br/>";
 			}else{
-				//echo "salvataggio su db fallito"."<br/>";
+				echo "salvataggio su db fallito"."<br/>";
 				//visto che l'operazione di salvataggio su db della news non è andata a buon fine rimuovo l'immagine sia dal db che dal filesystem
 				/*$dbAccess->deleteImage($imagePath1);
 				unlink("../".$imagePath1);
@@ -159,7 +159,7 @@ if($allOk){
 			"<content_ph/>" => $new_newsText ? $new_newsText : "",
 			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : "",
 			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : "",
-			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : ""
 		);
 
@@ -183,12 +183,12 @@ if($allOk){
 		}
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		//echo "replacements completati<br/>";
+		echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 		//un valore testuale di input non è stato rilevato. Ritengo quindi che l'utente sia arrivato da un altra pagina
 
 
@@ -198,7 +198,7 @@ if($allOk){
 			"<content_ph/>" => "",
 			"<img1_alt_ph/>" => "",
 			"<img2_alt_ph/>" => "",
-			"<opzioni_ph/>" => createGamesOptions($dbAccess),
+			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
 			"<game_name_ph/>" => ""
 		);
 		$replacements['<checked_eventi_ph/>'] = "";
@@ -206,7 +206,7 @@ if($allOk){
 		$replacements['<checked_hardware_ph/>'] = "";
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		//echo "replacements di rimozione placeholder completati<br/>";
+		echo "replacements di rimozione placeholder completati<br/>";
 	}
 
 }

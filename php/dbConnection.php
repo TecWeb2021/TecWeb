@@ -13,7 +13,7 @@ require_once("./classes/comment.php");
 class DBAccess {
     private const HOST_DB = "localhost";
     private const USERNAME ="root";
-    private const PASSWORD ="1234";
+    private const PASSWORD ="root";
     private const DATABASE_NAME ="ipiacere";
 
     private $connection;
@@ -36,9 +36,12 @@ class DBAccess {
     public function getResult($query, $silent = true){
         $querySelect ="$query";
         if(!$silent){
-            
+            echo $query;
         }
         $queryResult = mysqli_query($this->connection, $querySelect);
+        if(!$silent){
+            echo mysqli_error($this->connection);
+        }
         return $queryResult;
     }
 
@@ -688,7 +691,7 @@ class DBAccess {
 
         
 
-        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$last_review_date', '$review_authorUsername', $imagePath1', '$imagePath2','$developer')";
+        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$last_review_date', '$review_authorUsername', '$imagePath1', '$imagePath2','$developer')";
         $result=$this->getResult($query);
         if($result){
             if($consoles){

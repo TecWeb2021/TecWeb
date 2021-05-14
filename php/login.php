@@ -13,7 +13,7 @@ $homePage=file_get_contents("../html/templates/loginTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
-$error_message = ""
+$error_message = "";
 
 if($user){
 	$homePage="Hai già fatto il login";

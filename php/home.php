@@ -120,8 +120,14 @@ if($gamesNum > 0){
 
 	//usa cosa da implementare: se il top game non esiste bisogna togliere il div relativo, non lasciarlo con i valori vuoti
 
-	$consoles= $topGame ? $topGame->getConsoles() : null;
-	$genres= $topGame ? $topGame->getGenres() : null;
+	$consoles = $topGame ? $topGame->getConsoles() : null;
+	$genres = $topGame ? $topGame->getGenres() : null;
+
+	$prequel = $topGame ? $topGame->getPrequel() : null;
+	$prequel = $prequel === "" || $prequel === null ? "Nessuno" : $prequel;
+	$sequel = $topGame ? $topGame->getSequel() : null;
+	$sequel = $sequel === "" || $sequel === null ? "Nessuno" : $sequel;
+
 
 	//sostituzioni riguardanti il top_game
 	$replacements=array(
@@ -135,6 +141,8 @@ if($gamesNum > 0){
 			"<top_game_platforms_ph/>" => $consoles ? implode(", ",$consoles) : "Nessuna",
 			"<top_game_genres_ph/>" => $genres ? implode(", ",$genres) : "Nessuno",
 			"<top_game_developer/>" => $topGame ? $topGame->getDeveloper() : "Nessuno",
+			"<top_game_prequel_ph/>" => $prequel,
+			"<top_game_sequel_ph/>" => $sequel,
 
 			"<top_games_ph>" => "", // rimuovo i placeholder al limite dei topgames
 			"</top_games_ph>" => ""

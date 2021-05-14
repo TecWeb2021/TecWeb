@@ -184,6 +184,8 @@ $y2Num = (int) $yearRangeEnd;
 
 if($y1Num > $y2Num){
 	$homePage = str_replace('<messaggi_form_ph/>', '<div class="erroriFiltri">Intervallo temporale sbagliato</div>', $homePage);
+}else{
+	$homePage = str_replace('<messaggi_form_ph/>', '', $homePage);
 }
 
 $consoles_pre = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();

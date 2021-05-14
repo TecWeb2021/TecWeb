@@ -26,7 +26,7 @@ if($user){
 
 	$error_message = "";
 	if(isset($_REQUEST['email'])){
-		//echo "almeno un valore è stato inserito"."<br/>";
+		echo "almeno un valore è stato inserito"."<br/>";
 		
 		$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 		#sanitize
@@ -57,7 +57,7 @@ if($user){
 			$error_message = $error_message . $error_messages['email'] . "<br/>";
 		}
 		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
-		if($imagePath === false){
+		if($imagePath === false || $imagePath === null){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 		}
 		if($password === null  || ($errorText = checkString($password, "password")) !== true){
@@ -78,7 +78,7 @@ if($user){
 		if($error_message != ""){
 
 		}else{
-			//echo "non ci sono stati errori" . "<br/>";
+			echo "non ci sono stati errori" . "<br/>";
 			
 			if($imagePath!=false){
 				$image=new Image($imagePath, "immagine utente");
@@ -111,7 +111,7 @@ if($user){
 
 		
 	}else{
-		//echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
+		echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
 
 		//metto tutti i valori alla stringa vuota
 		$replacements=array(

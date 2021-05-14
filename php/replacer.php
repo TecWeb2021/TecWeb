@@ -203,7 +203,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 	$resRateo = $ySize / $xSize;
 	
 	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
-		return null;
+		return false;
 	}
 	#Recupero il percorso temporaneo del file
 	$image_tmp_location = $image['tmp_name'];
@@ -254,6 +254,7 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 	if($selectedName===""){
 		array_push($stringsArray, "<option value=\"\" selected=\"selected\" />");
 	}
+	// echo "count: " . count($gamesList);
 	foreach ($gamesList as $game) {
 		$singleString=$template;
 		$replacements = array(

@@ -20,10 +20,12 @@ if(isset($_COOKIE['login'])){
 }
 
 if($user){
-	$homePage=file_get_contents("../html/templates/profilo_utenteTemplate.html");
+	$homePage = file_get_contents("../html/templates/profilo_utenteTemplate.html");
 	if($user->isAdmin()){
-		$admin=file_get_contents("../html/templates/adminTemplate.html");
-		$homePage=str_replace("<admin_placeholder_ph/>", $admin, $homePage);
+		$admin = file_get_contents("../html/templates/adminTemplate.html");
+		$homePage = str_replace("<admin_placeholder_ph/>", $admin, $homePage);
+	}else{
+		$homePage = str_replace("<admin_placeholder_ph/>", "", $homePage);
 	}
 	$imagePath="";
 	if($user->getImage()){
