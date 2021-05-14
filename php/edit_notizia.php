@@ -77,7 +77,7 @@ if($allOk && !$news=$dbAccess->getNews($newsToBeModifiedName)){
 //se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
 if(isset($_REQUEST['elimina'])){
 	$newsToBeDeletedName=$_REQUEST["elimina"];
-	echo "elimina: ".$newsToBeDeletedName."<br/>";
+	//echo "elimina: ".$newsToBeDeletedName."<br/>";
 	$opResult=$dbAccess->deleteNews($newsToBeDeletedName);
 	if($opResult){
 		$homePage="eliminazione della notizia $newsToBeDeletedName riuscita";
@@ -100,7 +100,7 @@ if($allOk){
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
 	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) ){
-		echo "almeno un valore è stato rilevato<br/>";
+		//echo "almeno un valore è stato rilevato<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
 		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
 		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
@@ -124,7 +124,7 @@ if($allOk){
 
 		//errore 4: non è stata caricata alcuna immagine
 		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error']!=4 ){
-			echo "l'utente ha inserito una nuova immagine1"."<br/>";
+			//echo "l'utente ha inserito una nuova immagine1"."<br/>";
 			
 
 			$imagePath=saveImageFromFILES($dbAccess,'immagine1', News::$img1MinRatio, News::$img1MaxRatio);
@@ -133,14 +133,14 @@ if($allOk){
 				$dbAccess->addImage($new_newsImage1);
 				$image1Ok=true;
 			}else{
-				echo "salvataggio dell'immagine1 fallito"."<br/>";
+				//echo "salvataggio dell'immagine1 fallito"."<br/>";
 
 			}
 		}
 
 		//errore 4: non è stata caricata alcuna immagine
 		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error']!=4 ){
-			echo "l'utente ha inserito una nuova immagine2"."<br/>";
+			//echo "l'utente ha inserito una nuova immagine2"."<br/>";
 			
 
 			$imagePath=saveImageFromFILES($dbAccess,'immagine2', News::$img2MinRatio, News::$img2MaxRatio);
@@ -149,7 +149,7 @@ if($allOk){
 				$dbAccess->addImage($new_newsImage2);
 				$image2Ok=true;
 			}else{
-				echo "salvataggio dell'immagine2 fallito"."<br/>";
+				//echo "salvataggio dell'immagine2 fallito"."<br/>";
 
 			}
 		}
@@ -209,14 +209,14 @@ if($allOk){
 		}else{
 
 			if($new_newsImage1 == null){
-				echo "l'utente non ha inserito una nuova immagine1"."<br/>";
+				//echo "l'utente non ha inserito una nuova immagine1"."<br/>";
 				//prendo la vecchia immagine
 				$new_newsImage1=$oldNews->getImage1();
 				$image1Ok=true;
 			}
 
 			if($new_newsImage2 == null){
-				echo "l'utente non ha inserito una nuova immagine2"."<br/>";
+				//echo "l'utente non ha inserito una nuova immagine2"."<br/>";
 				//prendo la vecchia immagine
 				$new_newsImage2=$oldNews->getImage2();
 				$image2Ok=true;
@@ -225,9 +225,9 @@ if($allOk){
 			$newNews = new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
 			if($overwriteResult == true){
-				echo "overwrite su db riuscito" . "<br/>";
+				//echo "overwrite su db riuscito" . "<br/>";
 			}else{
-				echo "overwrite su db fallito" . "<br/>";
+				//echo "overwrite su db fallito" . "<br/>";
 			}
 		}
 
@@ -261,12 +261,12 @@ if($allOk){
 		}
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		//echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
 
 		$replacements = array(
@@ -303,7 +303,7 @@ if($allOk){
 		}
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		//echo "replacements completati<br/>";
 	}
 
 }

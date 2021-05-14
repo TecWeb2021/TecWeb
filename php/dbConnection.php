@@ -112,6 +112,7 @@ class DBAccess {
     }
 
     public function addUser($user){
+    	echo "addUser<br/>";
         $name = $user->getUsername();
 		$name = mysqli_real_escape_string($this->connection, $name);
         $hash = $user->getHash();
@@ -119,7 +120,6 @@ class DBAccess {
         $isAdmin = $user->IsAdmin();
 		$isAdmin = mysqli_real_escape_string($this->connection, $isAdmin);
         $image = $user->getImage();
-		$image = mysqli_real_escape_string($this->connection, $image);
         $email = $user->getEmail();
 		$email = mysqli_real_escape_string($this->connection, $email);
 
@@ -129,15 +129,17 @@ class DBAccess {
         #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
         $result=null;
         if($image){
+        	echo "in1<br/>";
             $imagePath=$image->getPath();
             $imageAlt=$image->getAlt();
             
-            $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
+            $query = "INSERT INTO images (`Path`, `Alt`) VALUES ('$imagePath', '$imageAlt')";
             $result=$this->getResult($query);
             if($result==null){
                 return null;
             }
         }
+        echo "2next";
 
         $imagePath = mysqli_real_escape_string($this->connection, $imagePath);
         $imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
@@ -517,7 +519,7 @@ class DBAccess {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
-            print_r($row);
+            
             $consoles=$this->getConsoles($name);
             $genres=$this->getGenres($name);
 
@@ -588,7 +590,7 @@ class DBAccess {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
-            // print_r($row);
+            // 
             $consoles=$this->getConsoles($row['Name']);
             $genres=$this->getGenres($row['Name']);
 

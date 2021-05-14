@@ -25,7 +25,7 @@ if($user){
 
 		
 		if(isset($_REQUEST['email'])){
-			echo "almeno un valore è stato inserito"."<br/>";
+			//echo "almeno un valore è stato inserito"."<br/>";
 
 			$new_password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
 			#sanitize
@@ -75,7 +75,7 @@ if($user){
 				$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 			}else{
-				echo "non ci sono stati errori" . "<br/>";
+				//echo "non ci sono stati errori" . "<br/>";
 				
 				//se non è stata inserita una nuova immagine prendo quella vecchia
 				$new_image = null;
@@ -98,10 +98,10 @@ if($user){
 		
 				$result = $dbAccess->overwriteUser($newUser);
 				if($result){
-					echo "risultato overwrite: " . $result . "<br>/";
+					//echo "risultato overwrite: " . $result . "<br>/";
 					setcookie('login',$new_hashValue);
 				}else{
-					echo "risultato overwrite: " . $result . "<br>/";
+					//echo "risultato overwrite: " . $result . "<br>/";
 					$allOk = false;
 				}
 		
@@ -117,7 +117,7 @@ if($user){
 
 			
 		}else{
-			echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+			//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
 			//faccio i replacement coi valori vecchio
 			$replacements=array(

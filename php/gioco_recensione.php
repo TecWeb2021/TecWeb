@@ -106,12 +106,12 @@ if(isset($_REQUEST['game'])){
 				$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
 				$result=$dbAccess->addComment($comment);
 				if($result){
-					echo "commento inserito<br/>";
+					//echo "commento inserito<br/>";
 				}else{
-					echo "commento non inserito<br/>";
+					//echo "commento non inserito<br/>";
 				}
 			}else{
-				echo "Per commentare devi essere autenticato";
+				//echo "Per commentare devi essere autenticato";
 			}
 			
 		}
@@ -120,22 +120,22 @@ if(isset($_REQUEST['game'])){
 		if($isAdmin){
 			$result = $dbAccess->deleteComment($deleteComment);
 			if($result){
-				echo "commento eleiminato<br/>";
+				//echo "commento eleiminato<br/>";
 			}else{
-				echo "commento non eleiminato<br/>";
+				//echo "commento non eleiminato<br/>";
 			}
 		}else{
-			echo "Per eliminare commenti devi essere autenticato come amministratore";
+			//echo "Per eliminare commenti devi essere autenticato come amministratore";
 		}
 
 		$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess, $isAdmin);
 		$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
 
 	}else{
-		echo "il gioco specificato non è stato trovato";
+		//echo "il gioco specificato non è stato trovato";
 	}
 }else{
-	echo "non è specificato un gioco";
+	//echo "non è specificato un gioco";
 	header('Location: home.php');
 }
 

@@ -33,7 +33,7 @@ function replacePH($news, $isUserAdmin){
 	);
 	$homePage=str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
-	echo "isuseradmin: ".$isUserAdmin;
+	//echo "isuseradmin: ".$isUserAdmin;
 	if($isUserAdmin){
 		$homePage = str_replace("<admin_func_ph>","",$homePage);
 		$homePage = str_replace("</admin_func_ph>","",$homePage);
@@ -52,12 +52,12 @@ if(isset($_REQUEST['news'])){
 	#sanitize;
 	$news = $dbAccess->getNews($newsTitle);
 	if($news === null){
-		echo "la notizia specificata non è stata trovata";
+		//echo "la notizia specificata non è stata trovata";
 	}else{
 		replacePH($news, $isAdmin);
 	}
 }else{
-	echo "non è specificata una notizia";
+	//echo "non è specificata una notizia";
 }
 
 
