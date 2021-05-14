@@ -12,6 +12,8 @@ $homePage=file_get_contents("../html/templates/editProfiloTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+$error_message = "";
+
 if($user){
 
 	if(isset($_REQUEST['elimina'])){
@@ -72,7 +74,7 @@ if($user){
 			
 			if($error_message !== ""){
 				//se c'è stato almeno un errore ...
-				$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+				
 
 			}else{
 				//echo "non ci sono stati errori" . "<br/>";
@@ -133,6 +135,8 @@ if($user){
 }else{
 	$homePage="non puoi accedere a questa pagina perchè non hai fatto il login";
 }
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 
 

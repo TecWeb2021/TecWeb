@@ -35,6 +35,8 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 
+$error_message = "";
+
 	
 if($allOk){
 
@@ -193,7 +195,7 @@ if($allOk){
 
 
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+			
 		}else{
 			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameLast_review_date, $new_gameReview_author, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
@@ -275,6 +277,8 @@ if($allOk){
 	}
 
 }
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 			
 
 

@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(0);
+
 require_once "replacer.php";
 require_once "dbConnection.php";
 
@@ -12,6 +14,8 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/registratiTemplate.html");
 
 $user=getLoggedUser($dbAccess);
+
+$error_message = "";
 
 if($user){
 	$homePage="Sei già registrato e hai già fatto il login";
@@ -72,9 +76,7 @@ if($user){
 		
 
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
-			
 		}else{
 			//echo "non ci sono stati errori" . "<br/>";
 			
@@ -121,18 +123,9 @@ if($user){
 
 		$allOk = false;
 	}
-
-	
 }
 
-//rifaccio il controllo dell'utente dopo l'operazione di registrazione
-//credo che questo qua sotto non funzioni perchè il cookie settato può essere rilevato dal php se lo script viene richiamato
-/*
-$user=getLoggedUser($dbAccess);
-//echo "user: ".($user ? $user->getUsername() : "nouserfound")."<br/>";
-if($user){
-	$homePage="Sei già registrato e hai già fatto il login";
-}*/
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);

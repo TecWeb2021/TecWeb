@@ -85,6 +85,8 @@ if(isset($_REQUEST['elimina'])){
 		$homePage="eliminazione della notizia $newsToBeDeletedName fallita";
 	}
 }
+
+$error_message = "";
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -205,7 +207,7 @@ if($allOk){
 
 
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+			
 		}else{
 
 			if($new_newsImage1 == null){
@@ -307,7 +309,8 @@ if($allOk){
 	}
 
 }
-			
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldNews ? $oldNews->getTitle() : "");

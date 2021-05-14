@@ -201,7 +201,6 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 	$xSize = $imageSizeDetails[0];
 	$ySize = $imageSizeDetails[1];
 	$resRateo = $ySize / $xSize;
-	echo "resRateo: ". $resRateo;
 	
 	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
 		return null;

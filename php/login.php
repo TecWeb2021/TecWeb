@@ -13,6 +13,8 @@ $homePage=file_get_contents("../html/templates/loginTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+$error_message = ""
+
 if($user){
 	$homePage="Hai già fatto il login";
 }else{
@@ -39,7 +41,7 @@ if($user){
 		}
 
 		if($error_message !== ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+			
 		}else{
 			$hashValue=getHash($username, $password);
 			$user=$dbAccess->getUserByHash($hashValue);
@@ -62,11 +64,9 @@ if($user){
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 	}
-
-	
-
-	
 }
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 
 

@@ -112,7 +112,6 @@ class DBAccess {
     }
 
     public function addUser($user){
-    	echo "addUser<br/>";
         $name = $user->getUsername();
 		$name = mysqli_real_escape_string($this->connection, $name);
         $hash = $user->getHash();
@@ -129,17 +128,15 @@ class DBAccess {
         #gestisco image in una maniera differente rispetto agli altri input poichè può essere nulla
         $result=null;
         if($image){
-        	echo "in1<br/>";
             $imagePath=$image->getPath();
             $imageAlt=$image->getAlt();
-            
+
             $query = "INSERT INTO images (`Path`, `Alt`) VALUES ('$imagePath', '$imageAlt')";
             $result=$this->getResult($query);
             if($result==null){
                 return null;
             }
         }
-        echo "2next";
 
         $imagePath = mysqli_real_escape_string($this->connection, $imagePath);
         $imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);

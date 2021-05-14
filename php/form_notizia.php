@@ -37,7 +37,7 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 
-
+$error_message = "";
 	
 if($allOk){
 
@@ -130,7 +130,7 @@ if($allOk){
 
 		//controllo se c'è stato almeno un errore
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+			
 		}else{
 			//echo "non sono presenti errori";
 			//se non ci sono stati errori procedo col salvataggio dei dati su db
@@ -210,6 +210,8 @@ if($allOk){
 	}
 
 }
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 			
 
 
