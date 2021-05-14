@@ -1344,3 +1344,41 @@ li{
   background: #252525;
   border-radius: 10px;
 }
+
+/*
+=========================
+SEZIONE PAGINE DI ERRORE
+=========================
+*/
+
+.schedaErrore{
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 0.5em;
+  margin-bottom: 0.2em;
+  overflow: auto;
+  margin: 1%;
+}
+
+.buttonLink {
+    color: #fff;
+    font-weight: bold;
+    line-height: 30px;
+    text-decoration: none;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    background-color: #1b365d;
+    border-bottom: 5px solid #54BAE2;
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+    margin-bottom: 1%;
+    margin-top: 1%;
+}
+
+.buttonLink:hover{
+    background-color: #600000;
+    border-bottom: 5px solid #1b365d;
+}
