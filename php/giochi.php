@@ -119,6 +119,9 @@ $isAdmin=$user && $user->isAdmin() ? true : false;
 $gameName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 #sanitize
 $order = isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
+if($order === null){
+	$order = isset($_REQUEST['filtroOrdineMemoria']) ? $_REQUEST['filtroOrdineMemoria'] : null;
+}
 // possibili valori in input dall'html: "Alfabetico", "Voto 4+", "Ultimi usciti"
 
 //converto gli input dell'utente in valori adatti alla funzione getGamesList
@@ -143,21 +146,24 @@ switch ($order) {
 		$replacements = array(
 			'<ordine_alfabetico_attivo_ph/>' => 'class="dropbtn_attivo"',
 			'<ordine_voto_attivo_ph/>' => 'class="dropbtn"',
-			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn"'
+			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn"',
+			'<order_filter_memory_ph/>' => 'Alfabetico'
 		);
 		break;
 	case 'voto':
 		$replacements = array(
 			'<ordine_alfabetico_attivo_ph/>' => 'class="dropbtn"',
 			'<ordine_voto_attivo_ph/>' => 'class="dropbtn_attivo"',
-			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn"'
+			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn"',
+			'<order_filter_memory_ph/>' => 'Voto 4+'
 		);
 		break;
 	default: // ordine cronologico e comunque di default
 		$replacements = array(
 			'<ordine_alfabetico_attivo_ph/>' => 'class="dropbtn"',
 			'<ordine_voto_attivo_ph/>' => 'class="dropbtn"',
-			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn_attivo"'
+			'<ordine_cronologico_attivo_ph/>' => 'class="dropbtn_attivo"',
+			'<order_filter_memory_ph/>' => 'Ultimi usciti'
 		);
 		break;
 }

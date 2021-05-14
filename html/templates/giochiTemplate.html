@@ -119,13 +119,14 @@
                 </label></li><br />
               </ul>
             </div>
+            <input type="hidden" name="filtroOrdineMemoria" value="<order_filter_memory_ph/>"/>
             <button class="applicafiltri" type="submit">Applica Filtri</button>
             <button class="applicafiltri" type="submit" name="resetFiltri">Reset Filtri</button>
           </form>
         </div>
         <div class="filtri_ordine">
           <span class="tipo_ordine">Ordine: |</span>
-          <form class="bottoniOrdine" action="giochi.php">
+          <form class="bottoniOrdine" method="post" action="giochi.php">
             <fieldset>
               <button <ordine_alfabetico_attivo_ph/> name="ordine" value="Alfabetico">Alfabetico</button>
               <button <ordine_voto_attivo_ph/> name="ordine" value="Voto 4+">Voto (Dec)</button>
