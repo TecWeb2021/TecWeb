@@ -56,13 +56,46 @@ function createNewsList($list, $isUserAdmin=false){
 $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
-$category= isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;
+$category = isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;
 
 $newsPartName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
 
-if( !in_array($category, News::$possible_categories)){
-	$category=null;
+if(!in_array($category, News::$possible_categories)){
+	$category = null;
 }
+
+switch ($category) {
+	case 'Hardware':
+		$replacements = array(
+			'<filtro_hardware_attivo_ph/>' => 'class="dropbtn_attivo"',
+			'<filtro_giochi_attivo_ph/>' => 'class="dropbtn"',
+			'<filtro_eventi_attivo_ph/>' => 'class="dropbtn"'
+		);
+		break;
+	case 'Giochi':
+		$replacements = array(
+			'<filtro_hardware_attivo_ph/>' => 'class="dropbtn"',
+			'<filtro_giochi_attivo_ph/>' => 'class="dropbtn_attivo"',
+			'<filtro_eventi_attivo_ph/>' => 'class="dropbtn"'
+		);
+		break;
+	case 'Eventi': // ordine cronologico e comunque di default
+		$replacements = array(
+			'<filtro_hardware_attivo_ph/>' => 'class="dropbtn"',
+			'<filtro_giochi_attivo_ph/>' => 'class="dropbtn"',
+			'<filtro_eventi_attivo_ph/>' => 'class="dropbtn_attivo"'
+		);
+		break;
+	default:
+		$replacements = array(
+			'<filtro_hardware_attivo_ph/>' => 'class="dropbtn"',
+			'<filtro_giochi_attivo_ph/>' => 'class="dropbtn"',
+			'<filtro_eventi_attivo_ph/>' => 'class="dropbtn"'
+		);
+		break;
+}
+
+$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 $homePage = str_replace("<opzioni_ph/>",createNewsOptions($dbAccess),$homePage);
 
