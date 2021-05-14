@@ -722,7 +722,7 @@ SEZIONE LISTA UTENTI
     padding-top: 0.8em;
 }
 
-#fotoUtente{
+.fotoUtente{
   border-radius: 50%;
   width: 50%;
   max-width: 4em;
@@ -1226,7 +1226,7 @@ p.deleteComment{
 }
 
 /*structural dall menu*/
-#foto_commentatore{
+.foto_commentatore{
   float: left;
     max-width: 10%;
     min-width: 2em;
