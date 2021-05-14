@@ -36,7 +36,7 @@ class DBAccess {
     public function getResult($query, $silent = true){
         $querySelect ="$query";
         if(!$silent){
-            echo "db query: ".$querySelect."<br/>";
+            
         }
         $queryResult = mysqli_query($this->connection, $querySelect);
         return $queryResult;
@@ -94,7 +94,7 @@ class DBAccess {
     public function getUserByHash($hashValue){
         $hashValue = mysqli_real_escape_string($this->connection, $hashValue);
         $query="SELECT * FROM users LEFT JOIN images ON users.Image=images.Path WHERE hash='$hashValue'"; // ' ' or ''=' '
-        // echo "getUserByHash query: " . $query. "<br/>";
+        
         $queryResult = $this->getResult($query);
         
         if(mysqli_num_rows($queryResult) < 1) {
@@ -131,7 +131,7 @@ class DBAccess {
         if($image){
             $imagePath=$image->getPath();
             $imageAlt=$image->getAlt();
-            echo "imageAlt: ".$imageAlt."<br/>";
+            
             $query="INSERT INTO images VALUES ('$imagePath','$imageAlt');";
             $result=$this->getResult($query);
             if($result==null){
@@ -143,7 +143,7 @@ class DBAccess {
         $imageAlt = mysqli_real_escape_string($this->connection, $imageAlt);
 
         $query="INSERT INTO users VALUES ('$name','$hash', $isAdmin, '$imagePath', '$email');";
-        echo "query: ".$query."<br/>";
+        
         $result=$this->getResult($query);
         return $result;
     }
@@ -153,8 +153,6 @@ class DBAccess {
         $query="DELETE FROM users WHERE Username='$username'";
         $queryResult = mysqli_query($this->connection, $query);
         $sq=$queryResult==null? "null":"not null";
-        echo "delete query result: ".$sq."<br/>"."<br/>";
-        echo mysqli_error($this->connection)."<br/>";
     }
 
     public function overwriteUser($user){
@@ -210,7 +208,6 @@ class DBAccess {
         
         
         $result = $this->getResult($query);
-        echo mysqli_error($this->connection)."<br/>";
         if($result === null){
             return null;
         }
@@ -241,7 +238,6 @@ class DBAccess {
 
         $queryResult = mysqli_query($this->connection, $query);
         if($queryResult==false){
-            echo mysqli_error($this->connection)."<br/>";
             return null;
         }
 
@@ -249,7 +245,6 @@ class DBAccess {
             return null;
         }else {
             $row = mysqli_fetch_assoc($queryResult);
-            //echo "Image: ".$row['Image']."<br/>";
             $image1 = new Image($row['i1Path'],$row['i1Alt']);
             $image2 = new Image($row['i2Path'],$row['i2Alt']);
             $author = new User($row['Username'], $row['Hash'], $row['IsAdmin'], null, $row['Email']);
@@ -298,18 +293,17 @@ class DBAccess {
 		$gameName  = mysqli_real_escape_string($this->connection, $gameName );
 
         $query="INSERT INTO images VALUES ('$imagePath1','$imageAlt1');";
-        echo "image1 insertion"."<br/>";
         //$this->getResult($query);
 
         $query="INSERT INTO images VALUES ('$imagePath2','$imageAlt2');";
-        echo "image2 insertion"."<br/>";
+        
         //$this->getResult($query);
 
-        echo "news insertion"."<br/>";
+        
         $content=addslashes($content);
         $query="INSERT INTO `news`(`Title`, `User`, `Last_edit_date`, `Content`, `Image1`, `Image2`,`Category`, `Game`) VALUES ('$title','$authorUsername','$last_edit_date_time','$content','$imagePath1','$imagePath2','$category','$gameName')";
 
-        echo "query: ".$query."<br/>";
+        
         $result=$this->getResult($query);
         return $result;
     }
@@ -489,7 +483,7 @@ class DBAccess {
         $queryResult = $this->getResult($query);
         
         if($queryResult==false){
-            echo mysqli_error($this->connection)."<br/>";
+            
             return null;
         }
 
@@ -825,7 +819,7 @@ class DBAccess {
                     $query="INSERT INTO games_consoles VALUES ('$name', '$value')";
                     $result=$this->getResult($query);
                     if(!$result){
-                        echo "problem"."<br/>";
+                        
                         break;
                     }
                 }
@@ -939,7 +933,7 @@ class DBAccess {
             return null;
         }else {
             $commentsList = array();
-            echo "commentsDBResult: " . "";
+            
             while ($row = mysqli_fetch_assoc($queryResult)) {
                 $comment=new Comment($row['Author'], $row['Game'], $row['Date_time'], $row['Content'], $row['Id']);
                 array_push($commentsList, $comment);
