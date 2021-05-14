@@ -35,13 +35,15 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 
+$error_message = "";
+
 	
 if($allOk){
 
 	//verifico che un valore testuale qualsiasi sia settato
 	if(isset($_REQUEST['nome'])){
 
-		echo "almeno un valore è stato rilevato<br/>";
+		//echo "almeno un valore è stato rilevato<br/>";
 
 		$new_gameName = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
 		$new_gameDeveloper = isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
@@ -69,28 +71,28 @@ if($allOk){
 		$new_gameImage2=null;
 		$image2Ok=false;
 		
-		echo "rilevato campo immagine"."<br/>";
+		//echo "rilevato campo immagine"."<br/>";
 		//prendo l'immagine inserita dall'utente
 		$imagePath1 = saveImageFromFILES($dbAccess, "immagine1", Game::$img1MinRatio, Game::$img1MaxRatio);
 		if($imagePath1){
-			echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
+			//echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
 			$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
 			$dbAccess->addImage($new_gameImage1);
 			$image1Ok=true;
 			
 		}else{
-			echo "Salvataggio immagine1 fallito"."<br/>";
+			//echo "Salvataggio immagine1 fallito"."<br/>";
 		}
 
 		$imagePath2 = saveImageFromFILES($dbAccess, "immagine2", Game::$img2MinRatio, Game::$img2MaxRatio);
 		if($imagePath2){
-			echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
+			//echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
 			$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
 			$dbAccess->addImage($new_gameImage2);
 			$image2Ok=true;
 			
 		}else{
-			echo "Salvataggio immagine2 fallito"."<br/>";
+			//echo "Salvataggio immagine2 fallito"."<br/>";
 		}
 
 
@@ -183,7 +185,7 @@ if($allOk){
 		//creo un array che per ogni posizione indica se la console in quella posizione è stata selezionata
 		foreach (Game::$possible_consoles as $key => $value) {
 			$selected_consoles[$key] = in_array($value, $new_gameConsoles);
-			echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
+			//echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
 		}
 		
 		//creo un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
@@ -193,12 +195,12 @@ if($allOk){
 
 
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+			
 		}else{
 			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameLast_review_date, $new_gameReview_author, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 	
 			$opResult = $dbAccess->addGame($newGame);
-			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
+			//echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
 
 		}
 
@@ -234,12 +236,12 @@ if($allOk){
 
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		//echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
 		
 
@@ -271,10 +273,12 @@ if($allOk){
 		}
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		//echo "replacements completati<br/>";
 	}
 
 }
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 			
 
 

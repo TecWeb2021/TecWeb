@@ -170,7 +170,6 @@ function logout(){
 	#sanitize;
 	if($logout='true' && isset($_COOKIE['login'])){
 		setcookie("login","");
-		echo "cookie unset";
 		header("Refresh:0");
 	}
 }
@@ -188,24 +187,20 @@ function getLoggedUser($dbAccess){
 function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0, $maxResolutionRateo =INF, $uploaddir = '../images/'){
 	//questa funzione ritorna il percorso in cui l'immagine è salvata
 	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
-
-	//echo "saveImageFromFILES";
-	//print_r($_FILES);
+	
 	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
-	//print_r($image);
+	
 
 	//errore 4: non è stata caricata alcuna immagine
 	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
 		return null;
 	}
 
-	echo "image dimensions: <br/>";
+
 	$imageSizeDetails = getimagesize($_FILES[$imgReceiveName]['tmp_name']);
 	$xSize = $imageSizeDetails[0];
 	$ySize = $imageSizeDetails[1];
 	$resRateo = $ySize / $xSize;
-	echo "image dimensions. x: $xSize y: $ySize rateo: $resRateo";
-	echo "<br/>";
 	
 	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
 		return null;
@@ -219,7 +214,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 	#ricavo nome immagine col numero più alto presente nel database
 	$rawNum = $dbAccess->getLastImageId();
 	$maxNum = $rawNum !== null ? $rawNum : -1;
-	echo "lastNum: " . $maxNum;
+	
 
 	#ricavo il nome da assegnare al nuovo file
 	$newNumber=$maxNum+1;

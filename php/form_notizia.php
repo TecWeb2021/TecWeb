@@ -37,13 +37,13 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 
-
+$error_message = "";
 	
 if($allOk){
 
 	// verifico che uno qualsiasi dei campi di testo sia stato passato. Se sì vuol dire che l'utente è tornato sulla pagina per inviare i dati, e non è appena arrivato da un altra pagina
 	if( isset($_REQUEST['titolo']) ){
-		echo "almeno uno dei valori è stato rilevato<br/>";
+		//echo "almeno uno dei valori è stato rilevato<br/>";
 		
 		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
 		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
@@ -65,7 +65,7 @@ if($allOk){
 			$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
 			$result1 = $dbAccess->addImage($new_newsImage1);
 		}else{
-			echo "salvataggio dell'immagine1 fallito"."<br/>";
+			//echo "salvataggio dell'immagine1 fallito"."<br/>";
 		}
 
 		$new_newsImage2 = null;
@@ -74,7 +74,7 @@ if($allOk){
 			$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
 			$dbAccess->addImage($new_newsImage2);
 		}else{
-			echo "salvataggio dell'immagine2 fallito"."<br/>";
+			//echo "salvataggio dell'immagine2 fallito"."<br/>";
 		}
 
 		// ho raccolto tutti i dati che potevo raccogliere
@@ -130,17 +130,17 @@ if($allOk){
 
 		//controllo se c'è stato almeno un errore
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+			
 		}else{
-			echo "non sono presenti errori";
+			//echo "non sono presenti errori";
 			//se non ci sono stati errori procedo col salvataggio dei dati su db
 			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 	
 			$opResult = $dbAccess->addNews($newNews);
 			if($opResult && $opResult!=false){
-				echo "salvataggio su db riuscito"."<br/>";
+				//echo "salvataggio su db riuscito"."<br/>";
 			}else{
-				echo "salvataggio su db fallito"."<br/>";
+				//echo "salvataggio su db fallito"."<br/>";
 				//visto che l'operazione di salvataggio su db della news non è andata a buon fine rimuovo l'immagine sia dal db che dal filesystem
 				/*$dbAccess->deleteImage($imagePath1);
 				unlink("../".$imagePath1);
@@ -183,12 +183,12 @@ if($allOk){
 		}
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		//echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 		//un valore testuale di input non è stato rilevato. Ritengo quindi che l'utente sia arrivato da un altra pagina
 
 
@@ -206,10 +206,12 @@ if($allOk){
 		$replacements['<checked_hardware_ph/>'] = "";
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements di rimozione placeholder completati<br/>";
+		//echo "replacements di rimozione placeholder completati<br/>";
 	}
 
 }
+
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 			
 
 

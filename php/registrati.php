@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(0);
+
 require_once "replacer.php";
 require_once "dbConnection.php";
 
@@ -13,6 +15,8 @@ $homePage=file_get_contents("../html/templates/registratiTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+$error_message = "";
+
 if($user){
 	$homePage="Sei già registrato e hai già fatto il login";
 }else{
@@ -22,7 +26,7 @@ if($user){
 
 	$error_message = "";
 	if(isset($_REQUEST['email'])){
-		echo "almeno un valore è stato inserito"."<br/>";
+		//echo "almeno un valore è stato inserito"."<br/>";
 		
 		$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 		#sanitize
@@ -72,11 +76,9 @@ if($user){
 		
 
 		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
-			
 		}else{
-			echo "non ci sono stati errori" . "<br/>";
+			//echo "non ci sono stati errori" . "<br/>";
 			
 			if($imagePath!=false){
 				$image=new Image($imagePath, "immagine utente");
@@ -91,7 +93,7 @@ if($user){
 					$homePage =  "<br/>operazione eseguita con successo<br/>tra ".$redirectInterval." secondi verrai portato sulla pagina home";
 					header( "refresh:".$redirectInterval.";url=home.php" );
 				}else{
-					 echo "salvataggio utente fallito" . "<br/>";
+					echo "salvataggio utente fallito" . "<br/>";
 					$allOk = false;
 				}
 	
@@ -109,7 +111,7 @@ if($user){
 
 		
 	}else{
-		echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
+		//echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
 
 		//metto tutti i valori alla stringa vuota
 		$replacements=array(
@@ -121,18 +123,9 @@ if($user){
 
 		$allOk = false;
 	}
-
-	
 }
 
-//rifaccio il controllo dell'utente dopo l'operazione di registrazione
-//credo che questo qua sotto non funzioni perchè il cookie settato può essere rilevato dal php se lo script viene richiamato
-/*
-$user=getLoggedUser($dbAccess);
-echo "user: ".($user ? $user->getUsername() : "nouserfound")."<br/>";
-if($user){
-	$homePage="Sei già registrato e hai già fatto il login";
-}*/
+$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);

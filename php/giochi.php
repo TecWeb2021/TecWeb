@@ -12,8 +12,7 @@ $homePage=file_get_contents("../html/templates/giochiTemplate.html");
 
 function createGameHTMLItem($game, $isAdmin=false){
 	$item=file_get_contents("../html/templates/gamesListItemTemplate.html");
-	
-	echo "gamevoe: ".$game->getVote();
+
 	$replacements = array(
 		"<game_name_ph/>" => $game->getName(),
 		"<game_date_ph/>" => dateToText($game->getPublicationDate()),
@@ -61,7 +60,6 @@ function replaceConsoleCheckboxes($selectedArray, &$page){
 		$isChecked = in_array($value, $selectedArray);
 		$to_substitute = "";
 		if($isChecked === true){
-			echo $value ."<br/>";
 			$to_substitute = "checked = \"checked\"";
 		}
 		$page = str_replace("<checked_console_".$key."/>", $to_substitute, $page);

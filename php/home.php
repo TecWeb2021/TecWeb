@@ -143,7 +143,6 @@ if($gamesNum > 0){
 	$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 }else{
-	echo "no games<br/>";
 	$homePage = preg_replace("/<top_games_ph>(.*\n)*.*<\/top_games_ph>/", "", $homePage);
 }
 
