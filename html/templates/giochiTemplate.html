@@ -1,7 +1,7 @@
 
 
 <div class="container" id="content">
-    <div class="advance_filter" id="categorie">
+    <form id="categorie" class="filtri" action="giochi.php"  onsubmit="return checkAnni();">
         <div class="filtri_categorie">
           <span class="tipo_categorie">Filtri Ricerca: |</span>
           <form class="filtri" action="giochi.php"  method="post" onsubmit="return checkAnni();">
@@ -29,7 +29,6 @@
                   <input type="checkbox" id="console4" name="console[]" value="XboxSeriesX" <checked_console_4/> />
                   <span class="checkmark"></span>
                 </label></li><br />
-
               </ul>
             </div>
             <div class="dropdown">
@@ -60,7 +59,6 @@
                   <input type="checkbox" id="genere5" name="genere[]" value="Puzzle" <checked_genere_5/> />
                   <span class="checkmark"></span>
                 </label></li><br />
-
               </ul>
             </div>
             <div class="dropdown">
@@ -118,20 +116,17 @@
             <input type="hidden" name="filtroOrdineMemoria" value="<order_filter_memory_ph/>"/>
             <button class="applicafiltri" type="submit">Applica Filtri</button>
             <button class="applicafiltri" type="submit" name="resetFiltri">Reset Filtri</button>
-          </form>
         </div>
         <div class="filtri_ordine">
           <span class="tipo_ordine">Ordine: |</span>
-          <form class="bottoniOrdine" method="post" action="giochi.php">
             <fieldset>
               <button <ordine_alfabetico_attivo_ph/> name="ordine" value="Alfabetico">Alfabetico</button>
               <button <ordine_voto_attivo_ph/> name="ordine" value="Voto 4+">Voto (Dec)</button>
               <button <ordine_cronologico_attivo_ph/> name="ordine" value="Ultimi usciti">Ultimi usciti</button>
             </fieldset>
-          </form>
         </div>
         <messaggi_form_ph/>
-    </div>
+    </form>
     <div class="spazio_contenuto">
       <games_divs_ph/>
     </div>
