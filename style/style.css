@@ -1221,6 +1221,9 @@ SEZIONE RECENSIONE
   margin-left: 0.5em;
   min-height: 40px;
 }
+p.deleteComment{
+  text-align: center;
+}
 
 /*structural dall menu*/
 #foto_commentatore{
