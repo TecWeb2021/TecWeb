@@ -71,10 +71,10 @@ if(isset($_REQUEST['game'])){
 		$newsListString=createNewsList($list, $isAdmin);
 	}else{
 		
-		echo "il gioco specificato non è stato trovato";
+		$homePage = "il gioco specificato non è stato trovato";
 	}
 }else{
-	echo "non è specificato un gioco";
+	$homePage = "non è specificato un gioco";
 }
 
 

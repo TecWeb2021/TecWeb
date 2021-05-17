@@ -132,10 +132,10 @@ if(isset($_REQUEST['game'])){
 		$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
 
 	}else{
-		//echo "il gioco specificato non è stato trovato";
+		$homePage = "il gioco specificato non è stato trovato";
 	}
 }else{
-	//echo "non è specificato un gioco";
+	$homePage = "non è specificato un gioco";
 	header('Location: home.php');
 }
 
