@@ -45,6 +45,8 @@ function replacePH($game, $isUserAdmin){
 	}
 }
 
+$game = null;
+
 $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
