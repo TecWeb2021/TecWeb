@@ -241,7 +241,7 @@ function getSafeImage($path, $defaultPath = "images/imagenotavailable.png"){
 	}
 }
 
-function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> />"){
+function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> ></option>"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$gamesList=$dbAccess->getGamesList();
@@ -270,7 +270,7 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 }
 
 
-function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> />"){
+function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> ></option>"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$newsList=$dbAccess->getNewsList();
