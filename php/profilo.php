@@ -10,8 +10,7 @@ $dbAccess->openDBConnection();
 
 $user=null;
 
-$user=null;
-$homePage="<p>Non sei autenticato</p>";
+$user = null;
 
 if(isset($_COOKIE['login'])){
 	$hash=$_COOKIE['login'];
@@ -38,7 +37,7 @@ if($user){
 	$homePage=str_replace("<username_ph/>",$user->getUsername(), $homePage);
 	$homePage=str_replace("<email_ph/>",$user->getEmail(), $homePage);
 }else{
-	$homePage="non puoi accedere a questa pagina";
+	$homePage = getErrorHtml("not_logged");
 }
 
 

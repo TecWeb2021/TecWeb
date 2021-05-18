@@ -39,11 +39,11 @@ $user=getLoggedUser($dbAccess);
 $authCheck=true;
 
 if(!$user){
-	$homePage="Non sei autenticato";
+	$homePage = getErrorHtml("not_logged");
 	$authCheck=false;
 }
 if($authCheck && !$user->isAdmin()){
-	$homePage="Non sei un amministratore";
+	$homePage = getErrorHtml("not_admin");
 	$authCheck=false;
 }
 
@@ -327,7 +327,7 @@ if($allOk){
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Non controllo che l'utente abbia inserito valori diversi da quelli preesistenti
 	}else{
-		echo "nessu valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
 
 		$old_gameConsoles = $oldGame->getConsoles();

@@ -24,7 +24,7 @@ $dbAccess->openDBConnection();
 
 
 $user = null;
-$homePage = "<p>Non sei autenticato</p>";
+$homePage=file_get_contents("../html/templates/listaUtentiTemplate.html");
 
 if(isset($_COOKIE['login'])){
 	$hash=$_COOKIE['login'];
@@ -45,7 +45,7 @@ if($user){
 				echo "non puoi eliminare il tuo profilo da questa pagina";
 			}
 		}
-		$homePage=file_get_contents("../html/templates/listaUtentiTemplate.html");
+		
 
 		$users=$dbAccess->getUsersList();
 
@@ -62,10 +62,10 @@ if($user){
 
 
 	}else{
-		$homePage="non puoi accedere a questa pagina perchè non sei un amministratore";
+		$homePage = getErrorHtml("not_admin");
 	}
 }else{
-	$homePage="non puoi accedere a questa pagina perchè non sei autenticato";
+	$homePage = getErrorHtml("not_logged");
 }
 
 

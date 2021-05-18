@@ -133,7 +133,7 @@ if($user){
 	
 
 }else{
-	$homePage="non puoi accedere a questa pagina perchè non hai fatto il login";
+	$homePage = getErrorHtml("not_logged");
 }
 
 $homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);

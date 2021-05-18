@@ -393,6 +393,23 @@ function dateTimeToText($dateTime){
 	return dateToText($parts[0]) . " " . $parts[1];
 }
 
+$errorsBasePath = "../html/templates/errors/";
+$errorsFileNames = array(
+	"not_logged" => "errore-non-loggato.html",
+	"not_admin" => "errore-non-admin.html",
+	"already_logged" => "errore-gia-loggato.html"
+);
+
+function getErrorHtml($errorName){
+	global $errorsFileNames;
+	global $errorsBasePath;
+	if(in_array($errorName, array_keys($errorsFileNames))){
+		return file_get_contents($errorsBasePath . $errorsFileNames[$errorName]);
+	}else{
+		return null;
+	}
+}
+
 
 
 

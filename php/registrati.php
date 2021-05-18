@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(0);
-
 require_once "replacer.php";
 require_once "dbConnection.php";
 
@@ -18,7 +16,7 @@ $user=getLoggedUser($dbAccess);
 $error_message = "";
 
 if($user){
-	$homePage="Sei già registrato e hai già fatto il login";
+	$homePage = getErrorHtml("already_logged");
 }else{
 	
 

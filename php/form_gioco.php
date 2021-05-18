@@ -22,11 +22,11 @@ $user=getLoggedUser($dbAccess);
 $authCheck=true;
 
 if(!$user){
-	$homePage="Non sei autenticato";
+	$homePage = getErrorHtml("not_logged");
 	$authCheck=false;
 }
 if($authCheck && !$user->isAdmin()){
-	$homePage="Non sei un amministratore";
+	$homePage = getErrorHtml("not_admin");
 	$authCheck=false;
 }
 
