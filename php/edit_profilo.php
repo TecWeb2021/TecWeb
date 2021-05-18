@@ -31,7 +31,7 @@ if($user){
 
 			$new_password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
 			#sanitize
-			$new_passwordRepeat=isset($_REQUEST['passwordrepeat']) ? $_REQUEST['passwordrepeat'] : null;
+			$new_passwordRepeat=isset($_REQUEST['repeatpassword']) ? $_REQUEST['repeatpassword'] : null;
 			#sanitize
 			$new_email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
 			#sanitize
@@ -67,6 +67,7 @@ if($user){
 			// controllo i campi obbligatori derivati
 
 			if( $new_password !== null && strlen($new_password) > 0 && $new_passwordRepeat !== $new_password){
+				echo "confronto password: {" . $new_password . "} : {" . $new_passwordRepeat . "}<br/>";
 				$error_message = $error_message . $error_messages['repeatpassword'] . "<br/>";
 			}
 				
