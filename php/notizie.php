@@ -64,7 +64,6 @@ if($newsPartName === null){
 
 	$newsPartName = isset($_REQUEST['filtroSearchMemoria']) ? $_REQUEST['filtroSearchMemoria'] : null;
 }
-echo "newsPartName: {" . $newsPartName . "}<br/>";
 
 
 if(!in_array($category, News::$possible_categories)){
@@ -118,7 +117,8 @@ if($newsListString === ""){
 
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "notizie", $dbAccess);
+$param = ($newsPartName === null || $newsPartName === "") ? "" : "| Hai cercato: $newsPartName";
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", "notizie", $dbAccess, $param);
 
 $basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
 

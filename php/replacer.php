@@ -50,8 +50,8 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	#completare i replacements
 	$titleAndBreadcrumbReplacements = array(
 		"home.php" => ["Home","Home"],
-		"giochi.php" => ["Giochi","Giochi"],
-		"notizie.php" => ["Notizie","Notizie"],
+		"giochi.php" => ["Giochi","Giochi <page_param_ph/>"],
+		"notizie.php" => ["Notizie","Notizie <page_param_ph/>"],
 		"notizia.php" => ["<page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > <page_param_ph/>"],
 		"edit_gioco.php" => ["Modifica gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Modifica <page_param_ph/>"],
 		"edit_notizia.php" => ["Modifica notizia - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica <page_param_ph/>"],
