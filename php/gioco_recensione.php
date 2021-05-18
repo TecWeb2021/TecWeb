@@ -17,9 +17,6 @@ function replacePH($game, $isUserAdmin){
 	$image = $game ? $game->getImage2() : null;
 	// questa è la lista delle sostituzioni da applicare
 	$replacements=array(
-		"<gioco_scheda_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
-		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
-		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
 		"<img_path_ph/>" => "../". ( $image ? getSafeImage($image->getPath()) : getSafeImage("")),
 		"<img_alt_ph/>" => $image ? $image->getAlt() : "",
 		"<review_content_ph/>" => $game->getReview(),
@@ -145,7 +142,11 @@ if(isset($_REQUEST['game'])){
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+$gameHomePage = createGameBasePage("recensione", $game ? $game->getName() : "");
+
+$basePage=str_replace("<page_content_ph/>", $gameHomePage, $basePage);
+
+$basePage=str_replace("<game_page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);
 

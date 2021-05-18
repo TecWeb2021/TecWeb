@@ -18,9 +18,6 @@ function replacePH($game, $isUserAdmin){
 	$genres= $game->getGenres() ? implode(", ", $game->getGenres()) : "";
 	
 	$replacements=array(
-		"<gioco_scheda_ph/>" => "../"."gioco_scheda.php?game=".strtolower($game->getName()),
-		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
-		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
 		"<img_path_ph/>" => "../".getSafeImage($game->getImage1()->getPath()),
 		"<img_alt_ph/>" => $game->getImage1()->getAlt(),
 		"<publication_date_ph/>" => dateToText($game->getPublicationDate()),
@@ -64,9 +61,15 @@ if(isset($_REQUEST['game'])){
 }
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
+$gameHomePage = createGameBasePage("scheda", $game ? $game->getName() : "");
+
+$basePage=str_replace("<page_content_ph/>", $gameHomePage, $basePage);
+
+$basePage=str_replace("<game_page_content_ph/>", $homePage, $basePage);
+
 
 $basePage=replace($basePage);
 

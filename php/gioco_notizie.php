@@ -9,14 +9,6 @@ $homePage=file_get_contents("../html/templates/giocoNotizieTemplate.html");
 
 $homePage=replace($homePage);
 
-function replacePH($game){
-	global $homePage;
-
-	$homePage=str_replace("<gioco_scheda_ph/>", "gioco_scheda.php?game=".strtolower($game->getName()),$homePage);
-	$homePage=str_replace("<gioco_recensione_ph/>", "gioco_recensione.php?game=".strtolower($game->getName()),$homePage);
-	$homePage=str_replace("<gioco_notizie_ph/>", "gioco_notizie.php?game=".strtolower($game->getName()),$homePage);
-}
-
 function createNewsHTMLItem($news, $isAdmin=false){
 	$item=file_get_contents("../html/templates/giocoNotiziaTemplate.html");
 
@@ -65,7 +57,6 @@ if(isset($_REQUEST['game'])){
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
 	if($game){
-		replacePH($game);
 
 		$list=$dbAccess->getNewsList($game->getName());
 		$newsListString=createNewsList($list, $isAdmin);
@@ -89,7 +80,11 @@ $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+$gameHomePage = createGameBasePage("notizie", $game ? $game->getName() : "");
+
+$basePage=str_replace("<page_content_ph/>", $gameHomePage, $basePage);
+
+$basePage=str_replace("<game_page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);
 

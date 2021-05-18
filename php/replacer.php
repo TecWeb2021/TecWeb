@@ -157,6 +157,45 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	return $base;
 }
 
+function createGameBasePage($page, $gameName, $template = "../html/templates/game_top_and_bottomTemplate.html"){
+	$base = file_get_contents($template);
+	switch ($page) {
+		case 'scheda':
+			$replacements = array(
+				"<active_template_scheda_ph/>" => "class=\"active\"",
+				"<active_template_recensione_ph/>" => "",
+				"<active_template_notizie_ph/>" => "",
+				"<gioco_scheda_ph/>" => "#",
+				"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($gameName),
+				"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($gameName)
+			);
+			break;
+		case 'recensione':
+			$replacements = array(
+				"<active_template_scheda_ph/>" => "",
+				"<active_template_recensione_ph/>" => "class=\"active\"",
+				"<active_template_notizie_ph/>" => "",
+				"<gioco_scheda_ph/>" => "gioco_scheda.php?game=" . strtolower($gameName),
+				"<gioco_recensione_ph/>" => "#",
+				"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($gameName)
+			);
+			break;
+		case 'notizie':
+			$replacements = array(
+				"<active_template_scheda_ph/>" => "",
+				"<active_template_recensione_ph/>" => "",
+				"<active_template_notizie_ph/>" => "class=\"active\"",
+				"<gioco_scheda_ph/>" => "gioco_scheda.php?game=" . strtolower($gameName),
+				"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($gameName),
+				"<gioco_notizie_ph/>" => "#"
+			);
+			break;
+	}
+
+	$base = str_replace(array_keys($replacements), array_values($replacements), $base);
+	return $base;
+}
+
 
 function getHash($username, $password){
 	$inputString=$username.$password;
