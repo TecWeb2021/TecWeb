@@ -60,9 +60,11 @@ $category = isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;
 
 
 $newsPartName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
-if($newsPartName === null || $newsPartName === ""){
+if($newsPartName === null){
+
 	$newsPartName = isset($_REQUEST['filtroSearchMemoria']) ? $_REQUEST['filtroSearchMemoria'] : null;
 }
+echo "newsPartName: {" . $newsPartName . "}<br/>";
 
 
 if(!in_array($category, News::$possible_categories)){
