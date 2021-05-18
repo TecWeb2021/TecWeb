@@ -95,7 +95,7 @@ if(isset($_REQUEST['game'])){
 	if($game){
 
 		if($game->getReview() === "" || $game->getReview() === null){
-			$homePage = "Recensione non presente per questo gioco";
+			$homePage = getErrorHtml("no_review");
 		}else{
 			replacePH($game, $isAdmin);
 			

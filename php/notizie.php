@@ -58,7 +58,12 @@ $isAdmin=$user && $user->isAdmin() ? true : false;
 
 $category = isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;
 
+
 $newsPartName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+if($newsPartName === null || $newsPartName === ""){
+	$newsPartName = isset($_REQUEST['filtroSearchMemoria']) ? $_REQUEST['filtroSearchMemoria'] : null;
+}
+
 
 if(!in_array($category, News::$possible_categories)){
 	$category = null;
@@ -95,12 +100,19 @@ switch ($category) {
 		break;
 }
 
+
+$replacements["<search_filter_memory_ph/>"] = $newsPartName;
+
+
 $homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 $homePage = str_replace("<opzioni_ph/>",createNewsOptions($dbAccess),$homePage);
 
 $list=$dbAccess->getNewsList(null, $category, $newsPartName);
 $newsListString=createNewsList($list, $isAdmin);
+if($newsListString === ""){
+	$newsListString = getErrorHtml("no_news");
+}
 
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);
 

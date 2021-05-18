@@ -208,6 +208,9 @@ replaceGenresCheckboxes($genres_pre, $homePage);
 $list = $dbAccess->getGamesList($gameName, $yearRangeStart, $yearRangeEnd, $order, $consoles_pre, $genres_pre);
 # Unisco le notizie in una lista html 
 $gamesDivsString = createGamesDivs($list, $isAdmin);
+if($gamesDivsString === ""){
+	$gamesDivsString = getErrorHtml("no_games");
+}
 # Metto la lista al posto del placeholder
 $homePage = preg_replace("/\<games_divs_ph\/\>/",$gamesDivsString,$homePage);
 

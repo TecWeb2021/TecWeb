@@ -397,7 +397,11 @@ $errorsBasePath = "../html/templates/errors/";
 $errorsFileNames = array(
 	"not_logged" => "errore-non-loggato.html",
 	"not_admin" => "errore-non-admin.html",
-	"already_logged" => "errore-gia-loggato.html"
+	"already_logged" => "errore-gia-loggato.html",
+	"no_games" => "messaggio_nessun_gioco.html",
+	"no_news" => "messaggio_nessuna_notizia.html",
+	"no_game_news" => "messaggio_nessuna_notizia_gioco.html",
+	"no_review" => "messaggio_nessuna_recensione.html"
 );
 
 function getErrorHtml($errorName){

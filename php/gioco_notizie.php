@@ -69,6 +69,10 @@ if(isset($_REQUEST['game'])){
 
 		$list=$dbAccess->getNewsList($game->getName());
 		$newsListString=createNewsList($list, $isAdmin);
+		if($newsListString === ""){
+			$newsListString = getErrorHtml("no_game_news");
+		}
+
 	}else{
 		
 		$homePage = "il gioco specificato non è stato trovato";
