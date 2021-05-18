@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 15, 2021 at 07:49 AM
+-- Generation Time: May 18, 2021 at 09:19 PM
 -- Server version: 10.2.11-MariaDB
 -- PHP Version: 7.2.34
 
@@ -35,6 +35,14 @@ CREATE TABLE `comments` (
   `Content` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`Id`, `Author`, `Game`, `Date_time`, `Content`) VALUES
+(22, 'admin', 'gioco2', '2021-05-17 18:20:01', 'dfgfgfg'),
+(23, 'admin', 'gioco2', '2021-05-18 20:57:23', 'fdfdf');
+
 -- --------------------------------------------------------
 
 --
@@ -60,7 +68,7 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`Name`, `Publication_date`, `Vote`, `Sinopsis`, `Age_range`, `Review`, `Last_review_date`, `Review_author`, `Image1`, `Image2`, `Developer`) VALUES
-('gioco1', '2021-05-19', 3, 'fd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf df', 3, 'fd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf df', '2021-05-14', 'admin', 'images/141.jpg', 'images/142.jpg', 'fdfd fdf '),
+('gioco1', '2021-05-19', 3, 'fd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf dffd fd fdf df', 3, NULL, '2021-05-14', 'admin', 'images/141.jpg', 'images/142.jpg', 'fdfd fdf '),
 ('gioco2', '2019-03-05', 4, 'gfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfg', 7, 'gfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfggfg fggfgfgfg', '2021-05-14', 'admin', 'images/150.jpg', 'images/151.jpg', 'gfgfg');
 
 -- --------------------------------------------------------
@@ -129,7 +137,33 @@ INSERT INTO `images` (`Id`, `Path`, `Alt`) VALUES
 (148, 'images/148.jpg', ''),
 (149, 'images/149.jpg', ''),
 (150, 'images/150.jpg', ''),
-(151, 'images/151.jpg', '');
+(151, 'images/151.jpg', ''),
+(152, 'images/152.jpg', ''),
+(153, 'images/153.jpg', ''),
+(154, 'images/154.jpg', ''),
+(155, 'images/155.jpg', ''),
+(156, 'images/156.jpg', ''),
+(157, 'images/157.jpg', ''),
+(158, 'images/158.jpg', ''),
+(159, 'images/159.jpg', ''),
+(160, 'images/160.jpg', ''),
+(161, 'images/161.jpg', ''),
+(162, 'images/162.jpg', ''),
+(163, 'images/163.jpg', ''),
+(164, 'images/164.jpg', ''),
+(165, 'images/165.jpg', ''),
+(166, 'images/166.jpg', ''),
+(167, 'images/167.jpg', ''),
+(168, 'images/168.jpg', ''),
+(169, 'images/169.jpg', ''),
+(170, 'images/170.jpg', ''),
+(171, 'images/171.jpg', ''),
+(172, 'images/172.jpg', ''),
+(173, 'images/173.jpg', ''),
+(174, 'images/174.jpg', ''),
+(175, 'images/175.jpg', ''),
+(176, 'images/176.jpg', 'immagine utente'),
+(177, 'images/177.jpg', 'immagine utente');
 
 -- --------------------------------------------------------
 
@@ -153,8 +187,8 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`Title`, `User`, `Last_edit_date`, `Content`, `Image1`, `Image2`, `Category`, `Game`) VALUES
-('notizia1notizia', 'admin', '2021-05-14', 'fdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdffdf dfd fdfdfdf', 'images/144.jpg', 'images/145.jpg', 'Eventi', ''),
-('notizia2notizia', 'admin', '2021-05-14', 'dd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf ddd fdf dfdf d', 'images/148.jpg', 'images/149.jpg', 'Giochi', 'gioco1');
+('notizia1notizia', 'admin', '2021-05-18', 'cciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ciao ', 'images/172.jpg', 'images/173.jpg', 'Giochi', 'gioco1'),
+('notizia2notizia', 'admin', '2021-05-18', 'notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz notiz ', 'images/174.jpg', 'images/175.jpg', 'Hardware', '');
 
 -- --------------------------------------------------------
 
@@ -195,6 +229,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`Username`, `Hash`, `IsAdmin`, `Image`, `Email`) VALUES
 ('admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, 'images/0.jpg', 'admin@gmail.com'),
+('ciaocarissimo', 'f24e711c7ca4b25b908bb1a831220218', 1, '', 'admin2@gmail.com'),
 ('user', '5cc32e366c87c4cb49e4309b75f57d64', 0, 'images/143.jpg', 'user@gmail.com');
 
 --
@@ -261,13 +296,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=178;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
