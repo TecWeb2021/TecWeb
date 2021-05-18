@@ -115,6 +115,12 @@ $isAdmin=$user && $user->isAdmin() ? true : false;
 
 
 $gameName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+if($gameName === null){
+	$gameName = isset($_REQUEST['filtroRicerca']) ? $_REQUEST['filtroRicerca'] : null;
+}
+
+$gameNameString = $gameName !== null ? $gameName : "";
+$homePage = str_replace("<search_memory_ph/>", $gameNameString, $homePage);
 #sanitize
 $order = isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
 if($order === null){

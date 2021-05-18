@@ -93,43 +93,45 @@ if(isset($_REQUEST['game'])){
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
 	if($game){
-		replacePH($game, $isAdmin);
 
-		
-
-		
-		$write = isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
-		#sanitize;
-		if($write){
-			$user = getLoggedUser($dbAccess);
-			if($user){
-				$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
-				$result=$dbAccess->addComment($comment);
-				if($result){
-					//echo "commento inserito<br/>";
+		if($game->getReview() === "" || $game->getReview() === null){
+			$homePage = "Recensione non presente per questo gioco";
+		}else{
+			replacePH($game, $isAdmin);
+			
+			$write = isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
+			#sanitize;
+			if($write){
+				$user = getLoggedUser($dbAccess);
+				if($user){
+					$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
+					$result=$dbAccess->addComment($comment);
+					if($result){
+						//echo "commento inserito<br/>";
+					}else{
+						//echo "commento non inserito<br/>";
+					}
 				}else{
-					//echo "commento non inserito<br/>";
+					//echo "Per commentare devi essere autenticato";
+				}
+				
+			}
+
+			$deleteComment = isset($_REQUEST['deleteComment']) ? $_REQUEST['deleteComment'] : null;
+			if($isAdmin){
+				$result = $dbAccess->deleteComment($deleteComment);
+				if($result){
+					//echo "commento eleiminato<br/>";
+				}else{
+					//echo "commento non eleiminato<br/>";
 				}
 			}else{
-				//echo "Per commentare devi essere autenticato";
+				//echo "Per eliminare commenti devi essere autenticato come amministratore";
 			}
-			
-		}
 
-		$deleteComment = isset($_REQUEST['deleteComment']) ? $_REQUEST['deleteComment'] : null;
-		if($isAdmin){
-			$result = $dbAccess->deleteComment($deleteComment);
-			if($result){
-				//echo "commento eleiminato<br/>";
-			}else{
-				//echo "commento non eleiminato<br/>";
-			}
-		}else{
-			//echo "Per eliminare commenti devi essere autenticato come amministratore";
+			$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess, $isAdmin);
+			$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
 		}
-
-		$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess, $isAdmin);
-		$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
 
 	}else{
 		$homePage = "il gioco specificato non è stato trovato";
