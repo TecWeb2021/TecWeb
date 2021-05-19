@@ -87,6 +87,8 @@ if(isset($_REQUEST['elimina'])){
 }
 
 $error_message = "";
+
+$oldNews = null;
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
