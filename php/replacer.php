@@ -440,7 +440,9 @@ $errorsFileNames = array(
 	"no_games" => "messaggio_nessun_gioco.html",
 	"no_news" => "messaggio_nessuna_notizia.html",
 	"no_game_news" => "messaggio_nessuna_notizia_gioco.html",
-	"no_review" => "messaggio_nessuna_recensione.html"
+	"no_review" => "messaggio_nessuna_recensione.html",
+	"game_not_existent" => "messaggio_gioco_non_esistente.html",
+	"game_not_specified" => "messaggio_gioco_non_specificato.html"
 );
 
 function getErrorHtml($errorName){

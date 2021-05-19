@@ -52,12 +52,12 @@ if(isset($_REQUEST['game'])){
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
 	if($game==null){
-		$homePage = "il gioco specificato non è stato trovato";
+		$homePage = getErrorHtml("game_not_existent");
 	}else{
 		replacePH($game, $isAdmin);
 	}
 }else{
-	$homePage = "non è specificato un gioco";
+	$homePage = getErrorHtml("game_not_specified");
 }
 
 

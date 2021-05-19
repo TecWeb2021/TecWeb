@@ -49,6 +49,9 @@ function createNewsList($list, $isAdmin=false){
 	return $joinedItems;
 }
 
+$newsListString = "";
+$game = null;
+
 $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
@@ -66,10 +69,10 @@ if(isset($_REQUEST['game'])){
 
 	}else{
 		
-		$homePage = "il gioco specificato non è stato trovato";
+		$homePage = getErrorHtml("game_not_existent");
 	}
 }else{
-	$homePage = "non è specificato un gioco";
+	$homePage = getErrorHtml("game_not_specified");
 }
 
 
