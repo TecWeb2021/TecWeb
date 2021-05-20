@@ -1,18 +1,18 @@
 const dettagliForm = {
-    "nome": [/^([\w\s]){2,20}$/, "Inserire il nome del gioco"],
-    "sviluppo": [/^([\w\s]){5,30}$/, "Inserire il nome della casa di sviluppo"],
+    "nome": [/^\w{1}([\w\s]){0,20}\w{1}$/, "Inserire il nome del gioco"],
+    "sviluppo": [/^\w{1}([\w\s]){0,30}\w{1}$/, "Inserire il nome della casa di sviluppo"],
     "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3,7,12,16,18"],
     "data": [/./, "Data non valida"],
 
-    "prequel": [/^([\w\s]){2,20}$/, "Inserire il nome del prequel"],
-    "sequel": [/^([\w\s]){2,20}$/, "Inserire il nome del sequel"],
+    "prequel": [/^\w{1}([\w\s]){0,20}\w{1}$/, "Inserire il nome del prequel"],
+    "sequel": [/^\w{1}([\w\s]){0,20}\w{1}$/, "Inserire il nome del sequel"],
 
-    "descrizione": [/.{25,}/, "Inserire la descrizione"],
-    "recensione": [/.{25,}/, "Inserire la recensione"],
+    "descrizione": [/^\w{1}.{24,}/, "Inserire la descrizione"],
+    "recensione": [/^\w{1}.{24,}/, "Inserire la recensione"],
     "voto": [/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/, "Voto da 0 a 5"],
 
-    "titolo": [/^([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
-    "testo": [/.{25,}/, "Inserire il testo della notizia"],
+    "titolo": [/^\w{1}([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
+    "testo": [/^\w{1}.{25,}/, "Inserire il testo della notizia"],
 
     "immagine1": [/./, "Nessun file selezionato"],
     "immagine2": [/./, "Nessun file selezionato"],
