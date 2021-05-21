@@ -2,16 +2,20 @@
 
   <div id="content" class="container">
     <div class="advance_filter" id="categorie">
+      <div class="search_container_notizie">
+        <p class="label_searchbox_notizia">Cerca notizia:</p>
           <form class="barra_ricerca_notizie" action="notizie.php" onsubmit="return checkNotEmpty();" role="search">
-            <fieldset>
+
+
               <label for="searchbar" class="structural">Cerca notizia:</label>
               <input list="titleInput_notizie" name="searchbar" id="searchbar_notizie" class="searchbar" placeholder="Cerca notizia..." aria-label="Campo per la ricerca di notizie" />
               <datalist id="titleInput_notizie" class="formText">
                 <opzioni_ph/>
               </datalist>
               <button type="submit" class="searchbutton">Cerca</button>
-            </fieldset>
+
           </form>
+          </div>
         <div class="filtri_ordine">
           <span class="tipo_ordine">Tipologia: |</span>
           <form class="bottoniOrdine" action="notizie.php">
