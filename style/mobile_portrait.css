@@ -132,3 +132,13 @@ dl.info dd {
 .info_utente{
     width: 80%;
 }
+
+#imgValidCode{
+    width: 20%;
+    float: left;
+}
+
+#imgValidCSS{
+  width: 20%;
+  float: right;
+}

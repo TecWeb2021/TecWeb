@@ -302,13 +302,15 @@ SEZIONE FOOTER
 }
 
 #imgValidCode{
-    margin-top: -0.5em;
     float: left;
 }
 
 #imgValidCSS{
-  margin-top: -0.5em;
   float: right;
+}
+
+.footer_ul{
+  display: inline-block;
 }
 
 /*
