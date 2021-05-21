@@ -12,9 +12,9 @@ require_once("./classes/comment.php");
 //pwd_db_2020-21.txt : ni4vanaogh1Hai1O
 class DBAccess {
     private const HOST_DB = "localhost";
-    private const USERNAME ="root";
-    private const PASSWORD ="root";
-    private const DATABASE_NAME ="ipiacere";
+    private const USERNAME = "root1";
+    private const PASSWORD = "root1";
+    private const DATABASE_NAME = "ipiacere";
 
     private $connection;
 

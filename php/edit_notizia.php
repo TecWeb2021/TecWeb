@@ -80,7 +80,7 @@ if(isset($_REQUEST['elimina'])){
 	//echo "elimina: ".$newsToBeDeletedName."<br/>";
 	$opResult=$dbAccess->deleteNews($newsToBeDeletedName);
 	if($opResult){
-		$homePage="eliminazione della notizia $newsToBeDeletedName riuscita";
+		$homePage = getErrorHtml("news_deleted");
 	}else{
 		$homePage="eliminazione della notizia $newsToBeDeletedName fallita";
 	}

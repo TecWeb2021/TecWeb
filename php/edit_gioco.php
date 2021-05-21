@@ -79,7 +79,7 @@ if(isset($_REQUEST['elimina'])){
 	$opResult = $dbAccess->deleteGame($gameToBeDeletedName);
 	echo "delete result: ".$opResult."<br/>";
 	if($opResult){
-		$homePage = "eliminazione del gioco $gameToBeDeletedName riuscita";
+		$homePage = getErrorHtml("game_deleted");
 	}else{
 		$homePage = "eliminazione del gioco $gameToBeDeletedName fallita";
 	}
