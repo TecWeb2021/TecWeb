@@ -55,7 +55,7 @@ if($authCheck && !$user->isAdmin()){
 $allOk=$authCheck;
 // verifico che sia stato specificato un gioco
 if($allOk && !isset($_REQUEST['news'])){
-	$homePage="Non è stata specificata alcuna notizia";
+	$homePage = getErrorHtml("news_not_existent");
 	$allOk=false;
 }
 
@@ -70,7 +70,7 @@ if($allOk /*&& !correctFormat(gameName) (qui devo controllare che il nel nome de
 }
 // verifico che il gioco specificato esista
 if($allOk && !$news=$dbAccess->getNews($newsToBeModifiedName)){
-	$homePage="La notizia $newsToBeModifiedName specificata non esiste";
+	$homePage = getErrorHtml("news_not_specified");
 	$allOk=false;
 }
 

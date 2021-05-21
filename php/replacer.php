@@ -280,7 +280,7 @@ function getSafeImage($path, $defaultPath = "images/imagenotavailable.png"){
 	}
 }
 
-function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> ></option>"){
+function createGamesOptions($dbAccess, $selectedName=null, $excludedGame=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> ></option>"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$gamesList=$dbAccess->getGamesList();
@@ -296,13 +296,15 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 	// echo "count: " . count($gamesList);
 	foreach ($gamesList as $game) {
 		$singleString=$template;
-		$replacements = array(
-			"<option_name_ph/>" => $game->getName(),
-			"<option_selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
-		);
+		if($game !== $excludedGame){
+			$replacements = array(
+				"<option_name_ph/>" => $game->getName(),
+				"<option_selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
+			);
 
-		$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
-		array_push($stringsArray, $singleString);
+			$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
+			array_push($stringsArray, $singleString);
+		}
 	}
 	$joinedItems = implode("", $stringsArray);
 	return $joinedItems;
@@ -442,7 +444,11 @@ $errorsFileNames = array(
 	"no_game_news" => "messaggio_nessuna_notizia_gioco.html",
 	"no_review" => "messaggio_nessuna_recensione.html",
 	"game_not_existent" => "messaggio_gioco_non_esistente.html",
-	"game_not_specified" => "messaggio_gioco_non_specificato.html"
+	"game_not_specified" => "messaggio_gioco_non_specificato.html",
+	"news_not_existent" => "messaggio_notizia_non_esistente.html",
+	"news_not_specified" => "messaggio_notizia_non_specificata.html",
+	"game_deleted" => "messaggio_gioco_eliminato.html",
+	"news_deleted" => "messaggio_notizia_eliminata.html"
 );
 
 function getErrorHtml($errorName){

@@ -52,12 +52,12 @@ if(isset($_REQUEST['news'])){
 	#sanitize;
 	$news = $dbAccess->getNews($newsTitle);
 	if($news === null){
-		$homePage = "la notizia specificata non è stata trovata";
+		$homePage = getErrorHtml("news_not_existent");
 	}else{
 		replacePH($news, $isAdmin);
 	}
 }else{
-	$homePage = "non è specificata una notizia";
+	$homePage = getErrorHtml("news_not_specified");
 }
 
 
