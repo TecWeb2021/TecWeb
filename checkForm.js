@@ -24,7 +24,7 @@ const dettagliForm = {
     "repeatpassword": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/, "Le password non combaciano"],
     "email": [/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
-
+ 
 /******************* SCRIPT DELLE PAGINE CONTENENTI FORM *******************/
 
 // Controllo dell'input delle form
