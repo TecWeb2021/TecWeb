@@ -87,7 +87,6 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	$onloadReplacements = array(
 		"giochi.php" => "onload=\"preparaFiltri();\"",
 		"notizia.php" => "onload=\"preparaFiltri();\"",
-		"home.php" => "onload=\"removeNoJs();\"",
 		"form_notizia.php" => "onload=\"handleClick();\"",
 		"edit_notizia.php" => "onload=\"handleClick();\""
 	);
@@ -96,8 +95,8 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 			$base=str_replace("<body_onload_ph/>", $value, $base);
 		}
 	}
-	//se non ha matchato nessuna pagina tolgo semplicemente il placeholder
-	$base=str_replace("<body_onload_ph/>", "", $base);
+	//se non ha matchato nessuna pagina metto la funzione removeNoJS()
+	$base=str_replace("<body_onload_ph/>", "onload=\"removeNoJs();\"", $base);
 
 
 	$possiblePages=array("home","giochi","notizie");
