@@ -17,7 +17,7 @@ function createGameHTMLItem($game, $isAdmin=false){
 		"<game_name_ph/>" => $game->getName(),
 		"<game_date_ph/>" => dateToText($game->getPublicationDate()),
 		"<game_vote_ph/>" => $game->getVote(),
-		"<game_sinossi_ph/>" => cutString($game->getSinopsis(), 500),
+		"<game_sinossi_ph/>" => getStringExtract($game->getSinopsis(), 500),
 		"<img_path_ph/>" => "../".getSafeImage($game->getImage1()->getPath()),
 		"<img_alt_ph/>" => $game->getImage1()->getAlt(),
 		"<game_scheda_url_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),

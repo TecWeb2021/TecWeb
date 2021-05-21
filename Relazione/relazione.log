@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.3.4)  16 MAY 2021 17:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.3.4)  21 MAY 2021 22:44
 entering extended mode
 **./relazione.tex
 (relazione.tex
@@ -686,7 +686,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [8]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 62.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 64.
+<./img/diagramma_er_ristrutturato.png, id=190, 793.96625pt x 623.32875pt>
+File: ./img/diagramma_er_ristrutturato.png Graphic file (type png)
+<use ./img/diagramma_er_ristrutturato.png>
+Package pdftex.def Info: ./img/diagramma_er_ristrutturato.png  used on input li
+ne 71.
+(pdftex.def)             Requested size: 398.3386pt x 312.73837pt.
 )
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -696,7 +702,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9] (import/test.tex
+[9 <./img/diagramma_er_ristrutturato.png>] (import/test.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 11.
@@ -714,13 +720,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 AED: lastpage setting LastPage
 (relazione.aux)
 Package rerunfilecheck Info: File `relazione.out' has not changed.
-(rerunfilecheck)             Checksum: 5D75754C44FF366BED135C108F122E54;2366.
+(rerunfilecheck)             Checksum: FBA3CDEA377E191A46683AD8F80BD19F;2459.
  ) 
 Here is how much of TeX's memory you used:
- 12700 strings out of 479334
- 195132 string characters out of 2857085
+ 12711 strings out of 479334
+ 195421 string characters out of 2857085
  532866 words of memory out of 3000000
- 29895 multiletter control sequences out of 15000+200000
+ 29901 multiletter control sequences out of 15000+200000
  409118 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  88i,11n,91p,656b,511s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -731,9 +737,9 @@ ic/amsfonts/cm/cmbx12.pfb><C:/Users/ivanp/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmr10.pfb><C:/Users/ivanp/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/ivanp/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on relazione.pdf (12 pages, 129679 bytes).
+Output written on relazione.pdf (12 pages, 151699 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
- 54 named destinations out of 1000 (max. 500000)
- 169 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 243 PDF objects out of 1000 (max. 8388607)
+ 56 named destinations out of 1000 (max. 500000)
+ 182 words of extra memory for PDF output out of 10000 (max. 10000000)
 

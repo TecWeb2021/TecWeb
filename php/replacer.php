@@ -460,8 +460,8 @@ function getErrorHtml($errorName){
 	}
 }
 
-function cutString($string, $length = 500){
-	return substr($string, 0, $length);
+function getStringExtract($string, $length = 500){
+	return substr($string, 0, $length) . " ...";
 }
 
 

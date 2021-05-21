@@ -42,7 +42,9 @@ Di seguito riportiamo le funzioni con una breve spiegazione:
 \subsection{BackEnd}
 Il backend del server è stato sviluppato con script PHP e database relazionale MariaDB.
 
-\subsubsection{Classi}
+\subsubsection{Php}
+
+\paragraph{Classi}
 \begin{itemize}
 	\item DBAccess: è la classe che gestisce tutte le interazioni col database.
 	\item User
@@ -53,7 +55,7 @@ Il backend del server è stato sviluppato con script PHP e database relazionale 
 	\item Image
 \end{itemize}
 
-\paragraph{DBAccess} 
+\subparagraph{DBAccess} 
 La classe DBAccess è abbastanza complessa da richiedere un approfondimento.
 Essa offre per metodi per la lettura e per la scrittura dei dati rappresentati dalle altre 6 classi.
 
@@ -62,5 +64,10 @@ I metodi più importanti sono:
 	\item \textbf{\texttt{nomeMetodo()}}: descrizione;
 
 \end{itemize}
+
+\subsubsection{Database}
+
+
+  \includegraphics[width=\linewidth]{./img/diagramma_er_ristrutturato.png}
 
 
