@@ -25,7 +25,7 @@ function createNewsListItem($news, $isUserAdmin=false){
 		"<news_url_ph/>" => "notizia.php?news=".$news->getTitle(),
 		"<news_publication_date_time_ph/>" => dateToText($news->getLastEditDateTime()),
 		"<news_title_ph/>" => $news->getTitle(),
-		"<news_content_ph/>" => $news->getContent(),
+		"<news_content_ph/>" => cutString($news->getContent(), 500),
 		"<news_author_ph/>" => $news->getAuthor()->getUsername(),
 		"<img_path_ph/>" => "../".getSafeImage($imagePath),
 		"<img_alt_ph/>" => $imageAlt,
