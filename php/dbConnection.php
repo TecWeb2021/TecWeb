@@ -9,7 +9,7 @@ require_once("./classes/comment.php");
 
 //my db interface is on localhost:80/phpmyadmin
 
-//pwd_db_2020-21.txt : ni4vanaogh1Hai1O
+// ni4vanaogh1Hai1O
 class DBAccess {
     private const HOST_DB = "localhost";
     private const USERNAME = "root1";
