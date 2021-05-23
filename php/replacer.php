@@ -460,8 +460,8 @@ function getErrorHtml($errorName){
 	}
 }
 
-function getStringExtract($string, $length = 500){
-	return substr($string, 0, $length) . " ...";
+function getStringExtract($string, $length = 500, $redirectTarget){
+	return substr($string, 0, $length) . "..." . " <a tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
 }
 
 
