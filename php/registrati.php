@@ -87,9 +87,8 @@ if($user){
 				$result=$dbAccess->addUser($newUser);
 				if($result){
 					setcookie('login',$hashValue);
-					$redirectInterval = 600;
-					$homePage =  "<br/>operazione eseguita con successo<br/>tra ".$redirectInterval." secondi verrai portato sulla pagina home";
-					header( "refresh:".$redirectInterval.";url=home.php" );
+					$homePage =  "<br/>operazione eseguita con successo<br/>ora verrai portato alla pagina home";
+					header( "Location: home.php" );
 				}else{
 					echo "salvataggio utente fallito" . "<br/>";
 					$allOk = false;

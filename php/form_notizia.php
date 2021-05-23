@@ -139,6 +139,7 @@ if($allOk){
 			$opResult = $dbAccess->addNews($newNews);
 			if($opResult && $opResult!=false){
 				echo "salvataggio su db riuscito"."<br/>";
+				header("Location: notizie.php");
 			}else{
 				echo "salvataggio su db fallito"."<br/>";
 				//visto che l'operazione di salvataggio su db della news non è andata a buon fine rimuovo l'immagine sia dal db che dal filesystem

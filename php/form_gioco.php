@@ -201,6 +201,9 @@ if($allOk){
 	
 			$opResult = $dbAccess->addGame($newGame);
 			echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
+			if($opResult === true){
+				header("Location: giochi.php");
+			}
 
 		}
 
