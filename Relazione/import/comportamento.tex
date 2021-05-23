@@ -1,8 +1,8 @@
 \section{Comportamento}
 Il comporamento del sito è gestito lato server da PHP e lato client da JavaScript.
 
-\subsection{Javascript}
-Abbiamo usato un unico file per contenere tutte le funzioni implementate. Il file è stato nominato checkForm.js in quanto le funzioni presenti svolgono principalmente controlli sull'input delle form.
+\subsection{JavaScript}
+Abbiamo usato un unico file JavaScript nominato checkForm.js, contenente principalmente funzioni che svolgono controlli sull'input delle form.
 Di seguito riportiamo le funzioni con una breve spiegazione:
 
 \begin{itemize}
@@ -12,7 +12,7 @@ Di seguito riportiamo le funzioni con una breve spiegazione:
 
 	\item \textbf{validateInput(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o di conferma del corretto inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file o data, il campo \texttt{repeatedpassword} e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in \texttt{dettagliForm} e procede ritornando il valore ricevuto dall'invocazione di \texttt{showMessage(input,stato)}; \\
 
-	\item \textbf{showMessage(input, stato): } crea un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le classi di utenti. Per l'inserimento di messaggi di errore sfrutta l'array di supporto \texttt{dettagliForm}; \\
+	\item \textbf{showMessage(input, stato): } crea un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le classi di utenti. \\
 
 	\item \textbf{checkPassword(): } controlla che gli input in \texttt{password} e in \texttt{repetedpassword} siano uguali e invoca opportunamente \texttt{showMessage(input,stato)}; \\
 

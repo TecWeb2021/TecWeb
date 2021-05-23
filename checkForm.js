@@ -11,13 +11,13 @@ const dettagliForm = {
     "recensione": [/^\w{1}.{24,}/, "Inserire la recensione"],
     "voto": [/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/, "Voto da 0 a 5"],
 
-    "titolo": [/^\w{1}([\w\s\'\,\.\"]){10,40}$/, "Inserire il titolo della notizia"],
-    "testo": [/^\w{1}.{25,}/, "Inserire il testo della notizia"],
+    "titolo": [/^\w{1}([\w\s\'\,\.\"]){10,100}$/, "Inserire il titolo della notizia"],
+    "testo": [/^\w{1}.{24,}/, "Inserire il testo della notizia"],
 
     "immagine1": [/./, "Nessun file selezionato"],
     "immagine2": [/./, "Nessun file selezionato"],
-    "alternativo1": [/^([\w\s]){0,50}$/, "Alt lungo massimo 50 caratteri"],
-    "alternativo2": [/^([\w\s]){0,50}$/, "Alt lungo massimo 50 caratteri"],
+    "alternativo1": [/^\w{1}([\w\s]){0,49}$/, "Alt lungo massimo 50 caratteri"],
+    "alternativo2": [/^\w{1}([\w\s]){0,49}$/, "Alt lungo massimo 50 caratteri"],
 
     "nomeUtente": [/^([\w]){4,15}$/, "Inserire il nome utente"],
     "password": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/, "Inserire la password"],
