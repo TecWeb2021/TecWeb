@@ -204,12 +204,41 @@ function getHash($username, $password){
 
 
 function logout(){
-	$logout=$_REQUEST['logout'];
-	#sanitize;
-	if($logout='true' && isset($_COOKIE['login'])){
-		setcookie("login","");
-		header("Refresh:0");
+	$notRestrictedPages = array(
+		"home.php",
+		"giochi.php",
+		"notizie.php",
+		"gioco_scheda.php",
+		"gioco_recensione.php",
+		"gioco_notizie.php",
+		"gioco.php",
+		"notizia.php"
+	);
+	$phpPage = getPhpPage();
+	$targetPage = "home.php";
+
+	if(in_array($phpPage, $notRestrictedPages)){
+		$targetPage = $phpPage;
 	}
+
+	$logout = $_REQUEST['logout'];
+	#sanitize;
+
+	if($logout === 'true' && isset($_COOKIE['login'])){
+		echo "ciao";
+		setcookie("login","");
+		header("Location: $targetPage");
+	}
+}
+
+function getPhpPage(){
+	$url=$_SERVER['REQUEST_URI'];
+	// echo $url . "<br/>";
+	$exp1 = explode("/", $url);
+	$lastPart = end($exp1);
+	$phpPage = explode("?", $lastPart)[0];
+	// echo $phpPage;
+	return $phpPage;
 }
 
 function getLoggedUser($dbAccess){
