@@ -4,18 +4,18 @@
   <div class="container" id="content">
     <div class="schedaForm">
       <h3 class="titolo_form">Form per l'inserimento di una nuova notizia</h3>
-      <p class="avviso_importante">I campi marcati con * sono opzionali</p>
+      <p class="avviso_importante">I campi marcati con * sono obbligatori</p>
       <form id="formNotizia" method="post" action="edit_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
         <messaggi_form_ph/>
 
         <fieldset>
-            <label for="titolo">Titolo: </label>
+            <label for="titolo">*Titolo: </label>
             <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
 
         <fieldset id="handler" onchange="handleClick(event);">
-          <div><p id="labelTipologia" class="spuntabili">Tipologia: </p></div>
+          <div><p id="labelTipologia" class="spuntabili">*Tipologia: </p></div>
             <div class="gruppoRadio">
               <ul class="checkbox">
                 <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <checked_eventi_ph/> >
@@ -32,7 +32,7 @@
 
         <fieldset id="cercaTitolo" class="">
             <p>Inserire il titolo <em>solo</em> se è stata selezionata la categoria <em>Giochi</em></p>
-            <label for="barraDiRicerca">*Gioco trattato:</label>
+            <label for="barraDiRicerca">Gioco trattato:</label>
             <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
             <datalist id="listaTitoli" class="formText">
               <opzioni_form_ph/>
@@ -40,23 +40,23 @@
         </fieldset>
 
         <fieldset>
-            <label id="label_immagine1" for="immagine1">Copertina: </label>
+            <label id="label_immagine1" for="immagine1">*Copertina: </label>
             <span><input type="file" id="immagine1" name="immagine1" class="opzionale" /></span><br />
 
-            <label for="alternativo1">*Alt Copertina: </label>
+            <label for="alternativo1">Alt Copertina: </label>
             <span><input type="text" id="alternativo1" name="alternativo1" class="opzionale" value="<img1_alt_ph/>" placeholder="Testo alternativo" /></span>
         </fieldset>
 
         <fieldset>
-            <label id="label_immagine2" for="immagine2">Banner: </label>
+            <label id="label_immagine2" for="immagine2">*Banner: </label>
             <span><input type="file" id="immagine2" name="immagine2" class="opzionale" /></span><br />
 
-            <label for="alternativo2">*Alt Banner: </label>
+            <label for="alternativo2">Alt Banner: </label>
             <span><input type="text" id="alternativo2" name="alternativo2" class="opzionale" value="<img2_alt_ph/>" placeholder="Testo alternativo" /></span>
         </fieldset>
 
         <fieldset>
-            <label for="testo" class="textAreaLabel">Testo: </label>
+            <label for="testo" class="textAreaLabel">*Testo: </label>
             <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><content_ph/></textarea></span>
         </fieldset>
 

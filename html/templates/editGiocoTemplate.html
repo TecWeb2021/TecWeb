@@ -3,27 +3,27 @@
     <div class="container" id="content">
         <div class="schedaForm">
             <h3 class="titolo_form">Form per l'inserimento di un nuovo gioco</h3>
-            <p class="avviso_importante">I campi marcati con * sono opzionali</p>
+            <p class="avviso_importante">I campi marcati con * sono obbligatori</p>
             <form id="formGioco" method="post" action="edit_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggi_form_ph/>
 
                 <fieldset>
-                    <label for="nome">Nome: </label>
+                    <label for="nome">*Nome: </label>
                     <span><input type="text" id="nome" name="nome" value="<game_name_ph/>" placeholder="Nome gioco" /></span><br />
 
-                    <label for="sviluppo">Casa di sviluppo: </label>
+                    <label for="sviluppo">*Casa di sviluppo: </label>
                     <span><input type="text" id="sviluppo" name="sviluppo" value="<developer_ph/>" placeholder="Casa di sviluppo" /></span><br />
 
-                    <label for="pegi"><abbr title="Pan European Game Information">PEGI</abbr>: </label>
+                    <label for="pegi"><abbr title="Pan European Game Information">*PEGI</abbr>: </label>
                     <span><input type="text" id="pegi" name="pegi" value="<age_range_ph/>" placeholder="possibili valori: 3, 7, 12, 16, 18" /></span><br />
 
-                    <label for="data">Data di rilascio: </label>
+                    <label for="data">*Data di rilascio: </label>
                     <span><input type="date" name="data" id="data" value="<date_ph/>"></span><br />
                 </fieldset>
 
                 <fieldset>
-                    <div><p id="labelConsole" class="spuntabili">Console:</p></div>
+                    <div><p id="labelConsole" class="spuntabili">*Console:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="console[]" value="PS4" id="PS4" <checked_console_0/> />
@@ -41,7 +41,7 @@
                 </fieldset>
 
                 <fieldset>
-                    <div><p id="labelGenere" class="spuntabili">Generi:</p></div>
+                    <div><p id="labelGenere" class="spuntabili">*Generi:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <checked_genere_0/> />
@@ -61,33 +61,33 @@
                 </fieldset>
 
                 <fieldset>
-                    <label for="immagine1">Copertina: </label>
+                    <label for="immagine1">*Copertina: </label>
                     <span><input type="file" id="immagine1" name="immagine1" class="opzionale" /></span><br />
 
-                    <label for="alternativo1">*Alt Copertina: </label>
+                    <label for="alternativo1">Alt Copertina: </label>
                     <span><input type="text" id="alternativo1" name="alternativo1" class="opzionale" value="<img1_alt_ph/>" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
                 <fieldset>
-                    <label for="immagine2">Banner: </label>
+                    <label for="immagine2">*Banner: </label>
                     <span><input type="file" id="immagine2" name="immagine2" class="opzionale" /></span><br />
 
-                    <label for="alternativo2">*Alt Banner: </label>
+                    <label for="alternativo2">Alt Banner: </label>
                     <span><input type="text" id="alternativo2" name="alternativo2" class="opzionale" value="<img2_alt_ph/>" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
                 <fieldset id="cercaTitolo">
 
-                    <label for="voto">Voto: </label>
+                    <label for="voto">*Voto: </label>
                     <span><input type="text" id="voto" name="voto" value="<vote_ph/>" placeholder="Voto da 0 a 5" /></span><br />
 
-                    <label for="searchbar">*Prequel:</label>
+                    <label for="searchbar">Prequel:</label>
                     <span><input list="listaPrequel" name="prequel" id="prequel" class="opzionale" value="<prequel_ph/>" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span><br />
                     <datalist id="listaPrequel" class="formText">
                       <opzioni_prequel_ph/>
                     </datalist>
 
-                    <label for="searchbar">*Sequel:</label>
+                    <label for="searchbar">Sequel:</label>
                     <span><input list="listaSequel" name="sequel" id="sequel" class="opzionale" value="<sequel_ph/>" placeholder="Cerca sequel" aria-label="Campo per la ricerca del prequel del gioco" /></span><br />
                     <datalist id="listaSequel" class="formText">
                       <opzioni_sequel_ph/>
@@ -95,12 +95,12 @@
                 </fieldset>
 
                 <fieldset>
-                    <label for="descrizione" class="textAreaLabel">Descrizione: </label>
+                    <label for="descrizione" class="textAreaLabel">*Descrizione: </label>
                     <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco, deve essere lunga almeno 25 caratteri"><sinopsis_ph/></textarea></span>
                 </fieldset>
 
                 <fieldset>
-                    <label for="recensione" class="textAreaLabel">*Recensione: </label>
+                    <label for="recensione" class="textAreaLabel">Recensione: </label>
                     <span><textarea id="recensione" name="recensione" class="opzionale" rows="10" cols="50" placeholder="Recensione del gioco, deve essere lunga almeno 25 caratteri"><review_ph/></textarea></span>
                 </fieldset>
 
