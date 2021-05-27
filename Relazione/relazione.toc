@@ -16,11 +16,11 @@
 \contentsline {subsection}{\numberline {4.2}Mobile}{6}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Print}{6}{subsection.4.3}%
 \contentsline {section}{\numberline {5}Comportamento}{7}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Javascript}{7}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.1}JavaScript}{7}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}BackEnd}{8}{subsection.5.2}%
 \contentsline {subsubsection}{\numberline {5.2.1}Php}{8}{subsubsection.5.2.1}%
-\contentsline {paragraph}{Classi}{8}{section*.4}%
+\contentsline {paragraph}{Classi}{9}{section*.4}%
 \contentsline {subparagraph}{DBAccess}{9}{section*.5}%
-\contentsline {subsubsection}{\numberline {5.2.2}Database}{9}{subsubsection.5.2.2}%
-\contentsline {section}{\numberline {6}Fase di Test}{10}{section.6}%
-\contentsline {subsubsection}{\numberline {6.0.1}Colori}{10}{subsubsection.6.0.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Database}{10}{subsubsection.5.2.2}%
+\contentsline {section}{\numberline {6}Fase di Test}{11}{section.6}%
+\contentsline {subsubsection}{\numberline {6.0.1}Colori}{11}{subsubsection.6.0.1}%
