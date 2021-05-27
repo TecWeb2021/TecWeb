@@ -866,7 +866,7 @@ class DBAccess {
 
         $query ="SELECT * FROM images";
 
-        $orderQueryAppend= $order=="path asc" ? "ORDER BY images.Path ASC" : "";
+        $orderQueryAppend = $order == "path desc" ? "ORDER BY images.Path DESC" : "";
         $query=$query." ".$orderQueryAppend;
         $queryResult = mysqli_query($this->connection, $query);
         
@@ -882,6 +882,7 @@ class DBAccess {
         }
     }
 
+/*
     public function getLastImageId(){
         $query = "SELECT Id FROM Images ORDER BY Images.Id DESC LIMIT 1";
         $queryResult = $this->getResult($query);
@@ -893,7 +894,7 @@ class DBAccess {
             return $id;
         }
     }
-
+*/
 
     public function addImage($image){
         if(!$image){

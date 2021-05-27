@@ -279,8 +279,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 	$originalName=$image['name'];
 
 	#ricavo nome immagine col numero più alto presente nel database
-	$rawNum = $dbAccess->getLastImageId();
-	$maxNum = $rawNum !== null ? $rawNum : -1;
+	$maxNum = getGreatestDBImageNumber($dbAccess);
 	
 
 	#ricavo il nome da assegnare al nuovo file
@@ -295,6 +294,19 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 		return $filePath;
 	}else{
 		return false;
+	}
+}
+
+function getGreatestDBImageNumber($dbAccess){
+	$images = $dbAccess->getImages("path desc");
+	$topImage = ($images && (count($images) > 0)) ? $images[0] : null;
+	if($topImage !== null){
+		print_r($topImage);
+		$exp1 = explode("images/", $topImage->getPath())[1];
+		$exp2 = explode(".", $exp1)[0];
+		return $exp2;
+	}else{
+		return 0;
 	}
 }
 
