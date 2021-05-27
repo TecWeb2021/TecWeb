@@ -20,17 +20,17 @@ Di seguito riportiamo le funzioni con una breve spiegazione:
 
 	\item \textbf{showMessageCheckbox(sezioni): } opera in modo analogo a \texttt{showMessage(input, stato)}, creando però dei messaggi che comunicano all'utente se i campi input (di tipo checkbox o radio) sono stati spuntati o meno; \\
 
-	\item \textbf{handleClick(): } fa comparire/scomparire il campo\n'\texttt{Gioco trattato}" se viene selezionata/deselezionata la categoria\n\texttt{Giochi}' in \texttt{Tipologia} nella form per l'inserimento di una notizia; \\
+	\item \textbf{handleClick(): } fa comparire/scomparire il campo'\texttt{Gioco trattato}" se viene selezionata/deselezionata la categoria\texttt{Giochi}' in \texttt{Tipologia} nella form per l'inserimento di una notizia; \\
 
-	\item \textbf{removeNoJs(): }  viene invocata al completamento del caricamento della pagina, rimuove la classe\n'no-js" dal tag \texttt{<html>}. Tale classe è stata utilizzata per la definizione di alcune regole \texttt{css} che gestiscono la casistica in cui JavaScript è disattivato. Ad esempio nel caso del menù principale nella versione mobile, con JS disattivato, viene rimosso il pulsante e viene mostrata la tendina aperta; \\
+	\item \textbf{removeNoJs(): }  viene invocata al completamento del caricamento della pagina, rimuove la classe'no-js" dal tag \texttt{<html>}. Tale classe è stata utilizzata per la definizione di alcune regole \texttt{css} che gestiscono la casistica in cui JavaScript è disattivato. Ad esempio nel caso del menù principale nella versione mobile, con JS disattivato, viene rimosso il pulsante e viene mostrata la tendina aperta; \\
 
-	\item \textbf{checkNotEmpty(id): } controlla che il campo \texttt{input} con id =\n'id" non sia vuoto o composto da spazi; \\
+	\item \textbf{checkNotEmpty(id): } controlla che il campo \texttt{input} con id ='id" non sia vuoto o composto da spazi; \\
 
 	\item \textbf{responsiveMenu(): } gestisce l'apertura e chiusura del menù a tendina nella versione mobile.
 	E' associata ad un evento \texttt{onclick}, scelto perchè gestisce anche l'evento \texttt{ontouch} per dispositivi mobile.
 	Il pulsante è situato nel top-right della pagina, dove è più facilmente raggiungibile da un utente mobile; \\
 
-	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina \texttt{Giochi}. Gestisce l'evento onclick dei button tramite event delegation nel \texttt{div} con classe\n'container". All'evento onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del\n'container" la richiude; \\
+	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina \texttt{Giochi}. Gestisce l'evento onclick dei button tramite event delegation nel \texttt{div} con classe'container". All'evento onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del'container" la richiude; \\
 
 	\item \textbf{checkAnni(): } effettua un controllo sull'intevallo degli anni di uscita dei videogiochi selezionato nella pagina giochi.
 	Inserisce un messaggio d'errore se l'intervallo è inamissibile (es: da 2020 a 2016) e blocca il submit. \\
@@ -44,33 +44,9 @@ Il backend del server è stato sviluppato con script PHP e database relazionale 
 
 \subsubsection{Php}
 
-Gli script che costituiscono il backend si possono suddividere in tre macrocategorie in base alla loro funzione:
-\begin{itemize}
-	\item interazione con il database;
-	\begin{itemize}
-		\item dbConnection.php
-	\end{itemize}
-	\item creazione e output delle pagine html;
-	\begin{itemize}
-		\item edit_gioco.php
-		\item edit_notizia.php
-		\item edit_profilo.php
-		\item form_gioco.php
-		\item form_notizia.php
-		\item giochi.php
-		\item gioco_notizie.php
-		\item gioco_recensione.php
-		\item gioco_scheda.php
-		\item home.php
-		\item lista_utenti.php
-		\item login.php
-		\item notizia.php
-		\item notizie.php
-		\item profilo.php
-		\item registrati.php
-		\item replacer.php
-	\end{itemize}
-	\item modellazione dei dati.
+Gli script che costituiscono il backend si possono suddividere in 3 macro categorie in base alla loro funzione:
+\begin{enumerate}
+	\item \textbf{modellazione dei dati}.
 	\begin{itemize}
 		\item comment.php
 		\item game.php
@@ -78,28 +54,57 @@ Gli script che costituiscono il backend si possono suddividere in tre macrocateg
 		\item news.php
 		\item user.php
 	\end{itemize}
-\end{itemize}
+	\item \textbf{interazione con il database};
+	\begin{itemize}
+		\item dbConnection.php
+	\end{itemize}
+	\item \textbf{creazione e presentazione delle pagine html};
+	\begin{itemize}
+		\item edit\_gioco.php
+		\item edit\_notizia.php
+		\item edit\_profilo.php
+		\item form\_gioco.php
+		\item form\_notizia.php
+		\item giochi.php
+		\item gioco\_notizie.php
+		\item gioco\_recensione.php
+		\item gioco\_scheda.php
+		\item home.php
+		\item lista\_utenti.php
+		\item login.php
+		\item notizia.php
+		\item notizie.php
+		\item profilo.php
+		\item registrati.php
+		\item replacer.php
+	\end{itemize}
+\end{enumerate}
+\paragraph{Modellazione dei dati}
+I dati gestiti dal nostro sito sono per la maggior parte classificabili in 5 tipi, illustrati singolarmente nei paragrafi successivi. Per favorire l'ordine all'interno del codice e nella comunicazione dei dati, ogni tipo di viene associato ad una classe.
 
-\paragraph{Classi}
+\subparagraph{Gioco}
+Contiene le informazioni riguardanti un gioco e la recensione che lo riguarda.
+\subparagraph{Notizia}
+Contiene le informazioni riguardanti una notizia.
+\subparagraph{Utente}
+Contiene le informazioni riguardanti un utente salvato nel sistema, che può essere di tipo amministratore o utente semplice.
+\subparagraph{Immagine}
+Contiene il percorso di un'immagine salvata nel server e il testo alternativo che la accompagna.
+\subparagraph{Commento}
+Contiene le informazioni un commento rilasciato da un utente riguardo ad un gioco.
+
+\paragraph{Interazione con il database}
+Il file dbConnection.php presenta la classe DBAccess che permette di aprire una connessione verso il database e di effettuare richieste ad esso. Per ognuno dei tipi di dato presentati nel paragrafo precedente sono rese disponibili le seguenti funzionalità:
 \begin{itemize}
-	\item DBAccess: è la classe che gestisce tutte le interazioni col database.
-	\item User
-	\item Game
-	\item News
-	\item GameNews
-	\item Comment
-	\item Image
+	\item ottenimento della lista dei dati;
+	\item aggiunta di un nuovo dato;
+	\item modifica di un dato già presente;
+	\item rimozione di un dato già presente. 
 \end{itemize}
 
-\subparagraph{DBAccess} 
-La classe DBAccess è abbastanza complessa da richiedere un approfondimento.
-Essa offre per metodi per la lettura e per la scrittura dei dati rappresentati dalle altre 6 classi.
+In aggiunta sono presenti delle specializzazioni di queste operazioni e alcune ulteriori operazioni per l'accesso alle tabelle del database non direttamente rappresentate da una classe, ovvero Prequel\_Sequel, Games\_Consoles e Games\_Genres.
 
-I metodi più importanti sono:
-\begin{itemize}
-	\item \textbf{\texttt{nomeMetodo()}}: descrizione;
-
-\end{itemize}
+\paragraph{creazione e presentazione delle pagine html}
 
 \subsubsection{Database}
 
