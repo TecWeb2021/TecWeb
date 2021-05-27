@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 27, 2021 at 09:56 PM
+-- Generation Time: May 27, 2021 at 10:20 PM
 -- Server version: 10.2.11-MariaDB
 -- PHP Version: 7.2.34
 
@@ -147,7 +147,9 @@ ALTER TABLE `comments`
 --
 ALTER TABLE `games`
   ADD PRIMARY KEY (`Name`),
-  ADD KEY `FK_Review_author` (`Review_author`);
+  ADD KEY `FK_Review_author` (`Review_author`),
+  ADD KEY `FK_Game_Image1` (`Image1`),
+  ADD KEY `FK_Game_Image2` (`Image2`);
 
 --
 -- Indexes for table `games_consoles`
@@ -174,7 +176,8 @@ ALTER TABLE `news`
   ADD PRIMARY KEY (`Title`),
   ADD KEY `FK_User` (`User`),
   ADD KEY `FK_Image2` (`Image2`),
-  ADD KEY `FK_image1` (`Image1`);
+  ADD KEY `FK_image1` (`Image1`),
+  ADD KEY `FK_Image_Game` (`Game`);
 
 --
 -- Indexes for table `prequel_sequel`
@@ -215,13 +218,28 @@ ALTER TABLE `comments`
 -- Constraints for table `games`
 --
 ALTER TABLE `games`
+  ADD CONSTRAINT `FK_Game_Image1` FOREIGN KEY (`Image1`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_Game_Image2` FOREIGN KEY (`Image2`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_Review_author` FOREIGN KEY (`Review_author`) REFERENCES `users` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `games_consoles`
+--
+ALTER TABLE `games_consoles`
+  ADD CONSTRAINT `FK_Console_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `games_genres`
+--
+ALTER TABLE `games_genres`
+  ADD CONSTRAINT `FK_Genre_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `news`
 --
 ALTER TABLE `news`
   ADD CONSTRAINT `FK_Image2` FOREIGN KEY (`Image2`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_Image_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_User` FOREIGN KEY (`User`) REFERENCES `users` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_image1` FOREIGN KEY (`Image1`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
