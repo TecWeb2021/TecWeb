@@ -61,7 +61,7 @@ if($allOk){
 		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
 		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
 		$new_gameLast_review_date = date("Y-m-d");
-		$new_gameReview_author = $user;
+		$new_gameReview_author = $user->getUsername();
 
 
 
@@ -197,20 +197,23 @@ if($allOk){
 		if($error_message != ""){
 			
 		}else{
-			$newGameReviewObj = "none";
-			$opResult1 = null;
-			if($newGameReviewObj !== "" && $newGameReviewObj !== null){
-				$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
-				$opResult1 = $dbAccess->addReview($newGameReviewObj);
-			}else{
-				$newGameReviewObj = null;
-			}
+			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+				
+			$opResult1 = $dbAccess->addGame($newGame);
+			echo "risultato salvataggio gioco su db: ".($opResult1==null ? "null" : $opResult1)."<br/>";
+
+			
 			
 			if($opResult1 === true){
-				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper, $newGameReviewObj);
+				$newGameReviewObj = "none";
+				$opResult2 = null;
+				if($newGameReviewObj !== "" && $newGameReviewObj !== null){
+					$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
+					$opResult2 = $dbAccess->addReview($newGameReviewObj);
+				}else{
+					$newGameReviewObj = null;
+				}
 				
-				$opResult2 = $dbAccess->addGame($newGame);
-				echo "risultato salvataggio gioco su db: ".($opResult==null ? "null" : $opResult)."<br/>";
 				if($opResult2 === true){
 					header("Location: giochi.php");	
 				}

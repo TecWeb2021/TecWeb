@@ -268,7 +268,7 @@ if($allOk){
 					$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
 					$opResult1 = $dbAccess->overwriteReview($newGameReviewObj);
 				}else{
-					$opResult1 = $dbAccess->deleteReview($oldGame->getName());
+					$opResult1 = $dbAccess->deleteReview($oldGame->getName();
 					$newGameReviewObj = null;
 				}
 

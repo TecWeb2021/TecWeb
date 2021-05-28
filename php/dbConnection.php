@@ -34,7 +34,7 @@ class DBAccess {
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
     // questa funzione fa solo la chiamata al database e restituisce qualunque cosa riceva
-    public function getResult($query, $silent = true){
+    public function getResult($query, $silent = false){
         $querySelect ="$query";
         if(!$silent){
             echo $query;
@@ -501,7 +501,7 @@ class DBAccess {
                 $image1 = new Image($row['Path1'],$row['Alt1']);
                 $image2 = new Image($row['Path2'],$row['Alt2']);
 
-                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Developer'], $this->getReview($row['Name']));
+                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Developer']);
                 array_push($gamesList, $game);
             }
 
@@ -526,7 +526,7 @@ class DBAccess {
 
             $image1 = new Image($row['Path1'],$row['Alt1']);
             $image2 = new Image($row['Path2'],$row['Alt2']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'], $this->getReview($row['Name']));
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
         return $game;
         }
@@ -597,7 +597,7 @@ class DBAccess {
 
             $image1 = new Image($row['i1Path'],$row['i1Alt']);
             $image2 = new Image($row['i2Path'],$row['i2Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'], $this->getReview($row['Name']) );
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
         return $game;
         }
@@ -615,7 +615,7 @@ class DBAccess {
                 $image1 = new Image($row['i1Path'],$row['i1Alt']);
                 $image2 = new Image($row['i2Path'],$row['i2Alt']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, null, null, null, null, null, $this->getReview($row['Name']));
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2);
                 array_push($gamesList, $game);
             }
 
@@ -644,9 +644,6 @@ class DBAccess {
         $imagePath2  = mysqli_real_escape_string($this->connection, $imagePath2 );
         $imageAlt2 =  $image2 ? $image2->getAlt() : null;
         $imageAlt2  = mysqli_real_escape_string($this->connection, $imageAlt2 );
-
-        $gameReview = $game->getReview();
-        $this->addReview($gameReview);
         
 
 
@@ -786,12 +783,6 @@ class DBAccess {
 		$sequel  = mysqli_real_escape_string($this->connection, $sequel );
         $developer = $newGame->getDeveloper();
 		$developer  = mysqli_real_escape_string($this->connection, $developer );
-
-        $review = $newGame->getReview();
-
-        // qui prima tenta di sovrascrivere e poi tenta di aggiungere. Almeno una delle due dovrebbe andare a buon fine. Le due non dovrebbero darsi fastidio a vicenda.
-        $this->overwriteReview($oldGameName, $review);
-        $this->addReview($review);
 
         //$this->addImage($image1);
         //$this->addImage($image2);
@@ -984,7 +975,7 @@ class DBAccess {
         if(mysqli_num_rows($queryResult) == 0) {
             return null;
         }else {
-            $row = mysqli_fetch_assoc($queryResult)
+            $row = mysqli_fetch_assoc($queryResult);
 
             $review = new Review($row['Game'], $row['Author'], $row['Date_time'], $row['Content']);
             return $review;
@@ -994,7 +985,7 @@ class DBAccess {
 
     function addReview($review){
         $authorName = $review->getAuthorName();
-        $authorName  = mysqli_real_escape_string($this->connection, $authorName );
+        $authorName  = mysqli_real_escape_string($this->connection, $authorName);
         $gameName = $review->getGameName();
         $gameName  = mysqli_real_escape_string($this->connection, $gameName );
         $date_time = $review->getDateTime();

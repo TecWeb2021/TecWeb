@@ -13,7 +13,6 @@ class Game{
 	protected $prequel;
 	protected $sequel;
 	protected $developer;
-	protected $review;
 
 	public static $img1MinRatio = 1.3;
 	public static $img1MaxRatio = 1.6;
@@ -24,7 +23,7 @@ class Game{
 	public static $possible_genres = array("Avventura","Azione","FPS","GDR","Horror","Puzzle");
 
 
-	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_image1, $_image2, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null, $_review=null){
+	function __construct($_name, $_publication_date, $_vote, $_sinopsis, $_age_range, $_image1, $_image2, $_consoles=null, $_genres=null, $_prequel=null, $_sequel=null, $_developer=null){
 		$this->name = $_name;
 		$this->publication_date = $_publication_date;
 		$this->vote = $_vote;
@@ -37,7 +36,6 @@ class Game{
 		$this->prequel = $_prequel;
 		$this->sequel = $_sequel;
 		$this->developer = $_developer;
-		$this->review = $_review;
 	}
 
 	function getName(){
@@ -86,10 +84,6 @@ class Game{
 
 	function getDeveloper(){
 		return $this->developer;
-	}
-
-	function getReview(){
-		return $this->review;
 	}
 }
 

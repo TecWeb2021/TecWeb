@@ -13,15 +13,16 @@ $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 
 function replacePH($game, $isUserAdmin){
 	global $homePage;
+	global $dbAccess;
 
 	$image = $game ? $game->getImage2() : null;
-	$review = $game ? $game->getReview() : null;
+	$review = $game ? $dbAccess->getReview($game->getName()) : null;
 	// questa è la lista delle sostituzioni da applicare
 	$replacements=array(
 		"<img_path_ph/>" => "../". ( $image ? getSafeImage($image->getPath()) : getSafeImage("")),
 		"<img_alt_ph/>" => $image ? $image->getAlt() : "",
 		"<review_content_ph/>" => $review ? $review->getContent() : "",
-		"<review_author_ph/>" => $review ? $review->getAuthor() : "",
+		"<review_author_ph/>" => $review ? $review->getAuthorName() : "",
 		"<review_date_ph/>" => $review ? dateToText($review->getDateTime()) : "",
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_name_ph/>" => $game->getName(),
@@ -92,7 +93,7 @@ if(isset($_REQUEST['game'])){
 	$game=$dbAccess->getGame($gameName);
 	if($game){
 
-		if($game->getReview() === null){
+		if($dbAccess->getReview($game->getName()) === null){
 			$homePage = getErrorHtml("no_review");
 		}else{
 			replacePH($game, $isAdmin);
