@@ -417,7 +417,8 @@ SEZIONE DROPDOWN FILTRI
   background-color: #74c243;
   color: black;
   padding: 0.5em 0.3em 0.5em 0.3em;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: bold;
   border: none;
   cursor: pointer;
 }
@@ -426,7 +427,8 @@ SEZIONE DROPDOWN FILTRI
   background-color: #3e8e41;;
   color: black;
   padding: 0.5em 0.3em 0.5em 0.3em;
-  font-size: 16px;
+  font-size: 15px;
+  font-weight: bold;
   border: none;
   cursor: pointer;
 }
