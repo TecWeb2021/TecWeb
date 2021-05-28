@@ -116,8 +116,8 @@ if($allOk){
 		$new_gameAlt2 = getSafeInput('alternativo2', 'string');
 		$new_gameVote = getSafeInput('voto');
 
-		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
-		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+		$new_gameConsoles = getSafeInput('console');
+		$new_gameGenres = getSafeInput('genere');
 
 		$new_gamePrequel = getSafeInput('prequel', 'string');
 		$new_gameSequel = getSafeInput('sequel', 'string');
