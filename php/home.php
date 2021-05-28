@@ -99,8 +99,9 @@ $isAdmin=$user && $user->isAdmin() ? true : false;
 $newsList=$dbAccess->getNewsList();
 # Unisco le notizie in una lista html 
 $newsListString=createNewsList($newsList, $isAdmin);
+
 if($newsListString === ""){
-	$newsListString = getErrorHtml("no_news");
+	$newsListString = getErrorHtml("no_news_in_home");
 }
 # Metto la lista al posto del placeholder
 $homePage=preg_replace("/\<news_divs_ph\/\>/",$newsListString,$homePage);

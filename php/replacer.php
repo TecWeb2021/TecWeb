@@ -488,7 +488,8 @@ $errorsFileNames = array(
 	"news_not_existent" => "messaggio_notizia_non_esistente.html",
 	"news_not_specified" => "messaggio_notizia_non_specificata.html",
 	"game_deleted" => "messaggio_gioco_eliminato.html",
-	"news_deleted" => "messaggio_notizia_eliminata.html"
+	"news_deleted" => "messaggio_notizia_eliminata.html",
+	"no_news_in_home" => "messaggio_nessuna_notizia_home.html"
 );
 
 function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){

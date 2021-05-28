@@ -48,7 +48,7 @@ if($allOk){
 		$new_gameName = getSafeInput('nome', 'string');
 		$new_gameDeveloper = getSafeInput('sviluppo', 'string');
 		$new_gameAgeRange = getSafeInput('pegi');
-		$new_gamePublicationDate = getSafeInput('data']) ? $_REQUEST['data'] : null;
+		$new_gamePublicationDate = getSafeInput('data');
 
 		$new_gameConsoles = getSafeInput('console');
 		$new_gameGenres = getSafeInput('genere');
