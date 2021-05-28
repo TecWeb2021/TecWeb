@@ -511,7 +511,7 @@ function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
 }
 
 function getStringExtract($string, $length = 500, $redirectTarget){
-	return substr($string, 0, $length) . "..." . " <a tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
+	return substr($string, 0, $length) . "..." . " <a class=\"continua_a_leggere\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
 }
 
 function getSafeInput($name, $type='other'){
