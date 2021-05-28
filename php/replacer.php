@@ -284,7 +284,8 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 
 	#ricavo il nome da assegnare al nuovo file
 	$newNumber=$maxNum+1;
-	$extension=end(explode('.', $originalName));
+	$parts = explode('.', $originalName);
+	$extension=end($parts);
 	$newFileName=$newNumber.".".$extension;
 	$fileDestination=$uploaddir . $newFileName;
 	$imgSaveResult=move_uploaded_file($image_tmp_location, $fileDestination);
@@ -301,7 +302,6 @@ function getGreatestDBImageNumber($dbAccess){
 	$images = $dbAccess->getImages("path desc");
 	$topImage = ($images && (count($images) > 0)) ? $images[0] : null;
 	if($topImage !== null){
-		print_r($topImage);
 		$exp1 = explode("images/", $topImage->getPath())[1];
 		$exp2 = explode(".", $exp1)[0];
 		return $exp2;
@@ -491,11 +491,20 @@ $errorsFileNames = array(
 	"news_deleted" => "messaggio_notizia_eliminata.html"
 );
 
-function getErrorHtml($errorName){
+function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
 	global $errorsFileNames;
 	global $errorsBasePath;
+	$errorHtml = "";
 	if(in_array($errorName, array_keys($errorsFileNames))){
-		return file_get_contents($errorsBasePath . $errorsFileNames[$errorName]);
+		$errorHtml = file_get_contents($errorsBasePath . $errorsFileNames[$errorName]);
+		if($isAdmin){
+			$errorHtml = str_replace("<admin_func_ph>","",$errorHtml);
+			$errorHtml = str_replace("</admin_func_ph>","",$errorHtml);
+		}else{
+			$errorHtml = preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$errorHtml);
+		}
+		$errorHtml = str_replace(array_keys($replacements), array_values($replacements), $errorHtml);
+		return $errorHtml;
 	}else{
 		return null;
 	}

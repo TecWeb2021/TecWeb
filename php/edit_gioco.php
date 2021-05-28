@@ -262,26 +262,41 @@ if($allOk){
 			
 			if($image1Ok && $image2Ok){
 
-				$newGameReviewObj = "none";
-				$opResult1 = null;
-				if($newGameReviewObj !== "" && $newGameReviewObj !== null){
-					$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
-					$opResult1 = $dbAccess->overwriteReview($newGameReviewObj);
-				}else{
-					$opResult1 = $dbAccess->deleteReview($oldGame->getName();
-					$newGameReviewObj = null;
-				}
+				
+
+				$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+				
+				$opResult1 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
+				echo "risultato overwrite gioco: ".($opResult1==null ? "null" : $opResult1)."<br/>";
+
+				
 
 				if($opResult1 === true){
-					$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper, $newGameReviewObj);
-					
-					$opResult2 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-					echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
-					if($opResult2 === true){
+					$newGameReviewObj = null;
+					$opResult2 = null;
+					if($new_gameReview !== "" && $new_gameReview !== null){
+						echo "inserting non empty review<br/>";
+						if($dbAccess->getReview() !== null){
+							$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
+							$opResult2 = $dbAccess->overwriteReview($new_gameName, $newGameReviewObj);
+						}else{
+							$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
+							$opResult2 = $dbAccess->addReview($newGameReviewObj);
+						}
+						
+					}else{
+						echo "inserting empty review<br/>";
+						$opResult2 = $dbAccess->deleteReview($new_gameName, $oldGame->getName());
+						$newGameReviewObj = null;
+					}
+					echo "review overwrite result is null? " . ($opResult2 === null ? "yes" :  "no") . "<br/>";
+					if($opResult2 === true || $opResult2 === null){
 						header("Location: giochi.php");	
+					}else{
+						echo "Overwrite review fallito<br/>";
 					}
 				}else{
-					echo "Overwrite review fallito<br/>";
+					echo "Overwrite gioco fallito<br/>";
 				}
 					
 			
@@ -315,6 +330,9 @@ if($allOk){
 			$selected_genres[$key] = in_array($value, $new_gameGenres);
 		}
 
+		$oldGameReviewObj = $dbAccess->getReview($oldGame->getName());
+		$oldGameReview = $oldGameReviewObj ? $oldGameReviewObj->getContent() : "";
+
 
 		// se sono stati inseriti valori accettabili li sostituisco ai placeholder, altrimenti ci metto i vecchi valori
 		$replacements = array(
@@ -327,7 +345,7 @@ if($allOk){
 			"<vote_ph/>" => $new_gameVote ? $new_gameVote : $oldGame->getVote(),
 			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis ? $new_gameSinopsis : $oldGame->getSinopsis(),
-			"<review_ph/>" => $new_gameReview ? $new_gameReview  : $oldGame->getReview(),
+			"<review_ph/>" => $new_gameReview ? $new_gameReview  : $oldGameReview,
 			"<prequel_ph/>" => $new_gamePrequel ? $new_gamePrequel : $oldGame->getPrequel(),
 			"<sequel_ph/>" => $new_gameSequel ? $new_gameSequel : $oldGame->getSequel(),
 
@@ -368,6 +386,9 @@ if($allOk){
 			$selected_genres[$key] = $old_gameGenres ? in_array($value, $old_gameGenres) : false;
 		}
 
+		$oldGameReviewObj = $dbAccess->getReview($oldGame->getName());
+		$oldGameReview = $oldGameReviewObj ? $oldGameReviewObj->getContent() : "";
+
 		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
 		$replacements = array(
 			"<game_name_ph/>" => $oldGame->getName(),
@@ -375,9 +396,8 @@ if($allOk){
 			"<date_ph/>" => $oldGame->getPublicationDate(),
 			"<vote_ph/>" => $oldGame->getVote(),
 			"<age_range_ph/>" => $oldGame->getAgeRange(),
-			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $oldGame->getSinopsis(),
-			"<review_ph/>" => $oldGame->getReview(),
+			"<review_ph/>" => $oldGameReview,
 			"<prequel_ph/>" => $oldGame->getPrequel(),
 			"<sequel_ph/>" => $oldGame->getSequel(),
 			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),

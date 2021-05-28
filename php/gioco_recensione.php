@@ -94,7 +94,10 @@ if(isset($_REQUEST['game'])){
 	if($game){
 
 		if($dbAccess->getReview($game->getName()) === null){
-			$homePage = getErrorHtml("no_review");
+			$noReviewErrorReplacements = array(
+				"<game_name_ph/>" => $game->getName()
+			);
+			$homePage = getErrorHtml("no_review", $isAdmin, $noReviewErrorReplacements);
 		}else{
 			replacePH($game, $isAdmin);
 			

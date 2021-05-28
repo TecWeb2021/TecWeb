@@ -34,14 +34,14 @@ class DBAccess {
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
     // questa funzione fa solo la chiamata al database e restituisce qualunque cosa riceva
-    public function getResult($query, $silent = false){
+    public function getResult($query, $silent = true){
         $querySelect ="$query";
         if(!$silent){
             echo $query;
         }
         $queryResult = mysqli_query($this->connection, $querySelect);
         if(!$silent){
-            echo mysqli_error($this->connection);
+            echo mysqli_error($this->connection) . "<br/>";
         }
         return $queryResult;
     }
@@ -966,7 +966,7 @@ class DBAccess {
     ///////REVIEW
     ////////////////
 
-    function getReview($gameName=null){
+    function getReview($gameName){
         $gameName = mysqli_real_escape_string($this->connection, $gameName);
 
         $query="SELECT * FROM reviews WHERE reviews.Game='$gameName'";
@@ -1001,7 +1001,7 @@ class DBAccess {
     function overwriteReview($oldGameName, $review){
         $oldGameName = mysqli_real_escape_string($this->connection, $oldGameName);
         $newAuthorName = $review->getAuthorName();
-        $newAuthorName  = mysqli_real_escape_string($this->connection, $newAuthorName );
+        $newAuthorName  = mysqli_real_escape_string($this->connection, $newAuthorName);
         $newGameName = $review->getGameName();
         $newGameName  = mysqli_real_escape_string($this->connection, $newGameName );
         $newDate_time = $review->getDateTime();
@@ -1009,7 +1009,7 @@ class DBAccess {
         $newContent = addslashes( $review->getContent() );
         $newContent  = mysqli_real_escape_string($this->connection, $newContent );
 
-        $query="UPDATE reviews SET Game='$gameName', Author='$authorName' Date_time='$date_time' Content='$content'";
+        $query="UPDATE reviews SET Game='$newGameName', Author='$newAuthorName', Date_time='$newDate_time', Content='$newContent' WHERE Game='$oldGameName'";
         $result=$this->getResult($query);
         return $result;
     }

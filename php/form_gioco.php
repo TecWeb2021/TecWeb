@@ -84,6 +84,10 @@ if($allOk){
 			echo "Salvataggio immagine1 fallito"."<br/>";
 		}
 
+		echo "images: <br/>";
+		print_r($dbAccess->getImages());
+		echo "<br/>";
+
 		$imagePath2 = saveImageFromFILES($dbAccess, "immagine2", Game::$img2MinRatio, Game::$img2MaxRatio);
 		if($imagePath2){
 			echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
@@ -205,20 +209,24 @@ if($allOk){
 			
 			
 			if($opResult1 === true){
-				$newGameReviewObj = "none";
 				$opResult2 = null;
-				if($newGameReviewObj !== "" && $newGameReviewObj !== null){
+				if($new_gameReview !== "" && $new_gameReview !== null){
+					echo "review not empty<br/>";
 					$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
 					$opResult2 = $dbAccess->addReview($newGameReviewObj);
 				}else{
 					$newGameReviewObj = null;
+					$opResult2 = true;
 				}
 				
 				if($opResult2 === true){
+					echo "Caricamento review riuscito<br/>";
 					header("Location: giochi.php");	
+				}else{
+					echo "Caricamento review fallito<br/>";
 				}
 			}else{
-				echo "Caricamento review fallito<br/>";
+				echo "Caricamento gioco fallito<br/>";
 			}
 
 			
