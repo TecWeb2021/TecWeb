@@ -196,10 +196,10 @@ if($allOk){
 		if($new_gamePublicationDate === null || ($errorText = checkString($new_gamePublicationDate,'data')) !== true){
 			$error_message = $error_message . $error_messages['data'] . "<br/>";
 		}
-		if(count($new_gameConsoles) === 0){
+		if($new_gameConsoles === null || count($new_gameConsoles) === 0){
 			$error_message = $error_message . $error_messages['console'] . "<br/>";
 		}
-		if(count($new_gameGenres) === 0){
+		if($new_gameGenres === null || count($new_gameGenres) === 0){
 			$error_message = $error_message . $error_messages['genere'] . "<br/>";
 		}
 		if($new_gameVote === null || ($errorText = checkString($new_gameVote,'voto')) !== true){

@@ -50,8 +50,8 @@ if($allOk){
 		$new_gameAgeRange = getSafeInput('pegi');
 		$new_gamePublicationDate = getSafeInput('data');
 
-		$new_gameConsoles = getSafeInput('console');
-		$new_gameGenres = getSafeInput('genere');
+		$new_gameConsoles = getSafeInput('console', 'array');
+		$new_gameGenres = getSafeInput('genere', 'array');
 
 		$new_gameAlt1 = getSafeInput('alternativo1', 'string');
 		$new_gameAlt2 = getSafeInput('alternativo2', 'string');
@@ -135,10 +135,10 @@ if($allOk){
 		if($new_gamePublicationDate === null || ($errorText = checkString($new_gamePublicationDate,'data')) !== true){
 			$error_message = $error_message . $error_messages['data'] . "<br/>";
 		}
-		if(count($new_gameConsoles) === 0){
+		if($new_gameConsoles === null || count($new_gameConsoles) === 0){
 			$error_message = $error_message . $error_messages['console'] . "<br/>";
 		}
-		if(count($new_gameGenres) === 0){
+		if($new_gameGenres === null || count($new_gameGenres) === 0){
 			$error_message = $error_message . $error_messages['genere'] . "<br/>";
 		}
 		if($new_gameImage1 === null){
