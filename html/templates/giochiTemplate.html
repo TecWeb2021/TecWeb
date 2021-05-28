@@ -5,7 +5,7 @@
       <div class="filtri_categorie">
           <span tabindex="0" class="tipo_categorie">Filtri Ricerca: |</span>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_console">Console ▼
+              <button type="button" class="dropbtn" id="btn_console" aria-label="Filtra per console">Console ▼
               </button>
               <ul class="dropdown-filter" id="console">
                 <li><label class="customLabel" for="console1">PlayStation 4
@@ -31,7 +31,7 @@
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_generi">Generi ▼
+              <button type="button" class="dropbtn" id="btn_generi" aria-label="Filtra per generi">Generi ▼
               </button>
               <ul class="dropdown-filter" id="generi">
                 <li><label class="customLabel" for="genere4">Avventura
@@ -61,7 +61,7 @@
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_da">Dall'anno ▼
+              <button type="button" class="dropbtn" id="btn_da" aria-label="Seleziona giochi dall'anno">Dall'anno ▼
               </button>
               <ul class="dropdown-filter" id="annoin">
                 <li><label class="customLabel" for="da2020">2020
@@ -87,7 +87,7 @@
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_a">All'anno ▼
+              <button type="button" class="dropbtn" id="btn_a" aria-label="all'anno">All'anno ▼
               </button>
               <ul class="dropdown-filter" id="annofin">
                 <li><label class="customLabel" for="a2020">2020
@@ -118,11 +118,11 @@
             <button class="applicafiltri" type="submit" name="resetFiltri">Reset Filtri</button>
       </div>
       <div class="filtri_ordine">
-          <span tabindex="0" class="tipo_ordine">Ordine: |</span>
+          <span tabindex="0" class="tipo_ordine" aria-label="Ordina risultati per:">Ordine: |</span>
 
-              <button <ordine_alfabetico_attivo_ph/> name="ordine" value="Alfabetico">A-Z</button>
-              <button <ordine_voto_attivo_ph/> name="ordine" value="Voto 4+">Voto (Decr.)</button>
-              <button <ordine_cronologico_attivo_ph/> name="ordine" value="Ultimi usciti">Più recenti</button>
+              <button aria-label="Alfabetico" <ordine_alfabetico_attivo_ph/> name="ordine" value="Alfabetico">A-Z</button>
+              <button aria-label="Voto in ordine decrescente"<ordine_voto_attivo_ph/> name="ordine" value="Voto">Voto (Decr.)</button>
+              <button aria-label="Uscite più recenti"<ordine_cronologico_attivo_ph/> name="ordine" value="Ultimi usciti">Più recenti</button>
 
         </div>
         <messaggi_form_ph/>
