@@ -341,7 +341,7 @@ a.link_login{
 }
 a.link:hover,a.link_login:hover{
     color: white;
-    background-color: #313131;
+    background-color: black;
 }
 
 a.linktop{

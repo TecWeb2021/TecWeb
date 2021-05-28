@@ -22,7 +22,7 @@ function createBasePage($templatePath, $page, $dbAccess, $pageParam = ""){
 	$user=getLoggedUser($dbAccess);
 
 	$basePage=generatePageTopAndBottom($templatePath, $page, $user, $pageParam);
-	
+
 	$optionsListString=createGamesOptions($dbAccess);
 	//$optionsListString = $optionsListString.""
 	// inserisco i possibili valori per la barra di ricerca
@@ -112,7 +112,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		}
 	}
 
-	
+
 	if($user){
 		if($user->getImage()){
 			$base=str_replace("<user_img_path_ph/>", "../".getSafeImage($user->getImage()->getPath()), $base);
@@ -127,7 +127,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		);
 
 		$base = preg_replace(array_keys($replacements), array_values($replacements), $base);
-		
+
 	}else{
 
 		$replacements = array(
@@ -146,7 +146,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 
 	if(isset($_REQUEST['tendina'])){
 		if($_REQUEST['tendina']=='true'){
-			$base=str_replace("topnav","topnav responsive",$base);	
+			$base=str_replace("topnav","topnav responsive",$base);
 			$base=str_replace("<tendina_bool_ph/>","false",$base);
 		}elseif($_REQUEST['tendina']=='false'){
 			$base=str_replace("<tendina_bool_ph/>","true",$base);
@@ -254,9 +254,9 @@ function getLoggedUser($dbAccess){
 function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0, $maxResolutionRateo =INF, $uploaddir = '../images/'){
 	//questa funzione ritorna il percorso in cui l'immagine è salvata
 	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
-	
+
 	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
-	
+
 
 	//errore 4: non è stata caricata alcuna immagine
 	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
@@ -268,7 +268,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 	$xSize = $imageSizeDetails[0];
 	$ySize = $imageSizeDetails[1];
 	$resRateo = $ySize / $xSize;
-	
+
 	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
 		return false;
 	}
@@ -280,7 +280,7 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 
 	#ricavo nome immagine col numero più alto presente nel database
 	$maxNum = getGreatestDBImageNumber($dbAccess);
-	
+
 
 	#ricavo il nome da assegnare al nuovo file
 	$newNumber=$maxNum+1;
@@ -310,7 +310,7 @@ function getGreatestDBImageNumber($dbAccess){
 	}
 }
 
-// returns the path if it corresponds to an image saved on the server, a "not available" image else 
+// returns the path if it corresponds to an image saved on the server, a "not available" image else
 // the path is supposed to be given relativto the root directory
 function getSafeImage($path, $defaultPath = "images/imagenotavailable.png"){
 	if(is_file("../".$path)){
@@ -512,13 +512,13 @@ function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
 }
 
 function getStringExtract($string, $length = 500, $redirectTarget){
-	return substr($string, 0, $length) . "..." . " <a class=\"continua_a_leggere\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
+	return substr($string, 0, $length) . "..." . " <a class=\"link\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
 }
 
 function getSafeInput($name, $type='other'){
 	if(isset($_REQUEST["$name"])){
 		$input = $_REQUEST["$name"];
-		
+
 		if($type === 'string'){
 			if($input === ""){
 				return null;
