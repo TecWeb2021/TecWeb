@@ -1377,16 +1377,15 @@ SEZIONE PAGINE DI ERRORE
 }
 
 .buttonLink {
-    color: #fff;
-    font-weight: bold;
-    line-height: 30px;
-    text-decoration: none;
-    width: 150px;
-    height: 30px;
-    text-align: center;
+    color: white;
     background-color: #1b365d;
-    border-bottom: 5px solid #54BAE2;
-    border-radius: 10px;
+    padding: 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    width: 8em;
+    text-align: center;
     display: block;
     margin: auto;
     margin-bottom: 1%;
@@ -1395,5 +1394,4 @@ SEZIONE PAGINE DI ERRORE
 
 .buttonLink:hover{
     background-color: #600000;
-    border-bottom: 5px solid #1b365d;
 }
