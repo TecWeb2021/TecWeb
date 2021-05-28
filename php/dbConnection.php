@@ -968,6 +968,50 @@ class DBAccess {
         $result=$this->getResult($query);
         return $result;
     }
+
+    ////////////////
+    ///////REVIEW
+    ////////////////
+
+    function getReview($gameName=null){
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+
+        $query="SELECT * FROM reviews WHERE reviews.Game='$gameName'";
+        $queryResult = $this->getResult($query);
+        
+        if(mysqli_num_rows($queryResult) == 0) {
+            return null;
+        }else {
+            $row = mysqli_fetch_assoc($queryResult)
+
+            $review = new Comment($row['Game'], $row['Author'], $row['Date_time'], $row['Content']);
+            return $review;
+        }
+
+    }
+
+    function addReview($review){
+        $authorName = $review->getAuthorName();
+        $authorName  = mysqli_real_escape_string($this->connection, $authorName );
+        $gameName = $review->getGameName();
+        $gameName  = mysqli_real_escape_string($this->connection, $gameName );
+        $date_time = $review->getDateTime();
+        $date_time  = mysqli_real_escape_string($this->connection, $date_time );
+        $content = addslashes( $review->getContent() );
+        $content  = mysqli_real_escape_string($this->connection, $content );
+
+        $query="INSERT INTO reviews VALUES ('$gameName', '$authorName', '$date_time', '$content')";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
+    function deleteReview($gameName){
+        $gameName = mysqli_real_escape_string($this->connection, $gameName);
+
+        $query="DELETE FROM comments WHERE Game='$gameName'";
+        $result=$this->getResult($query);
+        return $result;
+    }
     
 }
 ?>
