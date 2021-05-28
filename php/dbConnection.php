@@ -34,7 +34,7 @@ class DBAccess {
     #la funzione getResult deve ricevere in input una stringa già sanificata (sanitized)
     #altrimenti la sicurezza può essere compromessa
     // questa funzione fa solo la chiamata al database e restituisce qualunque cosa riceva
-    public function getResult($query, $silent = true){
+    public function getResult($query, $silent = false){
         $querySelect ="$query";
         if(!$silent){
             echo $query;
@@ -797,12 +797,12 @@ class DBAccess {
         }
         if($result){
             if($result){
-                $query="DELETE FROM games_consoles WHERE Game='$oldGameName'";
+                $query="DELETE FROM games_consoles WHERE Game='$name'";
                 $result=$this->getResult($query);
             }
 
             if($result){
-                $query="DELETE FROM games_genres WHERE Game='$oldGameName'";
+                $query="DELETE FROM games_genres WHERE Game='$name'";
                 $result=$this->getResult($query);
             }
 

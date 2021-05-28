@@ -514,6 +514,27 @@ function getStringExtract($string, $length = 500, $redirectTarget){
 	return substr($string, 0, $length) . "..." . " <a tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
 }
 
+function getSafeInput($name, $type='other'){
+	if(isset($_REQUEST["$name"])){
+		$input = $_REQUEST["$name"];
+		
+		if($type === 'string'){
+			if($input === ""){
+				return null;
+			}else{
+				return filter_var($input, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			}
+		}else{
+			return $input;
+		}
+
+	}else{
+		return null;
+	}
+}
+
+
+
 
 
 
