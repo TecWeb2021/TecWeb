@@ -50,8 +50,8 @@ if($allOk){
 		$new_gameAgeRange = getSafeInput('pegi');
 		$new_gamePublicationDate = getSafeInput('data');
 
-		$new_gameConsoles = getSafeInput('console', 'array');
-		$new_gameGenres = getSafeInput('genere', 'array');
+		$new_gameConsoles = getSafeInput('console');
+		$new_gameGenres = getSafeInput('genere');
 
 		$new_gameAlt1 = getSafeInput('alternativo1', 'string');
 		$new_gameAlt2 = getSafeInput('alternativo2', 'string');

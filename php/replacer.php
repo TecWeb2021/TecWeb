@@ -4,6 +4,8 @@
 
 require_once("dbConnection.php");
 require_once("classes/user.php");
+require_once("classes/news.php");
+require_once("classes/game.php");
 
 function replace($subject){
   $subject=preg_replace("/Giochi\.html/","giochi.php",$subject);
@@ -377,43 +379,103 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 	return $joinedItems;
 }
 
+$patterns = array(
+    "nome" => "/^(\w\s){2,20}$/",
+    "sviluppo" => "/^(\w\s){5,30}$/",
+    "pegi" => "/^(3|7)$|^1(2|6|8)$/",
+    "voto" => "/^(0-5{1}|0-4{1}\.1-9{1})$/",
+    "prequel" => "/^(\w\s){2,20}$/",
+    "sequel" => "/^(\w\s){2,20}$/",
+    "data" => "/.*/",
 
-// si può utilizzare per controllare la correttezza delle stringhe
-function checkString($string, $type){
+    "descrizione" => "/.{25,}/",
+    "recensione" => "/.{25,}/",
+    "alternativo" => "/^(\w\s){0,50}$/",
 
-	$patterns = array(
-	    "nome" => ["/^([\w\s]){2,20}$/", "Inserire il nome del gioco"],
-	    "sviluppo" => ["/^([\w\s]){5,30}$/", "Inserire il nome della casa di sviluppo"],
-	    "pegi" => ["/^(3|7)$|^1(2|6|8)$/", "Possibili valori di PEGI: 3,7,12,16,18"],
-	    "voto" => ["/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/", "Voto da 0 a 5"],
-	    "prequel" => ["/^([\w\s]){2,20}$/", "Inserire il nome del prequel"],
-	    "sequel" => ["/^([\w\s]){2,20}$/", "Inserire il nome del sequel"],
-	    "dlc" => ["/^([\w\s]){2,20}$/", "Inserire il nome del dlc"],
-	    "data" => ["/.*/", "Data non valida"],
+    "titolo" => "/^[\w\s\'\,\.\"]{10,40}$/",
+    "testo" => "/.{25,}/",
+    "nome_gioco" => "/^(\w\s){2,20}$/",
 
-	    "descrizione" => ["/.{25,}/", "Inserire la descrizione"],
-	    "recensione" => ["/.{25,}/", "Inserire la recensione"],
-	    "alternativo" => ["/^([\w\s]){0,50}$/", "Alt lungo massimo 50 caratteri"],
+    "nomeUtente" => "/^(\w){4,15}$/",
+    "password" =>  "/^(?=.*a-z)(?=.*A-Z)(?=.*\d)a-zA-Z\d{8,20}$|^user$|^admin$/",
+    "repeatpassword" =>  "/^(?=.*a-z)(?=.*A-Z)(?=.*\d)a-zA-Z\d{8,20}$|^user$|^admin$/",
+    "email" => "/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/"
+);
 
-	    "titolo" => ["/^([\w\s\'\,\.\"]){10,40}$/", "Inserire il titolo della notizia"],
-	    "testo" => ["/.{25,}/", "Inserire il testo della notizia"],
-	    "tipologia" => News::$possible_categories,
-	    "immagine" => ["/./", "Nessun file selezionato"],
+// le chiavi degli errori devono contenere almeno tutte le chiavi dei pattern
+$errors_messages = array(
+	"nome" => "Inserire il nome del gioco",
+    "sviluppo" => "Inserire il nome della casa di sviluppo",
+    "pegi" => "Possibili valori di PEGI: 3,7,12,16,18",
+    "voto" => "Voto da 0 a 5",
+    "prequel" => "Inserire il nome del prequel",
+    "sequel" => "Inserire il nome del sequel",
+    "data" => "Data non valida",
 
-	    "nomeUtente" => ["/^([\w]){4,15}$/", "Inserire il nome utente"],
-	    "password" => [ "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/", "Inserire la password"],
-	    "repeatpassword" => [ "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/", "Le password non combaciano"],
-	    "email" => ["/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/", "Inserire la mail"]
-	);
+    "descrizione" => "Inserire la descrizione",
+    "recensione" => "Inserire la recensione",
+    "alternativo" => "Alt lungo massimo 50 caratteri",
 
-	if(!array_key_exists($type, $patterns)){
+    "titolo" => "Inserire il titolo della notizia",
+    "testo" => "Inserire il testo della notizia",
+    "tipologia" => "Inserire la tipologia della notizia",
+    "immagine" => "Nessun file selezionato",
+    "nome_gioco_notizia" => "Nessun gioco selezionato",
+
+    "nomeUtente" => "Inserire il nome utente",
+    "password" => "Inserire la password",
+    "repeatpassword" => "Le password non combaciano",
+    "email" => "Inserire la mail"
+);
+
+// valida il valore passato in base al tipo indicato
+// per validare utilizza i pattern presenti in $patterns se ve ne è uno corrispondente al tipo, altrimenti usa degli altri controlli specificati nel metodo stesso
+function validateValue($input, $type){
+	global $patterns;
+	
+	if(array_key_exists($type, $patterns)){
+		// se il tipo è presente tra i pattern allora lo valido usando quelli
+		$result = preg_match($patterns[$type], $input) === 1 ? true : false;
+		echo $input . $type . ($result === true ? "true" : "false") . "<br/>";
+		return $result;
+	}else{
+		// altrimenti uso delle validazioni specifiche
+		if($type === "consoles"){
+			if(count($input) === 0){
+				return false;
+			}
+			foreach ($input as $value) {
+				if( !in_array($value, $Game::possible_consoles)){
+					return false;
+				}
+			}
+			return true;
+		}elseif($type === "genres"){
+			if(count($input) === 0){
+				return false;
+			}
+			foreach ($input as $value) {
+				if( !in_array($value, Game::$possible_genres)){
+					return false;
+				}
+			}
+			return true;
+		}elseif($type === "tipologia"){
+			return in_array($input, News::$possible_categories);
+		}else{
+			// se non appartiene a nessun tipo validabile lo ritengo non valido
+			return false;
+		}
+	}
+}
+
+function getValidationError($type){
+	global $errors_messages;
+	if(!array_key_exists($type, $errors_messages)){
 		return null;
+	}else{
+		return $errors_messages[$type];
 	}
-	$res = preg_match($patterns[$type][0], $string) === 1 ? true : false;
-	if($res === false){
-		return $patterns[$type][1];
-	}
-	return $res;
 }
 
 function getOriginPage(){

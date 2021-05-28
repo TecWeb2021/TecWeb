@@ -37,7 +37,7 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 
-$error_message = "";
+$validation_error_messages = array();
 	
 if($allOk){
 
@@ -56,8 +56,6 @@ if($allOk){
 		}
 		$new_newsAuthor = $user;
 		$new_newsEditDateTime = date("Y-m-d");
-
-		//il salvataggio dell'immagine potrebbe fallire quindi inserisco una variabile booleana per gestire la cosa (sarebbe forse meglio gestire il tutto con le eccezioni)
 
 		$new_newsImage1 = null;
 		$imagePath1 = saveImageFromFILES($dbAccess, 'immagine1', News::$img1MinRatio, News::$img1MaxRatio);
@@ -79,61 +77,49 @@ if($allOk){
 
 		// ho raccolto tutti i dati che potevo raccogliere
 
-		$error_messages = array(
-			'titolo' => "Titolo non presente",
-			'tipologia' => "Tipologia non presente o non corretta",
-			'gioco' => "Gioco non inserito",
-			'immagine1' => "Immagine1 non presente",
-			'immagine2' => "Immagine2 non presente",
-			'alternativo1' => "Testo alternativo dell'immagine1 non presente",
-			'alternativo2' => "Testo alternativo dell'immagine2 non presente",
-			'testo' => "Testo non presente"
-		);
-
 		$error_message = "";
 
 		// controllo i campi obbligatori
 
-		if( $new_newsTitle === null || ($errorText = checkString($new_newsTitle, 'titolo')) !== true){
-			$error_message = $error_message . $error_messages['titolo'] . "<br/>";
+		if( $new_newsTitle === null || validateValue($new_newsTitle, 'titolo') === false){
+			array_push($validation_error_messages, getValidationError('titolo'));
 		}
-		if($new_newsCategory === null || !in_array($new_newsCategory, News::$possible_categories)){
-			$error_message = $error_message . $error_messages['tipologia'] . "<br/>";
+		if($new_newsCategory === null || validateValue($new_newsCategory, 'tipologia') === false){
+			array_push($validation_error_messages, getValidationError('tipologia'));
 		}
 		if($new_newsImage1 === null){
-			$error_message = $error_message . $error_messages['immagine1'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 		if($new_newsImage2 === null){
-			$error_message = $error_message . $error_messages['immagine2'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 		
-		if( $new_newsText === null || ($errorText = checkString($new_newsText, 'testo')) !== true){
-			$error_message = $error_message . $error_messages['testo'] . "<br/>";
+		if( $new_newsText === null || validateValue($new_newsText, 'testo') === false){
+			array_push($validation_error_messages, getValidationError('testo'));
 		}
 
 		// controllo i campi obbligatori derivati
 
-		if($new_newsCategory === "Giochi" && ($new_newsGame === "" || $new_newsGame === null)){
-			$error_message = $error_message . $error_messages['gioco'] . "<br/>";
+		if($new_newsCategory === "Giochi" && ($new_newsGame === null || validateValue($new_newsGame, 'nome') === false)) {
+			array_push($validation_error_messages, getValidationError('nome_gioco_notizia'));
 		}
 
 		// controllo i campi opzionali
 
-		if( $new_newsAlt1 !== null && strlen($new_newsAlt1) > 0 && ($errorText = checkString($new_newsAlt1, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		if( $new_newsAlt1 !== null && (validateValue($new_newsAlt1) === false)) {
+			array_push($validation_error_messages, getValidationError('alternativo'));
 		}
-		if( $new_newsAlt2 !== null && strlen($new_newsAlt2) > 0 && ($errorText = checkString($new_newsAlt2, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		if( $new_newsAlt2 !== null && (validateValue($new_newsAlt2) === false)){
+			array_push($validation_error_messages, getValidationError('alternativo'));
 		}
 
 
 
 		//controllo se c'è stato almeno un errore
-		if($error_message != ""){
+		if(count($validation_error_messages) > 0){
 			
 		}else{
 			echo "non sono presenti errori<br/>";
-			//se non ci sono stati errori procedo col salvataggio dei dati su db
 			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 	
 			$opResult = $dbAccess->addNews($newNews);
@@ -142,12 +128,6 @@ if($allOk){
 				header("Location: notizie.php");
 			}else{
 				echo "salvataggio su db fallito"."<br/>";
-				//visto che l'operazione di salvataggio su db della news non è andata a buon fine rimuovo l'immagine sia dal db che dal filesystem
-				/*$dbAccess->deleteImage($imagePath1);
-				unlink("../".$imagePath1);
-
-				$dbAccess->deleteImage($imagePath2);
-				unlink("../".$imagePath2);*/
 			}
 		}
 			
@@ -212,7 +192,9 @@ if($allOk){
 
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = implode("<br>", $validation_error_messages);
+
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message, $homePage);
 			
 
 
