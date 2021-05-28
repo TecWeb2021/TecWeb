@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 28, 2021 at 01:13 AM
+-- Generation Time: May 28, 2021 at 02:31 PM
 -- Server version: 10.2.11-MariaDB
 -- PHP Version: 7.2.34
 
@@ -52,6 +52,14 @@ CREATE TABLE `games` (
   `Developer` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `games`
+--
+
+INSERT INTO `games` (`Name`, `Publication_date`, `Vote`, `Sinopsis`, `Age_range`, `Image1`, `Image2`, `Developer`) VALUES
+('gioco1gioco123', '2021-05-27', 5, 'fg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgf', '7', 'images/10.jpg', 'images/10.jpg', 'gfgfg'),
+('hghgfhgfh', '2021-05-25', 5, 'fd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfd', '7', 'images/10.jpg', 'images/10.jpg', 'gdfgfgfdg');
+
 -- --------------------------------------------------------
 
 --
@@ -62,6 +70,16 @@ CREATE TABLE `games_consoles` (
   `Game` varchar(50) NOT NULL,
   `Console` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `games_consoles`
+--
+
+INSERT INTO `games_consoles` (`Game`, `Console`) VALUES
+('gioco1gioco123', 'PS4'),
+('gioco1gioco123', 'Switch'),
+('gioco1gioco123', 'XboxOne'),
+('hghgfhgfh', 'XboxOne');
 
 -- --------------------------------------------------------
 
@@ -74,6 +92,16 @@ CREATE TABLE `games_genres` (
   `Genre` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `games_genres`
+--
+
+INSERT INTO `games_genres` (`Game`, `Genre`) VALUES
+('gioco1gioco123', 'Avventura'),
+('gioco1gioco123', 'Azione'),
+('gioco1gioco123', 'FPS'),
+('hghgfhgfh', 'Azione');
+
 -- --------------------------------------------------------
 
 --
@@ -84,6 +112,22 @@ CREATE TABLE `images` (
   `Path` varchar(50) NOT NULL,
   `Alt` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `images`
+--
+
+INSERT INTO `images` (`Path`, `Alt`) VALUES
+('images/1.jpg', 'immagine utente'),
+('images/10.jpg', ''),
+('images/2.jpg', ''),
+('images/3.jpg', ''),
+('images/4.jpg', ''),
+('images/5.jpg', ''),
+('images/6.jpg', ''),
+('images/7.jpg', ''),
+('images/8.jpg', ''),
+('images/9.jpg', '');
 
 -- --------------------------------------------------------
 
@@ -139,6 +183,13 @@ CREATE TABLE `users` (
   `Image` varchar(50) DEFAULT NULL,
   `Email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`Username`, `Hash`, `IsAdmin`, `Image`, `Email`) VALUES
+('admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, 'images/1.jpg', 'admin@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -241,13 +292,13 @@ ALTER TABLE `games`
 -- Constraints for table `games_consoles`
 --
 ALTER TABLE `games_consoles`
-  ADD CONSTRAINT `FK_Console_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_Console_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `games_genres`
 --
 ALTER TABLE `games_genres`
-  ADD CONSTRAINT `FK_Genre_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_Genre_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `news`
@@ -270,7 +321,7 @@ ALTER TABLE `prequel_sequel`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `FK_Review_Author` FOREIGN KEY (`Author`) REFERENCES `users` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_Review_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_Review_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`
