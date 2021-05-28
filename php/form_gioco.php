@@ -45,21 +45,21 @@ if($allOk){
 
 		echo "almeno un valore è stato rilevato<br/>";
 
-		$new_gameName = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
-		$new_gameDeveloper = isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
-		$new_gameAgeRange = isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
-		$new_gamePublicationDate = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
+		$new_gameName = getSafeInput('nome', 'string');
+		$new_gameDeveloper = getSafeInput('sviluppo', 'string');
+		$new_gameAgeRange = getSafeInput('pegi');
+		$new_gamePublicationDate = getSafeInput('data']) ? $_REQUEST['data'] : null;
 
-		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
-		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+		$new_gameConsoles = getSafeInput('console');
+		$new_gameGenres = getSafeInput('genere');
 
-		$new_gameAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
-		$new_gameAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
-		$new_gameVote = isset($_REQUEST['voto']) ? $_REQUEST['voto'] : null;
-		$new_gamePrequel = isset($_REQUEST['prequel']) ? $_REQUEST['prequel'] : null;
-		$new_gameSequel = isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
-		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
-		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
+		$new_gameAlt1 = getSafeInput('alternativo1', 'string');
+		$new_gameAlt2 = getSafeInput('alternativo2', 'string');
+		$new_gameVote = getSafeInput('voto');
+		$new_gamePrequel = getSafeInput('prequel', 'string');
+		$new_gameSequel = getSafeInput('sequel', 'string');
+		$new_gameSinopsis = getSafeInput('descrizione', 'string');
+		$new_gameReview = getSafeInput('recensione', 'string');
 		$new_gameLast_review_date = date("Y-m-d");
 		$new_gameReview_author = $user->getUsername();
 

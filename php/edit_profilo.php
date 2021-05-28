@@ -29,13 +29,13 @@ if($user){
 		if(isset($_REQUEST['email'])){
 			//echo "almeno un valore è stato inserito"."<br/>";
 
-			$new_password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
+			$new_password = getSafeInput('password', 'string');
 			#sanitize
-			$new_passwordRepeat=isset($_REQUEST['repeatpassword']) ? $_REQUEST['repeatpassword'] : null;
+			$new_passwordRepeat = getSafeInput('repeatpassword', 'string');
 			#sanitize
-			$new_email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+			$new_email = getSafeInput('email', 'string');
 			#sanitize
-			$new_imagePath=saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
+			$new_imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
 			#sanitize
 			
 			$error_message = "";

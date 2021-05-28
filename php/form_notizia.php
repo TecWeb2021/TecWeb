@@ -45,14 +45,14 @@ if($allOk){
 	if( isset($_REQUEST['titolo']) ){
 		echo "almeno uno dei valori è stato rilevato<br/>";
 		
-		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
-		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
-		$new_newsAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
-		$new_newsAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
-		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
+		$new_newsTitle =  getSafeInput('titolo', 'string');
+		$new_newsCategory = getSafeInput('tipologia', 'string');
+		$new_newsAlt1 = getSafeInput('alternativo1', 'string');
+		$new_newsAlt2 = getSafeInput('alternativo2', 'string');
+		$new_newsText = getSafeInput('testo', 'string');
 		$new_newsGame = null;
 		if($new_newsCategory == "Giochi"){
-			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+			$new_newsGame = getSafeInput('searchbar', 'string');
 		}
 		$new_newsAuthor = $user;
 		$new_newsEditDateTime = date("Y-m-d");

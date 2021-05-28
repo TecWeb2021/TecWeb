@@ -26,15 +26,15 @@ if($user){
 	if(isset($_REQUEST['email'])){
 		echo "almeno un valore è stato inserito"."<br/>";
 		
-		$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
+		$email = getSafeInput('email', 'string');
 		#sanitize
-		$username=isset($_REQUEST['username']) ? $_REQUEST['username'] : null;
+		$username = getSafeInput('username', 'string');
 		#sanitize
-		$imagePath=saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
+		$imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
 		#sanitize
-		$password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
+		$password = getSafeInput('password', 'string');
 		#sanitize
-		$repeatPassword=isset($_REQUEST['repeatpassword']) ? $_REQUEST['repeatpassword'] : null;
+		$repeatPassword = getSafeInput('repeatpassword', 'string');
 		#sanitize
 
 		//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro

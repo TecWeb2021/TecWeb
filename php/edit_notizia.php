@@ -106,17 +106,17 @@ if($allOk){
 	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) ){
 		//echo "almeno un valore è stato rilevato<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
-		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
-		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
+		$new_newsTitle =  getSafeInput('titolo', 'string');
+		$new_newsText = getSafeInput('testo', 'string');
 		// alcuni valori li riprendo dalla vecchia notizia
 		$new_newsAuthor = $user;
 		$new_newsEditDateTime = date("Y-m-d");
-		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
-		$new_newsAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
-		$new_newsAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
+		$new_newsCategory = getSafeInput('tipologia', 'string');
+		$new_newsAlt1 = getSafeInput('alternativo1', 'string');
+		$new_newsAlt2 = getSafeInput('alternativo2', 'string');
 		$new_newsGame = null;
 		if($new_newsCategory == "Giochi"){
-			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+			$new_newsGame = getSafeInput('searchbar', 'string');
 		}
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
