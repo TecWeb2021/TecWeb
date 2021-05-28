@@ -380,21 +380,21 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 }
 
 $patterns = array(
-    "nome" => "/^(\w\s){2,20}$/",
-    "sviluppo" => "/^(\w\s){5,30}$/",
+    "nome" => "/^[\w\s]{2,20}$/",
+    "sviluppo" => "/^[\w\s]{5,30}$/",
     "pegi" => "/^(3|7)$|^1(2|6|8)$/",
-    "voto" => "/^(0-5{1}|0-4{1}\.1-9{1})$/",
-    "prequel" => "/^(\w\s){2,20}$/",
-    "sequel" => "/^(\w\s){2,20}$/",
-    "data" => "/.*/",
+    "voto" => "/^[0-5]{1}(\.[1-9]){0,1}$/",
+    "prequel" => "/^[\w\s]{2,20}$/",
+    "sequel" => "/^[\w\s]{2,20}$/",
+    "data" => "/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",
 
     "descrizione" => "/.{25,}/",
     "recensione" => "/.{25,}/",
-    "alternativo" => "/^(\w\s){0,50}$/",
+    "alternativo" => "/^[\w\s]{0,50}$/",
 
     "titolo" => "/^[\w\s\'\,\.\"]{10,40}$/",
     "testo" => "/.{25,}/",
-    "nome_gioco" => "/^(\w\s){2,20}$/",
+    "nome_gioco_notizia" => "/^[\w\s]{2,20}$/",
 
     "nomeUtente" => "/^(\w){4,15}$/",
     "password" =>  "/^(?=.*a-z)(?=.*A-Z)(?=.*\d)a-zA-Z\d{8,20}$|^user$|^admin$/",
@@ -411,6 +411,8 @@ $errors_messages = array(
     "prequel" => "Inserire il nome del prequel",
     "sequel" => "Inserire il nome del sequel",
     "data" => "Data non valida",
+    "consoles" => "Selezionare almeno una console",
+    "genres" => "Selezionare almeno un genere",
 
     "descrizione" => "Inserire la descrizione",
     "recensione" => "Inserire la recensione",
@@ -445,7 +447,7 @@ function validateValue($input, $type){
 				return false;
 			}
 			foreach ($input as $value) {
-				if( !in_array($value, $Game::possible_consoles)){
+				if( !in_array($value, Game::$possible_consoles)){
 					return false;
 				}
 			}
@@ -464,6 +466,7 @@ function validateValue($input, $type){
 			return in_array($input, News::$possible_categories);
 		}else{
 			// se non appartiene a nessun tipo validabile lo ritengo non valido
+			echo "type $type not matched<br/>";
 			return false;
 		}
 	}
@@ -472,6 +475,7 @@ function validateValue($input, $type){
 function getValidationError($type){
 	global $errors_messages;
 	if(!array_key_exists($type, $errors_messages)){
+		echo "message for type $type not matched<br/>";
 		return null;
 	}else{
 		return $errors_messages[$type];
@@ -577,6 +581,7 @@ function getStringExtract($string, $length = 500, $redirectTarget){
 	return substr($string, 0, $length) . "..." . " <a class=\"link\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
 }
 
+// serve per fare il sanitize di un valore
 function getSafeInput($name, $type='other'){
 	if(isset($_REQUEST["$name"])){
 		$input = $_REQUEST["$name"];
@@ -594,6 +599,14 @@ function getSafeInput($name, $type='other'){
 	}else{
 		return null;
 	}
+}
+
+function getValidationErrorsHtml($errors){
+	return "<div style=\"color: red\">" . implode("<br>", $errors) . "</div>";
+}
+
+function getSuccessMessagesHtml($messages){
+	return "<div style=\"color: green\">" . implode("<br>", $messages) . "</div>";
 }
 
 

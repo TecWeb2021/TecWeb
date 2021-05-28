@@ -89,6 +89,9 @@ if(isset($_REQUEST['elimina'])){
 $error_message = "";
 
 $oldNews = null;
+
+$validation_error_messages = array();
+$success_messages = array();
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -154,61 +157,47 @@ if($allOk){
 				$image2Ok=true;
 			}else{
 				//echo "salvataggio dell'immagine2 fallito"."<br/>";
-
 			}
 		}
 
-		$error_messages = array(
-			'titolo' => "Titolo non presente",
-			'testo' => "Testo non presente",
-			'tipologia' => "Tipologia non presente",
-			'immagine1' => "Immagine1 non presente",
-			'immagine2' => "Immagine2 non presente",
-			'alternativo1' => "Testo alternativo dell'immagine1 non presente",
-			'alternativo2' => "Testo alternativo dell'immagine2 non presente",
-			'gioco' => "Gioco non inserito"
-		);
-
-		$error_message = "";
-
 		//controllo i campi obbligatori
 
-		if( $new_newsTitle === null || ($errorText = checkString($new_newsTitle, 'titolo')) !== true){
-			$error_message = $error_message . $error_messages['titolo'] . "<br/>";
+		if( $new_newsTitle === null || validateValue($new_newsTitle, 'titolo') === false){
+			array_push($validation_error_messages, getValidationError('titolo'));
 		}
-		if( $new_newsText === null || ($errorText = checkString($new_newsText, 'testo')) !== true){
-			$error_message = $error_message . $error_messages['testo'] . "<br/>";
+		if( $new_newsText === null || validateValue($new_newsText, 'testo') === false){
+			array_push($validation_error_messages, getValidationError('testo'));
 		}
-		if($new_newsCategory === null || !in_array($new_newsCategory, News::$possible_categories)){
-			$error_message = $error_message . $error_messages['tipologia'] . "<br/>";
+		if($new_newsCategory === null || validateValue($new_newsCategory, 'tipologia') === false){
+			array_push($validation_error_messages, getValidationError('tipologia'));
 		}
 
 		// controllo i campi obbligatori derivati
 
-		if($new_newsCategory == "Giochi" && $new_newsGame== null){
-			$error_message = $error_message . $error_messages['gioco'] . "<br/>";
+		if($new_newsCategory == "Giochi" && ($new_newsGame == null || validateValue($new_newsGame, 'nome_gioco_notizia') === false) ){
+			array_push($validation_error_messages, getValidationError('nome_gioco_notizia'));
 		}
 
 		// controllo i campi opzionali
 
 		if( $new_newsImage1 !== null && $image1Ok === false){
-			$error_message = $error_messages . $error_messages['immagine1'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 
 		if( $new_newsImage2 !== null && $image2Ok === false){
-			$error_message = $error_messages . $error_messages['immagine2'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 
-		if( $new_newsAlt1 !== null && strlen($new_newsAlt1) > 0 && ($errorText = checkString($new_newsAlt1, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
+		if( $new_newsAlt1 !== null && validateValue($new_newsAlt1, 'alternativo') === false){
+			array_push($validation_error_messages, getValidationError('alternativo'));
 		}
 
-		if( $new_newsAlt2 !== null && strlen($new_newsAlt2) > 0 && ($errorText = checkString($new_newsAlt2, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
+		if( $new_newsAlt2 !== null && validateValue($new_newsAlt2, 'alternativo') === false){
+			array_push($validation_error_messages, getValidationError('alternativo'));
 		}
 
 
-		if($error_message != ""){
+		if(count($validation_error_messages) > 0){
 			
 		}else{
 
@@ -229,7 +218,7 @@ if($allOk){
 			$newNews = new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
 			if($overwriteResult == true){
-				//echo "overwrite su db riuscito" . "<br/>";
+				array_push($success_messages, "overwrite su db riuscito");
 			}else{
 				//echo "overwrite su db fallito" . "<br/>";
 			}
@@ -307,12 +296,14 @@ if($allOk){
 		}
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		//echo "replacements completati<br/>";
+		// echo "replacements completati<br/>";
 	}
 
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_error_messages = getSuccessMessagesHtml($success_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_error_messages, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldNews ? $oldNews->getTitle() : "");

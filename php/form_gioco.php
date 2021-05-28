@@ -35,7 +35,8 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 
-$error_message = "";
+$validation_error_messages = array();
+$success_messages = array();
 
 	
 if($allOk){
@@ -100,105 +101,79 @@ if($allOk){
 		}
 
 
-
-		$error_messages = array(
-			'nome' => "Nome non inserito",
-			'data' => "Data non inserita",
-			'pegi' => "Pegi non inserito",
-			'descrizione' => "descrizione non inserita",
-			'recensione' => "Recensione non inserita",
-			'immagine1' => "Immagine1 non inserita",
-			'immagine2' => "Immagine2 non inserita",
-			'alternativo1' => "Testo alternativo dell'immagine1 non inserito",
-			'alternativo2' => "Testo alternativo dell'immagine2 non inserito",
-			'voto' => "Voto non inserito",
-			'console' => "Console non inserita",
-			'genere' => "Genere non inserito",
-			'prequel' => "Prequel non inserito",
-			'sequel' => "Sequel non inserito",
-			'sviluppo' => "Sviluppatore non inserito"
-		);
-
-		$error_message = "";
-
 		// controllo i campi obbligatori
 
-		if($new_gameName === null || ($errorText = checkString($new_gameName,'nome')) !== true ){
-			$error_message = $error_message . $error_messages['nome'] . "<br/>";
+		$mandatory_fields = array(
+			[$new_gameName, 'nome'],
+			[$new_gameDeveloper, 'sviluppo'],
+			[$new_gameAgeRange, 'pegi'],
+			[$new_gamePublicationDate, 'data'],
+			[$new_gameConsoles, 'consoles'],
+			[$new_gameGenres, 'genres'],
+			[$new_gameVote, 'voto'],
+			[$new_gameSinopsis, 'descrizione']
+		);
+
+		foreach ($mandatory_fields as $value) {
+			if($value[0] === null || validateValue($value[0], $value[1]) === false ){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
-		if($new_gameDeveloper === null || ($errorText = checkString($new_gameDeveloper,'sviluppo')) !== true){
-			$error_message = $error_message . $error_messages['sviluppo'] . "<br/>";
-		}
-		if($new_gameAgeRange === null || ($errorText = checkString($new_gameAgeRange,'pegi')) !== true){
-			$error_message = $error_message . $error_messages['pegi'] . "<br/>";
-		}
-		if($new_gamePublicationDate === null || ($errorText = checkString($new_gamePublicationDate,'data')) !== true){
-			$error_message = $error_message . $error_messages['data'] . "<br/>";
-		}
-		if($new_gameConsoles === null || count($new_gameConsoles) === 0){
-			$error_message = $error_message . $error_messages['console'] . "<br/>";
-		}
-		if($new_gameGenres === null || count($new_gameGenres) === 0){
-			$error_message = $error_message . $error_messages['genere'] . "<br/>";
-		}
+
 		if($new_gameImage1 === null){
-			$error_message = $error_message . $error_messages['immagine1'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 		if($new_gameImage2 === null){
-			$error_message = $error_message . $error_messages['immagine2'] . "<br/>";
-		}
-		if($new_gameVote === null || ($errorText = checkString($new_gameVote,'voto')) !== true){
-			$error_message = $error_message . $error_messages['voto'] . "<br/>";
-		}
-		if($new_gameSinopsis === null || ($errorText = checkString($new_gameSinopsis,'descrizione')) !== true){
-			$error_message = $error_message . $error_messages['descrizione'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 
 		// controllo i campi obbligatori derivati
 
 		// controllo i campi opzionali
-		
-		if($new_gamePrequel !== null && strlen($new_gamePrequel) > 0 && ($errorText = checkString($new_gamePrequel, 'prequel')) !== true){
-			$error_message = $error_message . $error_messages['prequel'] . "<br/>";
-		}
-		if($new_gameSequel !== null && strlen($new_gameSequel) > 0 &&($errorText = checkString($new_gameSequel, 'sequel')) !== true){
-			$error_message = $error_message . $error_messages['sequel'] . "<br/>";
-		}
 
-		if($new_gameReview !== null && strlen($new_gameReview) > 0 && ($errorText = checkString($new_gameReview, 'recensione')) !== true){
-			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
-		}
-		
-		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
-		}
+		$optional_fields = array(
+			[$new_gamePrequel, 'prequel'],
+			[$new_gameSequel, 'sequel'],
+			[$new_gameReview, 'recensione'],
+			[$new_gameAlt1, 'alternativo'],
+			[$new_gameAlt2, 'alternativo']
+		);
 
-		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
+		foreach ($optional_fields as $value) {
+			if($value[0] !== null && validateValue($value[0], $value[1]) === false ){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
 		
-		
-		
-		
-
 
 		//inizializzo questi due array che, anche se vuoti, mi serviranno più avanti
 		$selected_consoles=array();
 		$selected_genres=array();
 
 		//creo un array che per ogni posizione indica se la console in quella posizione è stata selezionata
-		foreach (Game::$possible_consoles as $key => $value) {
-			$selected_consoles[$key] = in_array($value, $new_gameConsoles);
-			echo "$value is ".($selected_consoles[$key] ? "true" : "false")."<br/>";
+		if($new_gameConsoles){
+			foreach (Game::$possible_consoles as $key => $value) {
+				$selected_consoles[$key] = in_array($value, $new_gameConsoles);
+			}
+		}else{
+			foreach (Game::$possible_consoles as $key => $value) {
+				$selected_consoles[$key] = false;
+			}
 		}
 		
 		//creo un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
-		foreach (Game::$possible_genres as $key => $value) {
-			$selected_genres[$key] = in_array($value, $new_gameGenres);
+		if($new_gameGenres){
+			foreach (Game::$possible_genres as $key => $value) {
+				$selected_genres[$key] = in_array($value, $new_gameGenres);
+			}
+		}else{
+			foreach (Game::$possible_genres as $key => $value) {
+				$selected_genres[$key] = false;
+			}
 		}
 
 
-		if($error_message != ""){
+		if(count($validation_error_messages) > 0){
 			
 		}else{
 			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
@@ -243,7 +218,6 @@ if($allOk){
 			"<img1_alt_ph/>" => $new_gameAlt1 ? $new_gameAlt1 : "",
 			"<img2_alt_ph/>" => $new_gameAlt2 ? $new_gameAlt2 : "",
 			"<vote_ph/>" => $new_gameVote ? $new_gameVote : "",
-			"<dlc_ph/>" => "dlcs del gioco",//non l'ho messo perchè per ora non ha una controparte tra gli attributi del gioco
 			"<sinopsis_ph/>" => $new_gameSinopsis ? $new_gameSinopsis : "",
 			"<review_ph/>" => $new_gameReview ? $new_gameReview : "",
 			"<prequel_ph/>" => $new_gamePrequel ? $new_gamePrequel : "",
@@ -307,7 +281,9 @@ if($allOk){
 
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_error_messages = getSuccessMessagesHtml($success_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_error_messages, $homePage);
 			
 
 

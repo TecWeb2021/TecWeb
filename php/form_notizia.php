@@ -38,6 +38,7 @@ if($authCheck && !$user->isAdmin()){
 $allOk=$authCheck;
 
 $validation_error_messages = array();
+$success_messages = array();
 	
 if($allOk){
 
@@ -100,16 +101,16 @@ if($allOk){
 
 		// controllo i campi obbligatori derivati
 
-		if($new_newsCategory === "Giochi" && ($new_newsGame === null || validateValue($new_newsGame, 'nome') === false)) {
+		if($new_newsCategory === "Giochi" && ($new_newsGame === null || validateValue($new_newsGame, 'nome_gioco_notizia') === false)) {
 			array_push($validation_error_messages, getValidationError('nome_gioco_notizia'));
 		}
 
 		// controllo i campi opzionali
 
-		if( $new_newsAlt1 !== null && (validateValue($new_newsAlt1) === false)) {
+		if( $new_newsAlt1 !== null && (validateValue($new_newsAlt1, 'alternativo') === false)) {
 			array_push($validation_error_messages, getValidationError('alternativo'));
 		}
-		if( $new_newsAlt2 !== null && (validateValue($new_newsAlt2) === false)){
+		if( $new_newsAlt2 !== null && (validateValue($new_newsAlt2, 'alternativo') === false)){
 			array_push($validation_error_messages, getValidationError('alternativo'));
 		}
 
@@ -192,9 +193,9 @@ if($allOk){
 
 }
 
-$jointValidation_error_message = implode("<br>", $validation_error_messages);
-
-$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_error_messages = getSuccessMessagesHtml($success_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_error_messages, $homePage);
 			
 
 
