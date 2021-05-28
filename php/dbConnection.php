@@ -797,12 +797,12 @@ class DBAccess {
         }
         if($result){
             if($result){
-                $query="DELETE FROM games_consoles WHERE Game='$oldGameName'";
+                $query="DELETE FROM games_consoles WHERE Game='$name'";
                 $result=$this->getResult($query);
             }
 
             if($result){
-                $query="DELETE FROM games_genres WHERE Game='$oldGameName'";
+                $query="DELETE FROM games_genres WHERE Game='$name'";
                 $result=$this->getResult($query);
             }
 

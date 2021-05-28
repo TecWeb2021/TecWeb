@@ -105,23 +105,23 @@ if($allOk){
 	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
 		echo "almeno un valore è stato rilevato<br/>";
 		
-		$new_gameName = isset($_REQUEST['nome']) ? $_REQUEST['nome'] : null;
-		$new_gamePublicationDate = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
-		$new_gameAgeRange = isset($_REQUEST['pegi']) ? $_REQUEST['pegi'] : null;
-		$new_gameSinopsis = isset($_REQUEST['descrizione']) ? $_REQUEST['descrizione'] : null;
-		$new_gameReview = isset($_REQUEST['recensione']) ? $_REQUEST['recensione'] : null;
+		$new_gameName = getSafeInput('nome', 'string');
+		$new_gamePublicationDate = getSafeInput('data');
+		$new_gameAgeRange = getSafeInput('pegi');
+		$new_gameSinopsis = getSafeInput('descrizione', 'string');
+		$new_gameReview = getSafeInput('recensione', 'string');
 		$new_gameLast_review_date = date("Y-m-d");
 		$new_gameReview_author = $user;
-		$new_gameAlt1 = isset($_REQUEST['alternativo1']) ? $_REQUEST['alternativo1'] : null;
-		$new_gameAlt2 = isset($_REQUEST['alternativo2']) ? $_REQUEST['alternativo2'] : null;
-		$new_gameVote = isset($_REQUEST['voto']) ? $_REQUEST['voto'] : null;
+		$new_gameAlt1 = getSafeInput('alternativo1', 'string');
+		$new_gameAlt2 = getSafeInput('alternativo2', 'string');
+		$new_gameVote = getSafeInput('voto');
 
-		$new_gameConsoles = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
-		$new_gameGenres = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+		$new_gameConsoles = getSafeInput('console');
+		$new_gameGenres = getSafeInput('genere');
 
-		$new_gamePrequel = isset($_REQUEST['prequel']) ? $_REQUEST['prequel'] : null;
-		$new_gameSequel = isset($_REQUEST['sequel']) ? $_REQUEST['sequel'] : null;
-		$new_gameDeveloper = isset($_REQUEST['sviluppo']) ? $_REQUEST['sviluppo'] : null;
+		$new_gamePrequel = getSafeInput('prequel', 'string');
+		$new_gameSequel = getSafeInput('sequel', 'string');
+		$new_gameDeveloper = getSafeInput('sviluppo', 'string');
 
 		$new_gameImage1 = null;
 		$new_gameImage2 = null;
@@ -166,7 +166,7 @@ if($allOk){
 			'nome' => "Nome non inserito",
 			'data' => "Data non inserita",
 			'pegi' => "Pegi non inserito",
-			'descrizione' => "descrizione non inserita",
+			'descrizione' => "Descrizione non inserita",
 			'recensione' => "Recensione non inserita",
 			'immagine1' => "Immagine1 non inserita",
 			'immagine2' => "Immagine2 non inserita",
@@ -267,16 +267,16 @@ if($allOk){
 				$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 				
 				$opResult1 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-				echo "risultato overwrite gioco: ".($opResult1==null ? "null" : $opResult1)."<br/>";
+				echo "risultato overwrite gioco false? ".($opResult1===false ? "yes" : "no")."<br/>";
 
 				
 
-				if($opResult1 === true){
+				if($opResult1 === true || $opResult1 === null){
 					$newGameReviewObj = null;
 					$opResult2 = null;
 					if($new_gameReview !== "" && $new_gameReview !== null){
 						echo "inserting non empty review<br/>";
-						if($dbAccess->getReview() !== null){
+						if($dbAccess->getReview($new_gameName) !== null){
 							$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
 							$opResult2 = $dbAccess->overwriteReview($new_gameName, $newGameReviewObj);
 						}else{
