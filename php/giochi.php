@@ -133,7 +133,7 @@ switch($order){
 	case "Alfabetico":
 		$order = "alfabetico";
 		break;
-	case "Voto 4+":
+	case "Voto":
 		$order = "voto";
 		break;
 	case "Ultimi usciti":

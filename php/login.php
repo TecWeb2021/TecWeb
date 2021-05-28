@@ -21,8 +21,8 @@ if($user){
 	if(isset($_REQUEST['nomeUtente'])){
 		echo "almeno un valore rilevato" . "<br/>";
 
-		$username = $_REQUEST['nomeUtente'];
-		$password = $_REQUEST['password'];
+		$username = getSafeInput('nomeUtente');
+		$password = getSafeInput('password');
 
 		$error_message = "";
 		
