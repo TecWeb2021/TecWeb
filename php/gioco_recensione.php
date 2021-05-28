@@ -15,13 +15,14 @@ function replacePH($game, $isUserAdmin){
 	global $homePage;
 
 	$image = $game ? $game->getImage2() : null;
+	$review = $game ? $game->getReview() : null;
 	// questa è la lista delle sostituzioni da applicare
 	$replacements=array(
 		"<img_path_ph/>" => "../". ( $image ? getSafeImage($image->getPath()) : getSafeImage("")),
 		"<img_alt_ph/>" => $image ? $image->getAlt() : "",
-		"<review_content_ph/>" => $game->getReview(),
-		"<review_author_ph/>" => $game->getReview_author(),
-		"<review_date_ph/>" => dateToText($game->getLast_review_date()),
+		"<review_content_ph/>" => $review ? $review->getContent() : "",
+		"<review_author_ph/>" => $review ? $review->getAuthor() : "",
+		"<review_date_ph/>" => $review ? dateToText($review->getDateTime()) : "",
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_name_ph/>" => $game->getName(),
 		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName()
@@ -91,7 +92,7 @@ if(isset($_REQUEST['game'])){
 	$game=$dbAccess->getGame($gameName);
 	if($game){
 
-		if($game->getReview() === "" || $game->getReview() === null){
+		if($game->getReview() === null){
 			$homePage = getErrorHtml("no_review");
 		}else{
 			replacePH($game, $isAdmin);

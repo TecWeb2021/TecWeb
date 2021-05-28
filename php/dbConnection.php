@@ -5,6 +5,7 @@ require_once("./classes/game.php");
 require_once("./classes/image.php");
 require_once("./classes/user.php");
 require_once("./classes/comment.php");
+require_once("./classes/review.php");
 //namespace DB;
 
 //my db interface is on localhost:80/phpmyadmin
@@ -500,7 +501,7 @@ class DBAccess {
                 $image1 = new Image($row['Path1'],$row['Alt1']);
                 $image2 = new Image($row['Path2'],$row['Alt2']);
 
-                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2, $consoles, $genres, $row['Developer']);
+                $game = new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Developer'], $this->getReview($row['Name']));
                 array_push($gamesList, $game);
             }
 
@@ -525,7 +526,7 @@ class DBAccess {
 
             $image1 = new Image($row['Path1'],$row['Alt1']);
             $image2 = new Image($row['Path2'],$row['Alt2']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'], $this->getReview($row['Name']));
 
         return $game;
         }
@@ -596,7 +597,7 @@ class DBAccess {
 
             $image1 = new Image($row['i1Path'],$row['i1Alt']);
             $image2 = new Image($row['i2Path'],$row['i2Alt']);
-            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'] );
+            $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer'], $this->getReview($row['Name']) );
 
         return $game;
         }
@@ -614,7 +615,7 @@ class DBAccess {
                 $image1 = new Image($row['i1Path'],$row['i1Alt']);
                 $image2 = new Image($row['i2Path'],$row['i2Alt']);
 
-                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $row['Review'], $row['Last_review_date'], $row['Review_author'], $image1, $image2);
+                $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, null, null, null, null, null, $this->getReview($row['Name']));
                 array_push($gamesList, $game);
             }
 
@@ -633,13 +634,6 @@ class DBAccess {
 		$sinopsis  = mysqli_real_escape_string($this->connection, $sinopsis );
         $age_range = $game->getAgeRange();
 		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
-        $review = addslashes($game->getReview());
-		$review  = mysqli_real_escape_string($this->connection, $review );
-        $last_review_date = $game->getLast_review_date();
-        $last_review_date = mysqli_real_escape_string($this->connection, $last_review_date );
-        $review_author = $game->getReview_author();
-        $review_authorUsername = $review_author->getUsername();
-        $review_authorUsername = mysqli_real_escape_string($this->connection, $review_authorUsername );
         $image1 = $game->getImage1();
         $imagePath1 =  $image1 ? $image1->getPath() : null;
 		$imagePath1  = mysqli_real_escape_string($this->connection, $imagePath1 );
@@ -650,6 +644,10 @@ class DBAccess {
         $imagePath2  = mysqli_real_escape_string($this->connection, $imagePath2 );
         $imageAlt2 =  $image2 ? $image2->getAlt() : null;
         $imageAlt2  = mysqli_real_escape_string($this->connection, $imageAlt2 );
+
+        $gameReview = $game->getReview();
+        $this->addReview($gameReview);
+        
 
 
         $consoles = $game->getConsoles();
@@ -691,7 +689,7 @@ class DBAccess {
 
         
 
-        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$review', '$last_review_date', '$review_authorUsername', '$imagePath1', '$imagePath2','$developer')";
+        $query="INSERT INTO games VALUES ('$name', '$date', '$vote', '$sinopsis', '$age_range', '$imagePath1', '$imagePath2','$developer')";
         $result=$this->getResult($query);
         if($result){
             if($consoles){
@@ -731,6 +729,11 @@ class DBAccess {
 
         $query="DELETE FROM games WHERE Name='$gameName'";
         $result=$this->getResult($query);
+        if($result){
+            $query="DELETE FROM reviews WHERE Game='$gameName'";
+            $result=$this->getResult($query);
+        }
+
         return $result;
     }
 
@@ -749,13 +752,6 @@ class DBAccess {
 		$sinopsis  = mysqli_real_escape_string($this->connection, $sinopsis );
         $age_range = $newGame->getAgeRange();
 		$age_range  = mysqli_real_escape_string($this->connection, $age_range );
-        $review = addslashes($newGame->getReview());
-		$review  = mysqli_real_escape_string($this->connection, $review );
-        $last_review_date = $newGame->getLast_review_date();
-        $last_review_date = mysqli_real_escape_string($this->connection, $last_review_date);
-        $review_author = $newGame->getReview_author();
-        $review_authorUsername = $review_author->getUsername();
-        $review_authorUsername = mysqli_real_escape_string($this->connection, $review_authorUsername );
         $image1 = $newGame->getImage1();
         
         $imagePath1 =  $image1 ? $image1->getPath() : null;
@@ -791,6 +787,12 @@ class DBAccess {
         $developer = $newGame->getDeveloper();
 		$developer  = mysqli_real_escape_string($this->connection, $developer );
 
+        $review = $newGame->getReview();
+
+        // qui prima tenta di sovrascrivere e poi tenta di aggiungere. Almeno una delle due dovrebbe andare a buon fine. Le due non dovrebbero darsi fastidio a vicenda.
+        $this->overwriteReview($oldGameName, $review);
+        $this->addReview($review);
+
         //$this->addImage($image1);
         //$this->addImage($image2);
 
@@ -799,7 +801,7 @@ class DBAccess {
         
 
         if($result){
-            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Review='$review', Last_review_date='$last_review_date', Review_author='$review_authorUsername', Image1='$imagePath1', Image2='$imagePath2', Developer='$developer' WHERE Name='$oldGameName'";
+            $query="UPDATE games SET Name='$name', Publication_date='$date', Vote='$vote', Sinopsis='$sinopsis', Age_range='$age_range', Image1='$imagePath1', Image2='$imagePath2', Developer='$developer' WHERE Name='$oldGameName'";
             $result=$this->getResult($query);
         }
         if($result){
@@ -984,7 +986,7 @@ class DBAccess {
         }else {
             $row = mysqli_fetch_assoc($queryResult)
 
-            $review = new Comment($row['Game'], $row['Author'], $row['Date_time'], $row['Content']);
+            $review = new Review($row['Game'], $row['Author'], $row['Date_time'], $row['Content']);
             return $review;
         }
 
@@ -1005,10 +1007,26 @@ class DBAccess {
         return $result;
     }
 
+    function overwriteReview($oldGameName, $review){
+        $oldGameName = mysqli_real_escape_string($this->connection, $oldGameName);
+        $newAuthorName = $review->getAuthorName();
+        $newAuthorName  = mysqli_real_escape_string($this->connection, $newAuthorName );
+        $newGameName = $review->getGameName();
+        $newGameName  = mysqli_real_escape_string($this->connection, $newGameName );
+        $newDate_time = $review->getDateTime();
+        $newDate_time  = mysqli_real_escape_string($this->connection, $newDate_time );
+        $newContent = addslashes( $review->getContent() );
+        $newContent  = mysqli_real_escape_string($this->connection, $newContent );
+
+        $query="UPDATE reviews SET Game='$gameName', Author='$authorName' Date_time='$date_time' Content='$content'";
+        $result=$this->getResult($query);
+        return $result;
+    }
+
     function deleteReview($gameName){
         $gameName = mysqli_real_escape_string($this->connection, $gameName);
 
-        $query="DELETE FROM comments WHERE Game='$gameName'";
+        $query="DELETE FROM reviews WHERE Game='$gameName'";
         $result=$this->getResult($query);
         return $result;
     }

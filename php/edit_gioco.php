@@ -261,11 +261,33 @@ if($allOk){
 			}
 			
 			if($image1Ok && $image2Ok){
+
+				$newGameReviewObj = "none";
+				$opResult1 = null;
+				if($newGameReviewObj !== "" && $newGameReviewObj !== null){
+					$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
+					$opResult1 = $dbAccess->overwriteReview($newGameReviewObj);
+				}else{
+					$opResult1 = $dbAccess->deleteReview($oldGame->getName());
+					$newGameReviewObj = null;
+				}
+
+				if($opResult1 === true){
+					$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper, $newGameReviewObj);
+					
+					$opResult2 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
+					echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
+					if($opResult2 === true){
+						header("Location: giochi.php");	
+					}
+				}else{
+					echo "Overwrite review fallito<br/>";
+				}
+					
 			
-				$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameReview, $new_gameLast_review_date, $new_gameReview_author, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+				
 	
-				$overwriteResult = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-				echo "risultato overwrite: ".($overwriteResult==null ? "null" : $overwriteResult)."<br/>";
+				
 			}
 		}
 	
