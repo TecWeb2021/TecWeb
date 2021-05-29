@@ -3,26 +3,31 @@
     <div class="container" id="content">
         <div class="schedaForm">
             <h3 class="titolo_form">Form per l'inserimento di un nuovo gioco</h3>
-            <p class="avviso_importante">I campi marcati con * sono obbligatori</p>
+            <p>I campi marcati con * sono obbligatori.</p>
             <form id="formGioco" method="post" action="form_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggi_form_ph/>
 
                 <fieldset>
+                    <p>Il nome del <em>videogioco</em> deve contenere da 2 a 40 caratteri (lettere, numeri, spaziature e caratteri speciali). Deve iniziare e terminare con una lettera o un numero.</p>
                     <label for="nome">*Nome: </label>
-                    <span><input type="text" id="nome" name="nome" value="<game_name_ph/>" placeholder="Nome gioco" /></span><br />
+                    <span><input type="text" id="nome" name="nome" value="<game_name_ph/>" placeholder="Nome videogioco" /></span><br />
 
+                    <p>Il nome della <em>casa di sviluppo</em> deve contenere da 2 a 30 caratteri (lettere, numeri e spaziature). Deve iniziare e terminare con una lettera o un numero.</p>
                     <label for="sviluppo">*Casa di sviluppo: </label>
                     <span><input type="text" id="sviluppo" name="sviluppo" value="<developer_ph/>" placeholder="Casa di sviluppo" /></span><br />
 
+                    <p>I valori ammessi di <em><abbr title="Pan European Game Information">PEGI</abbr></em> sono: 3, 7, 12, 16, 18</p>
                     <label for="pegi"><abbr title="Pan European Game Information">*PEGI</abbr>: </label>
-                    <span><input type="text" id="pegi" name="pegi" value="<age_range_ph/>" placeholder="possibili valori: 3, 7, 12, 16, 18" /></span><br />
+                    <span><input type="text" id="pegi" name="pegi" value="<age_range_ph/>" placeholder="Possibili valori: 3, 7, 12, 16, 18" /></span><br />
 
+                    <p>Inserire una <em>data</em> valida selezionandola dal calendario. L'intervallo di anni ammessi va dal 1947 al 2021 compresi.</p>
                     <label for="data">*Data di rilascio: </label>
                     <span><input type="date" name="data" id="data" value="<date_ph/>"></span><br />
                 </fieldset>
 
                 <fieldset>
+                    <p>Selezionare almeno una <em>console</em> su cui è disponibile il gioco.</p>
                     <div><p id="labelConsole" class="spuntabili">*Console:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
@@ -41,6 +46,7 @@
                 </fieldset>
 
                 <fieldset>
+                    <p>Selezionare almeno un <em>genere</em> per il gioco.</p>
                     <div><p id="labelGenere" class="spuntabili">*Generi:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
@@ -61,6 +67,8 @@
                 </fieldset>
 
                 <fieldset>
+                    <p>Inserire un file in formato ... di dimensione ...</p>
+                    <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
                     <label for="immagine1">*Copertina:</label>
                     <span><input type="file" class="immagine" id="immagine1" name="immagine1" /></span><br />
 
@@ -69,6 +77,8 @@
                 </fieldset>
 
                 <fieldset>
+                    <p>Inserire un file in formato ... di dimensione ...</p>
+                    <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
                     <label for="immagine2">*Banner:</label>
                     <span><input type="file" class="immagine" id="immagine2" name="immagine2" /></span><br />
 
@@ -77,6 +87,9 @@
                 </fieldset>
 
                 <fieldset id="cercaTitolo">
+
+                    <p>Inserire una <em>valutazione</em> per il gioco. I valori possibili vanno da 0 a 5.</p>
+                    <p>I campi <em>prequel</em> e <em>sequel</em> sono opzionali e i loro valori vengono suggeriti cercando delle corrispondenze tra quanto scritto e i giochi presenti nel sito. Possono contenere da 2 a 40 caratteri (lettere, numeri, spaziature e caratteri speciali) e devono iniziare e terminare con una lettera o un numero.</p>
 
                     <label for="voto">*Voto:</label>
                     <span><input type="text" id="voto" name="voto" value="<vote_ph/>" placeholder="Voto da 0 a 5" /></span><br />
@@ -95,11 +108,13 @@
                 </fieldset>
 
                 <fieldset>
+                    <p>Inserire la <em>descrizione</em> del gioco. Deve contenere almeno 25 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
                     <label for="descrizione" class="textAreaLabel">*Descrizione: </label>
                     <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco, deve essere lunga almeno 25 caratteri"><sinopsis_ph/></textarea></span>
                 </fieldset>
 
                 <fieldset>
+                    <p>L'inserimento della <em>recensione</em> del gioco è opzionale. Deve contenere almeno 25 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
                     <label for="recensione" class="textAreaLabel">Recensione: </label>
                     <span><textarea id="recensione" name="recensione" class="opzionale" rows="10" cols="50" placeholder="Recensione del gioco opzionale, se inserita deve essere lunga almeno 25 caratteri"><review_ph/></textarea></span>
                 </fieldset>

@@ -4,29 +4,32 @@
       <div class="schedaForm">
         <h3 class="titolo_login_registrati">Crea il tuo account ALLGames</h3>
         <form action="registrati.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+          <p>I campi marcati con * sono obbligatori.</p>
 
           <messaggi_form_ph/>
           
           <fieldset>
-            <p class="dati_personali">Dati personali<p>
-            <p class="avviso_importante">Tutti i campi sono obbligatori</p>
+            <h4>Dati personali</h4>
+            <p>Il nome utente deve contenere da 4 a 15 caratteri (lettere o numeri).</p>
 
-            <label for="email">E-mail</label>
+            <label for="email">*E-mail</label>
             <span><input type="text" name="email" id="email" value="<email_ph/>" placeholder="Inserisci la tua e-mail" /></span><br />
 
-            <label for="nomeUtente">Nome utente</label>
-            <span><input type="text" name="username" id="nomeUtente" value="<username_ph/>" placeholder="Da 5 a 15 caratteri alfanumerici" /></span><br />
+            <label for="nomeUtente">*Nome utente</label>
+            <span><input type="text" name="username" id="nomeUtente" value="<username_ph/>" placeholder="Da 4 a 15 caratteri alfanumerici" /></span><br />
 
-            <label for="immagine">Immagine profilo</label>
+            <label for="immagine">*Immagine profilo</label>
             <span><input type="file" id="immagine" name="immagine" /></span><br />
           </fieldset>
 
           <fieldset>
-            <p class="avviso_importante">La password deve contenere da 8 a 12 caratteri, fra cui almeno un numero, una lettera minuscola e una maiuscola</p>
-            <label for="password">Password</label>
+            <h4>Password</h4>
+            <p>La password deve contenere da 8 a 16 caratteri (lettere o numeri), fra cui almeno un numero, una lettera minuscola e una maiuscola.</p>
+            
+            <label for="password">*Password</label>
             <span><input type="password" name="password" id="password" value="" placeholder="Password" /></span><br />
 
-            <label for="repeatpassword">Ripeti password</label>
+            <label for="repeatpassword">*Ripeti password</label>
             <span><input type="password" name="repeatpassword" id="repeatpassword" value="" placeholder="Ripeti password" /></span><br />
 
             <div class="loginButton"><button type="submit" name="registrati" >Registrati</button></div>

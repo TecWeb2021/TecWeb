@@ -4,17 +4,19 @@
   <div class="container" id="content">
     <div class="schedaForm">
       <h3 class="titolo_form">Form per l'inserimento di una nuova notizia</h3>
-      <p class="avviso_importante">I campi marcati con * sono obbligatori</p>
+      <p>I campi marcati con * sono obbligatori.</p>
       <form id="formNotizia" method="post" action="form_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
         <messaggi_form_ph/>
 
         <fieldset>
+          <p>Il <em>titolo</em> della notizia deve contenere da 10 a 150 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
             <label for="titolo">*Titolo: </label>
             <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
 
         <fieldset id="handler" onchange="handleClick(event);">
+          <p>Selezionare una <em>tipologia</em> per la notizia.</p>
           <div><p id="labelTipologia" class="spuntabili">*Tipologia: </p></div>
             <div class="gruppoRadio">
               <ul class="checkbox">
@@ -31,7 +33,8 @@
         </fieldset>
 
         <fieldset id="cercaTitolo" class="">
-            <p>Inserire il titolo <em>solo</em> se è stata selezionata la categoria <em>Giochi</em></p>
+            <p>Inserire il titolo di un gioco <em>solo</em> se è stata selezionata la categoria <em>Giochi.</em></p>
+            <p>Il titolo viene suggerito cercando delle corrispondenze tra quanto scritto e i giochi presenti nel sito. Può contenere da 2 a 40 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare e terminare con una lettera o un numero.</p>
             <label for="barraDiRicerca">Gioco trattato:</label>
             <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
             <datalist id="listaTitoli" class="formText">
@@ -40,6 +43,9 @@
         </fieldset>
 
         <fieldset>
+            <p>Inserire un file in formato ... di dimensione ...</p>
+            <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
+                    
             <label id="label_immagine1" for="immagine1">*Copertina: </label>
             <span><input type="file" id="immagine1" class="immagine" name="immagine1" /></span><br />
 
@@ -48,6 +54,9 @@
         </fieldset>
 
         <fieldset>
+            <p>Inserire un file in formato ... di dimensione ...</p>
+            <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
+                    
             <label id="label_immagine2" for="immagine2">*Banner: </label>
             <span><input type="file" id="immagine2" class="immagine" name="immagine2" /></span><br />
 
@@ -56,6 +65,7 @@
         </fieldset>
 
         <fieldset>
+          <p>Inserire il <em>testo</em> della notizia. Deve contenere almeno 25 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
             <label for="testo" class="textAreaLabel">*Testo: </label>
             <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><content_ph/></textarea></span>
         </fieldset>

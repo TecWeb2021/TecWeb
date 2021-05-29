@@ -466,7 +466,7 @@ label, input { display: inline-block; }
   margin: 5px;
 }
 
-.schedaForm>p { margin-left: 0.5em; }
+.schedaForm p { margin: 0.5em; }
 
 .invisibile { display: none; }
 
@@ -545,9 +545,9 @@ input[type=text], textarea {
 }
 
 .messaggi {
-  padding-top: 0.5em;
-  display: inline-block;
-  text-align: left;
+  padding: 0em;
+  display: block;
+  text-align: center;
 }
 
 p+p.messaggi {
@@ -691,22 +691,6 @@ SEZIONE LOGIN
 }
 
 .loginButton{
-  margin-bottom: 0.5em;
-}
-
-/*
-=========================
-SEZIONE REGISTRATI
-=========================
-*/
-
-.dati_personali{
-  font-weight: bold;
-  font-size: large;
-}
-
-.avviso_importante{
-  color: red;
   margin-bottom: 0.5em;
 }
 
