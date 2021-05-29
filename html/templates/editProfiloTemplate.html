@@ -5,28 +5,32 @@
     <div class="schedaForm">
       <h1>Modifica o Elimina il tuo account ALLGames</h1>
       <form action="edit_profilo.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+        <p>I campi marcati con * sono obbligatori.</p>
 
         <messaggi_form_ph/>
 
         <fieldset>
-          <h2>Dati personali</h2>
-          <p class="required">I campi marcati con * sono obbligatori</p>
-          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+          <h4>Dati personali</h4>
+          <p>Se vuoi cambiare la tua mail di riferimento o la tua immagine di profilo puoi farlo nei due form seguenti.</p>
 
-          <label for="mail">Email</label>
-          <input type="text" name="email" id="mail" class="required" value="<email_ph/>"/><br />
+          <label for="mail">*Email</label>
+          <input type="text" name="email" id="mail" value="<email_ph/>"/><br />
 
           <label for="imgPerProfilo">Immagine profilo</label>
           <input type="file" name="immagine" id="imgPerProfilo" class="opzionale" /><br />
         </fieldset>
 
         <fieldset>
-          <p> Se vuoi cambiare password scrivi quella nuova nei due form seguenti </p>
-          <label for="password">Password </label>
+          <h4>Password</h4>
+          <p>Se vuoi cambiare password scrivi quella nuova nei due form seguenti.</p>
+          <p>La password deve contenere da 8 a 16 caratteri (lettere o numeri), fra cui almeno un numero, una lettera minuscola e una maiuscola.</p>
+
+          <label for="password">*Password </label>
           <span><input type="password" name="password" id="password" class="opzionale" /></span><br />
 
-          <label for="repeatpassword">Ripeti password </label>
+          <label for="repeatpassword">*Ripeti password </label>
           <span><input type="password" name="repeatpassword" id="repeatpassword" /></span><br />
+
           <button type="submit" name="salva">Salva modifiche</button>
           <button type="submit" name="annulla">Annulla modifiche</button>
           <button type="submit" name="elimina">Elimina profilo</button>

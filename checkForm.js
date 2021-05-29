@@ -1,27 +1,27 @@
 const dettagliForm = {
-    "nome": [/^\w{1}([\w\s]){0,20}\w{1}$/, "Inserire il nome del gioco"],
-    "sviluppo": [/^\w{1}([\w\s]){0,30}\w{1}$/, "Inserire il nome della casa di sviluppo"],
-    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Possibili valori di PEGI: 3,7,12,16,18"],
-    "data": [/./, "Data non valida"],
+    "nome": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome del gioco"],
+    "sviluppo": [/^\w{1}[\w\s]{0,28}\w{1}$/, "Inserire il nome della casa di sviluppo"],
+    "pegi": [/^(3|7)$|^1(2|6|8)$/, "Inserire un valore valido"],
+    "data": [/./, "Inserire una data valida"],
 
-    "prequel": [/^\w{1}([\w\s]){0,20}\w{1}$/, "Inserire il nome del prequel"],
-    "sequel": [/^\w{1}([\w\s]){0,20}\w{1}$/, "Inserire il nome del sequel"],
+    "prequel": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome del prequel"],
+    "sequel": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome del sequel"],
 
     "descrizione": [/^\w{1}.{24,}/, "Inserire la descrizione"],
     "recensione": [/^\w{1}.{24,}/, "Inserire la recensione"],
     "voto": [/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/, "Voto da 0 a 5"],
 
-    "titolo": [/^\w{1}([\w\s\'\,\.\"]){10,100}$/, "Inserire il titolo della notizia"],
+    "titolo": [/^\w{1}.{9,149}/, "Inserire il titolo della notizia"],
     "testo": [/^\w{1}.{24,}/, "Inserire il testo della notizia"],
 
     "immagine1": [/./, "Nessun file selezionato"],
     "immagine2": [/./, "Nessun file selezionato"],
-    "alternativo1": [/^\w{1}([\w\s]){0,49}$/, "Alt lungo massimo 50 caratteri"],
-    "alternativo2": [/^\w{1}([\w\s]){0,49}$/, "Alt lungo massimo 50 caratteri"],
+    "alternativo1": [/^\w{1}[\w\s]{4,49}$/, "Inserire un alt valido"],
+    "alternativo2": [/^\w{1}[\w\s]{4,49}$/, "Inserire un alt valido"],
 
-    "nomeUtente": [/^([\w]){4,15}$/, "Inserire il nome utente"],
-    "password": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/, "Inserire la password"],
-    "repeatpassword": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$|^user$|^admin$/, "Le password non combaciano"],
+    "nomeUtente": [/^[\w]{4,15}$/, "Inserire il nome utente"],
+    "password": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$|^user$|^admin$/, "Inserire la password"],
+    "repeatpassword": [ /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$|^user$|^admin$/, "Le password non combaciano"],
     "email": [/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/, "Inserire la mail"]
 };
  
@@ -66,7 +66,7 @@ function validateInput(input) {
     }
     if (input.id == "data") {
         var data = Date.parse(input.value);
-        if (data > Date.UTC(1947) && data < Date.UTC(2077))
+        if (data > Date.UTC(1947) && data < Date.UTC(2022))
             return showMessage(input, true);
         else 
             return showMessage(input, false);
