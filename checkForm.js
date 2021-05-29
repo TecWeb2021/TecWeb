@@ -13,6 +13,7 @@ const dettagliForm = {
 
     "titolo": [/^\w{1}.{9,149}/, "Inserire il titolo della notizia"],
     "testo": [/^\w{1}.{24,}/, "Inserire il testo della notizia"],
+    // "listaTitoli": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome di un gioco"],
 
     "immagine1": [/./, "Nessun file selezionato"],
     "immagine2": [/./, "Nessun file selezionato"],
