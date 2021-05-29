@@ -92,6 +92,7 @@ $oldNews = null;
 
 $validation_error_messages = array();
 $success_messages = array();
+$failure_messages = array();
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -302,8 +303,9 @@ if($allOk){
 }
 
 $jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
-$jointSuccess_error_messages = getSuccessMessagesHtml($success_messages);
-$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_error_messages, $homePage);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getSuccessMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldNews ? $oldNews->getTitle() : "");

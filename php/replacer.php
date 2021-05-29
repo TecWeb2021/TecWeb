@@ -602,11 +602,15 @@ function getSafeInput($name, $type='other'){
 }
 
 function getValidationErrorsHtml($errors){
-	return "<div style=\"color: red\">" . implode("<br>", $errors) . "</div>";
+	return "<div style=\"color: orange\">" . implode("<br>", $errors) . "</div>";
 }
 
 function getSuccessMessagesHtml($messages){
 	return "<div style=\"color: green\">" . implode("<br>", $messages) . "</div>";
+}
+
+function getFailureMessagesHtml($messages){
+	return "<div style=\"color: red\">" . implode("<br>", $messages) . "</div>";
 }
 
 

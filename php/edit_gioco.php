@@ -87,7 +87,9 @@ if(isset($_REQUEST['elimina'])){
 
 $oldGame = null;
 
-$error_message = "";
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -160,53 +162,24 @@ if($allOk){
 			}
 		}
 		
-		
 
-		$error_messages = array(
-			'nome' => "Nome non inserito",
-			'data' => "Data non inserita",
-			'pegi' => "Pegi non inserito",
-			'descrizione' => "Descrizione non inserita",
-			'recensione' => "Recensione non inserita",
-			'immagine1' => "Immagine1 non inserita",
-			'immagine2' => "Immagine2 non inserita",
-			'alternativo1' => "Testo alternativo dell'immaagine1 non inserito",
-			'alternativo2' => "Testo alternativo dell'immaagine2 non inserito",
-			'voto' => "Voto non inserito",
-			'console' => "Console non inserita",
-			'genere' => "Genere non inserito",
-			'prequel' => "Prequel non inserito",
-			'sequel' => "Sequel non inserito",
-			'sviluppo' => "Sviluppatore non inserito"
-		);
-
-		$error_message = "";
 
 		// controllo i campi obbligatori
 
-		if($new_gameName === null || ($errorText = checkString($new_gameName,'nome')) !== true ){
-			$error_message = $error_message . $error_messages['nome'] . "<br/>";
-		}
-		if($new_gameDeveloper === null || ($errorText = checkString($new_gameDeveloper,'sviluppo')) !== true){
-			$error_message = $error_message . $error_messages['sviluppo'] . "<br/>";
-		}
-		if($new_gameAgeRange === null || ($errorText = checkString($new_gameAgeRange,'pegi')) !== true){
-			$error_message = $error_message . $error_messages['pegi'] . "<br/>";
-		}
-		if($new_gamePublicationDate === null || ($errorText = checkString($new_gamePublicationDate,'data')) !== true){
-			$error_message = $error_message . $error_messages['data'] . "<br/>";
-		}
-		if($new_gameConsoles === null || count($new_gameConsoles) === 0){
-			$error_message = $error_message . $error_messages['console'] . "<br/>";
-		}
-		if($new_gameGenres === null || count($new_gameGenres) === 0){
-			$error_message = $error_message . $error_messages['genere'] . "<br/>";
-		}
-		if($new_gameVote === null || ($errorText = checkString($new_gameVote,'voto')) !== true){
-			$error_message = $error_message . $error_messages['voto'] . "<br/>";
-		}
-		if($new_gameSinopsis === null || ($errorText = checkString($new_gameSinopsis,'descrizione')) !== true){
-			$error_message = $error_message . $error_messages['descrizione'] . "<br/>";
+		$mandatory_fields = array(
+			[$new_gameName,'nome'],
+			[$new_gameDeveloper,'sviluppo'],
+			[$new_gameAgeRange,'pegi'],
+			[$new_gamePublicationDate,'data'],
+			[$new_gameConsoles, 'consoles'],
+			[$new_gameGenres, 'genres'],
+			[$new_gameVote,'voto'],
+			[$new_gameSinopsis,'descrizione']
+		);
+		foreach ($mandatory_fields as $value) {
+			if($value[0] === null || validateValue($value[0], $value[1]) === false ){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
 
 		// controllo i campi obbligatori derivati
@@ -220,27 +193,22 @@ if($allOk){
 		if($new_gameImage2 !== null && $image2Ok === false){
 			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
 		}*/
-		if($new_gamePrequel !== null && strlen($new_gamePrequel) > 0 && ($errorText = checkString($new_gamePrequel, 'prequel')) !== true){
-			$error_message = $error_message . $error_messages['prequel'] . "<br/>";
-		}
-		if($new_gameSequel !== null && strlen($new_gameSequel) > 0 &&($errorText = checkString($new_gameSequel, 'sequel')) !== true){
-			$error_message = $error_message . $error_messages['sequel'] . "<br/>";
-		}
 
-		if($new_gameReview !== null && strlen($new_gameReview) > 0 && ($errorText = checkString($new_gameReview, 'recensione')) !== true){
-			$error_message = $error_message . $error_messages['recensione'] . "<br/>";
-		}
-		
-		if($new_gameAlt1 !== null && strlen($new_gameAlt1) > 0 && ($errorText = checkString($new_gameAlt1, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo1'] . "<br/>";
-		}
-
-		if($new_gameAlt2 !== null && strlen($new_gameAlt2) > 0 && ($errorText = checkString($new_gameAlt2, 'alternativo')) !== true){
-			$error_message = $error_message . $error_messages['alternativo2'] . "<br/>";
+		$optional_fields = array(
+			[$new_gamePrequel, 'prequel'],
+			[$new_gameSequel, 'sequel'],
+			[$new_gameReview, 'recensione'],
+			[$new_gameAlt1, 'alternativo'],
+			[$new_gameAlt2, 'alternativo']
+		);
+		foreach ($optional_fields as $value) {
+			if($value[0] !== null && validateValue($value[0], $value[1]) === false ){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
 		
 
-		if($error_message != ""){// sono presenti errori
+		if(count($validation_error_messages) > 0){// sono presenti errori
 			
 		}else{
 			// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
@@ -272,6 +240,7 @@ if($allOk){
 				
 
 				if($opResult1 === true || $opResult1 === null){
+					array_push($success_messages, "Modifica gioco riuscita");
 					$newGameReviewObj = null;
 					$opResult2 = null;
 					if($new_gameReview !== "" && $new_gameReview !== null){
@@ -291,12 +260,13 @@ if($allOk){
 					}
 					echo "review overwrite result is null? " . ($opResult2 === null ? "yes" :  "no") . "<br/>";
 					if($opResult2 === true || $opResult2 === null){
-						header("Location: giochi.php");	
+						// header("Location: giochi.php");	
+						array_push($success_messages, "Modifica recensione riuscita");
 					}else{
-						echo "Overwrite review fallito<br/>";
+						array_push($failure_messages, "Modifica recensione fallita");
 					}
 				}else{
-					echo "Overwrite gioco fallito<br/>";
+					array_push($failure_messages, "Modifica gioco fallita");
 				}
 					
 			
@@ -428,7 +398,10 @@ if($allOk){
 
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getSuccessMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 			
 
 
