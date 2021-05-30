@@ -581,6 +581,7 @@ function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
 			$errorHtml = str_replace("<admin_func_ph>","",$errorHtml);
 			$errorHtml = str_replace("</admin_func_ph>","",$errorHtml);
 		}else{
+			echo "isAdmin: " . ($isAdmin ? "true" : "false") . "<br/>";
 			$errorHtml = preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$errorHtml);
 		}
 		$errorHtml = str_replace(array_keys($replacements), array_values($replacements), $errorHtml);

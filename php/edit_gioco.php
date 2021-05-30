@@ -47,8 +47,6 @@ if($authCheck && !$user->isAdmin()){
 	$authCheck=false;
 }
 
-
-
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 // verifico che sia stato specificato un gioco
@@ -59,8 +57,10 @@ if($allOk && getSafeInput('game', 'string') === null ){
 
 
 if($allOk){
-	$gameToBeModifiedName = getSafeInput('elimina', 'string');
+	$gameToBeModifiedName = getSafeInput('game', 'string');
 }
+
+$game = null;
 
 if($allOk /*&& !correctFormat(gameName) (qui devo controllare che il nel nome del gioco non siano presenti comandi malevoli)*/ && false/*questo false serve per non entrare nell'if in fase di testing*/){
 	$homePage="Formato del nome del gioco non corretto";
