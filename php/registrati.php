@@ -13,7 +13,9 @@ $homePage=file_get_contents("../html/templates/registratiTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
-$error_message = "";
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
 
 if($user){
 	$homePage = getErrorHtml("already_logged");
@@ -37,43 +39,36 @@ if($user){
 		$repeatPassword = getSafeInput('repeatpassword', 'string');
 		#sanitize
 
-		//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
-		$error_messages = array(
-			'username' => "Username non presente",
-			'email' => "Email non presente",
-			'password' => "Password non presente",
-			'repeatpassword' => "Le password non combaciano",
-			'immagine' => "Immagine non presente",
-		);
-
 		//controllo i campi obbligatori
 
-		if($username === null || ($errorText = checkString($username, "nomeUtente")) !== true){
-			$error_message = $error_message . $error_messages['username'] . "<br/>";
+		$mandatory_fields = array(
+			[$username, "nomeUtente"],
+			[$email, "email"],
+			[$password, "password"]
+		);
+		foreach ($mandatory_fields as $value) {
+			if($value[0] === null || validateValue($value[0], $value[1]) === false ){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
-		if($email === null || ($errorText = checkString($email, "email")) !== true){
-			$error_message = $error_message . $error_messages['email'] . "<br/>";
-		}
+
 		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
 		if($imagePath === false || $imagePath === null){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+			array_push($validation_error_messages, getValidationError('immagine'));
 		}
-		if($password === null  || ($errorText = checkString($password, "password")) !== true){
 
-			$error_message = $error_message . $error_messages['password'] . "<br/>";
+		if($password !== $repeatPassword){
+			array_push($validation_error_messages, getValidationError('repeatpassword'));
 		}
-		
 
 		// controllo i campi obbligatori derivati
 
-		if($password !== null && $repeatPassword !== $password){
-			$error_message = $error_message . $error_messages['repeatpassword'] . "<br/>";
-		}
+		// controllo i campi opzionali
 
 		
 		
 
-		if($error_message != ""){
+		if(count($validation_error_messages) > 0){
 
 		}else{
 			echo "non ci sono stati errori" . "<br/>";
@@ -87,10 +82,10 @@ if($user){
 				$result=$dbAccess->addUser($newUser);
 				if($result){
 					setcookie('login',$hashValue);
-					$homePage =  "<br/>operazione eseguita con successo<br/>ora verrai portato alla pagina home";
+					array_push($success_messages, 'Registrazione completata con successo');
 					header( "Location: home.php" );
 				}else{
-					echo "salvataggio utente fallito" . "<br/>";
+					array_push($failure_messages, 'Registrazione fallita');
 					$allOk = false;
 				}
 	
@@ -122,7 +117,10 @@ if($user){
 	}
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);

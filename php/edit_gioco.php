@@ -400,7 +400,7 @@ if($allOk){
 
 $jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
 $jointSuccess_messages = getSuccessMessagesHtml($success_messages);
-$jointFailure_messages = getSuccessMessagesHtml($failure_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
 $homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 			
 

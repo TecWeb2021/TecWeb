@@ -13,7 +13,9 @@ $homePage=file_get_contents("../html/templates/loginTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
-$error_message = "";
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
 
 if($user){
 	$homePage = getErrorHtml("already_logged");
@@ -24,34 +26,20 @@ if($user){
 		$username = getSafeInput('nomeUtente');
 		$password = getSafeInput('password');
 
-		$error_message = "";
-		
-		$error_messages = array(
-			'username' => "Nome utente non presente",
-			'password' => "Password non presente"
-		);
+		// qui non vengono fatte validazioni perché l'utente non deve sapere se ha sbagliato il formato. Deve solo sapere se le credenziali sono giuste o meno.
 
-		// controllo i campi obbligatori
-
-		if($username === null || $username === ""){
-			$error_message = $error_message . $error_messages['username'] . "<br/>";
-		}
-		if($password === null || $password === ""){
-			$error_message = $error_message . $error_messages['password'] . "<br/>";
-		}
-
-		if($error_message !== ""){
+		if(count($validation_error_messages) > 0){
 			
 		}else{
 			$hashValue=getHash($username, $password);
 			$user=$dbAccess->getUserByHash($hashValue);
 			if($user){
 				
-				$homePage = str_replace("<messaggi_form_ph/>", "Benvenuto" . $username, $homePage);
+				array_push($success_messages, "Login avvenuto con successo");
 				setcookie("login",$hashValue);
 				header('Location: home.php');
 			}else{
-				$homePage = str_replace("<messaggi_form_ph/>", "Nome utente o password non corretti", $homePage);
+				array_push($failure_messages, "Nome o password errati");
 			}
 			
 		}
@@ -66,7 +54,10 @@ if($user){
 	}
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 

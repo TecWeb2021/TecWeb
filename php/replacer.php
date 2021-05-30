@@ -302,14 +302,19 @@ function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0,
 
 function getGreatestDBImageNumber($dbAccess){
 	$images = $dbAccess->getImages("path desc");
-	$topImage = ($images && (count($images) > 0)) ? $images[0] : null;
-	if($topImage !== null){
-		$exp1 = explode("images/", $topImage->getPath())[1];
-		$exp2 = explode(".", $exp1)[0];
-		return $exp2;
-	}else{
-		return 0;
+	$topNum = 0;
+	if($images){
+		foreach ($images as $value) {
+			$path = $value->getPath();
+			$part = explode('/', $path)[1];
+			$num = explode('.', $part)[0];
+			if((int) $num > $topNum){
+				$topNum = $num;
+			}
+		}
 	}
+	return $topNum;
+	
 }
 
 // returns the path if it corresponds to an image saved on the server, a "not available" image else
@@ -380,27 +385,35 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 }
 
 $patterns = array(
-    "nome" => "/^[\w\s]{2,20}$/",
-    "sviluppo" => "/^[\w\s]{5,30}$/",
+    "nome" => "/^\w{1}.{0,38}\w{1}$/",
+    "sviluppo" => "/^\w{1}[\w\s]{0,28}\w{1}$/",
     "pegi" => "/^(3|7)$|^1(2|6|8)$/",
-    "voto" => "/^[0-5]{1}(\.[1-9]){0,1}$/",
-    "prequel" => "/^[\w\s]{2,20}$/",
-    "sequel" => "/^[\w\s]{2,20}$/",
-    "data" => "/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/",
+    "data" => "/./",
 
-    "descrizione" => "/.{25,}/",
-    "recensione" => "/.{25,}/",
-    "alternativo" => "/^[\w\s]{0,50}$/",
+    "prequel" => "/^\w{1}.{0,38}\w{1}$/",
+    "sequel" => "/^\w{1}.{0,38}\w{1}$/",
 
-    "titolo" => "/^[\w\s\'\,\.\"]{10,40}$/",
-    "testo" => "/.{25,}/",
-    "nome_gioco_notizia" => "/^[\w\s]{2,20}$/",
+    "descrizione" => "/^\w{1}.{24,}/",
+    "recensione" => "/^\w{1}.{24,}/",
+    "voto" => "/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/",
 
-    "nomeUtente" => "/^(\w){4,15}$/",
-    "password" =>  "/^(?=.*a-z)(?=.*A-Z)(?=.*\d)a-zA-Z\d{8,20}$|^user$|^admin$/",
-    "repeatpassword" =>  "/^(?=.*a-z)(?=.*A-Z)(?=.*\d)a-zA-Z\d{8,20}$|^user$|^admin$/",
+    "titolo" => "/^\w{1}.{9,149}/",
+    "testo" => "/^\w{1}.{24,}/",
+    // "listaTitoli" => "/^\w{1}.{0,38}\w{1}$/",
+    "nome_gioco_notizia" => "/^\w{1}.{0,38}\w{1}$/",
+
+    "immagine1" => "/./",
+    "immagine2" => "/./",
+    "alternativo1" => "/^\w{1}[\w\s]{4,49}$/",
+    "alternativo2" => "/^\w{1}[\w\s]{4,49}$/",
+
+    "nomeUtente" => "/^[\w]{4,15}$/",
+    "password" =>  "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$|^user$|^admin$/",
+    "repeatpassword" =>  "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$|^user$|^admin$/",
     "email" => "/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/"
 );
+
+
 
 // le chiavi degli errori devono contenere almeno tutte le chiavi dei pattern
 $errors_messages = array(

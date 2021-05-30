@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 28, 2021 at 02:31 PM
+-- Generation Time: May 29, 2021 at 05:00 PM
 -- Server version: 10.2.11-MariaDB
 -- PHP Version: 7.2.34
 
@@ -57,6 +57,7 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`Name`, `Publication_date`, `Vote`, `Sinopsis`, `Age_range`, `Image1`, `Image2`, `Developer`) VALUES
+('gioco1gioco', '2021-05-06', 5, 'gfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfggfd gfdg fdgfd gdfdfg', '7', 'images/10.jpg', 'images/10.jpg', 'fdsfdfdfdf'),
 ('gioco1gioco123', '2021-05-27', 5, 'fg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgffg fg fgdgfdg dgf', '7', 'images/10.jpg', 'images/10.jpg', 'gfgfg'),
 ('hghgfhgfh', '2021-05-25', 5, 'fd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfdfd fdsfdsf dsf dsfd', '7', 'images/10.jpg', 'images/10.jpg', 'gdfgfgfdg');
 
@@ -76,6 +77,7 @@ CREATE TABLE `games_consoles` (
 --
 
 INSERT INTO `games_consoles` (`Game`, `Console`) VALUES
+('gioco1gioco', 'XboxOne'),
 ('gioco1gioco123', 'PS4'),
 ('gioco1gioco123', 'Switch'),
 ('gioco1gioco123', 'XboxOne'),
@@ -97,6 +99,7 @@ CREATE TABLE `games_genres` (
 --
 
 INSERT INTO `games_genres` (`Game`, `Genre`) VALUES
+('gioco1gioco', 'Azione'),
 ('gioco1gioco123', 'Avventura'),
 ('gioco1gioco123', 'Azione'),
 ('gioco1gioco123', 'FPS'),
@@ -146,6 +149,13 @@ CREATE TABLE `news` (
   `Game` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`Title`, `User`, `Last_edit_date`, `Content`, `Image1`, `Image2`, `Category`, `Game`) VALUES
+('notizia1notizia', 'admin', '2021-05-28', 'df dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdfdf dfdfdfdf', 'images/10.jpg', 'images/10.jpg', 'Giochi', 'gioco1gioco123');
+
 -- --------------------------------------------------------
 
 --
@@ -156,6 +166,14 @@ CREATE TABLE `prequel_sequel` (
   `Prequel` varchar(50) NOT NULL,
   `Sequel` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `prequel_sequel`
+--
+
+INSERT INTO `prequel_sequel` (`Prequel`, `Sequel`) VALUES
+('gioco1gioco123', 'gioco1gioco'),
+('gioco1gioco', 'hghgfhgfh');
 
 -- --------------------------------------------------------
 
@@ -169,6 +187,13 @@ CREATE TABLE `reviews` (
   `Date_time` date NOT NULL,
   `Content` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`Game`, `Author`, `Date_time`, `Content`) VALUES
+('gioco1gioco123', 'admin', '2021-05-29', 'fdsf dsfds dfsfdsfsdf dsfdsf dffdsf dsfds dfsfdsfsdf dsfdsf dffdsf dsfds dfsfdsfsdf dsfdsf dffdsf dsfds dfsfdsfsdf dsfdsf dffdsf dsfds dfsfdsfsdf dsfdsf df');
 
 -- --------------------------------------------------------
 
@@ -237,7 +262,7 @@ ALTER TABLE `news`
   ADD KEY `FK_User` (`User`),
   ADD KEY `FK_Image2` (`Image2`),
   ADD KEY `FK_image1` (`Image1`),
-  ADD KEY `FK_Image_Game` (`Game`);
+  ADD KEY `FK_News_Game` (`Game`);
 
 --
 -- Indexes for table `prequel_sequel`
@@ -305,7 +330,7 @@ ALTER TABLE `games_genres`
 --
 ALTER TABLE `news`
   ADD CONSTRAINT `FK_Image2` FOREIGN KEY (`Image2`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_Image_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_News_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_User` FOREIGN KEY (`User`) REFERENCES `users` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_image1` FOREIGN KEY (`Image1`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 

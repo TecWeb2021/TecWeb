@@ -12,7 +12,9 @@ $homePage=file_get_contents("../html/templates/editProfiloTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
-$error_message = "";
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
 
 if($user){
 
@@ -30,50 +32,46 @@ if($user){
 			//echo "almeno un valore è stato inserito"."<br/>";
 
 			$new_password = getSafeInput('password', 'string');
-			#sanitize
 			$new_passwordRepeat = getSafeInput('repeatpassword', 'string');
-			#sanitize
 			$new_email = getSafeInput('email', 'string');
-			#sanitize
 			$new_imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
 			#sanitize
-			
-			$error_message = "";
-
-			//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
-			$error_messages = array(
-				'email' => "Email non presente",
-				'password' => "Password non presente",
-				'repeatpassword' => "Le password non combaciano",
-				'immagine' => "Immagine non presente",
-			);
 
 			// controllo i campi obbligatori
 
-			if($new_email === null || checkString($new_email, 'email') !== true){
-				$error_message = $error_message . $error_messages['email'] . "<br/>";
+			$mandatory_fields = array(
+				[$new_email, 'email']
+			);
+			foreach ($mandatory_fields as $value) {
+				if($value[0] === null || validateValue($value[0], $value[1]) === false){
+					array_push($validation_error_messages, getValidationError($value[1]));
+				}
 			}
 
 			// controllo i campi opzionali
 
-			if( $new_password !== null && strlen($new_password) > 0 && checkString($new_password, 'password') !== true){
-				$error_message = $error_message . $error_messages['password'] . "<br/>";
+			$optional_fields = array(
+				[$new_password, 'password'],
+			);
+			foreach ($mandatory_fields as $value) {
+				if($value[0] !== null && validateValue($value[0], $value[1]) === false){
+					array_push($validation_error_messages, getValidationError($value[1]));
+				}
 			}
 
 			if( $new_imagePath === false){
-				$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+				array_push($validation_error_messages, getValidationError('immagine'));
 			}
 
 			// controllo i campi obbligatori derivati
 
-			if( $new_password !== null && strlen($new_password) > 0 && $new_passwordRepeat !== $new_password){
-				echo "confronto password: {" . $new_password . "} : {" . $new_passwordRepeat . "}<br/>";
-				$error_message = $error_message . $error_messages['repeatpassword'] . "<br/>";
+			if( $new_password !== null && $new_passwordRepeat !== $new_password){
+				array_push($validation_error_messages, getValidationError('repeatpassword'));
 			}
 				
 
 			
-			if($error_message !== ""){
+			if(count($validation_error_messages) > 0){
 				//se c'è stato almeno un errore ...
 				
 
@@ -83,15 +81,16 @@ if($user){
 				//se non è stata inserita una nuova immagine prendo quella vecchia
 				$new_image = null;
 				if($new_imagePath == false){
-					$user->getImage();
+					echo "\$new_imagePath == false<br/>";
+					$new_image = $user->getImage();
 				}else{
 					$new_image = new Image($new_imagePath, "immagine utente");
 				}
 
-				//se non è stata inserita una nuova password la uso per creare il nuovo hash, altrimenti uso l'hash vecchio
+				//se è stata inserita una nuova password la uso per creare il nuovo hash, altrimenti uso l'hash vecchio
 				$new_hashValue = null;
 				if($new_password == null){
-					$new_hashValue = $user->gethash();
+					$new_hashValue = $user->getHash();
 				}else{
 					$new_hashValue = getHash($user->getUsername(), $new_password);
 				}
@@ -101,10 +100,10 @@ if($user){
 		
 				$result = $dbAccess->overwriteUser($newUser);
 				if($result){
-					//echo "risultato overwrite: " . $result . "<br>/";
+					array_push($success_messages, "Modifica avvenuta con successo");
 					setcookie('login',$new_hashValue);
 				}else{
-					//echo "risultato overwrite: " . $result . "<br>/";
+					array_push($failure_messages, "Modifica fallita");
 					$allOk = false;
 				}
 		
@@ -130,14 +129,14 @@ if($user){
 			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		}
 	}
-	
-	
-
 }else{
 	$homePage = getErrorHtml("not_logged");
 }
 
-$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 
