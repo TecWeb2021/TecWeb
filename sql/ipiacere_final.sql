@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 30, 2021 at 03:22 PM
+-- Generation Time: May 30, 2021 at 03:29 PM
 -- Server version: 10.2.11-MariaDB
 -- PHP Version: 7.2.34
 
@@ -131,7 +131,17 @@ INSERT INTO `images` (`Path`, `Alt`) VALUES
 ('images/12.jpg', 'immagine utente'),
 ('images/13.jpg', ''),
 ('images/14.jpg', ''),
+('images/15.jpg', ''),
+('images/16.jpg', ''),
+('images/17.jpg', ''),
+('images/18.jpg', ''),
+('images/19.jpg', ''),
 ('images/2.jpg', ''),
+('images/20.jpg', ''),
+('images/21.jpg', ''),
+('images/22.jpg', ''),
+('images/23.jpg', ''),
+('images/24.jpg', ''),
 ('images/3.jpg', ''),
 ('images/4.jpg', ''),
 ('images/5.jpg', ''),
@@ -156,6 +166,13 @@ CREATE TABLE `news` (
   `Category` enum('Hardware','Eventi','Giochi') NOT NULL,
   `Game` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`Title`, `User`, `Last_edit_date`, `Content`, `Image1`, `Image2`, `Category`, `Game`) VALUES
+('newsWithoutGame', 'admin', '2021-05-30', 'fdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fds', 'images/23.jpg', 'images/24.jpg', 'Hardware', '');
 
 -- --------------------------------------------------------
 
@@ -324,7 +341,6 @@ ALTER TABLE `games_genres`
 --
 ALTER TABLE `news`
   ADD CONSTRAINT `FK_Image2` FOREIGN KEY (`Image2`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_News_Game` FOREIGN KEY (`Game`) REFERENCES `games` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_User` FOREIGN KEY (`User`) REFERENCES `users` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_image1` FOREIGN KEY (`Image1`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
