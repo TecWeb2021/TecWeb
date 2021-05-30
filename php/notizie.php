@@ -56,13 +56,13 @@ function createNewsList($list, $isUserAdmin=false){
 $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
-$category = isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : null;
+$category = getSafeInput('categoria');
 
 
-$newsPartName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+$newsPartName = getSafeInput('searchbar');
 if($newsPartName === null){
 
-	$newsPartName = isset($_REQUEST['filtroSearchMemoria']) ? $_REQUEST['filtroSearchMemoria'] : null;
+	$newsPartName = getSafeInput('filtroSearchMemoria');
 }
 
 

@@ -148,14 +148,14 @@ if($gamesNum > 0){
 			"<top_game_prequel_ph/>" => $prequel,
 			"<top_game_sequel_ph/>" => $sequel,
 
-			"<top_games_ph>" => "", // rimuovo i placeholder al limite dei topgames
-			"</top_games_ph>" => ""
+			"<top_game_ph>" => "", // rimuovo i placeholder al limite dei topgames
+			"</top_game_ph>" => ""
 	);
 
 	$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 }else{
-	$homePage = preg_replace("/<top_games_ph>(.*\n)*.*<\/top_games_ph>/", "", $homePage);
+	$homePage = preg_replace("/<top_game_ph>(.*\n)*.*<\/top_game_ph>/", "", $homePage);
 }
 
 

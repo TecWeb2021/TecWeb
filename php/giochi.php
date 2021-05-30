@@ -114,17 +114,17 @@ $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
 
-$gameName = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+$gameName = getSafeInput('searchbar');
 if($gameName === null){
-	$gameName = isset($_REQUEST['filtroRicerca']) ? $_REQUEST['filtroRicerca'] : null;
+	$gameName = getSafeInput('filtroRicerca');
 }
 
 $gameNameString = $gameName !== null ? $gameName : "";
 $homePage = str_replace("<search_memory_ph/>", $gameNameString, $homePage);
 #sanitize
-$order = isset($_REQUEST['ordine']) ? $_REQUEST['ordine'] : null;
+$order = getSafeInput('ordine');
 if($order === null){
-	$order = isset($_REQUEST['filtroOrdineMemoria']) ? $_REQUEST['filtroOrdineMemoria'] : null;
+	$order = getSafeInput('filtroOrdineMemoria');
 }
 // possibili valori in input dall'html: "Alfabetico", "Voto 4+", "Ultimi usciti"
 
@@ -183,8 +183,8 @@ $genres_pre = array();
 
 // se non è stato dato il comando di resettare i filtri, raccolgo i filtri passati
 if(!isset($_REQUEST['resetFiltri'])){
-$yearRangeStart = isset($_REQUEST['year1']) ? $_REQUEST['year1'] : null;
-$yearRangeEnd = isset($_REQUEST['year2']) ? $_REQUEST['year2'] : null;
+$yearRangeStart = getSafeInput('year1');
+$yearRangeEnd = getSafeInput('year2');
 $y1Num = (int) $yearRangeStart;
 $y2Num = (int) $yearRangeEnd;
 
@@ -194,8 +194,8 @@ if($y1Num > $y2Num){
 	$homePage = str_replace('<messaggi_form_ph/>', '', $homePage);
 }
 
-$consoles_pre = isset($_REQUEST['console']) ? $_REQUEST['console'] : array();
-$genres_pre = isset($_REQUEST['genere']) ? $_REQUEST['genere'] : array();
+$consoles_pre = getSafeInput('console') ? getSafeInput('console') : array();
+$genres_pre = getSafeInput('genere') ? getSafeInput('genere') : array();
 }
 
 replaceYear1Checkboxes($yearRangeStart, $homePage);

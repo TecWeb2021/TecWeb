@@ -52,14 +52,14 @@ if($authCheck && !$user->isAdmin()){
 //allOk prende in carico le prossime verifiche e parte dal valore di $authCheck
 $allOk=$authCheck;
 // verifico che sia stato specificato un gioco
-if($allOk && !isset($_REQUEST['game'])){
+if($allOk && getSafeInput('game', 'string') === null ){
 	$homePage= getErrorHtml("game_not_specified");
 	$allOk=false;
 }
 
 
 if($allOk){
-	$gameToBeModifiedName=$_REQUEST['game'];
+	$gameToBeModifiedName = getSafeInput('elimina', 'string');
 }
 
 if($allOk /*&& !correctFormat(gameName) (qui devo controllare che il nel nome del gioco non siano presenti comandi malevoli)*/ && false/*questo false serve per non entrare nell'if in fase di testing*/){
@@ -73,8 +73,7 @@ if($allOk && !$game=$dbAccess->getGame($gameToBeModifiedName)){
 }
 
 //se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
-if(isset($_REQUEST['elimina'])){
-	$gameToBeDeletedName = $_REQUEST["elimina"];
+if(($gameToBeDeletedName = getSafeInput('elimina', 'string')) !== null){
 	echo "elimina: ".$gameToBeDeletedName."<br/>";
 	$opResult = $dbAccess->deleteGame($gameToBeDeletedName);
 	echo "delete result: ".$opResult."<br/>";
