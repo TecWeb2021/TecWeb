@@ -13,7 +13,7 @@
           <h4>Dati personali</h4>
           <p>Se vuoi cambiare la tua mail di riferimento o la tua immagine di profilo puoi farlo nei due form seguenti.</p>
 
-          <label for="mail">*Email</label>
+          <label for="mail" aria-label="Email, campo obbligatorio ">*Email</label>
           <input type="text" name="email" id="mail" value="<email_ph/>"/><br />
 
           <label for="imgPerProfilo">Immagine profilo</label>
@@ -25,10 +25,10 @@
           <p>Se vuoi cambiare password scrivi quella nuova nei due form seguenti.</p>
           <p>La password deve contenere da 8 a 16 caratteri (lettere o numeri), fra cui almeno un numero, una lettera minuscola e una maiuscola.</p>
 
-          <label for="password">*Password </label>
+          <label for="password" aria-label="Password, campo obbligatorio ">*Password </label>
           <span><input type="password" name="password" id="password" class="opzionale" /></span><br />
 
-          <label for="repeatpassword">*Ripeti password </label>
+          <label for="repeatpassword" aria-label="Ripeti password, campo obbligatorio ">*Ripeti password </label>
           <span><input type="password" name="repeatpassword" id="repeatpassword" /></span><br />
 
           <button type="submit" name="salva">Salva modifiche</button>
