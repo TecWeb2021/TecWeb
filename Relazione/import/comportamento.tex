@@ -53,6 +53,7 @@ Gli script che costituiscono il backend si possono suddividere in 3 macro catego
 		\item image.php
 		\item news.php
 		\item user.php
+		\item review.php
 	\end{itemize}
 	\item \textbf{interazione con il database};
 	\begin{itemize}
@@ -76,6 +77,9 @@ Gli script che costituiscono il backend si possono suddividere in 3 macro catego
 		\item notizie.php
 		\item profilo.php
 		\item registrati.php
+	\end{itemize}
+	\item \textbf{funzionalità condivise};
+	\begin{itemize}
 		\item replacer.php
 	\end{itemize}
 \end{enumerate}
@@ -92,6 +96,8 @@ Contiene le informazioni riguardanti un utente salvato nel sistema, che può ess
 Contiene il percorso di un'immagine salvata nel server e il testo alternativo che la accompagna.
 \subparagraph{Commento}
 Contiene le informazioni un commento rilasciato da un utente riguardo ad un gioco.
+\subparagraph{Recensione}
+Contiene il contenuto di una recensione e una indicazione del gioco a cui è riferita, dell'utente che l'ha scritta e della data e ora dell'ultima modifica.
 
 \paragraph{Interazione con il database}
 Il file dbConnection.php presenta la classe DBAccess che permette di aprire una connessione verso il database e di effettuare richieste ad esso. Per ognuno dei tipi di dato presentati nel paragrafo precedente sono rese disponibili le seguenti funzionalità:
@@ -102,9 +108,43 @@ Il file dbConnection.php presenta la classe DBAccess che permette di aprire una 
 	\item rimozione di un dato già presente. 
 \end{itemize}
 
-In aggiunta sono presenti delle specializzazioni di queste operazioni e alcune ulteriori operazioni per l'accesso alle tabelle del database non direttamente rappresentate da una classe, ovvero Prequel\_Sequel, Games\_Consoles e Games\_Genres.
+In aggiunta sono presenti delle specializzazioni di queste operazioni e alcune ulteriori funzionalità per l'accesso alle tabelle del database non direttamente rappresentate da una classe, ovvero Prequel\_Sequel, Games\_Consoles e Games\_Genres.
 
-\paragraph{creazione e presentazione delle pagine html}
+\subparagraph{Pulizia input}
+Ogni dato, prima di essere inserito nel database viene validato tramite la funzione texttt{mysqli\_real\_escape\_string}. Essa fa l'escape di tutti i caratteri speciali presenti nella stringa, disattivando così eventuali attacchi di tipo sql injection. La documentazione di questa funzione è fornita alla pagina \url{https://www.php.net/manual/en/mysqli.real-escape-string.php};
+
+\paragraph{Creazione e presentazione delle pagine html}
+Gli script inclusi in questa categoria costituiscono la vista del nostro sito, ovvero la parte che interagisce con l'utente.
+Ognuno degli script segue, nella sua esecuzione, lo schema seguente:
+\begin{enumerate}
+	\item apertura connessione col database;
+	\item costruzione template html specifico della pagina;
+	\item controllo del tipo di utente connesso (utente non autenticato, utente semplice, amministratore);
+	\item raccoglimento valori di input;
+	\item costruzione del contenuto della pagina in base a:
+	\begin{itemize}
+		\item input
+		\item tipo di utente
+		\item informazioni contenute nel database
+	\end{itemize}
+	\item assemblamento del contenuto col template;
+	\item inserimento pagina costruita all'interno di un template di più alto livello contenente header e footer;
+	\item output della pagina all'utente.
+\end{enumerate}
+
+\subparagraph{Form}
+Anche le pagine contenenti form si basano sulla struttura appena delineata. In particolare in esse il punto 4 è costituito dai seguenti passi:
+\begin{enumerate}
+	\item raccogliemento valori di input e loro sanificazione
+	\item validazione di ogni valore inserito e selezione degli eventuali messaggi di errore da mostrare
+\end{enumerate}
+
+\subparagraph{Pulizia e validazione input}
+Ogni valore di input ricevuto è sottoposto ad una sanificazione prima di essere utilizzato. La funzione adibita a questo compito è \texttt{getSafeInput} definita in \texttt{replacer.php}. \newline
+La validazione è eseguita tramite la funzione \texttt{validateValue} e i messaggi di errore sono ottenuti tramite la funzione \texttt{getValidationError}. Anche queste due funzioni si trovano in \texttt{replacer.php}.
+
+\paragraph{Funzionalità condivise}
+Il file replacer.php contiene funzionalità e dati utilizzati da molti script diversi. 
 
 \subsubsection{Database}
 

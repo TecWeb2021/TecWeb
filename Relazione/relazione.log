@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.3.4)  28 MAY 2021 01:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2021.3.4)  31 MAY 2021 00:36
 entering extended mode
 **./relazione.tex
 (relazione.tex
@@ -694,10 +694,19 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [9]
-<./img/diagramma_er.png, id=203, 793.96625pt x 663.47874pt>
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[10]
+<./img/diagramma_er.png, id=225, 793.96625pt x 663.47874pt>
 File: ./img/diagramma_er.png Graphic file (type png)
 <use ./img/diagramma_er.png>
-Package pdftex.def Info: ./img/diagramma_er.png  used on input line 112.
+Package pdftex.def Info: ./img/diagramma_er.png  used on input line 152.
 (pdftex.def)             Requested size: 398.3386pt x 332.88254pt.
 )
 
@@ -708,7 +717,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10 <./img/diagramma_er.png>] (import/test.tex
+[11 <./img/diagramma_er.png>] (import/test.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 11.
@@ -722,20 +731,20 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11] 
+[12] 
 AED: lastpage setting LastPage
 (relazione.aux)
 Package rerunfilecheck Info: File `relazione.out' has not changed.
 (rerunfilecheck)             Checksum: 1E500B33F94B289ECA1580C649E3820B;2459.
  ) 
 Here is how much of TeX's memory you used:
- 12721 strings out of 479334
- 195426 string characters out of 2857085
- 532866 words of memory out of 3000000
+ 12738 strings out of 479334
+ 195565 string characters out of 2857085
+ 533866 words of memory out of 3000000
  29901 multiletter control sequences out of 15000+200000
  409118 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 88i,11n,91p,656b,586s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 88i,11n,91p,656b,594s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\ivanp\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1095.pk><C:/Users/ivanp/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx10.pfb><C:/Users/ivanp/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -743,9 +752,9 @@ ic/amsfonts/cm/cmbx12.pfb><C:/Users/ivanp/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmr10.pfb><C:/Users/ivanp/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/ivanp/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on relazione.pdf (13 pages, 158661 bytes).
+Output written on relazione.pdf (14 pages, 164808 bytes).
 PDF statistics:
- 259 PDF objects out of 1000 (max. 8388607)
- 66 named destinations out of 1000 (max. 500000)
+ 284 PDF objects out of 1000 (max. 8388607)
+ 83 named destinations out of 1000 (max. 500000)
  182 words of extra memory for PDF output out of 10000 (max. 10000000)
 

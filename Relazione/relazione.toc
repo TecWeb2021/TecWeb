@@ -25,8 +25,13 @@
 \contentsline {subparagraph}{Utente}{9}{section*.7}%
 \contentsline {subparagraph}{Immagine}{9}{section*.8}%
 \contentsline {subparagraph}{Commento}{9}{section*.9}%
-\contentsline {paragraph}{Interazione con il database}{10}{section*.10}%
-\contentsline {paragraph}{creazione e presentazione delle pagine html}{10}{section*.11}%
-\contentsline {subsubsection}{\numberline {5.2.2}Database}{10}{subsubsection.5.2.2}%
-\contentsline {section}{\numberline {6}Fase di Test}{11}{section.6}%
-\contentsline {subsubsection}{\numberline {6.0.1}Colori}{11}{subsubsection.6.0.1}%
+\contentsline {subparagraph}{Recensione}{9}{section*.10}%
+\contentsline {paragraph}{Interazione con il database}{10}{section*.11}%
+\contentsline {subparagraph}{Pulizia input}{10}{section*.12}%
+\contentsline {paragraph}{Creazione e presentazione delle pagine html}{10}{section*.13}%
+\contentsline {subparagraph}{Form}{10}{section*.14}%
+\contentsline {subparagraph}{Pulizia e validazione input}{11}{section*.15}%
+\contentsline {paragraph}{Funzionalità condivise}{11}{section*.16}%
+\contentsline {subsubsection}{\numberline {5.2.2}Database}{11}{subsubsection.5.2.2}%
+\contentsline {section}{\numberline {6}Fase di Test}{12}{section.6}%
+\contentsline {subsubsection}{\numberline {6.0.1}Colori}{12}{subsubsection.6.0.1}%
