@@ -42,4 +42,41 @@ Il breadcrumb è presente in tutte le pagine del sito, sia mobile che desktop.
 E' posto sotto l'header e mostra la posizione dell'utente all'interno del sito. Si struttura come una serie di link partendo dalla pagina con gerarchica più alta scendendo fino alla pagina in cui ci si trova. La pagina corrente non è un link in modo tale da evitare la presenza di link circolari.
 
 \subsubsection{Contenuto}
-Pagina Home: Questa pagina contiene le ultime notizie e alcune funzionalità
+
+\begin{itemize}
+	\item \textbf{Pagina Home:} Questa è la prima pagina del sito, la quale svolge per lo più la funzione di presentazione del tipo di contenuti che si possono trovare all'interno del sito.
+Si presta come una sorta di bacheca che espone le novità presenti sul sito e andrà aggiornata regolarmente per mantenerla sempre attuale. Da qui è inoltre possibile accedere alle diverse sezioni del sito;
+	\item \textbf{Pagina Giochi:} Questa pagina propone una lista di tutti i giochi presenti sulla piattaforma, dando all'utente la possibilità di cercare un determinato titolo (o di scoprirne uno nuovo) e di approfondirne le caratteriste nella sottopagina ad esso dedicata. La presenza di diversi filtri di ricerca rende inoltre più libera e mirata l'esplorazione del catalogo;
+	\item \textbf{Pagina Notizie:} Questa pagina contiene tutte le notizie pubblicate sul sito, riportandole in ordine cronologico, dalle più recenti a quelle più datate. La barra di ricerca consente di cercare delle notizie specifiche con più immediatezza. I filtri di ricerca danno la possibilità di selezionare il tipo di notizia di cui si vuole usufruire;
+	\item \textbf{Pagina Scheda Gioco:} Questa pagina presenta un gioco specifico tramite una sinossi e delle caratteristiche generali;	
+	\item \textbf{Pagina Recensione:} In questa pagina è contenuta la recensione pubblicata dalla redazione del sito. Sotto la recensione l'utente ha la possibilità di leggere i commenti pubblicati da altri utenti o di scrivere il proprio commento;
+	\item \textbf{Pagina Notizie Gioco:} In questa pagina sono contenute tutte le notizie in ordine cronologico relative al gioco che si sta visionando;
+	\item \textbf{Pagina Notizia:} Questa pagina dà la possibilità di leggere l'intero contenuto di una notizia;
+	\item \textbf{Pagina Login:} Pagina per effettuare il login immettendo le credenziali;
+	\item \textbf{Pagina Registrati:} Pagina dedicata alla creazione di un account, inserendo alcuni dati per completare il profilo;
+	\item \textbf{Pagina Profilo Utente:} Pagina personale dell'utente dove può controllare i propri dati ed accede ad una sezione dove può modificarli;
+	\item \textbf{Pagina Admin:} Pagina analoga a quella appena descritta ma con aggiunte le funzionalità riservate agli admin;
+	\item \textbf{Pagina Inserisci Gioco:} Pagina riservata agli admin che permette l'inserimento di un nuovo gioco nel database compilando un form;
+	\item \textbf{Pagina Nuova Notizia:} Pagina analoga a quella precedente ma riservata all'inserimento di nuove notizie;
+	\item \textbf{Pagina Lista Utenti:} Pagina riservata agli admin con possibilità di vedere gli utenti registrati al sito ed eventualmente eliminarli.
+\end{itemize}
+
+\subsubsection{Footer}
+Il footer contiene i certificati di validazione W3C e la dicitura per il copyright nei confronti degli autori del sito.
+
+
+
+\subsection{Accessibiltà}
+Lo standard adottato per lo sviluppo del sito è stato WCAG 2.0
+
+\subsubsection{Separazione tra contenuto, presentazione e struttura}
+Una caratteristica fondamentale, per ottenere un sito il più possibile accessibile a diverse tipologie di utenti, sta nella separazione tra struttura, presentazione e comportamento. La struttura è stata sviluppata tramite file HTML (con standard XHTML5). Per l'implementazione di presentazione e comportamento sono stati usati rispettivamente fogli CSS e script JavaScript esterni alla struttura. In particolare gli script utilizzati sono stati implementati per degradare mantenendo il più possibile intatta la funzionalità del sito, in caso di JavaScript disabilitato.   
+
+\subsubsection{Navigazione}
+
+\begin{itemize}
+	\item \textbf{Breadcrumb:} Il breadcrumb è stato rappresentato come una catena di link (ad eccezione della pagina corrente) che indica la sezione del sito in cui ci si trova. E' un elemento di grande aiuto in quanto dà la possibilità all'utente di orientarsi meglio all'interno del sito riducendo di conseguenza il fenomeno di "lost in navigation";
+	\item \textbf{Testo e link nascosti:} Per rendere più accessibile la navigazione ad utenti con disabilità visive, sono presenti all'interno del codice degli elementi nascosti a schermo ma individuabili tramite screen reader. Ad esempio due link nascosti "Vai al menù" e "Vai al contenuto" possono essere utilizzati per saltare una porzione di pagina che l'utente non vuole visitare, rendendo quindi più agevole la navigazione della pagina. Altri link, questa volta visibili, sono stati adottati per permettere all'utente di poter ritornare ad inizio pagina, senza l'utilizzo di scroll. Questa funzionalità può rivelarsi molto utile in caso di utenti con disabilità di tipo motorio;
+	\item \textbf{Attributi HTML:} 
+\end{itemize}
+
