@@ -11,13 +11,13 @@
 
         <fieldset>
             <p>Il <em>titolo</em> della notizia deve contenere da 10 a 150 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
-            <label for="titolo">*Titolo: </label>
+            <label for="titolo" aria-label="Titolo della notizia, campo obbligatorio">*Titolo: </label>
             <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
 
         <fieldset id="handler" onchange="handleClick(event);">
           <p>Selezionare una <em>tipologia</em> per la notizia.</p>
-          <div><p id="labelTipologia" class="spuntabili">*Tipologia: </p></div>
+          <div><p  tabindex="0" id="labelTipologia" class="spuntabili" aria-label="Selezione tipologia notizia, campo obbligatorio">*Tipologia: </p></div>
             <div class="gruppoRadio">
               <ul class="checkbox">
                 <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <checked_eventi_ph/> >
@@ -35,7 +35,7 @@
         <fieldset id="cercaTitolo">
             <p>Inserire il titolo di un gioco <em>solo</em> se è stata selezionata la categoria <em>Giochi.</em></p>
             <p>Digitare il titolo del gioco. Selezionare una delle opzioni che verranno suggerite.</p>
-            <label for="barraDiRicerca">Gioco trattato:</label>
+            <label for="barraDiRicerca" aria-label="Gioco trattato dalla notizia">Gioco trattato:</label>
             <span><input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/></span>
             <datalist id="listaTitoli" class="formText">
               <opzioni_form_ph/>
@@ -45,22 +45,22 @@
         <fieldset>
             <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img1_min_ratio/> e <img1_max_ratio/></p>
             <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
-          
-            <label id="label_immagine1" for="immagine1">*Copertina: </label>
+
+            <label id="label_immagine1" for="immagine1" aria-label="Copertina notizia, campo obbligatorio ">*Copertina: </label>
             <span><input type="file" id="immagine1" name="immagine1" class="opzionale" /></span><br />
 
-            <label for="alternativo1">Alt Copertina: </label>
+            <label for="alternativo1">Testo alternativo copertina: </label>
             <span><input type="text" id="alternativo1" name="alternativo1" class="opzionale" value="<img1_alt_ph/>" placeholder="Testo alternativo" /></span>
         </fieldset>
 
         <fieldset>
             <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img2_min_ratio/> e <img2_max_ratio/></p>
             <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
-                    
-            <label id="label_immagine2" for="immagine2">*Banner: </label>
+
+            <label id="label_immagine2" for="immagine2" aria-label="Banner notizia, campo obbligatorio ">*Banner: </label>
             <span><input type="file" id="immagine2" name="immagine2" class="opzionale" /></span><br />
 
-            <label for="alternativo2">Alt Banner: </label>
+            <label for="alternativo2">Testo alternativo banner: </label>
             <span><input type="text" id="alternativo2" name="alternativo2" class="opzionale" value="<img2_alt_ph/>" placeholder="Testo alternativo" /></span>
         </fieldset>
 
