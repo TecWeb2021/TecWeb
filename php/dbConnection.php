@@ -182,7 +182,7 @@ class DBAccess {
     ////NEWS
     //////////////////
 
-    public function getNewsList($gameName=null, $category=null, $newsName=null) {
+    public function getNewsList($gameName=null, $category=null, $newsName=null, $limit=null) {
 
         $gameName = mysqli_real_escape_string($this->connection, $gameName);
         $category = mysqli_real_escape_string($this->connection, $category);
@@ -208,6 +208,11 @@ class DBAccess {
         }
 
         $query = $query . " ORDER BY news.Last_edit_date DESC";
+
+        if($limit !== null){
+            $query = $query . " LIMIT $limit";
+        }
+        
         
         
         $result = $this->getResult($query);
@@ -584,6 +589,13 @@ class DBAccess {
     }
 
     public function getTopGame(){
+        $games = $this->getGamesList();
+        if($games && count($games) > 0){
+            return $games[rand(0,count($games)-1)];
+        }else{
+            return null;
+        }
+        /*
         $querySelect ="SELECT ps1.Prequel, games.*, ps2.Sequel, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM prequel_sequel as ps1 RIGHT JOIN games ON ps1.Sequel=games.Name LEFT JOIN prequel_sequel as ps2 ON games.Name=ps2.Prequel LEFT JOIN images as i1 ON games.Image1=i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path LIMIT 1";
         $queryResult = $this->getResult($querySelect);
         
@@ -600,11 +612,11 @@ class DBAccess {
             $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
         return $game;
-        }
+        }*/
     }
 
     public function getTop5Games(){
-        $querySelect ="SELECT games.*, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM games LEFT JOIN images as i1 ON games.Image1 = i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path ORDER BY games.Vote DESC LIMIT 5";
+        $querySelect ="SELECT games.*, i1.Path as i1Path, i1.Alt as i1Alt, i2.Path as i2Path, i2.Alt as i2Alt FROM games LEFT JOIN images as i1 ON games.Image1 = i1.Path LEFT JOIN images as i2 ON games.Image2=i2.Path ORDER BY games.Publication_date DESC LIMIT 5";
         $queryResult = mysqli_query($this->connection, $querySelect);
         
         if(mysqli_num_rows($queryResult) == 0) {
