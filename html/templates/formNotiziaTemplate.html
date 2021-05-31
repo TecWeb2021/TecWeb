@@ -32,11 +32,11 @@
             </div>
         </fieldset>
 
-        <fieldset id="cercaTitolo" class="">
+        <fieldset id="cercaTitolo">
             <p>Inserire il titolo di un gioco <em>solo</em> se è stata selezionata la categoria <em>Giochi.</em></p>
-            <p>Il titolo viene suggerito cercando delle corrispondenze tra quanto scritto e i giochi presenti nel sito. Può contenere da 2 a 40 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare e terminare con una lettera o un numero.</p>
+            <p>Digitare il titolo del gioco. Selezionare una delle opzioni che verranno suggerite.</p>
             <label for="barraDiRicerca" aria-label="Gioco trattato dalla notizia">Gioco trattato:</label>
-            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
+            <span><input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/></span>
             <datalist id="listaTitoli" class="formText">
               <opzioni_form_ph/>
             </datalist>

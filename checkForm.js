@@ -4,8 +4,9 @@ const dettagliForm = {
     "pegi": [/^(3|7)$|^1(2|6|8)$/, "Inserire un valore valido"],
     "data": [/./, "Inserire una data valida"],
 
-    "prequel": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome del prequel"],
-    "sequel": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome del sequel"],
+    "prequel": [/./, "Selezionare il prequel tra le opzioni suggerite", "listaPrequel"],
+    "sequel": [/./, "Selezionare il sequel tra le opzioni suggerite", "listaSequel"],
+    "barraDiRicerca": [/./, "Selezionare il gioco tra le opzioni suggerite", "listaTitoli"],
 
     "descrizione": [/^\w{1}.{24,}/, "Inserire la descrizione"],
     "recensione": [/^\w{1}.{24,}/, "Inserire la recensione"],
@@ -13,7 +14,6 @@ const dettagliForm = {
 
     "titolo": [/^\w{1}.{9,149}/, "Inserire il titolo della notizia"],
     "testo": [/^\w{1}.{24,}/, "Inserire il testo della notizia"],
-    // "listaTitoli": [/^\w{1}.{0,38}\w{1}$/, "Inserire il nome di un gioco"],
 
     "immagine1": [/./, "Nessun file selezionato"],
     "immagine2": [/./, "Nessun file selezionato"],
@@ -75,6 +75,9 @@ function validateInput(input) {
     if(input.id == "repeatpassword")
         return checkPassword();
 
+    if(input.id == "barraDiRicerca" || input.id == "prequel" || input.id == "sequel")
+        return checkDataList(input, text);
+
     // se il contenuto non rispetta l'espr. regolare mostra l'errore
     if (text.search(regex) != 0)
         return showMessage(input, false);
@@ -97,6 +100,16 @@ function showMessage(input, stato) {
     var p = input.parentNode;
     p.appendChild(elemento);
     return stato;
+}
+
+function checkDataList(input, text) {
+    var dataList = document.getElementById(dettagliForm[input.id][2]);
+
+    for(var i = 0; i < dataList.options.length; i++)
+        if (dataList.options[i].value == text)
+            return showMessage(input,true);
+
+    return showMessage(input ,false);
 }
 
 function checkPassword() {
