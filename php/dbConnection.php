@@ -528,7 +528,7 @@ class DBAccess {
             $image2 = new Image($row['Path2'],$row['Alt2']);
             $game=new Game($row['Name'], $row['Publication_date'], $row['Vote'],$row['Sinopsis'],$row['Age_range'], $image1, $image2, $consoles, $genres, $row['Prequel'], $row['Sequel'], $row['Developer']);
 
-        return $game;
+            return $game;
         }
     }
 

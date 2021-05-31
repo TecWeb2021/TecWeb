@@ -77,27 +77,23 @@ if($allOk){
 			echo "salvataggio dell'immagine2 fallito"."<br/>";
 		}
 
-		// ho raccolto tutti i dati che potevo raccogliere
-
-		$error_message = "";
-
 		// controllo i campi obbligatori
 
-		if( $new_newsTitle === null || validateValue($new_newsTitle, 'titolo') === false){
-			array_push($validation_error_messages, getValidationError('titolo'));
-		}
-		if($new_newsCategory === null || validateValue($new_newsCategory, 'tipologia') === false){
-			array_push($validation_error_messages, getValidationError('tipologia'));
+		$mandatory_fields = array(
+			[$new_newsTitle, 'titolo'],
+			[$new_newsCategory, 'tipologia'],
+			[$new_newsText, 'testo']
+		);
+		foreach ($mandatory_fields as $value) {
+			if( $value[0] === null || validateValue($value[0], $value[1]) === false){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
 		if($new_newsImage1 === null){
 			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 		if($new_newsImage2 === null){
 			array_push($validation_error_messages, getValidationError('immagine'));
-		}
-		
-		if( $new_newsText === null || validateValue($new_newsText, 'testo') === false){
-			array_push($validation_error_messages, getValidationError('testo'));
 		}
 
 		// controllo i campi obbligatori derivati
@@ -106,13 +102,20 @@ if($allOk){
 			array_push($validation_error_messages, getValidationError('nome_gioco_notizia'));
 		}
 
+		if($new_newsCategory === "Giochi" && ($new_newsGame === null || validateValue($new_newsGame, 'gioco_esistente', $dbAccess) === false)) {
+			array_push($validation_error_messages, getValidationError('gioco_esistente'));
+		}
+
 		// controllo i campi opzionali
 
-		if( $new_newsAlt1 !== null && (validateValue($new_newsAlt1, 'alternativo') === false)) {
-			array_push($validation_error_messages, getValidationError('alternativo'));
-		}
-		if( $new_newsAlt2 !== null && (validateValue($new_newsAlt2, 'alternativo') === false)){
-			array_push($validation_error_messages, getValidationError('alternativo'));
+		$optional_fields = array(
+			[$new_newsAlt1, 'alternativo'],
+			[$new_newsAlt2, 'alternativo']
+		);
+		foreach ($mandatory_fields as $value) {
+			if( $value[0] !== null && validateValue($value[0], $value[1]) === false){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
 
 

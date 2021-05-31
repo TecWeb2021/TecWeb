@@ -435,6 +435,7 @@ $errors_messages = array(
     "tipologia" => "Inserire la tipologia della notizia",
     "immagine" => "Nessun file selezionato",
     "nome_gioco_notizia" => "Nessun gioco selezionato",
+    "gioco_esistente" => "Il gioco selezionato non esiste",
 
     "nomeUtente" => "Inserire il nome utente",
     "password" => "Inserire la password",
@@ -444,7 +445,7 @@ $errors_messages = array(
 
 // valida il valore passato in base al tipo indicato
 // per validare utilizza i pattern presenti in $patterns se ve ne è uno corrispondente al tipo, altrimenti usa degli altri controlli specificati nel metodo stesso
-function validateValue($input, $type){
+function validateValue($input, $type, $dbAccess = null){
 	global $patterns;
 	
 	if(array_key_exists($type, $patterns)){
@@ -476,6 +477,18 @@ function validateValue($input, $type){
 			return true;
 		}elseif($type === "tipologia"){
 			return in_array($input, News::$possible_categories);
+		}elseif($type === "gioco_esistente"){
+			if($dbAccess){
+				$game = $dbAccess->getGame($input);
+				if($game){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+			
 		}else{
 			// se non appartiene a nessun tipo validabile lo ritengo non valido
 			echo "type $type not matched<br/>";

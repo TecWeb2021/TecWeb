@@ -74,9 +74,9 @@ if($allOk && !$game=$dbAccess->getGame($gameToBeModifiedName)){
 
 //se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
 if(($gameToBeDeletedName = getSafeInput('elimina', 'string')) !== null){
-	echo "elimina: ".$gameToBeDeletedName."<br/>";
+	// echo "elimina: ".$gameToBeDeletedName."<br/>";
 	$opResult = $dbAccess->deleteGame($gameToBeDeletedName);
-	echo "delete result: ".$opResult."<br/>";
+	// echo "delete result: ".$opResult."<br/>";
 	if($opResult){
 		$homePage = getErrorHtml("game_deleted");
 	}else{
