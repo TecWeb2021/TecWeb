@@ -19,9 +19,13 @@ $failure_messages = array();
 if($user){
 
 	if(isset($_REQUEST['elimina'])){
-		$dbAccess->deleteUser($user->getUsername());
-		//qui devo ancora verificar ese effettivamente è stato eliminato con successo, per ora suppongo che succeda sempre
-		$homePage = "profilo eliminato con successo";
+		$res = $dbAccess->deleteUser($user->getUsername());
+		if($res !== false){
+			$homePage = getErrorHtml("user_deleted");
+		}else{
+			array_push($failure_messages, "Eliminazione fallita");
+		}
+		
 	}else{
 
 

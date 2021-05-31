@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 30, 2021 at 03:29 PM
+-- Generation Time: May 31, 2021 at 08:49 AM
 -- Server version: 10.2.11-MariaDB
 -- PHP Version: 7.2.34
 
@@ -142,6 +142,10 @@ INSERT INTO `images` (`Path`, `Alt`) VALUES
 ('images/22.jpg', ''),
 ('images/23.jpg', ''),
 ('images/24.jpg', ''),
+('images/25.jpg', ''),
+('images/26.jpg', ''),
+('images/27.png', 'immagine utente'),
+('images/28.png', 'immagine utente'),
 ('images/3.jpg', ''),
 ('images/4.jpg', ''),
 ('images/5.jpg', ''),
@@ -158,7 +162,7 @@ INSERT INTO `images` (`Path`, `Alt`) VALUES
 
 CREATE TABLE `news` (
   `Title` varchar(200) NOT NULL,
-  `User` varchar(50) NOT NULL,
+  `User` varchar(50) DEFAULT NULL,
   `Last_edit_date` date NOT NULL,
   `Content` varchar(10000) NOT NULL,
   `Image1` varchar(50) NOT NULL,
@@ -172,7 +176,8 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`Title`, `User`, `Last_edit_date`, `Content`, `Image1`, `Image2`, `Category`, `Game`) VALUES
-('newsWithoutGame', 'admin', '2021-05-30', 'fdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fds', 'images/23.jpg', 'images/24.jpg', 'Hardware', '');
+('fdsfdsfsdfds', NULL, '2021-05-30', 'gf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfggf df gdfg', 'images/25.jpg', 'images/26.jpg', 'Hardware', ''),
+('newsWithoutGame', NULL, '2021-05-30', 'fdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fdsfdf fdsfs dfdsfdsfd fds', 'images/23.jpg', 'images/24.jpg', 'Hardware', '');
 
 -- --------------------------------------------------------
 
@@ -214,7 +219,7 @@ CREATE TABLE `reviews` (
 
 CREATE TABLE `users` (
   `Username` varchar(50) NOT NULL,
-  `Hash` varchar(32) NOT NULL,
+  `Hash` varchar(128) NOT NULL,
   `IsAdmin` tinyint(1) NOT NULL,
   `Image` varchar(50) DEFAULT NULL,
   `Email` varchar(50) NOT NULL
@@ -225,7 +230,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Username`, `Hash`, `IsAdmin`, `Image`, `Email`) VALUES
-('admin', 'f6fdffe48c908deb0f4c3bd36c032e72', 1, 'images/12.jpg', 'admin@gmail.com');
+('admin', 'c01a3f4cd31e4a8865e64c0d68598a70b1fff7d53aa93a1df8e1eb8ec0ee31daca16646cecb587f6925c0379d63caea3d48f0017472bdfc5646aa77d21c78bdc', 1, 'images/28.png', 'admin@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -270,10 +275,10 @@ ALTER TABLE `images`
 --
 ALTER TABLE `news`
   ADD PRIMARY KEY (`Title`),
-  ADD KEY `FK_User` (`User`),
   ADD KEY `FK_Image2` (`Image2`),
-  ADD KEY `FK_image1` (`Image1`),
-  ADD KEY `FK_News_Game` (`Game`);
+  ADD KEY `FK_News_Game` (`Game`),
+  ADD KEY `FK_Image1` (`Image1`),
+  ADD KEY `FK_User` (`User`);
 
 --
 -- Indexes for table `prequel_sequel`
@@ -340,9 +345,9 @@ ALTER TABLE `games_genres`
 -- Constraints for table `news`
 --
 ALTER TABLE `news`
+  ADD CONSTRAINT `FK_Image1` FOREIGN KEY (`Image1`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_Image2` FOREIGN KEY (`Image2`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_User` FOREIGN KEY (`User`) REFERENCES `users` (`Username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_image1` FOREIGN KEY (`Image1`) REFERENCES `images` (`Path`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_User` FOREIGN KEY (`User`) REFERENCES `users` (`Username`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `prequel_sequel`

@@ -154,8 +154,8 @@ class DBAccess {
     public function deleteUser($username){
         $username = mysqli_real_escape_string($this->connection, $username);
         $query="DELETE FROM users WHERE Username='$username'";
-        $queryResult = mysqli_query($this->connection, $query);
-        $sq=$queryResult==null? "null":"not null";
+        $queryResult = $this->getResult($query);
+        return $queryResult;
     }
 
     public function overwriteUser($user){

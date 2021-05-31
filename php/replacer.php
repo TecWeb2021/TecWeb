@@ -200,7 +200,7 @@ function createGameBasePage($page, $gameName, $template = "../html/templates/gam
 
 function getHash($username, $password){
 	$inputString=$username.$password;
-	$hashValue=hash("md5",$inputString);
+	$hashValue=hash("sha3-512",$inputString);
 	return $hashValue;
 }
 
@@ -227,7 +227,6 @@ function logout(){
 	#sanitize;
 
 	if($logout === 'true' && isset($_COOKIE['login'])){
-		echo "ciao";
 		setcookie("login","");
 		header("Location: $targetPage");
 	}
@@ -568,7 +567,8 @@ $errorsFileNames = array(
 	"news_not_specified" => "messaggio_notizia_non_specificata.html",
 	"game_deleted" => "messaggio_gioco_eliminato.html",
 	"news_deleted" => "messaggio_notizia_eliminata.html",
-	"no_news_in_home" => "messaggio_nessuna_notizia_home.html"
+	"no_news_in_home" => "messaggio_nessuna_notizia_home.html",
+	"user_deleted" => "messaggio_profilo_eliminato.html"
 );
 
 function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
