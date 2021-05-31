@@ -59,41 +59,24 @@ if($allOk){
 		$new_newsAuthor = $user;
 		$new_newsEditDateTime = date("Y-m-d");
 
-		$new_newsImage1 = null;
-		$imagePath1 = saveImageFromFILES($dbAccess, 'immagine1', News::$img1MinRatio, News::$img1MaxRatio);
-		if($imagePath1){
-			$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
-			$result1 = $dbAccess->addImage($new_newsImage1);
-		}else{
-			echo "salvataggio dell'immagine1 fallito"."<br/>";
-		}
+		$imagePath1 = getSafeInput('immagine1', 'image', $dbAccess);
+		$imagePath2 = getSafeInput('immagine1', 'image', $dbAccess);
 
-		$new_newsImage2 = null;
-		$imagePath2 = saveImageFromFILES($dbAccess, 'immagine2', News::$img2MinRatio, News::$img2MaxRatio);
-		if($imagePath2){
-			$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
-			$dbAccess->addImage($new_newsImage2);
-		}else{
-			echo "salvataggio dell'immagine2 fallito"."<br/>";
-		}
+		
 
 		// controllo i campi obbligatori
 
 		$mandatory_fields = array(
 			[$new_newsTitle, 'titolo'],
 			[$new_newsCategory, 'tipologia'],
-			[$new_newsText, 'testo']
+			[$new_newsText, 'testo'],
+			[$imagePath1, 'immagine1_notizia_ratio'],
+			[$imagePath2, 'immagine2_notizia_ratio'],
 		);
 		foreach ($mandatory_fields as $value) {
 			if( $value[0] === null || validateValue($value[0], $value[1]) === false){
 				array_push($validation_error_messages, getValidationError($value[1]));
 			}
-		}
-		if($new_newsImage1 === null){
-			array_push($validation_error_messages, getValidationError('immagine'));
-		}
-		if($new_newsImage2 === null){
-			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 
 		// controllo i campi obbligatori derivati
@@ -122,17 +105,41 @@ if($allOk){
 
 		//controllo se c'è stato almeno un errore
 		if(count($validation_error_messages) > 0){
-			
+			if($imagePath1 !== null){
+				unlink('../' . $imagePath1);
+			}
+			if($imagePath2 !== null){
+				unlink('../' . $imagePath2);
+			}
 		}else{
-			echo "non sono presenti errori<br/>";
+
+			$new_newsImage1 = null;
+			if($imagePath1){
+				$new_newsImage1 = new Image($imagePath1,$new_newsAlt1);
+				$result1 = $dbAccess->addImage($new_newsImage1);
+			}
+
+			$new_newsImage2 = null;
+			if($imagePath2){
+				$new_newsImage2 = new Image($imagePath2,$new_newsAlt2);
+				$dbAccess->addImage($new_newsImage2);
+			}
+
+
 			$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
 	
 			$opResult = $dbAccess->addNews($newNews);
 			if($opResult && $opResult!=false){
-				echo "salvataggio su db riuscito"."<br/>";
+				array_push($failure_messages, "Aggiunta notizia riuscita");
 				header("Location: notizie.php");
 			}else{
-				echo "salvataggio su db fallito"."<br/>";
+				array_push($failure_messages, "Aggiunta notizia fallita");
+				if($imagePath1 !== null){
+					unlink('../' . $imagePath1);
+				}
+				if($imagePath2 !== null){
+					unlink('../' . $imagePath2);
+				}
 			}
 		}
 			

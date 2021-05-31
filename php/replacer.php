@@ -252,52 +252,7 @@ function getLoggedUser($dbAccess){
 	return $user;
 }
 
-function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0, $maxResolutionRateo =INF, $uploaddir = '../images/'){
-	//questa funzione ritorna il percorso in cui l'immagine è salvata
-	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
 
-	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
-
-
-	//errore 4: non è stata caricata alcuna immagine
-	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
-		return null;
-	}
-
-
-	$imageSizeDetails = getimagesize($_FILES[$imgReceiveName]['tmp_name']);
-	$xSize = $imageSizeDetails[0];
-	$ySize = $imageSizeDetails[1];
-	$resRateo = $ySize / $xSize;
-
-	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
-		return false;
-	}
-	#Recupero il percorso temporaneo del file
-	$image_tmp_location = $image['tmp_name'];
-	#recupero il nome originale del file caricato
-
-	$originalName=$image['name'];
-
-	#ricavo nome immagine col numero più alto presente nel database
-	$maxNum = getGreatestDBImageNumber($dbAccess);
-
-
-	#ricavo il nome da assegnare al nuovo file
-	$newNumber=$maxNum+1;
-	$parts = explode('.', $originalName);
-	$extension=end($parts);
-	$newFileName=$newNumber.".".$extension;
-	$fileDestination=$uploaddir . $newFileName;
-	$imgSaveResult=move_uploaded_file($image_tmp_location, $fileDestination);
-
-	if($imgSaveResult){
-		$filePath="images"."/".$newFileName;
-		return $filePath;
-	}else{
-		return false;
-	}
-}
 
 function getGreatestDBImageNumber($dbAccess){
 	$images = $dbAccess->getImages("path desc");
@@ -401,8 +356,6 @@ $patterns = array(
     // "listaTitoli" => "/^\w{1}.{0,38}\w{1}$/",
     "nome_gioco_notizia" => "/^\w{1}.{0,38}\w{1}$/",
 
-    "immagine1" => "/./",
-    "immagine2" => "/./",
     "alternativo1" => "/^\w{1}[\w\s]{4,49}$/",
     "alternativo2" => "/^\w{1}[\w\s]{4,49}$/",
 
@@ -425,6 +378,8 @@ $errors_messages = array(
     "data" => "Data non valida",
     "consoles" => "Selezionare almeno una console",
     "genres" => "Selezionare almeno un genere",
+    "immagine1_gioco_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
+    "immagine2_gioco_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
 
     "descrizione" => "Inserire la descrizione",
     "recensione" => "Inserire la recensione",
@@ -434,13 +389,16 @@ $errors_messages = array(
     "testo" => "Inserire il testo della notizia",
     "tipologia" => "Inserire la tipologia della notizia",
     "immagine" => "Nessun file selezionato",
+    "immagine1_notizia_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
+    "immagine2_notizia_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
     "nome_gioco_notizia" => "Nessun gioco selezionato",
     "gioco_esistente" => "Il gioco selezionato non esiste",
 
     "nomeUtente" => "Inserire il nome utente",
     "password" => "Inserire la password",
     "repeatpassword" => "Le password non combaciano",
-    "email" => "Inserire la mail"
+    "email" => "Inserire la mail",
+    "immagine_utente_ratio" => "Dimensioni immagine fuori dai limiti richiesti"
 );
 
 // valida il valore passato in base al tipo indicato
@@ -451,7 +409,7 @@ function validateValue($input, $type, $dbAccess = null){
 	if(array_key_exists($type, $patterns)){
 		// se il tipo è presente tra i pattern allora lo valido usando quelli
 		$result = preg_match($patterns[$type], $input) === 1 ? true : false;
-		echo $input . $type . ($result === true ? "true" : "false") . "<br/>";
+		// echo $input . $type . ($result === true ? "true" : "false") . "<br/>";
 		return $result;
 	}else{
 		// altrimenti uso delle validazioni specifiche
@@ -488,7 +446,16 @@ function validateValue($input, $type, $dbAccess = null){
 			}else{
 				return false;
 			}
-
+		}elseif($type === "immagine1_gioco_ratio"){
+			return checkImageRatio("../" . $input, Game::$img1MinRatio, Game::$img1MaxRatio);
+		}elseif($type === "immagine2_gioco_ratio"){
+			return checkImageRatio("../" . $input, Game::$img2MinRatio, Game::$img2MaxRatio);
+		}elseif($type === "immagine1_notizia_ratio"){
+			return checkImageRatio("../" . $input, News::$img1MinRatio, News::$img1MaxRatio);
+		}elseif($type === "immagine2_notizia_ratio"){
+			return checkImageRatio("../" . $input, News::$img2MinRatio, News::$img2MaxRatio);
+		}elseif($type === "immagine_utente_ratio"){
+			return checkImageRatio("../" . $input, User::$imgMinRatio, User::$imgMaxRatio);
 		}else{
 			// se non appartiene a nessun tipo validabile lo ritengo non valido
 			echo "type $type not matched<br/>";
@@ -609,24 +576,130 @@ function getStringExtract($string, $length = 500, $redirectTarget){
 }
 
 // serve per fare il sanitize di un valore
-function getSafeInput($name, $type='other'){
+function getSafeInput($name, $type='other', $dbAccess = null){
 	if(isset($_REQUEST["$name"])){
 		$input = $_REQUEST["$name"];
 
 		if($type === 'string'){
+			// STRING
 			if($input === ""){
 				return null;
 			}else{
 				return filter_var($input, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 			}
 		}else{
+			// bisognerebbe aggiungere un sanitize specifico per gli array
 			return $input;
 		}
 
+	}elseif(isset($_FILES["$name"])){
+		if($type === 'image'){
+			// IMAGE
+			$data = isset($_FILES["$name"]) ? $_FILES["$name"] : null;
+			if($data){
+				//errore 4: non è stata caricata alcuna immagine
+				if($data['error'] === 4){
+					return null;
+				}else{
+					if($dbAccess){
+						$tmpPath = $data['tmp_name'];
+						$res = moveImageToStorage($dbAccess, $tmpPath);
+						if($res === false){
+							return null;
+						}else{
+							return $res;
+						}
+					}else{
+						return null;
+					}
+				}
+			}else{
+				return null;
+			}
+		}
 	}else{
 		return null;
 	}
 }
+
+function checkImageRatio($imgPath, $minResolutionRatio = 0, $maxResolutionRateo = INF){
+	$details = getimagesize($imgPath);
+	$xSize = $details[0];
+	$ySize = $details[1];
+	echo "checkImageRatio : $xSize : $ySize <br/>";
+	$resRateo = $ySize / $xSize;
+	if(($resRateo < $minResolutionRatio) || ($resRateo > $maxResolutionRateo)){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function moveImageToStorage($dbAccess, $srcPath, $destDir = '../images/', $basePath = 'images/'){
+	$newName = getGreatestDBImageNumber($dbAccess) + 1;
+	echo "newName $newName";
+	$extension = getImageExtension($srcPath);
+	$destPath = $destDir . $newName . '.' . $extension;
+	$res = move_uploaded_file($srcPath, $destPath);
+	if($res){
+		return $basePath . $newName . '.' . $extension;
+	}else{
+		return false;
+	}
+
+}
+
+function getImageExtension($srcPath){
+	$parts = explode('.',$srcPath);
+	return end($parts);
+}
+
+/*
+function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0, $maxResolutionRateo = INF, $uploaddir = '../images/'){
+	//questa funzione ritorna il percorso in cui l'immagine è salvata
+	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
+
+	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
+	//errore 4: non è stata caricata alcuna immagine
+	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
+		return null;
+	}
+
+
+	$imageSizeDetails = getimagesize($_FILES[$imgReceiveName]['tmp_name']);
+	$xSize = $imageSizeDetails[0];
+	$ySize = $imageSizeDetails[1];
+	$resRateo = $ySize / $xSize;
+
+	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
+		return false;
+	}
+	#Recupero il percorso temporaneo del file
+	$image_tmp_location = $image['tmp_name'];
+	#recupero il nome originale del file caricato
+
+	$originalName=$image['name'];
+
+	#ricavo nome immagine col numero più alto presente nel database
+	$maxNum = getGreatestDBImageNumber($dbAccess);
+
+
+	#ricavo il nome da assegnare al nuovo file
+	$newNumber=$maxNum+1;
+	$parts = explode('.', $originalName);
+	$extension=end($parts);
+	$newFileName=$newNumber.".".$extension;
+	$fileDestination=$uploaddir . $newFileName;
+	$imgSaveResult=move_uploaded_file($image_tmp_location, $fileDestination);
+
+	if($imgSaveResult){
+		$filePath="images"."/".$newFileName;
+		return $filePath;
+	}else{
+		return false;
+	}
+}
+*/
 
 function getValidationErrorsHtml($errors){
 	return "<div style=\"color: orange\">" . implode("<br>", $errors) . "</div>";

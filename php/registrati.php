@@ -32,7 +32,7 @@ if($user){
 		#sanitize
 		$username = getSafeInput('username', 'string');
 		#sanitize
-		$imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
+		$imagePath = getSafeInput('immagine', 'image', $dbAccess);
 		#sanitize
 		$password = getSafeInput('password', 'string');
 		#sanitize
@@ -44,17 +44,14 @@ if($user){
 		$mandatory_fields = array(
 			[$username, "nomeUtente"],
 			[$email, "email"],
-			[$password, "password"]
+			[$password, "password"],
+			[$imagePath, "immagine_utente_ratio"]
+
 		);
 		foreach ($mandatory_fields as $value) {
 			if($value[0] === null || validateValue($value[0], $value[1]) === false ){
 				array_push($validation_error_messages, getValidationError($value[1]));
 			}
-		}
-
-		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
-		if($imagePath === false || $imagePath === null){
-			array_push($validation_error_messages, getValidationError('immagine'));
 		}
 
 		if($password !== $repeatPassword){
@@ -69,11 +66,11 @@ if($user){
 		
 
 		if(count($validation_error_messages) > 0){
-
+			unlink('../' . $imagePath);
 		}else{
 			echo "non ci sono stati errori" . "<br/>";
 			
-			if($imagePath!=false){
+			if($imagePath !== null){
 				$image=new Image($imagePath, "immagine utente");
 				$hashValue=getHash($username, $password);
 				$newUser=new User($username,$hashValue,0, $image, $email);
@@ -86,6 +83,7 @@ if($user){
 					header( "Location: home.php" );
 				}else{
 					array_push($failure_messages, 'Registrazione fallita');
+					unlink('../' . $imagePath);
 					$allOk = false;
 				}
 	

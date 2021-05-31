@@ -33,8 +33,9 @@ if($user){
 			$new_password = getSafeInput('password', 'string');
 			$new_passwordRepeat = getSafeInput('repeatpassword', 'string');
 			$new_email = getSafeInput('email', 'string');
-			$new_imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
-			#sanitize
+			$new_imagePath = getSafeInput('immagine', 'image', $dbAccess);
+			// $new_imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
+			
 
 			// controllo i campi obbligatori
 
@@ -51,15 +52,12 @@ if($user){
 
 			$optional_fields = array(
 				[$new_password, 'password'],
+				[$new_imagePath, 'immagine_utente_ratio']
 			);
-			foreach ($mandatory_fields as $value) {
+			foreach ($optional_fields as $value) {
 				if($value[0] !== null && validateValue($value[0], $value[1]) === false){
 					array_push($validation_error_messages, getValidationError($value[1]));
 				}
-			}
-
-			if( $new_imagePath === false){
-				array_push($validation_error_messages, getValidationError('immagine'));
 			}
 
 			// controllo i campi obbligatori derivati
@@ -68,16 +66,15 @@ if($user){
 				array_push($validation_error_messages, getValidationError('repeatpassword'));
 			}
 				
-
-			
 			if(count($validation_error_messages) > 0){
+				unlink('../' . $new_imagePath);
 				//se c'è stato almeno un errore ...
 			}else{
 				//echo "non ci sono stati errori" . "<br/>";
 				
 				//se non è stata inserita una nuova immagine prendo quella vecchia
 				$new_image = null;
-				if($new_imagePath == false){
+				if($new_imagePath === null){
 					echo "\$new_imagePath == false<br/>";
 					$new_image = $user->getImage();
 				}else{
@@ -101,6 +98,7 @@ if($user){
 					setcookie('login',$new_hashValue);
 				}else{
 					array_push($failure_messages, "Modifica fallita");
+					unlink('../' . $new_imagePath);
 					$allOk = false;
 				}
 		
