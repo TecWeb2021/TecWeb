@@ -95,8 +95,11 @@ if($user){
 
 		//faccio i replacement dove possibile, altrimenti metto valore vuoto
 		$replacements=array(
-		"<email_ph/>"=>$email ? $email : "",
-		"<username_ph/>"=>$username ? $username : ""
+			"<email_ph/>"=>$email ? $email : "",
+			"<username_ph/>"=>$username ? $username : "",
+	
+			"<img_min_ratio/>" => User::$imgMinRatio,
+			"<img_max_ratio/>" => User::$imgMinRatio,
 		);
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
@@ -107,8 +110,11 @@ if($user){
 
 		//metto tutti i valori alla stringa vuota
 		$replacements=array(
-		"<email_ph/>" => "",
-		"<username_ph/>" => ""
+			"<email_ph/>" => "",
+			"<username_ph/>" => "",
+	
+			"<img_min_ratio/>" => User::$imgMinRatio,
+			"<img_max_ratio/>" => User::$imgMinRatio,
 		);
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);

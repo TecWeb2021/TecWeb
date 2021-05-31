@@ -27,11 +27,6 @@ if($user){
 		}
 		
 	}else{
-
-
-		
-
-		
 		if(isset($_REQUEST['email'])){
 			//echo "almeno un valore è stato inserito"."<br/>";
 
@@ -116,7 +111,10 @@ if($user){
 
 			//faccio i replacement: dove possibile col valore nuovo, altrimenti con quello vecchio
 			$replacements=array(
-			"<email_ph/>"=>$new_email ? $new_email : $user->getEmail(),
+				"<email_ph/>"=>$new_email ? $new_email : $user->getEmail(),
+	
+				"<img_min_ratio/>" => User::$imgMinRatio,
+				"<img_max_ratio/>" => User::$imgMinRatio,
 			);
 
 			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
@@ -127,7 +125,10 @@ if($user){
 
 			//faccio i replacement coi valori vecchio
 			$replacements=array(
-			"<email_ph/>" => $user->getEmail(),
+				"<email_ph/>" => $user->getEmail(),
+	
+				"<img_min_ratio/>" => User::$imgMinRatio,
+				"<img_max_ratio/>" => User::$imgMinRatio,
 			);
 
 			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
