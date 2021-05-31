@@ -109,7 +109,7 @@ if(isset($_REQUEST['game'])){
 					$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
 					$result=$dbAccess->addComment($comment);
 					if($result){
-						//echo "commento inserito<br/>";
+						echo "commento inserito<br/>";
 					}else{
 						//echo "commento non inserito<br/>";
 					}
@@ -142,6 +142,10 @@ if(isset($_REQUEST['game'])){
 	$homePage = getErrorHtml("game_not_specified");
 	header('Location: home.php');
 }
+
+$_GET['write'] = '';
+$_POST['write'] = '';
+$_REQUEST['write'] = '';
 
 
 

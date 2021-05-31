@@ -281,7 +281,7 @@ if($allOk){
 		$selected_consoles = array();
 
 		//se non sono state selezionate console uso quelle del vecchio gioco
-		if(count($new_gameConsoles) == 0){
+		if($new_gameConsoles === null || count($new_gameConsoles) == 0){
 			$new_gameConsoles = $oldGame->getConsoles();
 		}
 		//creao un array che per ogni posizione indica se la console in quella posizione è stata selezionata
@@ -293,7 +293,7 @@ if($allOk){
 		$selected_genres=array();
 
 		//se non sono stati selezionati generi uso quelli del vecchio gioco
-		if(count($new_gameGenres) == 0){
+		if($new_gameGenres === null || count($new_gameGenres) == 0){
 			$new_gameGenres = $oldGame->getGenres();
 		}
 		//creao un array che per ogni posizione indica se il genere in quella posizione è stato selezionato
