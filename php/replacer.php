@@ -313,7 +313,7 @@ function getGreatestDBImageNumber($dbAccess){
 		}
 	}
 	return $topNum;
-	
+
 }
 
 // returns the path if it corresponds to an image saved on the server, a "not available" image else
@@ -447,7 +447,7 @@ $errors_messages = array(
 // per validare utilizza i pattern presenti in $patterns se ve ne è uno corrispondente al tipo, altrimenti usa degli altri controlli specificati nel metodo stesso
 function validateValue($input, $type, $dbAccess = null){
 	global $patterns;
-	
+
 	if(array_key_exists($type, $patterns)){
 		// se il tipo è presente tra i pattern allora lo valido usando quelli
 		$result = preg_match($patterns[$type], $input) === 1 ? true : false;
@@ -488,7 +488,7 @@ function validateValue($input, $type, $dbAccess = null){
 			}else{
 				return false;
 			}
-			
+
 		}else{
 			// se non appartiene a nessun tipo validabile lo ritengo non valido
 			echo "type $type not matched<br/>";
@@ -605,7 +605,7 @@ function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
 }
 
 function getStringExtract($string, $length = 500, $redirectTarget){
-	return substr($string, 0, $length) . "..." . " <a class=\"link\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
+	return substr($string, 0, $length) . "..." . " <a class=\"continua_a_leggere\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
 }
 
 // serve per fare il sanitize di un valore
