@@ -143,9 +143,9 @@ if(isset($_REQUEST['game'])){
 	header('Location: home.php');
 }
 
-$_GET['write'] = '';
-$_POST['write'] = '';
-$_REQUEST['write'] = '';
+unset($_GET['write']);
+unset($_POST['write']);
+unset($_REQUEST['write']);
 
 
 
