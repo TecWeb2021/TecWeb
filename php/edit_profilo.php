@@ -72,8 +72,6 @@ if($user){
 			
 			if(count($validation_error_messages) > 0){
 				//se c'è stato almeno un errore ...
-				
-
 			}else{
 				//echo "non ci sono stati errori" . "<br/>";
 				
