@@ -318,7 +318,7 @@ function getGreatestDBImageNumber($dbAccess){
 
 // returns the path if it corresponds to an image saved on the server, a "not available" image else
 // the path is supposed to be given relativto the root directory
-function getSafeImage($path, $defaultPath = "images/imagenotavailable.png"){
+function getSafeImage($path, $defaultPath = "images/imagenotavailable.png", $defaultAlt = "immagine non presente"){
 	if(is_file("../".$path)){
 		return $path;
 	}else{

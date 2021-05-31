@@ -51,7 +51,7 @@ function generateGameCommentsDivs($gameName, $dbAccess, $isUserAdmin){
 	$commentsString="";
 	foreach ($commentsList as $com) {
 		$author = $dbAccess->getUser($com->getAuthorName());
-		$s=$commentTemplate;
+		$s = $commentTemplate;
 
 		$replacements = array(
 			"<comment_content_ph/>" => $com->getContent(),
@@ -109,8 +109,8 @@ if(isset($_REQUEST['game'])){
 					$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
 					$result=$dbAccess->addComment($comment);
 					if($result){
-						echo "commento inserito<br/>";
-						header("Location: gioco_recensione.php?game=" . $game->getName());
+						// echo "commento inserito<br/>";
+						header("Location: gioco_recensione.php?game=" . $game->getName() . "");
 					}else{
 						//echo "commento non inserito<br/>";
 					}
@@ -122,11 +122,13 @@ if(isset($_REQUEST['game'])){
 
 			$deleteComment = isset($_REQUEST['deleteComment']) ? $_REQUEST['deleteComment'] : null;
 			if($isAdmin){
-				$result = $dbAccess->deleteComment($deleteComment);
-				if($result){
-					//echo "commento eleiminato<br/>";
-				}else{
-					//echo "commento non eleiminato<br/>";
+				if($deleteComment){
+					$result = $dbAccess->deleteComment($deleteComment);
+					if($result){
+						//echo "commento eleiminato<br/>";
+					}else{
+						//echo "commento non eleiminato<br/>";
+					}
 				}
 			}else{
 				//echo "Per eliminare commenti devi essere autenticato come amministratore";
