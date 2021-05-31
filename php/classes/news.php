@@ -19,10 +19,10 @@ class News{
 	protected $category;
 	protected $gameName;
 	
-	public static $img1MinRatio = 1.3;
-	public static $img1MaxRatio = 1.6;
-	public static $img2MinRatio = 0.1;
-	public static $img2MaxRatio = 0.5;
+	public static $img1MinRatio = 0;
+	public static $img1MaxRatio = INF;
+	public static $img2MinRatio = 0;
+	public static $img2MaxRatio = INF;
 	public static $possible_categories = array("Hardware", "Giochi", "Eventi");
 
 	function __construct($_title, $_content, $_author, $_last_edit_date_time, $_image1, $_image2, $_category, $_gameName = null){
