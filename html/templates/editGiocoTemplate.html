@@ -10,25 +10,25 @@
 
                 <fieldset>
                     <p>Il nome del <em>videogioco</em> deve contenere da 2 a 40 caratteri (lettere, numeri, spaziature e caratteri speciali). Deve iniziare e terminare con una lettera o un numero.</p>
-                    <label for="nome">*Nome: </label>
+                    <label for="nome" aria-label="Nome videogioco, campo obbligatorio">*Nome: </label>
                     <span><input type="text" id="nome" name="nome" value="<game_name_ph/>" placeholder="Nome gioco" /></span><br />
 
                     <p>Il nome della <em>casa di sviluppo</em> deve contenere da 2 a 30 caratteri (lettere, numeri e spaziature). Deve iniziare e terminare con una lettera o un numero.</p>
-                    <label for="sviluppo">*Casa di sviluppo: </label>
+                    <label for="sviluppo" aria-label="Casa di sviluppo, campo obbligatorio">*Casa di sviluppo: </label>
                     <span><input type="text" id="sviluppo" name="sviluppo" value="<developer_ph/>" placeholder="Casa di sviluppo" /></span><br />
 
                     <p>I valori ammessi di <em><abbr title="Pan European Game Information">PEGI</abbr></em> sono: 3, 7, 12, 16, 18</p>
-                    <label for="pegi"><abbr title="Pan European Game Information">*PEGI</abbr>: </label>
+                    <label for="pegi" aria-label="PEGI videogioco, campo obbligatorio"><abbr title="Pan European Game Information">*PEGI</abbr>: </label>
                     <span><input type="text" id="pegi" name="pegi" value="<age_range_ph/>" placeholder="Possibili valori: 3, 7, 12, 16, 18" /></span><br />
 
                     <p>Inserire una <em>data</em> valida selezionandola dal calendario. L'intervallo di anni ammessi va dal 1947 al 2021 compresi.</p>
-                    <label for="data">*Data di rilascio: </label>
+                    <label for="data" aria-label="Data di rilascio videogioco, campo obbligatorio">*Data di rilascio: </label>
                     <span><input type="date" name="data" id="data" value="<date_ph/>"></span><br />
                 </fieldset>
 
                 <fieldset>
                     <p>Selezionare almeno una <em>console</em> su cui è disponibile il gioco.</p>
-                    <div><p id="labelConsole" class="spuntabili">*Console:</p></div>
+                    <div><p tabindex="0" id="labelConsole" class="spuntabili" aria-label="Console, campo obbligatorio">*Console:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="console[]" value="PS4" id="PS4" <checked_console_0/> />
@@ -47,7 +47,7 @@
 
                 <fieldset>
                     <p>Selezionare almeno un <em>genere</em> per il gioco.</p>
-                    <div><p id="labelGenere" class="spuntabili">*Generi:</p></div>
+                    <div><p tabindex="0" id="labelGenere" class="spuntabili" aria-label="Genere videogioco, campo obbligatorio">*Generi:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <checked_genere_0/> />
@@ -69,20 +69,20 @@
                 <fieldset>
                     <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img1_min_ratio/> e <img1_max_ratio/></p>
                     <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
-                    <label for="immagine1">*Copertina: </label>
+                    <label for="immagine1" aria-label="Copertina videogioco, campo obbligatorio ">*Copertina: </label>
                     <span><input type="file" id="immagine1" name="immagine1" class="opzionale" /></span><br />
 
-                    <label for="alternativo1">Alt Copertina: </label>
+                    <label for="alternativo1">Testo alternativo copertina: </label>
                     <span><input type="text" id="alternativo1" name="alternativo1" class="opzionale" value="<img1_alt_ph/>" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
                 <fieldset>
                     <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img2_min_ratio/> e <img2_max_ratio/></p>
                     <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
-                    <label for="immagine2">*Banner: </label>
+                    <label for="immagine2" aria-label="Banner videogioco, campo obbligatorio ">*Banner: </label>
                     <span><input type="file" id="immagine2" name="immagine2" class="opzionale" /></span><br />
 
-                    <label for="alternativo2">Alt Banner: </label>
+                    <label for="alternativo2">Testo alternativo banner: </label>
                     <span><input type="text" id="alternativo2" name="alternativo2" class="opzionale" value="<img2_alt_ph/>" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
@@ -91,7 +91,7 @@
                     <p>Inserire una <em>valutazione</em> per il gioco. I valori possibili vanno da 0 a 5.</p>
                     <p>I campi <em>prequel</em> e <em>sequel</em> sono opzionali. Digitare i titoli dei giochi e selezionare i valori tra le opzioni suggerite.</p>
 
-                    <label for="voto">*Voto: </label>
+                    <label for="voto" aria-label="Voto videogioco, campo obbligatorio ">*Voto: </label>
                     <span><input type="text" id="voto" name="voto" value="<vote_ph/>" placeholder="Voto da 0 a 5" /></span><br />
 
                     <label for="searchbar">Prequel:</label>
