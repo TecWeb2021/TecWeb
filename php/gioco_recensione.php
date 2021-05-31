@@ -101,7 +101,7 @@ if(isset($_REQUEST['game'])){
 		}else{
 			replacePH($game, $isAdmin);
 			
-			$write = isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
+			$write = getSafeInput('write');
 			#sanitize;
 			if($write){
 				$user = getLoggedUser($dbAccess);
@@ -110,6 +110,7 @@ if(isset($_REQUEST['game'])){
 					$result=$dbAccess->addComment($comment);
 					if($result){
 						echo "commento inserito<br/>";
+						header("Location: gioco_recensione.php?game=" . $game->getName());
 					}else{
 						//echo "commento non inserito<br/>";
 					}
