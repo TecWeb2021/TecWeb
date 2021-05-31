@@ -143,7 +143,12 @@ if($allOk){
 			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : "",
 			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : "",
 			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : ""
+			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : "",
+
+			"<img1_min_ratio/>" => News::$img1MinRatio,
+			"<img1_max_ratio/>" => News::$img1MaxRatio,
+			"<img2_min_ratio/>" => News::$img2MinRatio,
+			"<img2_max_ratio/>" => News::$img2MaxRatio
 		);
 
 
@@ -182,7 +187,12 @@ if($allOk){
 			"<img1_alt_ph/>" => "",
 			"<img2_alt_ph/>" => "",
 			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => ""
+			"<game_name_ph/>" => "",
+
+			"<img1_min_ratio/>" => News::$img1MinRatio,
+			"<img1_max_ratio/>" => News::$img1MaxRatio,
+			"<img2_min_ratio/>" => News::$img2MinRatio,
+			"<img2_max_ratio/>" => News::$img2MaxRatio
 		);
 		$replacements['<checked_eventi_ph/>'] = "";
 		$replacements['<checked_giochi_ph/>'] = "";

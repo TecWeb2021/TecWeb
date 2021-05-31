@@ -233,7 +233,12 @@ if($allOk){
 			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : ($oldNews->getImage1() ? $oldNews->getImage1()->getAlt() : ""),
 			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : ($oldNews->getImage2() ? $oldNews->getImage2()->getAlt() : ""),
 			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName()
+			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName(),
+
+			"<img1_min_ratio/>" => News::$img1MinRatio,
+			"<img1_max_ratio/>" => News::$img1MaxRatio,
+			"<img2_min_ratio/>" => News::$img2MinRatio,
+			"<img2_max_ratio/>" => News::$img2MaxRatio
 		);
 
 		if($new_newsCategory == 'Eventi'){
@@ -267,7 +272,12 @@ if($allOk){
 			"<news_title_ph/>" => $oldNews->getTitle(),
 			"<content_ph/>" => $oldNews->getContent(),
 			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : ""
+			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : "",
+
+			"<img1_min_ratio/>" => News::$img1MinRatio,
+			"<img1_max_ratio/>" => News::$img1MaxRatio,
+			"<img2_min_ratio/>" => News::$img2MinRatio,
+			"<img2_max_ratio/>" => News::$img2MaxRatio
 		);
 
 		if($oldImage1 = $oldNews->getImage1()){

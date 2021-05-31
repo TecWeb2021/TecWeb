@@ -319,7 +319,12 @@ if($allOk){
 			"<sequel_ph/>" => $new_gameSequel ? $new_gameSequel : $oldGame->getSequel(),
 
 			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),
-			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
+			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess),
+
+			"<img1_min_ratio/>" => Game::$img1MinRatio,
+			"<img1_max_ratio/>" => Game::$img1MaxRatio,
+			"<img2_min_ratio/>" => Game::$img2MinRatio,
+			"<img2_max_ratio/>" => Game::$img2MaxRatio,
 		);
 
 		//aggiungo ai replacement quelli delle checkboxes
@@ -370,7 +375,12 @@ if($allOk){
 			"<prequel_ph/>" => $oldGame->getPrequel(),
 			"<sequel_ph/>" => $oldGame->getSequel(),
 			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),
-			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
+			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess),
+
+			"<img1_min_ratio/>" => Game::$img1MinRatio,
+			"<img1_max_ratio/>" => Game::$img1MaxRatio,
+			"<img2_min_ratio/>" => Game::$img2MinRatio,
+			"<img2_max_ratio/>" => Game::$img2MaxRatio
 		);
 
 		//aggiungo ai replacement quelli delle checkboxes

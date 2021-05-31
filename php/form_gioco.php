@@ -225,7 +225,12 @@ if($allOk){
 			"<sequel_ph/>" => $new_gameSequel ? $new_gameSequel : "",
 
 			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),
-			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
+			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess),
+
+			"<img1_min_ratio/>" => Game::$img1MinRatio,
+			"<img1_max_ratio/>" => Game::$img1MaxRatio,
+			"<img2_min_ratio/>" => Game::$img2MinRatio,
+			"<img2_max_ratio/>" => Game::$img2MaxRatio
 		);
 
 		print_r($selected_consoles);
@@ -263,7 +268,12 @@ if($allOk){
 			"<prequel_ph/>" => "",
 			"<sequel_ph/>" => "",
 			"<opzioni_prequel_ph/>" => createGamesOptions($dbAccess),
-			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess)
+			"<opzioni_sequel_ph/>" => createGamesOptions($dbAccess),
+
+			"<img1_min_ratio/>" => Game::$img1MinRatio,
+			"<img1_max_ratio/>" => Game::$img1MaxRatio,
+			"<img2_min_ratio/>" => Game::$img2MinRatio,
+			"<img2_max_ratio/>" => Game::$img2MaxRatio
 		);
 
 
