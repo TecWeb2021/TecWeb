@@ -96,7 +96,7 @@ $user=getLoggedUser($dbAccess);
 $isAdmin=$user && $user->isAdmin() ? true : false; 
 
 # Chiedo al server una lista delle notizie
-$newsList=$dbAccess->getNewsList();
+$newsList=$dbAccess->getNewsList(null, null, null, 5);
 # Unisco le notizie in una lista html 
 $newsListString=createNewsList($newsList, $isAdmin);
 
