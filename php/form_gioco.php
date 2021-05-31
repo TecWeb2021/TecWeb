@@ -134,14 +134,16 @@ if($allOk){
 
 		$optional_fields = array(
 			[$new_gamePrequel, 'prequel'],
+			[$new_gamePrequel, 'gioco_esistente'],
 			[$new_gameSequel, 'sequel'],
+			[$new_gameSequel, 'gioco_esistente'],
 			[$new_gameReview, 'recensione'],
 			[$new_gameAlt1, 'alternativo'],
 			[$new_gameAlt2, 'alternativo']
 		);
 
 		foreach ($optional_fields as $value) {
-			if($value[0] !== null && validateValue($value[0], $value[1]) === false ){
+			if($value[0] !== null && validateValue($value[0], $value[1], $dbAccess) === false ){
 				array_push($validation_error_messages, getValidationError($value[1]));
 			}
 		}

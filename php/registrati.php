@@ -99,7 +99,7 @@ if($user){
 			"<username_ph/>"=>$username ? $username : "",
 	
 			"<img_min_ratio/>" => User::$imgMinRatio,
-			"<img_max_ratio/>" => User::$imgMinRatio,
+			"<img_max_ratio/>" => User::$imgMaxRatio,
 		);
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
@@ -114,7 +114,7 @@ if($user){
 			"<username_ph/>" => "",
 	
 			"<img_min_ratio/>" => User::$imgMinRatio,
-			"<img_max_ratio/>" => User::$imgMinRatio,
+			"<img_max_ratio/>" => User::$imgMaxRatio,
 		);
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
