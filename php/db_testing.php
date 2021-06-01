@@ -15,6 +15,10 @@ if(isset($_REQUEST['query'])){
 		echo "true"."<br/>";
 	}else{
 		echo "<table style=\"border-collapse: collapse;\">";
+		for($i = 0; $i < mysqli_num_fields($res); $i++) {
+		    $field_info = mysqli_fetch_field($res);
+		    echo "<th>{$field_info->name}</th>";
+		}
 		foreach($res as $r){
 			echo "<tr>";
 			foreach($r as $s){

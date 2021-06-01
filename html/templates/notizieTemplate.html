@@ -2,23 +2,28 @@
 
   <div id="content" class="container">
     <div class="advance_filter" id="categorie">
+      <div class="search_container_notizie">
+        <p class="label_searchbox_notizia">Cerca notizia:</p>
           <form class="barra_ricerca_notizie" action="notizie.php" onsubmit="return checkNotEmpty();" role="search">
-            <fieldset>
+
+
               <label for="searchbar" class="structural">Cerca notizia:</label>
               <input list="titleInput_notizie" name="searchbar" id="searchbar_notizie" class="searchbar" placeholder="Cerca notizia..." aria-label="Campo per la ricerca di notizie" />
               <datalist id="titleInput_notizie" class="formText">
                 <opzioni_ph/>
               </datalist>
               <button type="submit" class="searchbutton">Cerca</button>
-            </fieldset>
+
           </form>
+          </div>
         <div class="filtri_ordine">
-          <span class="tipo_ordine">Tipologia: |</span>
+          <span tabindex="0" class="tipo_ordine" aria-label="Filtri tipologia notizia">Tipologia: |</span>
           <form class="bottoniOrdine" action="notizie.php">
+            <input type="hidden" name="filtroSearchMemoria" value="<search_filter_memory_ph/>">
             <fieldset>
-              <button class="dropbtn" name="categoria" value="Hardware">Hardware</button>
-              <button class="dropbtn" name="categoria" value="Giochi">Giochi</button>
-              <button class="dropbtn" name="categoria" value="Eventi">Eventi</button>
+              <button <filtro_hardware_attivo_ph/> name="categoria" value="Hardware">Hardware</button>
+              <button <filtro_giochi_attivo_ph/> name="categoria" value="Giochi">Giochi</button>
+              <button <filtro_eventi_attivo_ph/> name="categoria" value="Eventi">Eventi</button>
             </fieldset>
           </form>
         </div>

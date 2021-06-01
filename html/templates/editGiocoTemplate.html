@@ -2,38 +2,43 @@
 
     <div class="container" id="content">
         <div class="schedaForm">
-            <h3 class="titolo_form">Form per l'inserimento di un nuovo gioco</h3>
-            <p class="avviso_importante">I campi marcati con * sono opzionali</p>
+            <h3 class="titolo_form">Form per la modifica di un gioco</h3>
+            <p>I campi marcati con * sono obbligatori.</p>
             <form id="formGioco" method="post" action="edit_gioco.php" onsubmit="return validateForm();" enctype="multipart/form-data">
 
                 <messaggi_form_ph/>
 
                 <fieldset>
-                    <label for="nome">Nome: </label>
+                    <p>Il nome del <em>videogioco</em> deve contenere da 2 a 40 caratteri (lettere, numeri, spaziature e caratteri speciali). Deve iniziare e terminare con una lettera o un numero.</p>
+                    <label for="nome" aria-label="Nome videogioco, campo obbligatorio">*Nome: </label>
                     <span><input type="text" id="nome" name="nome" value="<game_name_ph/>" placeholder="Nome gioco" /></span><br />
 
-                    <label for="sviluppo">Casa di sviluppo: </label>
+                    <p>Il nome della <em>casa di sviluppo</em> deve contenere da 2 a 30 caratteri (lettere, numeri e spaziature). Deve iniziare e terminare con una lettera o un numero.</p>
+                    <label for="sviluppo" aria-label="Casa di sviluppo, campo obbligatorio">*Casa di sviluppo: </label>
                     <span><input type="text" id="sviluppo" name="sviluppo" value="<developer_ph/>" placeholder="Casa di sviluppo" /></span><br />
 
-                    <label for="pegi"><abbr title="Pan European Game Information">PEGI</abbr>: </label>
-                    <span><input type="text" id="pegi" name="pegi" value="<age_range_ph/>" placeholder="possibili valori: 3, 7, 12, 16, 18" /></span><br />
+                    <p>I valori ammessi di <em><abbr title="Pan European Game Information">PEGI</abbr></em> sono: 3, 7, 12, 16, 18</p>
+                    <label for="pegi" aria-label="PEGI videogioco, campo obbligatorio"><abbr title="Pan European Game Information">*PEGI</abbr>: </label>
+                    <span><input type="text" id="pegi" name="pegi" value="<age_range_ph/>" placeholder="Possibili valori: 3, 7, 12, 16, 18" /></span><br />
 
-                    <label for="data">Data di rilascio: </label>
+                    <p>Inserire una <em>data</em> valida selezionandola dal calendario. L'intervallo di anni ammessi va dal 1947 al 2021 compresi.</p>
+                    <label for="data" aria-label="Data di rilascio videogioco, campo obbligatorio">*Data di rilascio: </label>
                     <span><input type="date" name="data" id="data" value="<date_ph/>"></span><br />
                 </fieldset>
 
                 <fieldset>
-                    <span><p id="labelConsole" class="spuntabili">Console:</p></span>
+                    <p>Selezionare almeno una <em>console</em> su cui è disponibile il gioco.</p>
+                    <div><p tabindex="0" id="labelConsole" class="spuntabili" aria-label="Console, campo obbligatorio">*Console:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="console[]" value="PS4" id="PS4" <checked_console_0/> />
-                            <label for="PS4"><abbr title="Pan European Game Information">PS4</abbr></label></li>
+                            <label for="PS4"><abbr title="PlayStation 4">PS4</abbr></label></li>
                             <li><input type="checkbox" name="console[]" value="XboxOne" id="XboxOne" <checked_console_1/> />
                             <label for="XboxOne">XboxOne</label></li>
                             <li><input type="checkbox" name="console[]" value="Switch" id="Switch" <checked_console_2/> />
-                            <label for="Nintendo Switch">Switch</label></li>
+                            <label for="Switch">Switch</label></li>
                             <li><input type="checkbox" name="console[]" value="PS5" id="PS5" <checked_console_3/> />
-                            <label for="PS5"><abbr title="Pan European Game Information">PS5</abbr></label></li>
+                            <label for="PS5"><abbr title="PlayStation 5">PS5</abbr></label></li>
                             <li><input type="checkbox" name="console[]" value="XboxSeriesX" id="XboxSeriesX" <checked_console_4/> />
                             <label for="XboxSeriesX">XboxSeriesX/S</label></li>
                         </ul>
@@ -41,7 +46,8 @@
                 </fieldset>
 
                 <fieldset>
-                    <span><p id="labelGenere" class="spuntabili">Generi:</p></span>
+                    <p>Selezionare almeno un <em>genere</em> per il gioco.</p>
+                    <div><p tabindex="0" id="labelGenere" class="spuntabili" aria-label="Genere videogioco, campo obbligatorio">*Generi:</p></div>
                     <div class="gruppoCheck">
                         <ul class="checkbox">
                             <li><input type="checkbox" name="genere[]" value="Avventura" id="Avventura" <checked_genere_0/> />
@@ -49,11 +55,11 @@
                             <li><input type="checkbox" name="genere[]" value="Azione" id="Azione" <checked_genere_1/> />
                             <label for="Azione">Azione</label></li>
                             <li><input type="checkbox" name="genere[]" value="FPS" id="FPS" <checked_genere_2/> />
-                            <label for="FPS"><abbr xml:lang="en" title="First-person shooter">FPS</abbr></label></li>
+                            <label for="FPS"><abbr xml:lang="en" lang="en" title="First-person shooter">FPS</abbr></label></li>
                             <li><input type="checkbox" name="genere[]" value="GDR" id="GDR" <checked_genere_3/> />
                             <label for="GDR"><abbr title="Giochi di ruolo">GDR</abbr></label></li>
                             <li><input type="checkbox" name="genere[]" value="Horror" id="Horror" <checked_genere_4/> />
-                            <label for="Horror" xml:lang="en">Horror</label></li>
+                            <label for="Horror" xml:lang="en" lang="en">Horror</label></li>
                             <li><input type="checkbox" name="genere[]" value="Puzzle" id="Puzzle" <checked_genere_5/> />
                             <label for="Puzzle">Puzzle</label></li>
                         </ul>
@@ -61,46 +67,60 @@
                 </fieldset>
 
                 <fieldset>
-                    <label for="immagine">Immagine: </label>
-                    <span><input type="file" id="immagine" class="opzionale" name="immagine" /></span><br />
+                    <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img1_min_ratio/> e <img1_max_ratio/></p>
+                    <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
+                    <label for="immagine1" aria-label="Copertina videogioco, campo obbligatorio ">*Copertina: </label>
+                    <span><input type="file" id="immagine1" name="immagine1" class="opzionale" /></span><br />
 
-                    <label for="alternativo">*Alt immagine: </label>
-                    <span><input type="text" id="alternativo" name="alternativo" class="opzionale" value="<img_alt_ph/>" placeholder="Testo alternativo" /></span>
+                    <label for="alternativo1">Testo alternativo copertina: </label>
+                    <span><input type="text" id="alternativo1" name="alternativo1" class="opzionale" value="<img1_alt_ph/>" placeholder="Testo alternativo" /></span>
+                </fieldset>
+
+                <fieldset>
+                    <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img2_min_ratio/> e <img2_max_ratio/></p>
+                    <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
+                    <label for="immagine2" aria-label="Banner videogioco, campo obbligatorio ">*Banner: </label>
+                    <span><input type="file" id="immagine2" name="immagine2" class="opzionale" /></span><br />
+
+                    <label for="alternativo2">Testo alternativo banner: </label>
+                    <span><input type="text" id="alternativo2" name="alternativo2" class="opzionale" value="<img2_alt_ph/>" placeholder="Testo alternativo" /></span>
                 </fieldset>
 
                 <fieldset id="cercaTitolo">
 
-                    <label for="voto">Voto: </label>
+                    <p>Inserire una <em>valutazione</em> per il gioco. I valori possibili vanno da 0 a 5.</p>
+                    <p>I campi <em>prequel</em> e <em>sequel</em> sono opzionali. Digitare i titoli dei giochi e selezionare i valori tra le opzioni suggerite.</p>
+
+                    <label for="voto" aria-label="Voto videogioco, campo obbligatorio ">*Voto: </label>
                     <span><input type="text" id="voto" name="voto" value="<vote_ph/>" placeholder="Voto da 0 a 5" /></span><br />
 
-                    <label for="searchbar">*Prequel:</label>
+                    <label for="searchbar">Prequel:</label>
                     <span><input list="listaPrequel" name="prequel" id="prequel" class="opzionale" value="<prequel_ph/>" placeholder="Cerca prequel" aria-label="Campo per la ricerca del sequel del gioco" /></span><br />
                     <datalist id="listaPrequel" class="formText">
                       <opzioni_prequel_ph/>
                     </datalist>
 
-                    <label for="searchbar">*Sequel:</label>
+                    <label for="searchbar">Sequel:</label>
                     <span><input list="listaSequel" name="sequel" id="sequel" class="opzionale" value="<sequel_ph/>" placeholder="Cerca sequel" aria-label="Campo per la ricerca del prequel del gioco" /></span><br />
                     <datalist id="listaSequel" class="formText">
                       <opzioni_sequel_ph/>
                     </datalist>
-
-                    <label for="dlc"><abbr title="downloadable content" xml:lang="en">*DLC:</abbr> </label>
-                    <span><input type="text" id="dlc" name="dlc" class="opzionale" value="<dlc_ph/>" placeholder="Inserisci il nome del DLC" /></span>
                 </fieldset>
 
                 <fieldset>
-                    <label for="descrizione" class="textAreaLabel">Descrizione: </label>
+                    <p>Inserire la <em>descrizione</em> del gioco. Deve contenere almeno 25 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
+                    <label for="descrizione" class="textAreaLabel">*Descrizione: </label>
                     <span><textarea id="descrizione" name="descrizione" rows="10" cols="50" placeholder="Descrizione del gioco, deve essere lunga almeno 25 caratteri"><sinopsis_ph/></textarea></span>
                 </fieldset>
 
                 <fieldset>
-                    <label for="recensione" class="textAreaLabel">*Recensione: </label>
+                    <p>L'inserimento della <em>recensione</em> del gioco è opzionale. Deve contenere almeno 25 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
+                    <label for="recensione" class="textAreaLabel">Recensione: </label>
                     <span><textarea id="recensione" name="recensione" class="opzionale" rows="10" cols="50" placeholder="Recensione del gioco, deve essere lunga almeno 25 caratteri"><review_ph/></textarea></span>
                 </fieldset>
 
                 <!--uso il seguente input per tenere menoria del gioco che voglio modificare-->
-                <input type="hidden" id="game" name="game" value="<game_name_ph/>" placeholder="supporto" /></span><br />
+                <input type="hidden" id="game" name="game" value="<game_name_ph/>"><br />
 
                 <fieldset>
                     <button type="submit" name="submit">Salva Modifiche</button>

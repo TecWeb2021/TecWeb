@@ -11,52 +11,65 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giocoSchedaTemplate.html");
 $homePage=replace($homePage);
 
-function replacePH($game){
+function replacePH($game, $isUserAdmin){
 	global $homePage;
 
 	$platforms= $game->getConsoles() ? implode(", ", $game->getConsoles()) : "";
 	$genres= $game->getGenres() ? implode(", ", $game->getGenres()) : "";
 	
 	$replacements=array(
-		"<gioco_scheda_ph/>" => "../"."gioco_scheda.php?game=".strtolower($game->getName()),
-		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
-		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
-		"<img_path_ph/>" => "../".$game->getImage()->getPath(),
-		"<img_alt_ph/>" => $game->getImage()->getAlt(),
-		"<publication_date_ph/>" => $game->getPublicationDate(),
+		"<img_path_ph/>" => "../".getSafeImage($game->getImage1()->getPath()),
+		"<img_alt_ph/>" => $game->getImage1()->getAlt(),
+		"<publication_date_ph/>" => dateToText($game->getPublicationDate()),
 		"<game_name_ph/>" => $game->getName(),
 		"<sinopsis_ph/>" => $game->getSinopsis(),
 		"<platforms_ph/>" => $platforms,
 		"<genres_ph/>" => $genres,
-		"<age_range_ph/>" => "PEGI ".$game->getAgeRange(),
+		"<age_range_ph/>" => $game->getAgeRange(),
 		"<prequel_ph/>" => $game->getPrequel() ? $game->getPrequel() : "Nessuno",
 		"<sequel_ph/>" => $game->getSequel() ? $game->getSequel() : "Nessuno",
 		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName(),
 		"<developer_ph/>" => $game->getDeveloper()
 	);
 
-	foreach ($replacements as $key => $value) {
-		$homePage=str_replace($key, $value, $homePage);
+	$homePage=str_replace(array_keys($replacements), array_values($replacements), $homePage);
+
+	if($isUserAdmin){
+		$homePage=str_replace("<admin_func_ph>","",$homePage);
+		$homePage=str_replace("</admin_func_ph>","",$homePage);
+	}else{
+		$homePage=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$homePage);
 	}
 }
+
+$game = null;
+
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
 
 if(isset($_REQUEST['game'])){
 	$gameName=$_REQUEST['game'];
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
 	if($game==null){
-		echo "il gioco specificato non è stato trovato";
+		$homePage = getErrorHtml("game_not_existent");
 	}else{
-		replacePH($game);
+		replacePH($game, $isAdmin);
 	}
 }else{
-	echo "non è specificato un gioco";
+	$homePage = getErrorHtml("game_not_specified");
 }
 
 
-$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+
+$basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
+$gameHomePage = createGameBasePage("scheda", $game ? $game->getName() : "");
+
+$basePage=str_replace("<page_content_ph/>", $gameHomePage, $basePage);
+
+$basePage=str_replace("<game_page_content_ph/>", $homePage, $basePage);
+
 
 $basePage=replace($basePage);
 

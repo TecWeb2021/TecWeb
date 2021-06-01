@@ -13,61 +13,71 @@ $homePage=file_get_contents("../html/templates/registratiTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
+
 if($user){
-	$homePage="Sei già registrato e hai già fatto il login";
+	$homePage = getErrorHtml("already_logged");
 }else{
-	$username=isset($_REQUEST['username']) ? $_REQUEST['username'] : null;
-	#sanitize
-	$password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
-	#sanitize
-	$email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-	#sanitize
-	$imagePath=saveImageFromFILES($dbAccess, "immagine");
-	#sanitize
+	
 
 	$allOk = true;
 
 	$error_message = "";
-	if($username || $email || $password || $imagePath){
-		echo "almeno un valore è stato inserito"."<br/>";
+	if(isset($_REQUEST['email'])){
+		// echo "almeno un valore è stato inserito"."<br/>";
 		
+		$email = getSafeInput('email', 'string');
+		#sanitize
+		$username = getSafeInput('username', 'string');
+		#sanitize
+		$imagePath = getSafeInput('immagine', 'image', $dbAccess);
+		#sanitize
+		$password = getSafeInput('password', 'string');
+		#sanitize
+		$repeatPassword = getSafeInput('repeatpassword', 'string');
+		#sanitize
 
-		//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
-		$error_messages = array(
-			'username' => "Username non presente",
-			'email' => "Email non presente",
-			'password' => "Password non presente",
-			'immagine' => "Immagine non presente",
+		//controllo i campi obbligatori
+
+		$mandatory_fields = array(
+			[$username, "nomeUtente"],
+			[$email, "email"],
+			[$password, "password"],
+
 		);
+		foreach ($mandatory_fields as $value) {
+			if($value[0] === null || validateValue($value[0], $value[1]) === false ){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
+		}
 
-		//eseguo i controlli sugli input
-		if($username == null){
-			$error_message = $error_message . $error_messages['username'] . "<br/>";
+		if( $imagePath === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
 		}
-		if($email == null){
-			$error_message = $error_message . $error_messages['email'] . "<br/>";
+		if( $imagePath !== null && validateValue($imagePath,"immagine_utente_ratio") === false){
+			// echo "validating imagePath <br/>";
+			array_push($validation_error_messages, getValidationError("immagine_utente_ratio"));
 		}
-		//controllo di lunghezza temporaneo
-		if($password == null || strlen($password) < 5){
-			$error_message = $error_message . $error_messages['password'] . "<br/>";
+
+		if($password !== $repeatPassword){
+			array_push($validation_error_messages, getValidationError('repeatpassword'));
 		}
-		//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
-		if($imagePath === false){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}
+
+		// controllo i campi obbligatori derivati
+
+		// controllo i campi opzionali
 
 		
 		
 
-		if($error_message != ""){
-			//se c'è stato almeno un errore ...
-			echo $error_message;
-
-			
+		if(count($validation_error_messages) > 0){
+			unlink('../' . $imagePath);
 		}else{
-			echo "non ci sono stati errori" . "<br/>";
+			// echo "non ci sono stati errori" . "<br/>";
 			
-			if($imagePath!=false){
+			if($imagePath !== null){
 				$image=new Image($imagePath, "immagine utente");
 				$hashValue=getHash($username, $password);
 				$newUser=new User($username,$hashValue,0, $image, $email);
@@ -76,11 +86,11 @@ if($user){
 				$result=$dbAccess->addUser($newUser);
 				if($result){
 					setcookie('login',$hashValue);
-					$redirectInterval = 600;
-					$homePage =  "<br/>operazione eseguita con successo<br/>tra ".$redirectInterval." secondi verrai portato sulla pagina home";
-					header( "refresh:".$redirectInterval.";url=home.php" );
+					array_push($success_messages, 'Registrazione completata con successo');
+					header( "Location: home.php" );
 				}else{
-					 echo "salvataggio utente fallito" . "<br/>";
+					array_push($failure_messages, 'Registrazione fallita');
+					unlink('../' . $imagePath);
 					$allOk = false;
 				}
 	
@@ -90,41 +100,38 @@ if($user){
 
 		//faccio i replacement dove possibile, altrimenti metto valore vuoto
 		$replacements=array(
-		"<email_ph/>"=>$email ? $email : "",
-		"<username_ph/>"=>$username ? $username : ""
+			"<email_ph/>"=>$email ? $email : "",
+			"<username_ph/>"=>$username ? $username : "",
+	
+			"<img_min_ratio/>" => User::$imgMinRatio,
+			"<img_max_ratio/>" => User::$imgMaxRatio,
 		);
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 		
 	}else{
-		echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
+		// echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
 
 		//metto tutti i valori alla stringa vuota
 		$replacements=array(
-		"<email_ph/>" => "",
-		"<username_ph/>" => ""
+			"<email_ph/>" => "",
+			"<username_ph/>" => "",
+	
+			"<img_min_ratio/>" => User::$imgMinRatio,
+			"<img_max_ratio/>" => User::$imgMaxRatio,
 		);
 
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 		$allOk = false;
 	}
-
-	
 }
 
-//rifaccio il controllo dell'utente dopo l'operazione di registrazione
-//credo che questo qua sotto non funzioni perchè il cookie settato può essere rilevato dal php se lo script viene richiamato
-/*
-$user=getLoggedUser($dbAccess);
-echo "user: ".($user ? $user->getUsername() : "nouserfound")."<br/>";
-if($user){
-	$homePage="Sei già registrato e hai già fatto il login";
-}*/
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);

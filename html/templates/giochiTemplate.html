@@ -1,135 +1,140 @@
 
+
 <div class="container" id="content">
-    <div class="advance_filter" id="categorie">
-        <div class="filtri_categorie">
-          <span class="tipo_categorie">Filtri Ricerca: |</span>
-          <form class="filtri" action="giochi.php"  method="post" onsubmit="return checkAnni();">
+    <form id="categorie" class="filtri" action="giochi.php"  onsubmit="return checkAnni();">
+      <div class="filtri_categorie">
+          <span tabindex="0" class="tipo_categorie">Filtri Ricerca: |</span>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_console">Console
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_console" aria-label="Filtra per console">Console ▼
               </button>
               <ul class="dropdown-filter" id="console">
                 <li><label class="customLabel" for="console1">PlayStation 4
-                  <input type="checkbox" id="console1" name="console[]" value="PS4" />
+                  <input type="checkbox" id="console1" name="console[]" value="PS4" <checked_console_0/> />
                   <span class="checkmark"></span>
-                </label></li><br />
-                <li><label class="customLabel" for="console2">PlayStation 5
-                  <input type="checkbox" id="console2" name="console[]" value="PS5" />
-                  <span class="checkmark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="console3">Xbox One
-                  <input type="checkbox" id="console3" name="console[]" value="XboxOne" />
+                  <input type="checkbox" id="console3" name="console[]" value="XboxOne" <checked_console_1/> />
                   <span class="checkmark"></span>
-                </label></li><br />
-                <li><label class="customLabel" for="console4">Xbox Series X/S
-                  <input type="checkbox" id="console4" name="console[]" value="XboxSeriesX" />
-                  <span class="checkmark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="console5">Nintendo Switch
-                  <input type="checkbox" id="console5" name="console[]" value="Switch" />
+                  <input type="checkbox" id="console5" name="console[]" value="Switch" <checked_console_2/> />
                   <span class="checkmark"></span>
-                </label></li><br />
+                </label></li><br/>
+                <li><label class="customLabel" for="console2">PlayStation 5
+                  <input type="checkbox" id="console2" name="console[]" value="PS5" <checked_console_3/> />
+                  <span class="checkmark"></span>
+                </label></li><br/>
+                <li><label class="customLabel" for="console4">Xbox Series X/S
+                  <input type="checkbox" id="console4" name="console[]" value="XboxSeriesX" <checked_console_4/> />
+                  <span class="checkmark"></span>
+                </label></li><br/>
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_generi">Generi
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_generi" aria-label="Filtra per generi">Generi ▼
               </button>
               <ul class="dropdown-filter" id="generi">
-                <li><label class="customLabel" for="genere1">FPS
-                  <input type="checkbox" id="genere1" name="genere[]" value="FPS" />
-                  <span class="checkmark"></span>
-                </label></li><br />
-                <li><label class="customLabel" for="genere2">Horror
-                  <input type="checkbox" id="genere2" name="genere[]" value="Horror" />
-                  <span class="checkmark"></span>
-                </label></li><br />
-                <li><label class="customLabel" for="genere3">GDR
-                  <input type="checkbox" id="genere3" name="genere[]" value="GDR" />
-                  <span class="checkmark"></span>
-                </label></li><br />
                 <li><label class="customLabel" for="genere4">Avventura
-                  <input type="checkbox" id="genere4" name="genere[]" value="Avventura" />
+                  <input type="checkbox" id="genere4" name="genere[]" value="Avventura" <checked_genere_0/> />
                   <span class="checkmark"></span>
-                </label></li><br />
-                <li><label class="customLabel" for="genere5">Puzzle
-                  <input type="checkbox" id="genere5" name="genere[]" value="Puzzle" />
-                  <span class="checkmark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="genere6">Azione
-                  <input type="checkbox" id="genere6" name="genere[]" value="Azione" />
+                  <input type="checkbox" id="genere6" name="genere[]" value="Azione" <checked_genere_1/> />
                   <span class="checkmark"></span>
-                </label></li><br />
+                </label></li><br/>
+                <li><label class="customLabel" for="genere1">FPS
+                  <input type="checkbox" id="genere1" name="genere[]" value="FPS" <checked_genere_2/> />
+                  <span class="checkmark"></span>
+                </label></li><br/>
+                <li><label class="customLabel" for="genere3">GDR
+                  <input type="checkbox" id="genere3" name="genere[]" value="GDR" <checked_genere_3/> />
+                  <span class="checkmark"></span>
+                </label></li><br/>
+                <li><label class="customLabel" for="genere2">Horror
+                  <input type="checkbox" id="genere2" name="genere[]" value="Horror" <checked_genere_4/> />
+                  <span class="checkmark"></span>
+                </label></li><br/>
+                <li><label class="customLabel" for="genere5">Puzzle
+                  <input type="checkbox" id="genere5" name="genere[]" value="Puzzle" <checked_genere_5/> />
+                  <span class="checkmark"></span>
+                </label></li><br/>
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_da">Dall'anno:
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_da" aria-label="Seleziona giochi dall'anno">Dall'anno ▼
               </button>
               <ul class="dropdown-filter" id="annoin">
+                <li><label class="customLabel" for="da2021">2021
+                  <input type="radio" id="da2021" name="year1" value="2021" <checked_anno1_0/> />
+                  <span class="radiomark"></span>
+                  </label></li><br/>
                 <li><label class="customLabel" for="da2020">2020
-                  <input type="radio" id="da2020" name="year1" value="2020" />
+                  <input type="radio" id="da2020" name="year1" value="2020" <checked_anno1_0/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="da2019">2019
-                  <input type="radio" id="da2019" name="year1" value="2019" />
+                  <input type="radio" id="da2019" name="year1" value="2019"  <checked_anno1_1/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="da2018">2018
-                  <input type="radio" id="da2018" name="year1" value="2018" />
+                  <input type="radio" id="da2018" name="year1" value="2018"  <checked_anno1_2/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="da2017">2017
-                  <input type="radio" id="da2017" name="year1" value="2017" />
+                  <input type="radio" id="da2017" name="year1" value="2017"  <checked_anno1_3/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="da2016">2016
-                  <input type="radio" id="da2016" name="year1" value="2016" />
+                  <input type="radio" id="da2016" name="year1" value="2016"  <checked_anno1_4/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_a">All'anno:
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_a" aria-label="all'anno">All'anno ▼
               </button>
               <ul class="dropdown-filter" id="annofin">
+                <li><label class="customLabel" for="a2021">2021
+                  <input type="radio" id="a2021" name="year2" value="2021" <checked_anno2_0/> />
+                  <span class="radiomark"></span>
+                </label></li><br/>
                 <li><label class="customLabel" for="a2020">2020
-                  <input type="radio" id="a2020" name="year2" value="2020" />
+                  <input type="radio" id="a2020" name="year2" value="2020" <checked_anno2_0/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="a2019">2019
-                  <input type="radio" id="a2019" name="year2" value="2019" />
+                  <input type="radio" id="a2019" name="year2" value="2019" <checked_anno2_1/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="a2018">2018
-                  <input type="radio" id="a2018" name="year2" value="2018" />
+                  <input type="radio" id="a2018" name="year2" value="2018" <checked_anno2_2/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="a2017">2017
-                  <input type="radio" id="a2017" name="year2" value="2017" />
+                  <input type="radio" id="a2017" name="year2" value="2017" <checked_anno2_3/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
                 <li><label class="customLabel" for="a2016">2016
-                  <input type="radio" id="a2016" name="year2" value="2016" />
+                  <input type="radio" id="a2016" name="year2" value="2016" <checked_anno2_4/> />
                   <span class="radiomark"></span>
-                </label></li><br />
+                </label></li><br/>
               </ul>
             </div>
+            <input type="hidden" name="filtroOrdineMemoria" value="<order_filter_memory_ph/>"/>
+            <input type="hidden" name="filtroRicerca" value="<search_memory_ph/>"/>
             <button class="applicafiltri" type="submit">Applica Filtri</button>
-          </form>
+            <button class="applicafiltri" type="submit" name="resetFiltri">Reset Filtri</button>
+      </div>
+      <div class="filtri_ordine">
+          <span tabindex="0" class="tipo_ordine" aria-label="Ordina risultati per:">Ordine: |</span>
+
+              <button aria-label="Alfabetico" <ordine_alfabetico_attivo_ph/> name="ordine" value="Alfabetico">A-Z</button>
+              <button aria-label="Voto in ordine decrescente"<ordine_voto_attivo_ph/> name="ordine" value="Voto">Voto (Decr.)</button>
+              <button aria-label="Uscite più recenti"<ordine_cronologico_attivo_ph/> name="ordine" value="Ultimi usciti">Più recenti</button>
+
         </div>
-        <div class="filtri_ordine">
-          <span class="tipo_ordine">Ordine: |</span>
-          <form class="bottoniOrdine" action="giochi.php">
-            <fieldset>
-              <button class="dropbtn" name="ordine" value="Alfabetico">Alfabetico</button>
-              <button class="dropbtn" name="ordine" value="Voto 4+">Voto 4+</button>
-              <button class="dropbtn" name="ordine" value="Ultimi usciti">Ultimi usciti</button>
-            </fieldset>
-          </form>
-        </div>
-    </div>
+        <messaggi_form_ph/>
+    </form>
     <div class="spazio_contenuto">
       <games_divs_ph/>
     </div>

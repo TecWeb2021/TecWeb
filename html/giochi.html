@@ -61,13 +61,11 @@
   </div>
 
 <div class="container" id="content">
-    <div class="advance_filter" id="categorie">
+    <form id="categorie" class="filtri" action="giochi.php"  onsubmit="return checkAnni();">
         <div class="filtri_categorie">
           <span class="tipo_categorie">Filtri Ricerca: |</span>
-          <form class="filtri" action="../php/action_page.php"  onsubmit="return checkAnni();">
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_console">Console
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_console">Console ▼
               </button>
               <ul class="dropdown-filter" id="console">
                 <li><label class="customLabel" for="console1">PlayStation 4
@@ -93,8 +91,8 @@
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_generi">Generi
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_generi">Generi ▼
+
               </button>
               <ul class="dropdown-filter" id="generi">
                 <li><label class="customLabel" for="genere1">FPS
@@ -124,8 +122,8 @@
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_da">Dall'anno:
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_da">Dall'anno ▼
+
               </button>
               <ul class="dropdown-filter" id="annoin">
                 <li><label class="customLabel" for="da2020">2020
@@ -151,8 +149,7 @@
               </ul>
             </div>
             <div class="dropdown">
-              <button type="button" class="dropbtn" id="btn_a">All'anno:
-                <i class="fa fa-caret-down"></i>
+              <button type="button" class="dropbtn" id="btn_a">All'anno ▼
               </button>
               <ul class="dropdown-filter" id="annofin">
                 <li><label class="customLabel" for="a2020">2020
@@ -177,19 +174,19 @@
                 </label></li><br />
               </ul>
             </div>
+            <input type="hidden" name="filtroOrdineMemoria" value="<order_filter_memory_ph/>"/>
             <button class="applicafiltri" type="submit">Applica Filtri</button>
-          </form>
+            <button class="applicafiltri" type="submit" name="resetFiltri">Reset Filtri</button>
         </div>
         <div class="filtri_ordine">
           <span class="tipo_ordine">Ordine: |</span>
-          <form class="bottoniOrdine" action="../php/action_page.php">
             <fieldset>
-              <button class="dropbtn" value="Alfabetico">Alfabetico</button>
-              <button class="dropbtn" value="Voto 4+">Voto 4+</button>
-              <button class="dropbtn" value="Ultimi usciti">Ultimi usciti</button>
+              <button class="dropbtn" name="ordine" value="Alfabetico">A-Z</button>
+              <button class="dropbtn" name="ordine" value="Voto">Voto (Decr.)</button>
+              <button class="dropbtn_attivo" name="ordine" value="Ultimi usciti">Più recenti</button>
             </fieldset>
-          </form>
         </div>
+        <messaggi_form_ph/>
     </div>
     <div class="spazio_contenuto">
       <div class="game">
@@ -206,8 +203,9 @@
           <p class="torna_su"><a class="link" href="#top">Torna su</a></p>
           <p class="modifica"><a class="link" href="">Modifica Gioco</a></p>
       </div>
-    </div>
 </div>
+</form>
+
 
 <div id="footer">
 	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />

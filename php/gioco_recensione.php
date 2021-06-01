@@ -11,30 +11,38 @@ $dbAccess->openDBConnection();
 $homePage=file_get_contents("../html/templates/giocoRecensioneTemplate.html");
 
 
-function replacePH($game){
+function replacePH($game, $isUserAdmin){
 	global $homePage;
+	global $dbAccess;
 
+	$image = $game ? $game->getImage2() : null;
+	$review = $game ? $dbAccess->getReview($game->getName()) : null;
 	// questa è la lista delle sostituzioni da applicare
 	$replacements=array(
-		"<gioco_scheda_ph/>" => "gioco_scheda.php?game=".strtolower($game->getName()),
-		"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($game->getName()),
-		"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($game->getName()),
-		"<img_path_ph/>" => "../".$game->getImage()->getPath(),
-		"<img_alt_ph/>" => $game->getImage()->getAlt(),
-		"<review_content_ph/>" => $game->getReview(),
+		"<img_path_ph/>" => "../". ( $image ? getSafeImage($image->getPath()) : getSafeImage("")),
+		"<img_alt_ph/>" => $image ? $image->getAlt() : "",
+		"<review_content_ph/>" => $review ? $review->getContent() : "",
+		"<review_author_ph/>" => $review ? $review->getAuthorName() : "",
+		"<review_date_ph/>" => $review ? dateToText($review->getDateTime()) : "",
 		"<game_vote_ph/>" => $game->getVote(),
 		"<game_name_ph/>" => $game->getName(),
 		"<game_edit_ph/>" => "edit_gioco.php?game=".$game->getName()
 	);
 
 	//applico le sostituzioni
-	foreach ($replacements as $key => $value) {
-		$homePage = str_replace($key, $value, $homePage);
+	$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
+
+	if($isUserAdmin){
+		$homePage=str_replace("<admin_func_ph>","",$homePage);
+		$homePage=str_replace("</admin_func_ph>","",$homePage);
+	}else{
+		$homePage=preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$homePage);
 	}
+
 }
 
 
-function generateGameCommentsDivs($gameName,$dbAccess){
+function generateGameCommentsDivs($gameName, $dbAccess, $isUserAdmin){
 	$commentTemplate=file_get_contents("../html/templates/commentDivTemplate.html");
 	$commentsList=$dbAccess->getCommentsList($gameName);
 	if(!$commentsList){
@@ -42,69 +50,115 @@ function generateGameCommentsDivs($gameName,$dbAccess){
 	}
 	$commentsString="";
 	foreach ($commentsList as $com) {
-		$author=$dbAccess->getUser($com->getAuthorName());
-		$s=$commentTemplate;
+		$author = $dbAccess->getUser($com->getAuthorName());
+		$s = $commentTemplate;
 
 		$replacements = array(
 			"<comment_content_ph/>" => $com->getContent(),
-			"<comment_author_profile_img_path_ph/>" => $author->getImage() ? $author->getImage()->getPath() : "../images/login.png",
+			"<comment_author_profile_img_path_ph/>" => $author->getImage() ? "../".getSafeImage($author->getImage()->getPath()) : "../". getSafeImage("images/login.png"),
 			"<comment_author_ph/>" => $author->getUsername(),
-			"<comment_date_ph/>" => $com->getDateTime()
+			"<comment_date_ph/>" => dateTimeToText($com->getDateTime())
 		);
 
-		foreach ($replacements as $key => $value) {
-			$s = str_replace($key, $value, $s);
+		$s = str_replace(array_keys($replacements), array_values($replacements), $s);
+
+		if($isUserAdmin){
+			$replacements = array(
+				'<admin_func_ph>' => '',
+				'<admin_func_ph/>' => '',
+				'<comment_delete_ph/>' => $com->getId()
+			);
+			$s = str_replace(array_keys($replacements), array_values($replacements), $s);
+		}else{
+			$replacements = array(
+				"/\<admin_func_ph\>.*\<\/admin_func_ph\>/" => ""
+			);
+			$s = preg_replace(array_keys($replacements), array_values($replacements), $s);
 		}
 
-		$commentsString=$commentsString.$s;
+		$commentsString = $commentsString.$s;
 	}
 	return $commentsString;
 
 }
+
+$game = null;
+
+$user=getLoggedUser($dbAccess);
+$isAdmin=$user && $user->isAdmin() ? true : false; 
 
 if(isset($_REQUEST['game'])){
 	$gameName=$_REQUEST['game'];
 	#sanitize;
 	$game=$dbAccess->getGame($gameName);
 	if($game){
-		replacePH($game);
 
-		
-
-		
-		$write=isset($_REQUEST['write']) ? $_REQUEST['write'] : null;
-		#sanitize;
-		if($write){
-			$user=getLoggedUser($dbAccess);
-			if($user){
-				$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
-				$result=$dbAccess->addComment($comment);
-				if($result){
-					echo "commento inserito<br/>";
+		if($dbAccess->getReview($game->getName()) === null){
+			$noReviewErrorReplacements = array(
+				"<game_name_ph/>" => $game->getName()
+			);
+			$homePage = getErrorHtml("no_review", $isAdmin, $noReviewErrorReplacements);
+		}else{
+			replacePH($game, $isAdmin);
+			
+			$write = getSafeInput('write');
+			#sanitize;
+			if($write){
+				$user = getLoggedUser($dbAccess);
+				if($user){
+					$comment=new Comment($user->getUsername(), $game->getName(), date('Y-m-d H:i:s'), $write); #2021-01-13 02:14:49
+					$result=$dbAccess->addComment($comment);
+					if($result){
+						// echo "commento inserito<br/>";
+						header("Location: gioco_recensione.php?game=" . $game->getName() . "");
+					}else{
+						//echo "commento non inserito<br/>";
+					}
 				}else{
-					echo "commento non inserito<br/>";
+					//echo "Per commentare devi essere autenticato";
+				}
+				
+			}
+
+			$deleteComment = isset($_REQUEST['deleteComment']) ? $_REQUEST['deleteComment'] : null;
+			if($isAdmin){
+				if($deleteComment){
+					$result = $dbAccess->deleteComment($deleteComment);
+					if($result){
+						//echo "commento eleiminato<br/>";
+					}else{
+						//echo "commento non eleiminato<br/>";
+					}
 				}
 			}else{
-				echo "Per commentare devi essere autenticato";
+				//echo "Per eliminare commenti devi essere autenticato come amministratore";
 			}
-			
+
+			$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess, $isAdmin);
+			$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
 		}
 
-		$commentsDivs=generateGameCommentsDivs($game->getName(), $dbAccess);
-		$homePage=str_replace("<comments_divs_ph/>", $commentsDivs, $homePage);
-
 	}else{
-		echo "il gioco specificato non è stato trovato";
+		$homePage = getErrorHtml("game_not_existent");
 	}
 }else{
-	echo "non è specificato un gioco";
+	$homePage = getErrorHtml("game_not_specified");
+	header('Location: home.php');
 }
+
+unset($_GET['write']);
+unset($_POST['write']);
+unset($_REQUEST['write']);
 
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $game ? $game->getName() : "");
 
-$basePage=str_replace("<page_content_ph/>", $homePage, $basePage);
+$gameHomePage = createGameBasePage("recensione", $game ? $game->getName() : "");
+
+$basePage=str_replace("<page_content_ph/>", $gameHomePage, $basePage);
+
+$basePage=str_replace("<game_page_content_ph/>", $homePage, $basePage);
 
 $basePage=replace($basePage);
 

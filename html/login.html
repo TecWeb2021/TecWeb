@@ -64,21 +64,21 @@
   <div class="container">
     <div class="schedaForm">
       <h3 class="titolo_login_registrati">Accedi al tuo account ALLGames</h3>
-      <form id="loginForm" action="../php/login.php" onsubmit="return validateForm();">
+      <form id="loginForm" action="login.php" onsubmit="return validateForm();">
 
         <fieldset>
 
-          <erroreLogin_ph />
+          <messaggi_form_ph/>
 
           <label for="nomeUtente">Nome utente:</label>
-          <span><input type="text" id="nomeUtente"  name="nomeUtente" value="<nomeProfilo_ph />" placeholder="Nome utente" /></span><br />
+          <span><input type="text" id="nomeUtente"  name="nomeUtente" value="<username_ph/>" placeholder="Nome utente" /></span><br />
 
           <label for="password">Password:</label>
-          <span><input type="password" id="password" name="password" value="<valorePw_ph />" placeholder="Password" /></span><br />
-          <div class="loginButton" ><button type="submit" name="login">Login</button></div>
+          <span><input type="password" id="password" name="password" value="" placeholder="Password" /></span><br />
+          <div class="loginButton" ><button type="submit" >Login</button></div>
 
           <div class="nuovoUtente">
-            <p class="messaggioLogin">Non hai un profilo? <a href="../php/registrati.php">Creane subito uno</a></p>
+            <p class="messaggioLogin">Non hai un profilo? <a href="registrati.php">Creane subito uno</a></p>
           </div>
         </fieldset>
       </form>

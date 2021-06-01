@@ -1,8 +1,71 @@
 \section{Presentazione}
-CSS...
-\subsection{Desktop}
 
-\subsection{Mobile}
+Nella realizzazione del progetto abbiamo utilizzato il CSS per creare un sito che risultasse facilmente accessibile. A tal fine abbiamo prediletto l’utilizzo di misure relative o in percentuale e di comandi per il posizionamento del testo e del contenuto che ci hanno permesso di ottenere un design che si adatta ad ogni formato di schermo, senza compromettere in alcun modo la navigazione tramite screen reader.
+Abbiamo quindi creato 4 file CSS ognuno dei quali dedicato a un target preciso:
+
+\subsection{Desktop (style.css)}
+
+\subsubsection{Header}
+Gli elementi presenti nell'header, esposti nel paragrafo 2.3.1, sono organizzati in modo da potersi adattare alla dimensione della schermata. Inoltre, nel caso di nome utente troppo lungo, il link che permette di effettuare il logout si sposterà nella posizione sottostante al nome utente.
+
+\subsubsection{Contenuto}
+Abbiamo creato il sito utilizzando 4 strutture principali per le pagine, con delle piccole modifiche dove necessario:
+\begin{itemize}
+	\item il primo tipo di struttura lo abbiamo usato per le pagine Home, Giochi, Notizie, Notizie Gioco e Lista Utenti: in queste pagine il contenuto è mostrato suddiviso in elementi uno sottostante all’altro, come se fosse una lista;
+	\item il secondo tipo di struttura lo abbiamo usato in Scheda Gioco, Recensione e Notizia: in queste pagine il contenuto consiste in un unico testo che riempie completamente la pagina;
+	\item il terzo tipo di struttura lo abbiamo usato per le pagine Login, Registrati, Inserisci Gioco, Modifica Gioco, Nuova Notizia, Modifica Notizia e Modifica Profilo: in queste pagine il contenuto consiste in una serie di form da compilare per poter accedere ad altre pagine o per aggiungere o modificare degli elementi;
+	\item il quarto tipo di struttura lo abbiamo usato per la pagina Profilo Utente e Admin: in questa pagina il contenuto consiste nelle informazioni del profilo e nel caso di un profilo di un amministratore vengono aggiunti 3 bottoni appositi che corrispondo alle azioni eseguibili solo da un amministratore.
+\end{itemize}
+
+Di seguito elenchiamo le pagine significative nel dettaglio:
+
+\begin{itemize}
+	\item \textbf{Pagina Home:} In questa pagina il contenuto principale, ovvero la lista di notizie e giochi che sono state aggiunte al sito più recentemente, è suddiviso su 2 colonne: 
+	\begin{itemize}
+		\item sulla sinistra è presente la lista delle ultime notizie aggiunte al sito in ordine cronologico in modo che venga visualizzata per prima la più recente, con il limite di 5 notizie visibili.
+		\item sulla destra è presente la lista degli ultimi giochi pubblicati ordinati seconda la data di uscita e con il limite di 5 giochi visibili. Al di sotto della sezione degli ultimi giochi aggiunti abbiamo inserito una sezione dedicata al gioco random, nella quale visualizziamo un gioco casuale tra quelli presenti nel database, permettendo così all’utente di scoprire nuovi giochi che potrebbe non conoscere.
+	\end{itemize}
+	\item \textbf{Pagina Giochi:} In questa pagina sono visualizzati tutti i giochi presenti nel database, ognuno dei quali con la sua sezione dedicata, visualizzati uno sotto l’altro in ordine di uscita. Al di sotto del breadcrumb abbiamo inserito una sezione dedicata a dei filtri appositi in modo da aiutare l’utente a visualizzare solo ciò a cui è interessato, di fianco a questa sezione filtri abbiamo messo dei bottoni appositi grazie ai quali l’utente può visualizzare i giochi in un ordine diverso da quello di default. 
+Nella sezione dedicata al gioco sono presenti una foto del gioco, parte della sinossi del gioco, la data di uscita e il voto.
+	\item \textbf{Pagina Notizie:} Questa pagina è analoga alla Pagina Giochi, tranne per la sezione dei filtri e dell’ordinamento. È inoltre presente una barra di ricerca apposita per le notizie, che permette all’utente di visualizzare le notizie che nel titolo presentano ciò che l’utente ha digitato. A fianco abbiamo mantenuto una sezione di filtri semplificata rispetto a quella dei giochi e per quanto riguarda l’ordine delle notizie abbiamo deciso di mantenere sempre un ordine cronologico dalla più recente alla meno recente.
+Nella sessione dedicata della notizia sono presenti una foto della notizia, parte del testo della notizia e la data di pubblicazione.
+	\item \textbf{Pagina Scheda Gioco:} In questa pagina il contenuto è suddiviso in 2 colonne:
+	\begin{itemize}
+		\item sulla sinistra è presente una piccola foto del gioco e al di sotto di essa vi è una lista di tutte le informazioni generiche più importanti riguardanti il gioco.
+		\item sulla destra è presente una sinossi della trama del gioco.
+	\end{itemize}
+	\item \textbf{Pagina Recensione:} In questa pagina è presente la copertina del gioco che occupa tutta la pagina in larghezza, sotto di essa è visibile il testo della recensione del gioco con tanto di nome dell’autore, data di pubblicazione e voto. Sotto quest’ultima vi è una sezione dedicata ai commenti.
+	\item \textbf{Pagina Notizie Gioco:} Questa pagina è analoga alla pagina Notizie tranne che per la mancanza della barra di ricerca e della sezione di filtri, inoltre tutte le notizie presenti sono notizie collegate al gioco che si sta consultando al momento.
+	\item \textbf{Pagina Notizia:} Questa pagina è analoga alla pagina Recensione tranne per la mancanza della sezione dei commenti.
+	\item \textbf{Pagina Profilo Utente:} In questa pagina è visibile la propria foto utente con affianco le proprie informazioni personali, inoltre è presente il bottone per la modifica del proprio profilo.
+	\item \textbf{Pagina Admin:} Questa pagina è analoga alla pagina Profilo Utente con l’aggiunta al di sotto della propria immagine profilo di 3 bottoni dedicati appositamente a delle funzioni esclusive per l’amministratore, ovvero la possibilità di aggiungere un gioco, una notizia o di visualizzare la lista degli utenti.
+	\item \textbf{Pagina Lista Utenti:} In questa pagina è visibile la lista di tutti gli utenti del sito sotto forma di lista ed ogni utente ha la sua foto, il suo nome e un bottone che permette all’amministratore di eliminare il profilo corrispondente.
+	\item Le pagine \textbf{Login}, \textbf{Registrati}, \textbf{Inserisci Gioco}, \textbf{Modifica Gioco}, \textbf{Nuova Notizia}, \textbf{Modifica Notizia} e \textbf{Modifica Profilo} sono pagine molto semplici che presentano una lista di form da dover compilare seguite in fondo alla pagina da uno o più bottoni (il numero e la funzione dei bottoni varia a seconda della pagina).
+\end{itemize}
+
+
+
+
+
+\subsection{Mobile (mobileportraite.css e mobilelandscape.css)}
+
+\subsubsection{Header}
+Per quanto riguarda la visualizzazione da smartphone e tablet abbiamo deciso di invertire la posizione tra la barra di ricerca e i 3 link delle pagine principali (Home, Giochi, Notizie), i quali vengono inoltre raggruppati in un menù a tendina, quando si usano schermi con un formato di 1024x768 o inferiore. Abbiamo fatto questa scelta considerando che la maggior parte degli utenti è destronsa e quindi il menù a destra in questo modo è più facilmente raggiungibile. Un’altra modifica che abbiamo effettuato è stata quella di eliminare il sottotitolo del sito, che appariva sulla sinistra sotto il titolo, ritenendolo superfluo nelle versioni mobile dove bisogna prediligere la semplicità.
+Abbiamo deciso di creare 2 file per gestire meglio alcune piccole differenze tra lo schermo di uno smartphone in verticale e lo schermo di uno smartphone orizzontale o di un tablet. Un esempio di differenza tra le 2 risoluzioni è il numero di colonne in cui è suddiviso il testo di un gioco o di una notizia nelle pagine Giochi e Notizie, in mobileportraite usiamo 1 colonna sola mentre in mobilelandscape ne usiamo 3 come nella versione desktop.
+
+
+\subsubsection{Contenuto}
+\begin{itemize}
+	\item \textbf{Pagina Home:} la colonna di destra si sposta sotto quella di sinistra e la sezione gioco random viene messa di fianco alla sezione ultime uscite;
+	\item \textbf{Pagina Giochi:} la sezione dei bottoni per l’ordinamento dei giochi si posiziona al di sotto della sezione filtri dei giochi;
+	\item \textbf{Pagina Notizie:} la sezione dei filtri delle notizie si posiziona sotto la barra di ricerca apposita per le notizie;
+	\item \textbf{Pagina Scheda Gioco:} la sinossi che prima si trovava sulla destra ora si trova al di sotto delle informazioni generali del gioco.
+\end{itemize}
+
 
 \subsection{Print}
+Questo foglio di stile si applica automaticamente quanto un utente vuole stampare la pagina. 
+Abbiamo eliminato tutte le immagini, anche il background, perché ritenute superflue rispetto al contenuto. Abbiamo poi rimosso anche il menu, la barra di ricerca, il footer, tutti i pulsanti ed i link dato che in una pagina stampata perdevano la loro funzione e perciò non sono necessari. 
+Inoltre abbiamo deciso di rendere le pagine in bianco e nero e di adottare un font con grazie (in questo caso Times New Roman) per rendere più leggibile il contenuto una volta stampato.
+
 

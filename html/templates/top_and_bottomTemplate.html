@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="it-IT" lang="it-IT">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -22,21 +22,15 @@
 </head>
 
 <body <body_onload_ph/>>
-
   <div id="header">
     <a class="aiutiNascosti" href="#vociMenu"> Vai al menù </a>
     <a class="aiutiNascosti" href="#content"> Vai al contenuto </a>
 
-    <a href="home.html"><img id="logo" alt="Qualcosa" src="../images/joystick.png" /></a>
-    <h1 id="titolo1"><span xml:lang="en">ALLGames</span></h1>
-    <h2 id="titolo2">Tutto sui Videogiochi</h2>
-    <div class="loginblock">
-      <a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="foto profilo utente" src="<user_img_path_ph/>" /></a>
-      <not_logged_in><span id="login"><a class="link_login" href="login.html">Login</a> | <a class="link_login" href="registrati.html">Registrati</a></span></not_logged_in>
-      <logged_in><span id="login"><username_ph/> | <a href="?logout=true">Logout</a></span></logged_in>
-    </div>
+    <a href="home.php"><img id="logo" alt="ALL Games Logo" src="../images/joystick.png" /></a>
+		<h1 id="titolo1"><span xml:lang="en" lang="en">ALLGames</span></h1>
+		<h2 id="titolo2">Tutto sui Videogiochi</h2>
+    <logged_ph/>
   </div>
-
   <div class="topnav" id="menu">
     <button  class="icon" onclick="responsiveMenu()">
       <img id="hamburger" src="../images/barre_menu.png" alt="menu" />
@@ -54,23 +48,30 @@
     </form>
 
     <ul id="vociMenu" class="menu">
-        <li><a <home_active>class="active"</home_active> href="Home.html"><span xml:lang="en">Home</span></a></li>
-        <li><a <giochi_active>class="active"</giochi_active> href="Giochi.html">Giochi</a></li>
-        <li><a <notizie_active>class="active"</notizie_active> href="Notizie.html">Notizie</a></li>
+        <li><a <home_active>class="active"</home_active> href="home.php"><span xml:lang="en" lang="en">Home</span></a></li>
+        <li><a <giochi_active>class="active"</giochi_active> href="giochi.php">Giochi</a></li>
+        <li><a <notizie_active>class="active"</notizie_active> href="notizie.php">Notizie</a></li>
     </ul>
 
   </div>
 
-  <div id="breadcrumb">
+  <div role="breadcrumb" id="breadcrumb">
       <p>Ti trovi in: <page_breadcrumb_ph/></p>
   </div>
 
 <page_content_ph/>
 
 <div id="footer">
-  <img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
-  <em> Noi4 - Progetto di Tecnologie Web 2020/2021 </em>
-  <img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
+	<img id="imgValidCode" alt="Certificato W3C xhtml" src="../images/valid-xhtml10.png" />
+	<ul tabindex="0" class="footer_ul">
+		<li>
+			<em> Noi4© - Progetto di Tecnologie Web 2020/2021 </em>
+		</li>
+		<li>
+			<em> Contatti: noi4.dev@gmail.com </em>
+		</li>
+	</ul>
+	<img id="imgValidCSS" alt="Certificato W3C css" src="../images/vcss-blue.gif" />
 </div>
 
 </body>

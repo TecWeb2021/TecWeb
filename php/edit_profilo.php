@@ -12,67 +12,81 @@ $homePage=file_get_contents("../html/templates/editProfiloTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
+
 if($user){
 
 	if(isset($_REQUEST['elimina'])){
-		$dbAccess->deleteUser($user->getUsername());
-		//qui devo ancora verificar ese effettivamente è stato eliminato con successo, per ora suppongo che succeda sempre
-		$homePage = "profilo eliminato con successo";
-	}else{
-
-
-		$new_password=isset($_REQUEST['password']) ? $_REQUEST['password'] : null;
-		#sanitize
-		$new_email=isset($_REQUEST['email']) ? $_REQUEST['email'] : null;
-		#sanitize
-		$new_imagePath=saveImageFromFILES($dbAccess, "immagine");
-		#sanitize
-
+		$res = $dbAccess->deleteUser($user->getUsername());
+		if($res !== false){
+			$homePage = getErrorHtml("user_deleted");
+		}else{
+			array_push($failure_messages, "Eliminazione fallita");
+		}
 		
-		if($new_email || $new_password || $new_imagePath){
-			echo "almeno un valore è stato inserito"."<br/>";
-			
-			$error_message = "";
+	}else{
+		if(isset($_REQUEST['email'])){
+			//echo "almeno un valore è stato inserito"."<br/>";
 
-			//non è chiaro scrivere solo non presente quando il problema potrebbe essere un altro
-			$error_messages = array(
-				'email' => "Email non presente",
-				'password' => "Password non presente",
-				'immagine' => "Immagine non presente",
+			$new_password = getSafeInput('password', 'string');
+			$new_passwordRepeat = getSafeInput('repeatpassword', 'string');
+			$new_email = getSafeInput('email', 'string');
+			$new_imagePath = getSafeInput('immagine', 'image', $dbAccess);
+			// $new_imagePath = saveImageFromFILES($dbAccess, "immagine", User::$imgMinRatio, User::$imgMaxRatio);
+			
+
+			// controllo i campi obbligatori
+
+			$mandatory_fields = array(
+				[$new_email, 'email']
 			);
-
-			if($new_email == null){
-				$error_message = $error_message . $error_messages['email'] . "<br/>";
-			}
-			//controllo di lunghezza temporaneo
-			if(false /*$new_password == null || strlen($new_password) < 5*/){
-				$error_message = $error_message . $error_messages['password'] . "<br/>";
-			}
-			//controllo se è false perchè è così che funziona la funzione saveImageFromFILES
-			if(false /*$new_imagePath === false*/){
-				$error_message = $error_message . $error_messages['immagine'] . "<br/>";
+			foreach ($mandatory_fields as $value) {
+				if($value[0] === null || validateValue($value[0], $value[1]) === false){
+					array_push($validation_error_messages, getValidationError($value[1]));
+				}
 			}
 
-			
-			if($error_message != ""){
+			// controllo i campi opzionali
+
+			$optional_fields = array(
+				[$new_password, 'password'],
+				[$new_imagePath, 'immagine_utente_ratio']
+			);
+			foreach ($optional_fields as $value) {
+				if($value[0] !== null && validateValue($value[0], $value[1]) === false){
+					array_push($validation_error_messages, getValidationError($value[1]));
+				}
+			}
+
+			// controllo i campi obbligatori derivati
+
+			if( $new_password !== null && $new_passwordRepeat !== $new_password){
+				array_push($validation_error_messages, getValidationError('repeatpassword'));
+			}
+				
+			if(count($validation_error_messages) > 0){
+				if ($new_imagePath !== null){
+					unlink('../' . $new_imagePath);
+				}
 				//se c'è stato almeno un errore ...
-				echo $error_message;
-
 			}else{
-				echo "non ci sono stati errori" . "<br/>";
+				//echo "non ci sono stati errori" . "<br/>";
 				
 				//se non è stata inserita una nuova immagine prendo quella vecchia
 				$new_image = null;
-				if($new_imagePath == false){
-					$user->getImage();
+				if($new_imagePath === null){
+					// echo "\$new_imagePath == false<br/>";
+					$new_image = $user->getImage();
 				}else{
 					$new_image = new Image($new_imagePath, "immagine utente");
 				}
 
-				//se non è stata inserita una nuova password la uso per creare il nuovo hash, altrimenti uso l'hash vecchio
+				//se è stata inserita una nuova password la uso per creare il nuovo hash, altrimenti uso l'hash vecchio
 				$new_hashValue = null;
 				if($new_password == null){
-					$new_hashValue = $user->gethash();
+					$new_hashValue = $user->getHash();
 				}else{
 					$new_hashValue = getHash($user->getUsername(), $new_password);
 				}
@@ -82,10 +96,13 @@ if($user){
 		
 				$result = $dbAccess->overwriteUser($newUser);
 				if($result){
-					echo "risultato overwrite: " . $result . "<br>/";
+					array_push($success_messages, "Modifica avvenuta con successo");
 					setcookie('login',$new_hashValue);
 				}else{
-					echo "risultato overwrite: " . $result . "<br>/";
+					array_push($failure_messages, "Modifica fallita");
+					if ($new_imagePath !== null){
+						unlink('../' . $new_imagePath);
+					}
 					$allOk = false;
 				}
 		
@@ -94,31 +111,37 @@ if($user){
 
 			//faccio i replacement: dove possibile col valore nuovo, altrimenti con quello vecchio
 			$replacements=array(
-			"<email_ph/>"=>$new_email ? $new_email : $user->getEmail(),
+				"<email_ph/>"=>$new_email ? $new_email : $user->getEmail(),
+	
+				"<img_min_ratio/>" => User::$imgMinRatio,
+				"<img_max_ratio/>" => User::$imgMaxRatio,
 			);
-			foreach ($replacements as $key => $value) {
-				$homePage=str_replace($key, $value, $homePage);
-			}
+
+			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 
 			
 		}else{
-			echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+			//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
 			//faccio i replacement coi valori vecchio
 			$replacements=array(
-			"<email_ph/>" => $user->getEmail(),
+				"<email_ph/>" => $user->getEmail(),
+	
+				"<img_min_ratio/>" => User::$imgMinRatio,
+				"<img_max_ratio/>" => User::$imgMaxRatio,
 			);
-			foreach ($replacements as $key => $value) {
-				$homePage=str_replace($key, $value, $homePage);
-			}
+
+			$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 		}
 	}
-	
-	
-
 }else{
-	$homePage="non puoi accedere a questa pagina perchè non hai fatto il login";
+	$homePage = getErrorHtml("not_logged");
 }
+
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 

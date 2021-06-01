@@ -31,17 +31,26 @@
 
 \begin{center}
 	\textbf{\Large{Informazioni sul sito}}\\
-	\textbf{Indirizzo sito web:} \url{http://localhost/ipiacere/php/home.php}\\
+	\textbf{Indirizzo sito web:} \url{http://localhost:8080/ipiacere/php/home.php}\\
 	\textbf{Email referente gruppo:} ivan.piacere@studenti.unipd.it
+
 	\renewcommand{\arraystretch}{1.8}
 	%\rowcolors{3}{FFD699!100!black!15}{}
-	\begin{longtable}{c c c}
+	\begin{longtable}[H]{| p{.18\hsize} | p{.18\hsize} | p{.18\hsize} |}
 		\caption{Utenti}\\
-		\rowcolor[HTML]{FF9933}
-		\textbf{Utente} & \textbf{Login} & \textbf{Password} \\
+		\rowcolor[HTML]{C14638}
+		%\textbf{Utente} & \textbf{Login} & \textbf{Password} \\
+	\multicolumn{1}{c}{\color[HTML]{FFFFFF} \textbf{Utente}} &
+		\multicolumn{1}{c}{\color[HTML]{FFFFFF} \textbf{Login}} &
+		\multicolumn{1}{c}{\color[HTML]{FFFFFF} \textbf{Password}} \\
 		\endhead
-		\textbf{Admin} & amdin & admin\\
+		
+		\textbf{Admin} & admin & admin\\
+		\hline
 		\textbf{Utente} & user & user\\
+		\hline
 	\end{longtable}
 \end{center}
+
+
 

@@ -10,8 +10,7 @@ $dbAccess->openDBConnection();
 
 $user=null;
 
-$user=null;
-$homePage="<p>Non sei autenticato</p>";
+$user = null;
 
 if(isset($_COOKIE['login'])){
 	$hash=$_COOKIE['login'];
@@ -20,10 +19,12 @@ if(isset($_COOKIE['login'])){
 }
 
 if($user){
-	$homePage=file_get_contents("../html/templates/profilo_utenteTemplate.html");
+	$homePage = file_get_contents("../html/templates/profilo_utenteTemplate.html");
 	if($user->isAdmin()){
-		$admin=file_get_contents("../html/templates/adminTemplate.html");
-		$homePage=str_replace("<admin_placeholder_ph/>", $admin, $homePage);
+		$admin = file_get_contents("../html/templates/adminTemplate.html");
+		$homePage = str_replace("<admin_placeholder_ph/>", $admin, $homePage);
+	}else{
+		$homePage = str_replace("<admin_placeholder_ph/>", "", $homePage);
 	}
 	$imagePath="";
 	if($user->getImage()){
@@ -31,12 +32,12 @@ if($user){
 	}else{
 		$imagePath="images/login.png";
 	}
-	$homePage=str_replace("<user_image_ph/>","../".$imagePath, $homePage);
+	$homePage=str_replace("<user_image_ph/>","../".getSafeImage($imagePath), $homePage);
 
 	$homePage=str_replace("<username_ph/>",$user->getUsername(), $homePage);
 	$homePage=str_replace("<email_ph/>",$user->getEmail(), $homePage);
 }else{
-	$homePage="non puoi accedere a questa pagina";
+	$homePage = getErrorHtml("not_logged");
 }
 
 

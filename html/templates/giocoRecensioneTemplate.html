@@ -1,15 +1,9 @@
 
 
-  <ul class="leftnav" id="submenu">
-    <li><a href="<gioco_scheda_ph/>">Scheda Gioco</a></li>
-    <li><a class="active" href="<gioco_recensione_ph/>">Recensione Gioco</a></li>
-    <li><a href="<gioco_notizie_ph/>">Notizie Gioco</a></li>
-  </ul>
-
 <div class="container" id="content">
   <div class="recensione">
     <div class="info_gioco">
-      <img class="sfondo" src="<img_path_ph/>" alt="<img_alt_ph/>">
+      <img class="foto_recensione" src="<img_path_ph/>" alt="<img_alt_ph/>">
     </div>
     <div class="recensione_gioco">
       <p class="valutazione">Voto: <game_vote_ph/> / 5</p>
@@ -19,7 +13,7 @@
       <p class="testo">
         <review_content_ph/>
       </p>
-      <p class="modifica" id="modifica_scheda_recensione"><a class="link" href="<game_edit_ph/>">Modifica recensione</a></p>
+      <admin_func_ph><p class="modifica" id="modifica_scheda_recensione"><a class="link" href="<game_edit_ph/>">Modifica recensione</a></p></admin_func_ph>
     </div>
   </div>
   <div class="commenti">
@@ -34,8 +28,12 @@
         </fieldset>
       </form>
     </div>
-    <ul class="lista_commenti">
-      <comments_divs_ph/>
-    </ul>
+      <form action="gioco_recensione.php" method="get">
+        <input type="hidden" name="game" value="<game_name_ph/>"/>
+        <ul id="lista_commenti" class="lista_commenti">
+          <comments_divs_ph/>
+        </ul>
+      </form>
+
   </div>
 </div>

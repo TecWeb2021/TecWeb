@@ -7,6 +7,9 @@ class User{
 	private $image;
 	private $email;
 
+	public static $imgMinRatio = 0.5;
+	public static $imgMaxRatio = 1.5;
+
 	function __construct($_username, $_hash, $_is_admin=0, $_image=null, $_email){
 		$this->username=$_username;
 		$this->hash=$_hash;

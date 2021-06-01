@@ -36,16 +36,16 @@ $homePage=file_get_contents("../html/templates/editNotiziaTemplate.html");
 
 
 // verifico che l'utente abbia l'autorizzazione per modificare un gioco
-$user=getLoggedUser($dbAccess);
+$user = getLoggedUser($dbAccess);
 
 $authCheck=true;
 
 if(!$user){
-	$homePage="Non sei autenticato";
+	$homePage = getErrorHtml("not_logged");
 	$authCheck=false;
 }
 if($authCheck && !$user->isAdmin()){
-	$homePage="Non sei un amministratore";
+	$homePage = getErrorHtml("not_admin");
 	$authCheck=false;
 }
 
@@ -55,7 +55,7 @@ if($authCheck && !$user->isAdmin()){
 $allOk=$authCheck;
 // verifico che sia stato specificato un gioco
 if($allOk && !isset($_REQUEST['news'])){
-	$homePage="Non è stata specificata alcuna notizia";
+	$homePage = getErrorHtml("news_not_existent");
 	$allOk=false;
 }
 
@@ -70,21 +70,29 @@ if($allOk /*&& !correctFormat(gameName) (qui devo controllare che il nel nome de
 }
 // verifico che il gioco specificato esista
 if($allOk && !$news=$dbAccess->getNews($newsToBeModifiedName)){
-	$homePage="La notizia $newsToBeModifiedName specificata non esiste";
+	$homePage = getErrorHtml("news_not_specified");
 	$allOk=false;
 }
 
 //se c'è elimina non c'è il resto quindi succede solo quello che c'è nell'if qua sotto, almeno credo
 if(isset($_REQUEST['elimina'])){
 	$newsToBeDeletedName=$_REQUEST["elimina"];
-	echo "elimina: ".$newsToBeDeletedName."<br/>";
+	//echo "elimina: ".$newsToBeDeletedName."<br/>";
 	$opResult=$dbAccess->deleteNews($newsToBeDeletedName);
 	if($opResult){
-		$homePage="eliminazione della notizia $newsToBeDeletedName riuscita";
+		$homePage = getErrorHtml("news_deleted");
 	}else{
 		$homePage="eliminazione della notizia $newsToBeDeletedName fallita";
 	}
 }
+
+$error_message = "";
+
+$oldNews = null;
+
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
 	
 if($allOk){
 	//ora posso popolare la pagina con gli attributi del gioco
@@ -99,107 +107,128 @@ if($allOk){
 
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
-	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo']) ){
-		echo "almeno un valore è stato rilevato<br/>";
+	if( isset($_REQUEST['titolo']) || isset($_REQUEST['testo']) || isset($_REQUEST['tipologia']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) ){
+		//echo "almeno un valore è stato rilevato<br/>";
 		//i nuovi valori per il gioco sono stati tutti rilevati
-		$new_newsTitle =  isset($_REQUEST['titolo']) ? $_REQUEST['titolo'] : null;
-		$new_newsText = isset($_REQUEST['testo']) ? $_REQUEST['testo'] : null;
+		$new_newsTitle =  getSafeInput('titolo', 'string');
+		$new_newsText = getSafeInput('testo', 'string');
 		// alcuni valori li riprendo dalla vecchia notizia
-		$new_newsAuthor = $oldNews->getAuthor();
-		$new_newsEditDateTime = $oldNews->getLastEditDateTime();
-		$new_newsCategory = isset($_REQUEST['tipologia']) ? $_REQUEST['tipologia'] : null;
-		$new_newsAlt = isset($_REQUEST['alternativo']) ? $_REQUEST['alternativo'] : null;
+		$new_newsAuthor = $user;
+		$new_newsEditDateTime = date("Y-m-d");
+		$new_newsCategory = getSafeInput('tipologia', 'string');
+		$new_newsAlt1 = getSafeInput('alternativo1', 'string');
+		$new_newsAlt2 = getSafeInput('alternativo2', 'string');
 		$new_newsGame = null;
 		if($new_newsCategory == "Giochi"){
-			$new_newsGame = isset($_REQUEST['searchbar']) ? $_REQUEST['searchbar'] : null;
+			$new_newsGame = getSafeInput('searchbar', 'string');
 		}
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-		$new_newsImage=null;
-		$imageOk=false;
+		
 
-		//errore 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine']) && $_FILES['immagine']['error']!=4 ){
-			echo "l'utente ha inserito una nuova immagine"."<br/>";
-			
+		$imagePath1 = getSafeInput('immagine1', 'image', $dbAccess);
+		$imagePath2 = getSafeInput('immagine2', 'image', $dbAccess, 1);
 
-			$imagePath=saveImageFromFILES($dbAccess,'immagine');
-			if($imagePath){
-				$new_newsImage=new Image($imagePath,$new_newsAlt);
-				$imageOk=true;
-			}else{
-				echo "salvataggio dell'immagine fallito"."<br/>";
+		//controllo i campi obbligatori
 
+		$mandatory_fields = array(
+			[$new_newsTitle, 'titolo'],
+			[$new_newsText, 'testo'],
+			[$new_newsCategory, 'tipologia']
+		);
+		foreach ($mandatory_fields as $value) {
+			if( $value[0] === null || validateValue($value[0], $value[1]) === false){
+				array_push($validation_error_messages, getValidationError($value[1]));
 			}
 		}
 
-		$error_messages = array(
-			'titolo' => "Titolo non presente",
-			'testo' => "Testo non presente",
-			'tipologia' => "Tipologia non presente",
-			'immagine' => "Immagine non presente",
-			'alternativo' => "Testo alternativo dell'immagine non presente",
-			'gioco' => "Gioco non inserito"
-		);
+		// controllo i campi obbligatori derivati
 
-		$error_message = "";
-
-		//qui ci dovrò mettere anche un controllo dei campi
-		if($new_newsTitle == null){
-			$error_message = $error_message . $error_messages['titolo'] . "<br/>";
-		}
-		if($new_newsText == null){
-			$error_message = $error_message . $error_messages['testo'] . "<br/>";
-		}
-		if($new_newsCategory == null){
-			$error_message = $error_message . $error_messages['tipologia'] . "<br/>";
-		}
-		if(false /*$new_newsImage == null*/){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}
-		if($new_newsAlt == null){
-			$error_message = $error_message . $error_messages['alternativo'] . "<br/>";
-		}
-		if($new_newsCategory == "Giochi" && $new_newsGame== null){
-			$error_message = $error_message . $error_messages['gioco'] . "<br/>";
+		if($new_newsCategory == "Giochi" && ($new_newsGame == null || validateValue($new_newsGame, 'nome_gioco_notizia') === false) ){
+			array_push($validation_error_messages, getValidationError('nome_gioco_notizia'));
 		}
 
-		if($error_message != ""){
-			$homePage = str_replace("<messaggi_form_ph/>", $error_message, $homePage);
+		// controllo i campi opzionali
+		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_notizia_ratio") === false){
+			// echo "validating imagePath1 <br/>";
+			array_push($validation_error_messages, getValidationError("immagine1_notizia_ratio"));
+		}
+
+		if( $imagePath2 !== null && validateValue($imagePath2,"immagine2_notizia_ratio") === false){
+			array_push($validation_error_messages, getValidationError("immagine2_notizia_ratio"));
+		}
+
+		if( $new_newsAlt1 !== null && validateValue($new_newsAlt1, 'alternativo') === false){
+			array_push($validation_error_messages, getValidationError('alternativo'));
+		}
+
+		if( $new_newsAlt2 !== null && validateValue($new_newsAlt2, 'alternativo') === false){
+			array_push($validation_error_messages, getValidationError('alternativo'));
+		}
+
+
+		if(count($validation_error_messages) > 0){
+			if($imagePath1 !== null){
+				unlink('../' . $imagePath1);
+			}
+			if($imagePath2 !== null){
+				unlink('../' . $imagePath2);
+			}
 		}else{
 
-			if($new_newsImage == null){
-				echo "l'utente non ha inserito una nuova immagine"."<br/>";
+			$new_newsImage1 = null;
+
+			$new_newsImage2 = null;
+
+			if($imagePath1){
+				$new_newsImage1=new Image($imagePath1,$new_newsAlt1);
+				$dbAccess->addImage($new_newsImage1);
+			}
+			if($new_newsImage1 == null){
 				//prendo la vecchia immagine
-				$new_newsImage=$oldNews->getImage();
-				$imageOk=true;
+				$new_newsImage1=$oldNews->getImage1();
 			}
 
-			if($imageOk){
-				$newNews=new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage, $new_newsCategory, $new_newsGame);
-				$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
-				if($overwriteResult==true){
-					echo "overwrite su db riuscito"."<br/>";
-				}else{
-					echo "overwrite su db fallito"."<br/>";
+			if($imagePath2){
+				$new_newsImage2=new Image($imagePath2,$new_newsAlt2);
+				$dbAccess->addImage($new_newsImage2);
+				$image2Ok=true;
+			}
+			if($new_newsImage2 == null){
+				//prendo la vecchia immagine
+				$new_newsImage2=$oldNews->getImage2();
+				$image2Ok=true;
+			}
+
+			$newNews = new News($new_newsTitle, $new_newsText, $new_newsAuthor, $new_newsEditDateTime, $new_newsImage1, $new_newsImage2, $new_newsCategory, $new_newsGame);
+			$overwriteResult = $dbAccess->overwriteNews($newsToBeModifiedName, $newNews);
+			if($overwriteResult == true){
+				array_push($success_messages, "overwrite su db riuscito");
+			}else{
+				//echo "overwrite su db fallito" . "<br/>";
+				if($imagePath1 !== null){
+					unlink('../' . $imagePath1);
 				}
-			
+				if($imagePath2 !== null){
+					unlink('../' . $imagePath2);
+				}
 			}
 		}
 
-		
-	
-		
-		
-
 		//qui faccio i replacement dei placeholder in base a quello che mi è stato comunicato dall'utente
-		//mancano i replacement delle checkboxes
+		//se c'è una stringa data dall'utente metto quella, altrimenti metto quella vechia, presa dal db
 		$replacements = array(
 			"<news_title_ph/>" => $new_newsTitle ? $new_newsTitle : $oldNews->getTitle(),
 			"<content_ph/>" => $new_newsText ? $new_newsText : $oldNews->getContent(),
-			"<img_alt_ph/>" => $new_newsAlt ? $new_newsAlt : ($oldNews->getImage() ? $oldNews->getImage()->getAlt() : ""),
-			"<opzioni_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName()
+			"<img1_alt_ph/>" => $new_newsAlt1 ? $new_newsAlt1 : ($oldNews->getImage1() ? $oldNews->getImage1()->getAlt() : ""),
+			"<img2_alt_ph/>" => $new_newsAlt2 ? $new_newsAlt2 : ($oldNews->getImage2() ? $oldNews->getImage2()->getAlt() : ""),
+			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
+			"<game_name_ph/>" => $new_newsGame ? $new_newsGame : $oldNews->getGameName(),
+
+			"<img1_min_ratio/>" => News::$img1MinRatio,
+			"<img1_max_ratio/>" => News::$img1MaxRatio,
+			"<img2_min_ratio/>" => News::$img2MinRatio,
+			"<img2_max_ratio/>" => News::$img2MaxRatio
 		);
 
 		if($new_newsCategory == 'Eventi'){
@@ -219,41 +248,38 @@ if($allOk){
 			$replacements['<checked_giochi_ph/>'] = "";
 			$replacements['<checked_hardware_ph/>'] = "";
 		}
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
-		echo "replacements completati<br/>";
+		
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
+		//echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		//echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
-		/*
-		// controllo quale valore non è stato inserito
-		if(!isset($_REQUEST['titolo'])){
-			echo "titolo non inserito<br/>";
-		}elseif(!isset($_REQUEST['testo'])){
-			echo "testo non inserito<br/>";
-		}elseif(!isset($_REQUEST['alternativo'])){
-			echo "alt non inserito<br/>";
-		}
-		*/
 
-		//qui faccio i replacement dei placeholder in base ai valori del gioco che si vuole modificare
-		//per ora mancano le sostituzioni rigaurdanti le checkbox perchè sono complicate
 		$replacements = array(
 			"<news_title_ph/>" => $oldNews->getTitle(),
 			"<content_ph/>" => $oldNews->getContent(),
-			"<opzioni_ph/>" => createGamesOptions($dbAccess),
-			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : ""
+			"<opzioni_form_ph/>" => createGamesOptions($dbAccess),
+			"<game_name_ph/>" => $oldNews->getGameName() ? $oldNews->getGameName() : "",
+
+			"<img1_min_ratio/>" => News::$img1MinRatio,
+			"<img1_max_ratio/>" => News::$img1MaxRatio,
+			"<img2_min_ratio/>" => News::$img2MinRatio,
+			"<img2_max_ratio/>" => News::$img2MaxRatio
 		);
 
-		if($oldImage=$oldNews->getImage()){
-			$replacements['<img_alt_ph/>'] = $oldImage->getAlt();
+		if($oldImage1 = $oldNews->getImage1()){
+			$replacements['<img1_alt_ph/>'] = $oldImage1->getAlt();
 		}else{
-			$replacements['<img_alt_ph/>'] = "";
+			$replacements['<img1_alt_ph/>'] = "";
+		}
+
+		if($oldImage2 = $oldNews->getImage2()){
+			$replacements['<img2_alt_ph/>'] = $oldImage2->getAlt();
+		}else{
+			$replacements['<img2_alt_ph/>'] = "";
 		}
 
 		if($oldNews->getCategory()=="Eventi"){
@@ -270,15 +296,16 @@ if($allOk){
 			$replacements['<checked_hardware_ph/>'] = "checked=\"checked\" ";
 		}
 
-	
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
-		echo "replacements completati<br/>";
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
+		// echo "replacements completati<br/>";
 	}
 
 }
-			
+
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess, $oldNews ? $oldNews->getTitle() : "");

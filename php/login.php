@@ -13,38 +13,51 @@ $homePage=file_get_contents("../html/templates/loginTemplate.html");
 
 $user=getLoggedUser($dbAccess);
 
+$validation_error_messages = array();
+$success_messages = array();
+$failure_messages = array();
+
 if($user){
-	$homePage="Hai già fatto il login";
+	$homePage = getErrorHtml("already_logged");
 }else{
-	if(isset($_POST['nomeLogin']) && isset($_POST['pw'])){
-		$username=$_POST['nomeLogin'];
-		$password=$_POST['pw'];
-		$hashValue=getHash($username, $password);
-		$user=$dbAccess->getUserByHash($hashValue);
-		if($user){
-			$username=$user->getUsername();
+	if(isset($_REQUEST['nomeUtente'])){
+		// echo "almeno un valore rilevato" . "<br/>";
+
+		$username = getSafeInput('nomeUtente');
+		$password = getSafeInput('password');
+
+		// qui non vengono fatte validazioni perché l'utente non deve sapere se ha sbagliato il formato. Deve solo sapere se le credenziali sono giuste o meno.
+
+		if(count($validation_error_messages) > 0){
 			
-			echo "Benvenuto ".$username;
-			setcookie("login",$hashValue);
-			header('Location: home.php');
 		}else{
-			echo "Nome utente o password non corretti";
-			$replacements=array("<username_placeholder_ph/>"=>$username);
-			foreach ($replacements as $key => $value) {
-				$homePage=str_replace($key, $value, $homePage);
+			$hashValue=getHash($username, $password);
+			$user=$dbAccess->getUserByHash($hashValue);
+			if($user){
+				
+				array_push($success_messages, "Login avvenuto con successo");
+				setcookie("login",$hashValue);
+				header('Location: home.php');
+			}else{
+				array_push($failure_messages, "Nome o password errati");
 			}
+			
 		}
+
+		$replacements=array("<username_ph/>"=>$username);
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 	}else{
-		$replacements=array("<username_placeholder_ph/>"=>"");
-		foreach ($replacements as $key => $value) {
-			$homePage=str_replace($key, $value, $homePage);
-		}
+		$replacements=array("<username_ph/>"=>"");
+
+		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
 	}
-
-	
-
-	
 }
+
+$jointValidation_error_message = getValidationErrorsHtml($validation_error_messages);
+$jointSuccess_messages = getSuccessMessagesHtml($success_messages);
+$jointFailure_messages = getFailureMessagesHtml($failure_messages);
+$homePage = str_replace("<messaggi_form_ph/>", $jointValidation_error_message . "\n" . $jointSuccess_messages . "\n" . $jointFailure_messages, $homePage);
 
 
 

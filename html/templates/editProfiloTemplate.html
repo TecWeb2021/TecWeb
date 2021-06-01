@@ -1,28 +1,34 @@
 
 
 
-  <div id="content" class="contenutoGenerale">
+  <div class="container" id="content">
     <div class="schedaForm">
       <h1>Modifica o Elimina il tuo account ALLGames</h1>
       <form action="edit_profilo.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
+        <p>I campi marcati con * sono obbligatori.</p>
+
+        <messaggi_form_ph/>
+
         <fieldset>
-          <h2>Dati personali</h2>
-          <p class="required">I campi marcati con * sono obbligatori</p>
-          <p class="required">Password da 6 a 16 caratteri, fra cui almeno una maiuscola e un simbolo</p>
+          <h4>Dati personali</h4>
+          <p>Puoi cambiare la tua <em>Email</em> di riferimento nel seguente form.</p>
+          <label for="mail" aria-label="Email, campo obbligatorio ">*Email</label>
+          <input type="text" name="email" id="mail" value="<email_ph/>"/><br />
 
-          <label for="mail">Email</label>
-          <input type="mail" name="email" id="email" class="required" value="<email_ph/>"/><br />
-
+          <p>Puoi cambiare la tua <em>immagine di profilo</em> nel seguente form. Il file immagine deve avere un rapporto tra l'altezza e la larghezza compreso tra <img_min_ratio/> e <img_max_ratio/></p>
           <label for="imgPerProfilo">Immagine profilo</label>
-          <input type="file" name="immagine" id="imgPerProfilo" /><br />
+          <input type="file" name="immagine" id="imgPerProfilo" class="opzionale" /><br />
         </fieldset>
 
         <fieldset>
-          <label for="password">Password : se vuoi cambiare password scrivi quella nuova nei due form seguenti</label>
-          <input type="password" name="password" id="password" class="opzionale" /><br />
+          <h4>Password</h4>
+          <p>Puoi cambiare password utilizzando i seguenti form. La nuova password inserita nei campi <em>password</em> e <em>ripeti password</em> deve contenere da 8 a 16 caratteri (lettere o numeri), fra cui almeno un numero, una lettera minuscola e una maiuscola.</p>
 
-          <label for="repeatpassword">Ripeti password</label>
-          <input type="password" name="repeatpassword" id="repeatpassword" /><br />
+          <label for="password" aria-label="Password, campo obbligatorio ">*Password </label>
+          <span><input type="password" name="password" id="password" class="opzionale" /></span><br />
+
+          <label for="repeatpassword" aria-label="Ripeti password, campo obbligatorio ">*Ripeti password </label>
+          <span><input type="password" name="repeatpassword" id="repeatpassword" /></span><br />
 
           <button type="submit" name="salva">Salva modifiche</button>
           <button type="submit" name="annulla">Annulla modifiche</button>

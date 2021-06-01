@@ -1,8 +1,11 @@
 <?php
 // per adesso questo script contiene un mix di funzioni utili in vari altri script
+// potrebbe convenire separare le funzionalità in più script diversi
 
 require_once("dbConnection.php");
 require_once("classes/user.php");
+require_once("classes/news.php");
+require_once("classes/game.php");
 
 function replace($subject){
   $subject=preg_replace("/Giochi\.html/","giochi.php",$subject);
@@ -21,7 +24,7 @@ function createBasePage($templatePath, $page, $dbAccess, $pageParam = ""){
 	$user=getLoggedUser($dbAccess);
 
 	$basePage=generatePageTopAndBottom($templatePath, $page, $user, $pageParam);
-	
+
 	$optionsListString=createGamesOptions($dbAccess);
 	//$optionsListString = $optionsListString.""
 	// inserisco i possibili valori per la barra di ricerca
@@ -31,7 +34,7 @@ function createBasePage($templatePath, $page, $dbAccess, $pageParam = ""){
 
 }
 
-function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", $defaultUserImagePath="../images/login.png"){
+function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", $defaultUserImagePath="images/login.png"){
 
 	if(isset($_REQUEST['tendina']) && ($_REQUEST['tendina']=='true' || $_REQUEST['tendina']=='false')){
 		$templatePath="../html/templates/top_and_bottomTemplateNoJS.html";
@@ -49,15 +52,15 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	#completare i replacements
 	$titleAndBreadcrumbReplacements = array(
 		"home.php" => ["Home","Home"],
-		"giochi.php" => ["Giochi","Giochi"],
-		"notizie.php" => ["Notizie","Notizie"],
-		"notizia.php" => ["Notizia","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > <page_param_ph/>"],
+		"giochi.php" => ["Giochi","Giochi <page_param_ph/>"],
+		"notizie.php" => ["Notizie","Notizie <page_param_ph/>"],
+		"notizia.php" => ["<page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > <page_param_ph/>"],
 		"edit_gioco.php" => ["Modifica gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > Modifica <page_param_ph/>"],
 		"edit_notizia.php" => ["Modifica notizia - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"notizie.php\">Notizie</a> > Modifica <page_param_ph/>"],
 		"form_gioco.php" => ["Aggiungi gioco","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi gioco"],
 		"form_notizia.php" => ["Aggiungi notizia","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Aggiungi notizia"],
-		"form_profilo.php" => ["Modifica profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Profilo</a> > Modifica profilo"],
-		"gioco_notizie.php" => ["Notizie - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Notizie"],
+		"edit_profilo.php" => ["Modifica profilo","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Profilo</a> > Modifica profilo"],
+		"gioco_notizie.php" => ["Notizie gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Notizie gioco"],
 		"gioco_recensione.php" => ["Recensione - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Recensione"],
 		"gioco_scheda.php" => ["Scheda gioco - <page_param_ph/>","<a class=\"link_breadcrumb\" href=\"giochi.php\">Giochi</a> > <page_param_ph/> > Scheda del gioco"],
 		"lista_utenti.php" => ["Lista utenti","<a class=\"link_breadcrumb\" href=\"home.php\">Home</a> > <a class=\"link_breadcrumb\" href=\"profilo.php\">Admin</a> > Lista utenti"],
@@ -71,6 +74,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 		// 5 è la posizione del primo carattere dopo /php/
 		if(strpos(explode("php/",$url)[1], $key) === 0){
 			//costruisco le basi del titolo e del breadcrumb
+			//aggiungo ad ogni titolo la scritta ALLGames, cioò il nome del sito"
 			$title = $value[0]." - ALLGames";
 			$breadcrumb = $value[1];
 			//metto il parametro passato all'interno del titolo e del breadcrumb
@@ -84,6 +88,7 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	//mettere qui tutte le corrispondenze necessarie
 	$onloadReplacements = array(
 		"giochi.php" => "onload=\"preparaFiltri();\"",
+		"notizia.php" => "onload=\"preparaFiltri();\"",
 		"form_notizia.php" => "onload=\"handleClick();\"",
 		"edit_notizia.php" => "onload=\"handleClick();\""
 	);
@@ -92,8 +97,8 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 			$base=str_replace("<body_onload_ph/>", $value, $base);
 		}
 	}
-	//se non ha matchato nessuna pagina tolgo semplicemente il placeholder
-	$base=str_replace("<body_onload_ph/>", "", $base);
+	//se non ha matchato nessuna pagina metto la funzione removeNoJS()
+	$base=str_replace("<body_onload_ph/>", "onload=\"removeNoJs();\"", $base);
 
 
 	$possiblePages=array("home","giochi","notizie");
@@ -108,46 +113,13 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 			$base=preg_replace("/\<$value\_active\>class\=\"active\"\<\/$value\_active\>/", "", $base);
 		}
 	}
-
 	
-	if($user){
-		if($user->getImage()){
-			$base=str_replace("<user_img_path_ph/>", "../".$user->getImage()->getPath(), $base);
-		}
-
-		$replacements = array(
-			"/\<not_logged_in\>.*\<\/not_logged_in\>/" => "",
-			"/\<logged\_in\>/" => "",
-			"/\<\/logged\_in\>/" => "",
-			"/\<username\_ph\/\>/" => $user->getUsername(),
-			"/\<profile\_pic\_redirect\_url\_ph\/\>/" => "profilo.php"
-		);
-
-		foreach ($replacements as $key => $value) {
-			$base = preg_replace($key, $value, $base);
-		}
-		
-	}else{
-
-		$replacements = array(
-			"/\<logged_in\>.*\<\/logged_in\>/" => "",
-			"/\<not\_logged\_in\>/" => "",
-			"/\<\/not\_logged\_in\>/" => "",
-			"/\<profile\_pic\_redirect\_url\_ph\/\>/" => "login.php"
-		);
-
-		foreach ($replacements as $key => $value) {
-			$base = preg_replace($key, $value, $base);
-		}
-	}
-	#la riga qua sotto fa quello che deve solo se il tag non è giù stato sostiuito, quindi solo l'utente non ha un'immagine
-	$base=str_replace("<user_img_path_ph/>",$defaultUserImagePath,$base);
-
+	$base = str_replace("<logged_ph/>", createLoggedInHtml($user), $base);
 
 
 	if(isset($_REQUEST['tendina'])){
 		if($_REQUEST['tendina']=='true'){
-			$base=str_replace("topnav","topnav responsive",$base);	
+			$base=str_replace("topnav","topnav responsive",$base);
 			$base=str_replace("<tendina_bool_ph/>","false",$base);
 		}elseif($_REQUEST['tendina']=='false'){
 			$base=str_replace("<tendina_bool_ph/>","true",$base);
@@ -157,22 +129,132 @@ function generatePageTopAndBottom($templatePath, $page, $user, $pageParam = "", 
 	return $base;
 }
 
+function createLoggedInHtml($user, $template = "../html/templates/logged_inTemplate.html") {
+	$base = file_get_contents($template);
+
+	$replacements = array();
+	$url = $_SERVER['REQUEST_URI'];
+	$page = explode("php/",$url)[1];
+	// echo "page: $page<br/>";
+	
+	if($user){
+		$userImage = $user->getImage();
+		if($page === 'profilo.php'){
+			$replacements['<logged_pic_ph/>'] = '<span><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></span>';
+			$replacements['<logged_links_ph/>'] = '<span id="login"><span><username_ph/></span> | <a href="?logout=true">Logout</a></span>';
+			$replacements['<user_img_path_ph/>'] = ($userImage && $userImage->getPath()) ? '../' . getSafeImage($userImage->getPath()) : '../' . getSafeImage('images/login.png');
+			$replacements['<username_ph/>'] = $user->getUsername();
+		}else{
+			$replacements['<logged_pic_ph/>'] = '<a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></a>';
+			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="profilo.php"><username_ph/></a> | <a href="?logout=true">Logout</a></span>';
+			$replacements['<profile_pic_redirect_url_ph/>'] = 'profilo.php';
+			$replacements['<user_img_path_ph/>'] = ($userImage && $userImage->getPath()) ? '../' . getSafeImage($userImage->getPath()) : '../' . getSafeImage('images/login.png');
+			$replacements['<username_ph/>'] = $user->getUsername();
+		}
+	}else{
+		if($page === 'login.php'){
+			$replacements['<logged_pic_ph/>'] = '<span><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></span>';
+			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="registrati.php">Registrati</a></span>';
+			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('images/login.png');
+		}elseif($page === 'registrati.php'){
+			$replacements['<logged_pic_ph/>'] = '<a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></a>';
+			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="login.php">Login</a></span>';
+			$replacements['<profile_pic_redirect_url_ph/>'] = 'login.php';
+			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('images/login.png');
+		}else{
+			$replacements['<logged_pic_ph/>'] = '<a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></a>';
+			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="login.php">Login</a> | <a class="link_login" href="registrati.php">Registrati</a></span>';
+			$replacements['<profile_pic_redirect_url_ph/>'] = 'login.php';
+			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('images/login.png');
+		}
+	}
+
+	$base = str_replace(array_keys($replacements), array_values($replacements), $base);
+	return $base;
+}
+
+function createGameBasePage($page, $gameName, $template = "../html/templates/game_top_and_bottomTemplate.html"){
+	$base = file_get_contents($template);
+	switch ($page) {
+		case 'scheda':
+			$replacements = array(
+				"<active_template_scheda_ph/>" => "class=\"active\"",
+				"<active_template_recensione_ph/>" => "",
+				"<active_template_notizie_ph/>" => "",
+				"<gioco_scheda_ph/>" => "#",
+				"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($gameName),
+				"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($gameName)
+			);
+			break;
+		case 'recensione':
+			$replacements = array(
+				"<active_template_scheda_ph/>" => "",
+				"<active_template_recensione_ph/>" => "class=\"active\"",
+				"<active_template_notizie_ph/>" => "",
+				"<gioco_scheda_ph/>" => "gioco_scheda.php?game=" . strtolower($gameName),
+				"<gioco_recensione_ph/>" => "#",
+				"<gioco_notizie_ph/>" => "gioco_notizie.php?game=".strtolower($gameName)
+			);
+			break;
+		case 'notizie':
+			$replacements = array(
+				"<active_template_scheda_ph/>" => "",
+				"<active_template_recensione_ph/>" => "",
+				"<active_template_notizie_ph/>" => "class=\"active\"",
+				"<gioco_scheda_ph/>" => "gioco_scheda.php?game=" . strtolower($gameName),
+				"<gioco_recensione_ph/>" => "gioco_recensione.php?game=".strtolower($gameName),
+				"<gioco_notizie_ph/>" => "#"
+			);
+			break;
+	}
+
+	$base = str_replace(array_keys($replacements), array_values($replacements), $base);
+	return $base;
+}
+
 
 function getHash($username, $password){
 	$inputString=$username.$password;
-	$hashValue=hash("md5",$inputString);
+	$hashValue=hash("sha3-512",$inputString);
 	return $hashValue;
 }
 
 
 function logout(){
-	$logout=$_REQUEST['logout'];
-	#sanitize;
-	if($logout='true' && isset($_COOKIE['login'])){
-		setcookie("login","");
-		echo "cookie unset";
-		header("Refresh:0");
+	$notRestrictedPages = array(
+		"home.php",
+		"giochi.php",
+		"notizie.php",
+		"gioco_scheda.php",
+		"gioco_recensione.php",
+		"gioco_notizie.php",
+		"gioco.php",
+		"notizia.php"
+	);
+	$phpPage = getPhpPage();
+	$targetPage = "home.php";
+
+	if(in_array($phpPage, $notRestrictedPages)){
+		$targetPage = $phpPage;
 	}
+
+	$logout = $_REQUEST['logout'];
+	#sanitize;
+
+	if($logout === 'true' && isset($_COOKIE['login'])){
+		setcookie("login","");
+		header("Location: $targetPage");
+	}
+}
+
+function getPhpPage(){
+	$url=$_SERVER['REQUEST_URI'];
+	// echo $url . "<br/>";
+	$exp1 = explode("/", $url);
+	$lastPart = end($exp1);
+	$phpPage = explode("?", $lastPart)[0];
+	// echo $phpPage;
+	return $phpPage;
 }
 
 function getLoggedUser($dbAccess){
@@ -180,56 +262,41 @@ function getLoggedUser($dbAccess){
 	if(isset($_COOKIE['login'])){
 		$hash=$_COOKIE['login'];
 		#sanitize
-		$user=$dbAccess->getUserByHash($hash);
+		$user = $dbAccess->getUserByHash($hash);
 	}
 	return $user;
 }
 
-function saveImageFromFILES($dbAccess, $imgReceiveName, $uploaddir='../images/'){
-	//questa funzione ritorna il percorso in cui l'immagine è salvata
-	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
 
-	//echo "saveImageFromFILES";
-	//print_r($_FILES);
-	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
-	//print_r($image);
-	if(!$image){
-		return false;
+
+function getGreatestDBImageNumber($dbAccess){
+	$images = $dbAccess->getImages("path desc");
+	$topNum = 0;
+	if($images){
+		foreach ($images as $value) {
+			$path = $value->getPath();
+			$part = explode('/', $path)[1];
+			$num = explode('.', $part)[0];
+			if((int) $num > $topNum){
+				$topNum = $num;
+			}
+		}
 	}
-	#Recupero il percorso temporaneo del file
-	$image_tmp_location = $image['tmp_name'];
-	#recupero il nome originale del file caricato
+	return $topNum;
 
-	$originalName=$image['name'];
+}
 
-	#ricavo nome immagine col numero più alto presente nel database
-	$imagesList=$dbAccess->getImages();
-	$numArray=array();
-	foreach ($imagesList as $image) {
-		//echo $image->getPath()."<br/>";
-		$a=explode("/",$image->getPath())[1];
-		//echo $a."<br/>";
-		$num= explode(".",$a)[0];
-		array_push($numArray, $num);
-	}
-	$maxNum= count($numArray)>0 ? max($numArray) : -1;
-
-	#ricavo il nome da assegnare al nuovo file
-	$newNumber=$maxNum+1;
-	$extension=end(explode('.', $originalName));
-	$newFileName=$newNumber.".".$extension;
-	$fileDestination=$uploaddir . $newFileName;
-	$imgSaveResult=move_uploaded_file($image_tmp_location, $fileDestination);
-
-	if($imgSaveResult){
-		$filePath="images"."/".$newFileName;
-		return $filePath;
+// returns the path if it corresponds to an image saved on the server, a "not available" image else
+// the path is supposed to be given relativto the root directory
+function getSafeImage($path, $defaultPath = "images/imagenotavailable.png", $defaultAlt = "immagine non presente"){
+	if(is_file("../".$path)){
+		return $path;
 	}else{
-		return false;
+		return $defaultPath;
 	}
 }
 
-function createGamesOptions($dbAccess, $selectedName=null, $template="<option value=\"<name_ph/>\" <selected_ph/> />"){
+function createGamesOptions($dbAccess, $selectedName=null, $excludedGame=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> ></option>"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$gamesList=$dbAccess->getGamesList();
@@ -242,23 +309,25 @@ function createGamesOptions($dbAccess, $selectedName=null, $template="<option va
 	if($selectedName===""){
 		array_push($stringsArray, "<option value=\"\" selected=\"selected\" />");
 	}
+	// echo "count: " . count($gamesList);
 	foreach ($gamesList as $game) {
 		$singleString=$template;
-		$replacements = array(
-			"<name_ph/>" => $game->getName(),
-			"<selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
-		);
-		foreach ($replacements as $key => $value) {
-			$singleString = str_replace($key, $value, $singleString);
+		if($game !== $excludedGame){
+			$replacements = array(
+				"<option_name_ph/>" => $game->getName(),
+				"<option_selected_ph/>" => $game->getName() == $selectedName ? "selected=\"selected\"" : ""
+			);
+
+			$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
+			array_push($stringsArray, $singleString);
 		}
-		array_push($stringsArray, $singleString);
 	}
-	$joinedItems=implode("", $stringsArray);
+	$joinedItems = implode("", $stringsArray);
 	return $joinedItems;
 }
 
 
-function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<name_ph/>\" <selected_ph/> />"){
+function createNewsOptions($dbAccess, $selectedName=null, $template="<option value=\"<option_name_ph/>\" <option_selected_ph/> ></option>"){
 		//questa funzione crea una stringa in html che rappresenta come opzioni per un campo input i nomi dei vari giochi
 
 	$newsList=$dbAccess->getNewsList();
@@ -274,18 +343,417 @@ function createNewsOptions($dbAccess, $selectedName=null, $template="<option val
 	foreach ($newsList as $news) {
 		$singleString=$template;
 		$replacements = array(
-			"<name_ph/>" => $news->getTitle(),
-			"<selected_ph/>" => $news->getTitle() == $selectedName ? "selected=\"selected\"" : ""
+			"<option_name_ph/>" => $news->getTitle(),
+			"<option_selected_ph/>" => $news->getTitle() == $selectedName ? "selected=\"selected\"" : ""
 		);
-		foreach ($replacements as $key => $value) {
-			$singleString = str_replace($key, $value, $singleString);
-		}
+		$singleString = str_replace(array_keys($replacements), array_values($replacements), $singleString);
 		array_push($stringsArray, $singleString);
 	}
 	$joinedItems=implode("", $stringsArray);
 	return $joinedItems;
 }
 
+$patterns = array(
+    "nome" => "/^\w{1}.{0,38}\w{1}$/",
+    "sviluppo" => "/^\w{1}[\w\s]{0,28}\w{1}$/",
+    "pegi" => "/^(3|7)$|^1(2|6|8)$/",
+    "data" => "/./",
+
+    "prequel" => "/^\w{1}.{0,38}\w{1}$/",
+    "sequel" => "/^\w{1}.{0,38}\w{1}$/",
+
+    "descrizione" => "/^\w{1}.{24,}/",
+    "recensione" => "/^\w{1}.{24,}/",
+    "voto" => "/^([0-5]{1}|[0-4]{1}\.[1-9]{1})$/",
+
+    "titolo" => "/^\w{1}.{9,149}/",
+    "testo" => "/^\w{1}.{24,}/",
+    // "listaTitoli" => "/^\w{1}.{0,38}\w{1}$/",
+    "nome_gioco_notizia" => "/^\w{1}.{0,38}\w{1}$/",
+
+    "alternativo1" => "/^\w{1}[\w\s]{4,49}$/",
+    "alternativo2" => "/^\w{1}[\w\s]{4,49}$/",
+
+    "nomeUtente" => "/^[\w]{4,15}$/",
+    "password" =>  "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$|^user$|^admin$/",
+    "repeatpassword" =>  "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$|^user$|^admin$/",
+    "email" => "/^\w{2}\w*(\.?\w+)*@\w{2}\w*(\.?\w+)*(\.\w{2,3})+$/"
+);
+
+
+
+// le chiavi degli errori devono contenere almeno tutte le chiavi dei pattern
+$errors_messages = array(
+	"nome" => "Inserire il nome del gioco",
+    "sviluppo" => "Inserire il nome della casa di sviluppo",
+    "pegi" => "Possibili valori di PEGI: 3,7,12,16,18",
+    "voto" => "Voto da 0 a 5",
+    "prequel" => "Inserire il nome del prequel",
+    "sequel" => "Inserire il nome del sequel",
+    "data" => "Data non valida",
+    "consoles" => "Selezionare almeno una console",
+    "genres" => "Selezionare almeno un genere",
+    "immagine1_gioco_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
+    "immagine2_gioco_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
+
+    "descrizione" => "Inserire la descrizione",
+    "recensione" => "Inserire la recensione",
+    "alternativo" => "Alt lungo massimo 50 caratteri",
+
+    "titolo" => "Inserire il titolo della notizia",
+    "testo" => "Inserire il testo della notizia",
+    "tipologia" => "Inserire la tipologia della notizia",
+    "immagine" => "Nessun file selezionato",
+    "immagine1_notizia_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
+    "immagine2_notizia_ratio" => "Dimensioni immagine fuori dai limiti richiesti",
+    "nome_gioco_notizia" => "Nessun gioco selezionato",
+    "gioco_esistente" => "Il gioco selezionato non esiste",
+
+    "nomeUtente" => "Inserire il nome utente",
+    "password" => "Inserire la password",
+    "repeatpassword" => "Le password non combaciano",
+    "email" => "Inserire la mail",
+    "immagine_utente_ratio" => "Dimensioni immagine fuori dai limiti richiesti"
+);
+
+// valida il valore passato in base al tipo indicato
+// per validare utilizza i pattern presenti in $patterns se ve ne è uno corrispondente al tipo, altrimenti usa degli altri controlli specificati nel metodo stesso
+function validateValue($input, $type, $dbAccess = null){
+	// echo "validateValue : $input : $type <br/>";
+	global $patterns;
+
+	if(array_key_exists($type, $patterns)){
+		// se il tipo è presente tra i pattern allora lo valido usando quelli
+		$result = preg_match($patterns[$type], $input) === 1 ? true : false;
+		// echo $input . $type . ($result === true ? "true" : "false") . "<br/>";
+		return $result;
+	}else{
+		// altrimenti uso delle validazioni specifiche
+		if($type === "consoles"){
+			if(count($input) === 0){
+				return false;
+			}
+			foreach ($input as $value) {
+				if( !in_array($value, Game::$possible_consoles)){
+					return false;
+				}
+			}
+			return true;
+		}elseif($type === "genres"){
+			if(count($input) === 0){
+				return false;
+			}
+			foreach ($input as $value) {
+				if( !in_array($value, Game::$possible_genres)){
+					return false;
+				}
+			}
+			return true;
+		}elseif($type === "tipologia"){
+			return in_array($input, News::$possible_categories);
+		}elseif($type === "gioco_esistente"){
+			if($dbAccess){
+				$game = $dbAccess->getGame($input);
+				if($game){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}elseif($type === "immagine1_gioco_ratio"){
+			return checkImageRatio("../" . $input, Game::$img1MinRatio, Game::$img1MaxRatio);
+		}elseif($type === "immagine2_gioco_ratio"){
+			return checkImageRatio("../" . $input, Game::$img2MinRatio, Game::$img2MaxRatio);
+		}elseif($type === "immagine1_notizia_ratio"){
+			// echo "checkgin immagine1 notizia ratio<br/>";
+			return checkImageRatio("../" . $input, News::$img1MinRatio, News::$img1MaxRatio);
+		}elseif($type === "immagine2_notizia_ratio"){
+			return checkImageRatio("../" . $input, News::$img2MinRatio, News::$img2MaxRatio);
+		}elseif($type === "immagine_utente_ratio"){
+			return checkImageRatio("../" . $input, User::$imgMinRatio, User::$imgMaxRatio);
+		}else{
+			// se non appartiene a nessun tipo validabile lo ritengo non valido
+			// echo "type $type not matched<br/>";
+			return false;
+		}
+	}
+}
+
+function getValidationError($type){
+	global $errors_messages;
+	if(!array_key_exists($type, $errors_messages)){
+		// echo "message for type $type not matched<br/>";
+		return null;
+	}else{
+		return $errors_messages[$type];
+	}
+}
+
+function getOriginPage(){
+	if(isset($_SERVER['HTTP_REFERER'])){
+		// sanitize
+		return $_SERVER['HTTP_REFERER'];
+	}else{
+		return null;
+	}
+}
+
+
+
+
+$errorsBasePath = "../html/templates/errors/";
+$errorsFileNames = array(
+	"not_logged" => "errore-non-loggato.html",
+	"not_admin" => "errore-non-admin.html",
+	"already_logged" => "errore-gia-loggato.html",
+	"no_games" => "messaggio_nessun_gioco.html",
+	"no_news" => "messaggio_nessuna_notizia.html",
+	"no_game_news" => "messaggio_nessuna_notizia_gioco.html",
+	"no_review" => "messaggio_nessuna_recensione.html",
+	"game_not_existent" => "messaggio_gioco_non_esistente.html",
+	"game_not_specified" => "messaggio_gioco_non_specificato.html",
+	"news_not_existent" => "messaggio_notizia_non_esistente.html",
+	"news_not_specified" => "messaggio_notizia_non_specificata.html",
+	"game_deleted" => "messaggio_gioco_eliminato.html",
+	"news_deleted" => "messaggio_notizia_eliminata.html",
+	"no_news_in_home" => "messaggio_nessuna_notizia_home.html",
+	"user_deleted" => "messaggio_profilo_eliminato.html"
+);
+
+function getErrorHtml($errorName, $isAdmin = false, $replacements = array()){
+	global $errorsFileNames;
+	global $errorsBasePath;
+	$errorHtml = "";
+	if(in_array($errorName, array_keys($errorsFileNames))){
+		$errorHtml = file_get_contents($errorsBasePath . $errorsFileNames[$errorName]);
+		if($isAdmin){
+			$errorHtml = str_replace("<admin_func_ph>","",$errorHtml);
+			$errorHtml = str_replace("</admin_func_ph>","",$errorHtml);
+		}else{
+			// echo "isAdmin: " . ($isAdmin ? "true" : "false") . "<br/>";
+			$errorHtml = preg_replace("/\<admin_func_ph\>.*\<\/admin_func_ph\>/","",$errorHtml);
+		}
+		$errorHtml = str_replace(array_keys($replacements), array_values($replacements), $errorHtml);
+		return $errorHtml;
+	}else{
+		return null;
+	}
+}
+
+function getStringExtract($string, $length = 500, $redirectTarget){
+	return substr($string, 0, $length) . "..." . " <a class=\"continua_a_leggere\" tabindex=\"-1\" href=\"$redirectTarget\">Continua a leggere</a>";
+}
+
+// serve per fare il sanitize di un valore
+function getSafeInput($name, $type='other', $dbAccess = null, $offset = 0){
+	if(isset($_REQUEST["$name"])){
+		$input = $_REQUEST["$name"];
+
+		if($type === 'string'){
+			// STRING
+			if($input === ""){
+				return null;
+			}else{
+				$filtered = filter_var($input, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+				return htmlspecialchars($input);
+			}
+		}else{
+			// bisognerebbe aggiungere un sanitize specifico per gli array
+			return $input;
+		}
+
+	}elseif(isset($_FILES["$name"])){
+		if($type === 'image'){
+			// IMAGE
+			$data = isset($_FILES["$name"]) ? $_FILES["$name"] : null;
+			if($data){
+				//errore 4: non è stata caricata alcuna immagine
+				if($data['error'] === 4){
+					return null;
+				}else{
+					if($dbAccess){
+						$tmpPath = $data['tmp_name'];
+						$res = moveImageToStorage($dbAccess, $tmpPath, $offset);
+						if($res === false){
+							return null;
+						}else{
+							return $res;
+						}
+					}else{
+						return null;
+					}
+				}
+			}else{
+				return null;
+			}
+		}
+	}else{
+		return null;
+	}
+}
+
+function checkImageRatio($imgPath, $minResolutionRatio = 0, $maxResolutionRateo = INF){
+	// echo "checkImageRatio<br/>";
+	$details = getimagesize($imgPath);
+	$xSize = $details[0];
+	$ySize = $details[1];
+	
+	$resRateo = $ySize / $xSize;
+	// echo "checkImageRatio : $xSize : $ySize : $resRateo<br/>";
+	if(($resRateo < $minResolutionRatio) || ($resRateo > $maxResolutionRateo)){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function moveImageToStorage($dbAccess, $srcPath, $offset = 0, $destDir = '../images/', $basePath = 'images/'){
+	// echo "srcPath: $srcPath<br/>";
+	$newName = getGreatestDBImageNumber($dbAccess) + 1 + $offset;
+	// echo "newName $newName";
+	$extension = getImageExtension($srcPath);
+	$destPath = $destDir . $newName . '.' . $extension;
+	$res = move_uploaded_file($srcPath, $destPath);
+	// echo "destPath : $destPath<br/>";
+	if($res){
+		// echo "moved<br/>";
+
+		return $basePath . $newName . '.' . $extension;
+	}else{
+		// echo "not moved<br/>";
+		return false;
+	}
+
+}
+
+function getImageExtension($srcPath){
+	$details = getimagesize($srcPath);
+	$ext = "";
+	switch ($details[2]) {
+		case 'image/jpeg':
+			$ext = "jpg";
+			break;
+		case 'image/png' :
+			$ext = "png";
+			break;
+		default:
+			$ext = "png";
+			break;
+	}
+	// $parts = explode('.',$srcPath);
+	// return end($parts);
+	return $ext;
+}
+
+/*
+function saveImageFromFILES($dbAccess, $imgReceiveName, $minResolutionRatio = 0, $maxResolutionRateo = INF, $uploaddir = '../images/'){
+	//questa funzione ritorna il percorso in cui l'immagine è salvata
+	// questa funzione non salva l'immagine nel db, la salva solamente nel filesystem, senza alt
+
+	$image= isset($_FILES["$imgReceiveName"]) ? $_FILES["$imgReceiveName"] : null;
+	//errore 4: non è stata caricata alcuna immagine
+	if(!$image || $_FILES["$imgReceiveName"]['error'] == 4){
+		return null;
+	}
+
+
+	$imageSizeDetails = getimagesize($_FILES[$imgReceiveName]['tmp_name']);
+	$xSize = $imageSizeDetails[0];
+	$ySize = $imageSizeDetails[1];
+	$resRateo = $ySize / $xSize;
+
+	if($resRateo < $minResolutionRatio || $resRateo > $maxResolutionRateo){
+		return false;
+	}
+	#Recupero il percorso temporaneo del file
+	$image_tmp_location = $image['tmp_name'];
+	#recupero il nome originale del file caricato
+
+	$originalName=$image['name'];
+
+	#ricavo nome immagine col numero più alto presente nel database
+	$maxNum = getGreatestDBImageNumber($dbAccess);
+
+
+	#ricavo il nome da assegnare al nuovo file
+	$newNumber=$maxNum+1;
+	$parts = explode('.', $originalName);
+	$extension=end($parts);
+	$newFileName=$newNumber.".".$extension;
+	$fileDestination=$uploaddir . $newFileName;
+	$imgSaveResult=move_uploaded_file($image_tmp_location, $fileDestination);
+
+	if($imgSaveResult){
+		$filePath="images"."/".$newFileName;
+		return $filePath;
+	}else{
+		return false;
+	}
+}
+*/
+
+function getValidationErrorsHtml($errors){
+	return "<div style=\"color: orange\">" . implode("<br>", $errors) . "</div>";
+}
+
+function getSuccessMessagesHtml($messages){
+	return "<div style=\"color: green\">" . implode("<br>", $messages) . "</div>";
+}
+
+function getFailureMessagesHtml($messages){
+	return "<div style=\"color: red\">" . implode("<br>", $messages) . "</div>";
+}
+
+function dateToText($date){
+	$parts = explode("-", $date);
+	$monthString = "";
+	switch($parts[1]){
+		case "01":
+			$monthString = "gennaio";
+			break;
+		case "02":
+			$monthString = "febbraio";
+			break;
+		case "03":
+			$monthString = "marzo";
+			break;
+		case "04":
+			$monthString = "aprile";
+			break;
+		case "05":
+			$monthString = "maggio";
+			break;
+		case "06":
+			$monthString = "giugno";
+			break;
+		case "07":
+			$monthString = "luglio";
+			break;
+		case "08":
+			$monthString = "agosto";
+			break;
+		case "09":
+			$monthString = "settembre";
+			break;
+		case "10":
+			$monthString = "ottobre";
+			break;
+		case "11":
+			$monthString = "novembre";
+			break;
+		case "12":
+			$monthString = "dicembre";
+			break;
+	}
+	return $parts[2] . " " . $monthString . " " . $parts[0];
+}
+
+function dateTimeToText($dateTime){
+	$parts = explode(" ", $dateTime);
+	return dateToText($parts[0]) . " " . $parts[1];
+}
 
 
 

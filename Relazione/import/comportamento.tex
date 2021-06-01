@@ -1,50 +1,157 @@
 \section{Comportamento}
-Per comporamento del sito è gestito lato server da PHP e lato client da JavaScript.
+Il comporamento del sito è gestito lato server da PHP e lato client da JavaScript.
 
-\subsection{Javascript}
-Abbiamo usato un unico file per contenere tutte le funzioni implementate. Il file è stato nominato checkForm.js in quanto le funzioni presenti svolgono principalmente controlli sull'input delle form presenti.
+\subsection{JavaScript}
+Abbiamo usato un unico file JavaScript nominato checkForm.js, contenente principalmente funzioni che svolgono controlli sull'input delle form.
 Di seguito riportiamo le funzioni con una breve spiegazione:
 
 \begin{itemize}
-	\item \textbf{validateForm(): } esegue un controllo sull'input della form (lato client). Viene chiamata in tutte le pagine che contengono delle form di inserimento/modifica dei dati lato admin (Form Notizie e Form Giochi) e nelle pagine di login e registrazione lato utente.
-	Per facilitare eventuali future aggiunte di campi input nel sito, la funzione si appoggia ad un array (dettagliform) contenente come chiavi gli id dei campi input a cui viene associato un array contenente le espressioni regolari per la verifica dell'input e il corrispondente messaggio d'errore.
-	La funzione procede chiamando prima validazioneCampo(input) per ogni input presente nell'array di supporto trovato nella pagina di invocazione ed in seguito chiama checkChecked(), che effettua un controllo dei campi checkbox e radio.\\
-	\item \textbf{validazioneCampo(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o conferma dell'inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file o data, il campo "repeatedpassword" e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in dettagliform e procede a invocare la funzione mostraMessaggio(input,stato), dove stato è rispettivamente true o false se la value rispetta o meno le caratteristiche volute. \\
-	\item \textbf{mostraMessaggio(input, stato): } mostra un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le categorie di utenti.\\
-	\item \textbf{checkChecked(): } descrizione.....\\
-	\item \textbf{checkPassword(): } descrizione.....\\
-	\item \textbf{checkPassword(): } descrizione.....\\
-	\item \textbf{checkNotEmpty(): } descrizione.....\\
-	\item \textbf{responsiveMenu(): } questa funzione assegna un evento di click al pulsante del menu nella versione mobile.
-	Abbiamo scelto l'evento onclick perchè gestisce anche l'evento ontouch per dispositivi mobile.
-	Il pulsante è situato nel top-right della pagina, dove è più facilmente raggiungibile da un utente mobile;\\
-	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina giochi. Gestisce l'evento onclick dei button tramite event delegation nel container. All'onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del container la richiude.\\
-	\item \textbf{checkAnni(): } effettua un controllo sull'intevallo selezionato di anni di uscita dei videogiochi nella pagina giochi.
-	Inserisce un messaggio d'errore se l'intervallo è inamissibile (es: da 2020 a 2016) e blocca il submit.\\
+	\item \textbf{validateForm(): } esegue un controllo lato client dell'input della form. Viene chiamata in tutte le pagine che contengono delle form per l'inserimento o la modifica dei dati lato admin e nelle pagine di login e registrazione lato utente.
+	Per facilitare eventuali aggiunte di campi input nel sito, la funzione si appoggia all'array \texttt{dettagliForm} contenente come chiavi gli id dei campi input a cui vengono associati array contenenti le espressioni regolari per la verifica dell'input e i corrispondenti messaggi d'errore.
+	La funzione procede chiamando \texttt{validateInput(input)} per ogni elemento di \texttt{dettagliForm} trovato nella pagina di invocazione, prosegue chiamendo \texttt{checkChecked()} ed infine ritorna un valore booleano in base all'esito dei controlli effettuati; \\
+
+	\item \textbf{validateInput(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o di conferma del corretto inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file, data o list, il campo \texttt{repeatedpassword} e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in \texttt{dettagliForm} e procede ritornando il valore ricevuto dall'invocazione di \texttt{showMessage(input,stato)}; \\
+
+	\item \textbf{showMessage(input, stato): } crea un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le classi di utenti. \\
+
+	\item \textbf{checkDatalist(input, text): } controlla che il campo input di tipo list con value text sia o vuoto o corrispondente a una delle opzioni presenti nella datalist e invoca opportunamente \texttt{showMessage(input,stato)}; \\
+
+	\item \textbf{checkPassword(): } controlla che gli input in \texttt{password} e in \texttt{repetedpassword} siano uguali e invoca opportunamente \texttt{showMessage(input,stato)}; \\
+
+	\item \textbf{checkChecked(): } effettua un controllo dei campi checkbox e radio sfruttando l'array di supporto \texttt{spuntabili} in modo analogo a \texttt{validateForm()}. Crea un array contenente coppie chiave-valore nella forma: id del campo input, valore booleano (che indica se il rispettivo campo input è stato spuntato). Tale array viene poi fornito come parametro a \texttt{showMessageCheckbox(sezioni)}; \\
+
+	\item \textbf{showMessageCheckbox(sezioni): } opera in modo analogo a \texttt{showMessage(input, stato)}, creando però dei messaggi che comunicano all'utente se i campi input (di tipo checkbox o radio) sono stati spuntati o meno; \\
+
+	\item \textbf{handleClick(): } fa comparire/scomparire il campo'\texttt{Gioco trattato}" se viene selezionata/deselezionata la categoria\texttt{Giochi}' in \texttt{Tipologia} nella form per l'inserimento di una notizia; \\
+
+	\item \textbf{removeNoJs(): }  viene invocata al completamento del caricamento della pagina, rimuove la classe'no-js" dal tag \texttt{<html>}. Tale classe è stata utilizzata per la definizione di alcune regole \texttt{css} che gestiscono la casistica in cui JavaScript è disattivato. Ad esempio nel caso del menù principale nella versione mobile, con JS disattivato, viene rimosso il pulsante e viene mostrata la tendina aperta; \\
+
+	\item \textbf{checkNotEmpty(id): } controlla che il campo \texttt{input} con id ='id" non sia vuoto o composto da spazi; \\
+
+	\item \textbf{responsiveMenu(): } gestisce l'apertura e chiusura del menù a tendina nella versione mobile.
+	E' associata ad un evento \texttt{onclick}, scelto perchè gestisce anche l'evento \texttt{ontouch} per dispositivi mobile.
+	Il pulsante è situato nel top-right della pagina, dove è più facilmente raggiungibile da un utente mobile; \\
+
+	\item \textbf{preparaFiltri(): } viene chiamata al completamento del caricamento della pagina \texttt{Giochi}. Gestisce l'evento onclick dei button tramite event delegation nel \texttt{div} con classe'container". All'evento onclick di un bottone dei filtri di ricerca lascia aperta la tendina contenente i filtri, mentre ad un secondo evento onclick all'interno del'container" la richiude; \\
+
+	\item \textbf{checkAnni(): } effettua un controllo sull'intevallo degli anni di uscita dei videogiochi selezionato nella pagina giochi.
+	Inserisce un messaggio d'errore se l'intervallo è inamissibile (es: da 2020 a 2016) e blocca il submit. \\
 \end{itemize}
 
-\subsection{PHP}
-Il backend del server è stato sviluppato con script PHP e database relazionale MariaDB;
 
-\subsubsection{Classi}
+
+
+\subsection{BackEnd}
+Il backend del server è stato sviluppato con script PHP e database relazionale MariaDB.
+
+\subsubsection{Php}
+
+Gli script che costituiscono il backend si possono suddividere in 3 macro categorie in base alla loro funzione:
+\begin{enumerate}
+	\item \textbf{modellazione dei dati}.
+	\begin{itemize}
+		\item comment.php
+		\item game.php
+		\item image.php
+		\item news.php
+		\item user.php
+		\item review.php
+	\end{itemize}
+	\item \textbf{interazione con il database};
+	\begin{itemize}
+		\item dbConnection.php
+	\end{itemize}
+	\item \textbf{creazione e presentazione delle pagine html};
+	\begin{itemize}
+		\item edit\_gioco.php
+		\item edit\_notizia.php
+		\item edit\_profilo.php
+		\item form\_gioco.php
+		\item form\_notizia.php
+		\item giochi.php
+		\item gioco\_notizie.php
+		\item gioco\_recensione.php
+		\item gioco\_scheda.php
+		\item home.php
+		\item lista\_utenti.php
+		\item login.php
+		\item notizia.php
+		\item notizie.php
+		\item profilo.php
+		\item registrati.php
+	\end{itemize}
+	\item \textbf{funzionalità condivise};
+	\begin{itemize}
+		\item replacer.php
+	\end{itemize}
+\end{enumerate}
+\paragraph{Modellazione dei dati}
+I dati gestiti dal nostro sito sono per la maggior parte classificabili in 5 tipi, illustrati singolarmente nei paragrafi successivi. Per favorire l'ordine all'interno del codice e nella comunicazione dei dati, ogni tipo di viene associato ad una classe.
+
+\subparagraph{Gioco}
+Contiene le informazioni riguardanti un gioco e la recensione che lo riguarda.
+\subparagraph{Notizia}
+Contiene le informazioni riguardanti una notizia.
+\subparagraph{Utente}
+Contiene le informazioni riguardanti un utente salvato nel sistema, che può essere di tipo amministratore o utente semplice.
+\subparagraph{Immagine}
+Contiene il percorso di un'immagine salvata nel server e il testo alternativo che la accompagna.
+\subparagraph{Commento}
+Contiene le informazioni un commento rilasciato da un utente riguardo ad un gioco.
+\subparagraph{Recensione}
+Contiene il contenuto di una recensione e una indicazione del gioco a cui è riferita, dell'utente che l'ha scritta e della data e ora dell'ultima modifica.
+
+\paragraph{Interazione con il database}
+Il file dbConnection.php presenta la classe DBAccess che permette di aprire una connessione verso il database e di effettuare richieste ad esso. Per ognuno dei tipi di dato presentati nel paragrafo precedente sono rese disponibili le seguenti funzionalità:
 \begin{itemize}
-	\item DBAccess: è la classe che gestisce tutte le interazioni col database.
-	\item User
-	\item Game
-	\item News
-	\item GameNews
-	\item Comment
-	\item Image
+	\item ottenimento della lista dei dati;
+	\item aggiunta di un nuovo dato;
+	\item modifica di un dato già presente;
+	\item rimozione di un dato già presente. 
 \end{itemize}
 
-\paragraph{DBAccess} 
-La classe DBAccess è abbastanza complessa da richiedere un approfondimento.
-Essa offre per metodi per la lettura e per la scrittura dei dati rappresentati dalle altre 6 classi.
+In aggiunta sono presenti delle specializzazioni di queste operazioni e alcune ulteriori funzionalità per l'accesso alle tabelle del database non direttamente rappresentate da una classe, ovvero Prequel\_Sequel, Games\_Consoles e Games\_Genres.
 
-I metodi più importanti sono:
-\begin{itemize}
-	\item \textbf{\texttt{nomeMetodo()}}: descrizione;
+\subparagraph{Pulizia input}
+Ogni dato, prima di essere inserito nel database viene validato tramite la funzione texttt{mysqli\_real\_escape\_string}. Essa fa l'escape di tutti i caratteri speciali presenti nella stringa, disattivando così eventuali attacchi di tipo sql injection. La documentazione di questa funzione è fornita alla pagina \url{https://www.php.net/manual/en/mysqli.real-escape-string.php};
 
-\end{itemize}
+\paragraph{Creazione e presentazione delle pagine html}
+Gli script inclusi in questa categoria costituiscono la vista del nostro sito, ovvero la parte che interagisce con l'utente.
+Ognuno degli script segue, nella sua esecuzione, lo schema seguente:
+\begin{enumerate}
+	\item apertura connessione col database;
+	\item costruzione template html specifico della pagina;
+	\item controllo del tipo di utente connesso (utente non autenticato, utente semplice, amministratore);
+	\item raccoglimento valori di input;
+	\item costruzione del contenuto della pagina in base a:
+	\begin{itemize}
+		\item input
+		\item tipo di utente
+		\item informazioni contenute nel database
+	\end{itemize}
+	\item assemblamento del contenuto col template;
+	\item inserimento pagina costruita all'interno di un template di più alto livello contenente header e footer;
+	\item output della pagina all'utente.
+\end{enumerate}
+
+\subparagraph{Form}
+Anche le pagine contenenti form si basano sulla struttura appena delineata. In particolare in esse il punto 4 è costituito dai seguenti passi:
+\begin{enumerate}
+	\item raccogliemento valori di input e loro sanificazione
+	\item validazione di ogni valore inserito e selezione degli eventuali messaggi di errore da mostrare
+\end{enumerate}
+
+\subparagraph{Pulizia e validazione input}
+Ogni valore di input ricevuto è sottoposto ad una sanificazione prima di essere utilizzato. La funzione adibita a questo compito è \texttt{getSafeInput} definita in \texttt{replacer.php}. \newline
+La validazione è eseguita tramite la funzione \texttt{validateValue} e i messaggi di errore sono ottenuti tramite la funzione \texttt{getValidationError}. Anche queste due funzioni si trovano in \texttt{replacer.php}.
+
+\paragraph{Funzionalità condivise}
+Il file replacer.php contiene funzionalità e dati utilizzati da molti script diversi. 
+
+\subsubsection{Database}
+
+
+  \includegraphics[width=\linewidth]{./img/diagramma_er.png}
+  
 
 

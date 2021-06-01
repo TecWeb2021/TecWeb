@@ -1,95 +1,99 @@
 
 
-  <div id="content" class="contenutoGenerale">
+
+  <div class="container" id="content">
     <div class="schedaForm">
-      <h1>Form per la modifica di una notizia</h1>
-      <p>I campi marcati con * sono obbligatori</p>
+      <h3 class="titolo_form">Form per la modifica di una notizia</h3>
+      <p>I campi marcati con * sono obbligatori.</p>
       <form id="formNotizia" method="post" action="edit_notizia.php" onsubmit="return validateForm();" enctype="multipart/form-data">
-      
+
         <messaggi_form_ph/>
-    
+
         <fieldset>
-            <label for="titolo">*Titolo: </label>
+            <p>Il <em>titolo</em> della notizia deve contenere da 10 a 150 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
+            <label for="titolo" aria-label="Titolo della notizia, campo obbligatorio">*Titolo: </label>
             <span><input type="text" id="titolo" name="titolo" value="<news_title_ph/>" placeholder="Titolo della notizia" /></span><br />
         </fieldset>
-    
-        <fieldset id="handler">
-            <p>*Tipologia: </p>
-    
-            <input type="radio" id="Eventi" name="tipologia" value="Eventi" <checked_eventi_ph/> >
-            <label for="Eventi">Eventi</label>
-    
-            <input type="radio" id="Giochi" name="tipologia" value="Giochi" <checked_giochi_ph/> >
-            <label for="Giochi">Giochi</label>
-    
-            <input type="radio" id="Hardware" name="tipologia" value="Hardware" <checked_hardware_ph/> >
-            <label for="Hardware">Hardware</label>
-        </fieldset>
-        
-    
-        <fieldset id="cercaTitolo" class="invisibile">
-        	
-            <label for="searchbar">Gioco trattato nella notizia:</label>
-            <input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/>
-            <datalist id="listaTitoli" class="formText">
-              <opzioni_ph/>
-            </datalist>
-            
-            <!--
-            <label for="searchbar">Gioco trattato nella notizia:</label>
-            <select list="listaTitoli" name="searchbar" id="barraDiRicerca" class="searchbar" aria-label="Cerca gioco trattato nella notizia">
-            	<option value="" selected="selected"></option>
-            	<option value="volvo">Volvo</option>
- 			  	<option value="saab">Saab</option>
- 			  	<option value="opel">Opel</option>
- 			  	<option value="audi">Audi</option>
- 			</select>
- 			-->
-        </fieldset>
-    
-        <fieldset>
-            <label for="immagine">*Immagine: </label>
-            <input type="file" id="immagine" class="opzionale" name="immagine" /><br />
-    
-            <label for="alternativo">Alt immagine: </label>
-            <span><input type="text" id="alternativo" name="alternativo" value="<img_alt_ph/>" placeholder="Testo alternativo" /></span>
-        </fieldset>
-    
-        <fieldset>
-            <label for="testo">*Testo: </label>
-            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia"><content_ph/></textarea></span>
+
+        <fieldset id="handler" onchange="handleClick(event);">
+          <p>Selezionare una <em>tipologia</em> per la notizia.</p>
+          <div><p  tabindex="0" id="labelTipologia" class="spuntabili" aria-label="Selezione tipologia notizia, campo obbligatorio">*Tipologia: </p></div>
+            <div class="gruppoRadio">
+              <ul class="checkbox">
+                <li><input type="radio" id="Eventi" name="tipologia" value="Eventi" <checked_eventi_ph/> >
+                    <label for="Eventi">Eventi</label></li>
+
+                  <li><input type="radio" id="Giochi" name="tipologia" value="Giochi" <checked_giochi_ph/> >
+                    <label for="Giochi">Giochi</label></li>
+
+                <li><input type="radio" id="Hardware" name="tipologia" value="Hardware" <checked_hardware_ph/> >
+                    <label for="Hardware">Hardware</label></li>
+              </ul>
+            </div>
         </fieldset>
 
-        <!--uso il seguente input per tenere menoria della notizia che voglio modificare-->
-        <input type="hidden" id="news" name="news" value="<news_title_ph/>" placeholder="supporto" /></span><br />
-    
-        <fieldset id="corto">
-            <button type="submit" name="submit">Salva Modifiche</button>
+        <fieldset id="cercaTitolo">
+            <p>Inserire il titolo di un gioco <em>solo</em> se è stata selezionata la categoria <em>Giochi.</em></p>
+            <p>Digitare il titolo del gioco. Selezionare una delle opzioni che verranno suggerite.</p>
+            <label for="barraDiRicerca" aria-label="Gioco trattato dalla notizia">Gioco trattato:</label>
+            <span><input list="listaTitoli" name="searchbar" id="barraDiRicerca" class="opzionale" placeholder="Cerca gioco" aria-label="Cerca gioco trattato nella notizia" value="<game_name_ph/>"/></span>
+            <datalist id="listaTitoli" class="formText">
+              <opzioni_form_ph/>
+            </datalist>
         </fieldset>
-    
+
+        <fieldset>
+            <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img1_min_ratio/> e <img1_max_ratio/></p>
+            <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
+
+            <label id="label_immagine1" for="immagine1" aria-label="Copertina notizia, campo obbligatorio ">*Copertina: </label>
+            <span><input type="file" id="immagine1" name="immagine1" class="opzionale" /></span><br />
+
+            <label for="alternativo1">Testo alternativo copertina: </label>
+            <span><input type="text" id="alternativo1" name="alternativo1" class="opzionale" value="<img1_alt_ph/>" placeholder="Testo alternativo" /></span>
+        </fieldset>
+
+        <fieldset>
+            <p>Inserire un file immagine in cui il rapporto tra l'altezza e la larghezza sia compreso tra <img2_min_ratio/> e <img2_max_ratio/></p>
+            <p>L'inserimento del <em>testo alternativo</em> è opzionale ma consigliato. Deve contenere da 5 a 50 caratteri (lettere, numeri e spaziature) e deve iniziare con una lettera o un numero.</p>
+
+            <label id="label_immagine2" for="immagine2" aria-label="Banner notizia, campo obbligatorio ">*Banner: </label>
+            <span><input type="file" id="immagine2" name="immagine2" class="opzionale" /></span><br />
+
+            <label for="alternativo2">Testo alternativo banner: </label>
+            <span><input type="text" id="alternativo2" name="alternativo2" class="opzionale" value="<img2_alt_ph/>" placeholder="Testo alternativo" /></span>
+        </fieldset>
+
+        <fieldset>
+            <p>Inserire il <em>testo</em> della notizia. Deve contenere almeno 25 caratteri (lettere, numeri, spaziature e caratteri speciali) e deve iniziare con una lettera o un numero.</p>
+            <label for="testo" class="textAreaLabel">*Testo: </label>
+            <span><textarea id="testo" name="testo" rows="15" cols="50" placeholder="Testo della notizia, deve essere lungo almeno 25 caratteri"><content_ph/></textarea></span>
+        </fieldset>
+
+        <!--uso il seguente input per tenere memoria della notizia che voglio modificare-->
+        <input type="hidden" id="news" name="news" value="<news_title_ph/>"><br />
+
+        <fieldset id="salva">
+            <button type="submit" name="submit">Salva Modifiche</button>
+            <p>Salva le modifiche e torna alla pagina principale Admin</p>
+        </fieldset>
+
       </form>
 
-      <script>
-          var box_giochi = document.getElementById('Giochi');
-          var barraDiRicerca = document.getElementById('cercaTitolo');
-          if (box_giochi.checked==true)
-            barraDiRicerca.className = 'visibile';
-          else
-            barraDiRicerca.className = 'invisibile';
-      </script>
-      
       <div id="bottoniOpzionali">
           <form action="profilo.php">
             <fieldset>
               <button type="submit">Annulla Modifiche</button>
+              <p>Annulla le modifiche apportate e torna alla pagina principale Admin</p>
             </fieldset>
           </form>
           <form method="post" action="edit_notizia.php">
             <fieldset>
               <button type="submit" name="elimina" value="<news_title_ph/>">Elimina Notizia</button>
+              <p>Elimina la notizia e torna alla pagina Admin. Non sarà possibile annullare questa azione.</p>
             </fieldset>
           </form>
       </div>
-    
+
     </div>
   </div>
