@@ -10,9 +10,11 @@ Di seguito riportiamo le funzioni con una breve spiegazione:
 	Per facilitare eventuali aggiunte di campi input nel sito, la funzione si appoggia all'array \texttt{dettagliForm} contenente come chiavi gli id dei campi input a cui vengono associati array contenenti le espressioni regolari per la verifica dell'input e i corrispondenti messaggi d'errore.
 	La funzione procede chiamando \texttt{validateInput(input)} per ogni elemento di \texttt{dettagliForm} trovato nella pagina di invocazione, prosegue chiamendo \texttt{checkChecked()} ed infine ritorna un valore booleano in base all'esito dei controlli effettuati; \\
 
-	\item \textbf{validateInput(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o di conferma del corretto inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file o data, il campo \texttt{repeatedpassword} e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in \texttt{dettagliForm} e procede ritornando il valore ricevuto dall'invocazione di \texttt{showMessage(input,stato)}; \\
+	\item \textbf{validateInput(input): } effettua il controllo del campo input. Nel caso sia già presente un messaggio (di errore o di conferma del corretto inserimento), lo rimuove. Gestisce in seguito i casi limite, non gestibili tramite l'array di supporto: campi input di tipo file, data o list, il campo \texttt{repeatedpassword} e i campi opzionali. Effettua quindi il controllo dei restanti campi input sfruttando le espressioni regolari presenti in \texttt{dettagliForm} e procede ritornando il valore ricevuto dall'invocazione di \texttt{showMessage(input,stato)}; \\
 
 	\item \textbf{showMessage(input, stato): } crea un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le classi di utenti. \\
+
+	\item \textbf{checkDatalist(input, text): } controlla che il campo input di tipo list con value text sia o vuoto o corrispondente a una delle opzioni presenti nella datalist e invoca opportunamente \texttt{showMessage(input,stato)}; \\
 
 	\item \textbf{checkPassword(): } controlla che gli input in \texttt{password} e in \texttt{repetedpassword} siano uguali e invoca opportunamente \texttt{showMessage(input,stato)}; \\
 
