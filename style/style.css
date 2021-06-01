@@ -371,6 +371,8 @@ SEZIONE IMMAGINI
 }
 
 .sfondo{
+  min-height:20em;
+  max-height: 20em;
   width: 100%;
   height: inherit;
   top: 0;
@@ -1177,7 +1179,7 @@ SEZIONE RECENSIONE
 .foto_recensione{
   width: 100%;
   max-height:20em;
-  min-height:20em; 
+  min-height:20em;
 }
 
 .recensione{
