@@ -26,7 +26,7 @@ if($user){
 
 	$error_message = "";
 	if(isset($_REQUEST['email'])){
-		echo "almeno un valore è stato inserito"."<br/>";
+		// echo "almeno un valore è stato inserito"."<br/>";
 		
 		$email = getSafeInput('email', 'string');
 		#sanitize
@@ -111,7 +111,7 @@ if($user){
 
 		
 	}else{
-		echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
+		// echo "nessun valore è stato inserito, probabilmente arrivo da un'altra pagina"."<br/>";
 
 		//metto tutti i valori alla stringa vuota
 		$replacements=array(
