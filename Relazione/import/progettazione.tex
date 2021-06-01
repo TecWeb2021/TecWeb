@@ -40,6 +40,7 @@ La barra di ricerca posta sulla destra dà la possibilità all'utente di cercare
 \subsubsection{Breadcrumb}
 Il breadcrumb è presente in tutte le pagine del sito, sia mobile che desktop.
 E' posto sotto l'header e mostra la posizione dell'utente all'interno del sito. Si struttura come una serie di link partendo dalla pagina con gerarchica più alta scendendo fino alla pagina in cui ci si trova. La pagina corrente non è un link in modo tale da evitare la presenza di link circolari.
+Inoltre in caso di ricerca il breadcrumb verrà affiancato da un elemento aggiuntivo che mostrerà cosa l'utente ha digitato durante la ricerca. ("Hai cercato: [input ricerca]").
 
 \subsubsection{Contenuto}
 
@@ -49,7 +50,7 @@ Si presta come una sorta di bacheca che espone le novità presenti sul sito e an
 	\item \textbf{Pagina Giochi:} Questa pagina propone una lista di tutti i giochi presenti sulla piattaforma, dando all'utente la possibilità di cercare un determinato titolo (o di scoprirne uno nuovo) e di approfondirne le caratteriste nella sottopagina ad esso dedicata. La presenza di diversi filtri di ricerca rende inoltre più libera e mirata l'esplorazione del catalogo;
 	\item \textbf{Pagina Notizie:} Questa pagina contiene tutte le notizie pubblicate sul sito, riportandole in ordine cronologico, dalle più recenti a quelle più datate. La barra di ricerca consente di cercare delle notizie specifiche con più immediatezza. I filtri di ricerca danno la possibilità di selezionare il tipo di notizia di cui si vuole usufruire;
 	\item \textbf{Pagina Scheda Gioco:} Questa pagina presenta un gioco specifico tramite una sinossi e delle caratteristiche generali;	
-	\item \textbf{Pagina Recensione:} In questa pagina è contenuta la recensione pubblicata dalla redazione del sito. Sotto la recensione l'utente ha la possibilità di leggere i commenti pubblicati da altri utenti o di scrivere il proprio commento;
+	\item \textbf{Pagina Recensione:} In questa pagina è contenuta la recensione pubblicata dalla redazione del sito. Sotto la recensione l'utente ha la possibilità di leggere i commenti pubblicati da altri utenti o di scrivere il proprio;
 	\item \textbf{Pagina Notizie Gioco:} In questa pagina sono contenute tutte le notizie in ordine cronologico relative al gioco che si sta visionando;
 	\item \textbf{Pagina Notizia:} Questa pagina dà la possibilità di leggere l'intero contenuto di una notizia;
 	\item \textbf{Pagina Login:} Pagina per effettuare il login immettendo le credenziali;
@@ -62,7 +63,7 @@ Si presta come una sorta di bacheca che espone le novità presenti sul sito e an
 \end{itemize}
 
 \subsubsection{Footer}
-Il footer contiene i certificati di validazione W3C e la dicitura per il copyright nei confronti degli autori del sito.
+Il footer contiene i certificati di validazione W3C,  la dicitura per il copyright nei confronti degli autori del sito ed una mail per contattre gli autori del sito.
 
 
 
@@ -77,6 +78,8 @@ Una caratteristica fondamentale, per ottenere un sito il più possibile accessib
 \begin{itemize}
 	\item \textbf{Breadcrumb:} Il breadcrumb è stato rappresentato come una catena di link (ad eccezione della pagina corrente) che indica la sezione del sito in cui ci si trova. E' un elemento di grande aiuto in quanto dà la possibilità all'utente di orientarsi meglio all'interno del sito riducendo di conseguenza il fenomeno di "lost in navigation";
 	\item \textbf{Testo e link nascosti:} Per rendere più accessibile la navigazione ad utenti con disabilità visive, sono presenti all'interno del codice degli elementi nascosti a schermo ma individuabili tramite screen reader. Ad esempio due link nascosti "Vai al menù" e "Vai al contenuto" possono essere utilizzati per saltare una porzione di pagina che l'utente non vuole visitare, rendendo quindi più agevole la navigazione della pagina. Altri link, questa volta visibili, sono stati adottati per permettere all'utente di poter ritornare ad inizio pagina, senza l'utilizzo di scroll. Questa funzionalità può rivelarsi molto utile in caso di utenti con disabilità di tipo motorio;
-	\item \textbf{Attributi HTML:} 
+	\item \textbf{Attributi HTML:} Il codice presenta all'interno di alcuni tag degli aria-label per descrivere la funzione di alcuni elementi in modo più chiaro a chi utilizza screen-reader.
+Per le parole in lingua straniera si è utilizzato l'attributo lang per permettere una corretta lettura da parte degli screen-reader.
+L'ordine di lettura della pagina è scandita da dei tabindex che esplicitano se e quando un elemento verrà selezionato tramite l'uso del tab.
 \end{itemize}
 
