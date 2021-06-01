@@ -142,30 +142,30 @@ function createLoggedInHtml($user, $template = "../html/templates/logged_inTempl
 		if($page === 'profilo.php'){
 			$replacements['<logged_pic_ph/>'] = '<span><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></span>';
 			$replacements['<logged_links_ph/>'] = '<span id="login"><span><username_ph/></span> | <a href="?logout=true">Logout</a></span>';
-			$replacements['<user_img_path_ph/>'] = ($userImage && $userImage->getPath()) ? '../' . getSafeImage($userImage->getPath()) : '../' . getSafeImage('');
+			$replacements['<user_img_path_ph/>'] = ($userImage && $userImage->getPath()) ? '../' . getSafeImage($userImage->getPath()) : '../' . getSafeImage('images/login.png');
 			$replacements['<username_ph/>'] = $user->getUsername();
 		}else{
 			$replacements['<logged_pic_ph/>'] = '<a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></a>';
 			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="profilo.php"><username_ph/></a> | <a href="?logout=true">Logout</a></span>';
 			$replacements['<profile_pic_redirect_url_ph/>'] = 'profilo.php';
-			$replacements['<user_img_path_ph/>'] = ($userImage && $userImage->getPath()) ? '../' . getSafeImage($userImage->getPath()) : '../' . getSafeImage('');
+			$replacements['<user_img_path_ph/>'] = ($userImage && $userImage->getPath()) ? '../' . getSafeImage($userImage->getPath()) : '../' . getSafeImage('images/login.png');
 			$replacements['<username_ph/>'] = $user->getUsername();
 		}
 	}else{
 		if($page === 'login.php'){
 			$replacements['<logged_pic_ph/>'] = '<span><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></span>';
 			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="registrati.php">Registrati</a></span>';
-			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('');
+			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('images/login.png');
 		}elseif($page === 'registrati.php'){
 			$replacements['<logged_pic_ph/>'] = '<a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></a>';
 			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="login.php">Login</a></span>';
 			$replacements['<profile_pic_redirect_url_ph/>'] = 'login.php';
-			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('');
+			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('images/login.png');
 		}else{
 			$replacements['<logged_pic_ph/>'] = '<a href="<profile_pic_redirect_url_ph/>"><img id="loginPic" alt="Accedi al tuo profilo - foto profilo" src="<user_img_path_ph/>" /></a>';
 			$replacements['<logged_links_ph/>'] = '<span id="login"><a class="link_login" href="login.php">Login</a> | <a class="link_login" href="registrati.php">Registrati</a></span>';
 			$replacements['<profile_pic_redirect_url_ph/>'] = 'login.php';
-			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('');
+			$replacements['<user_img_path_ph/>'] = '../' . getSafeImage('images/login.png');
 		}
 	}
 
