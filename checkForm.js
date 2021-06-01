@@ -105,6 +105,9 @@ function showMessage(input, stato) {
 function checkDataList(input, text) {
     var dataList = document.getElementById(dettagliForm[input.id][2]);
 
+    if (!text)
+        return showMessage(input,true);
+
     for(var i = 0; i < dataList.options.length; i++)
         if (dataList.options[i].value == text)
             return showMessage(input,true);
