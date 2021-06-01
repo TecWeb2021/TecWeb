@@ -4,8 +4,9 @@ require_once "dbConnection.php";
 
 # Nei vari template ph è acronimo di place holder, cioè una cosa che tiene il posto per un'altra.
 
-function createUserHTMLItem($user){
-	$template=file_get_contents("../html/templates/listaUtentiListItemTemplate.html");
+function createUserHTMLItem($user, $thisUser){
+	$template = file_get_contents("../html/templates/listaUtentiListItemTemplate.html");
+
 	$image=$user->getImage();
 	$imagePath= $image ? $image->getPath() : "../images/login.png";
 	//echo "imagePath: ".$imagePath;
@@ -13,9 +14,7 @@ function createUserHTMLItem($user){
 		"<usr_img_path_ph/>"=>"../".getSafeImage($imagePath),
 		"<username_ph/>"=>$user->getUsername()
 	);
-
 	$template = str_replace(array_keys($replacements), array_values($replacements), $template);
-
 	return $template;
 }
 
@@ -36,10 +35,9 @@ if($user){
 	
 	if($user->isAdmin()){
 
-		if(isset($_REQUEST['delete'])){
-			$usernameToDelete=$_REQUEST['delete'];
-			#sanitize
-			if($usernameToDelete!=$user->getUsername()){
+		$usernameToDelete = getSafeInput('delete', 'string');
+		if($usernameToDelete){
+			if($usernameToDelete !== $user->getUsername()){
 				$dbAccess->deleteUser($usernameToDelete);
 			}else{
 				// echo "non puoi eliminare il tuo profilo da questa pagina";
@@ -51,7 +49,7 @@ if($user){
 
 		$divsString="";
 		foreach ($users as $singleUser) {
-			$divsString=$divsString.createUserHTMLItem($singleUser);
+			$divsString=$divsString.createUserHTMLItem($singleUser, $user);
 		}
 
 		$replacements=array(
@@ -67,11 +65,6 @@ if($user){
 }else{
 	$homePage = getErrorHtml("not_logged");
 }
-
-
-
-
-
 
 $basePage=createBasePage("../html/templates/top_and_bottomTemplate.html", null, $dbAccess);
 
