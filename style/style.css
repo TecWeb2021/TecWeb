@@ -169,7 +169,7 @@ button.icon{
 }
 
 .search_container_notizie {
-  width: 69%;
+  width: 68%;
   display: inline-block;
 }
 
@@ -792,6 +792,7 @@ SEZIONE HOME
 }
 
 li.giocotop{
+  padding-bottom: 0.5em;
   height: 5rem;
   box-sizing: border-box;
   overflow: hidden;
