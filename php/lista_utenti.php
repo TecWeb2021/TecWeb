@@ -42,7 +42,7 @@ if($user){
 			if($usernameToDelete!=$user->getUsername()){
 				$dbAccess->deleteUser($usernameToDelete);
 			}else{
-				echo "non puoi eliminare il tuo profilo da questa pagina";
+				// echo "non puoi eliminare il tuo profilo da questa pagina";
 			}
 		}
 		

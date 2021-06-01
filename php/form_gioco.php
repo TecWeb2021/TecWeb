@@ -45,7 +45,7 @@ if($allOk){
 	//verifico che un valore testuale qualsiasi sia settato
 	if(isset($_REQUEST['nome'])){
 
-		echo "almeno un valore è stato rilevato<br/>";
+		// echo "almeno un valore è stato rilevato<br/>";
 
 		$new_gameName = getSafeInput('nome', 'string');
 		$new_gameDeveloper = getSafeInput('sviluppo', 'string');
@@ -93,7 +93,7 @@ if($allOk){
 			array_push($validation_error_messages, getValidationError("immagine"));
 		}
 		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_gioco_ratio") === false){
-			echo "validating imagePath1 <br/>";
+			// echo "validating imagePath1 <br/>";
 			array_push($validation_error_messages, getValidationError("immagine1_gioco_ratio"));
 		}
 
@@ -163,7 +163,7 @@ if($allOk){
 
 			$new_gameImage1 = null;
 			if($imagePath1){
-				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
+				// echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
 				$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
 				$dbAccess->addImage($new_gameImage1);
 				
@@ -171,7 +171,7 @@ if($allOk){
 
 			$new_gameImage2 = null;
 			if($imagePath2){
-				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
+				// echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
 				$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
 				$dbAccess->addImage($new_gameImage2);
 				$image2Ok=true;
@@ -188,7 +188,7 @@ if($allOk){
 			if($opResult1 === true){
 				$opResult2 = null;
 				if($new_gameReview !== "" && $new_gameReview !== null){
-					echo "review not empty<br/>";
+					// echo "review not empty<br/>";
 					$newGameReviewObj = new Review($new_gameName, $new_gameReview_author, $new_gameLast_review_date, $new_gameReview);
 					$opResult2 = $dbAccess->addReview($newGameReviewObj);
 				}else{
@@ -258,12 +258,12 @@ if($allOk){
 
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		// echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		// echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 		//i nuovi valori per il gioco non sono stati rilevati tutti, ritengo quindi che l'utente sia arrivato a questa pagina da un'altra e non abbia ancora potuto inviare le modifiche (o i dati già presenti, quelli scritti con la sostituzione dei placeholder)
 		
 
@@ -300,7 +300,7 @@ if($allOk){
 		}
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		// echo "replacements completati<br/>";
 	}
 
 }

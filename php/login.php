@@ -21,7 +21,7 @@ if($user){
 	$homePage = getErrorHtml("already_logged");
 }else{
 	if(isset($_REQUEST['nomeUtente'])){
-		echo "almeno un valore rilevato" . "<br/>";
+		// echo "almeno un valore rilevato" . "<br/>";
 
 		$username = getSafeInput('nomeUtente');
 		$password = getSafeInput('password');

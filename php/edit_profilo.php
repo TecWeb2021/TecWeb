@@ -77,7 +77,7 @@ if($user){
 				//se non è stata inserita una nuova immagine prendo quella vecchia
 				$new_image = null;
 				if($new_imagePath === null){
-					echo "\$new_imagePath == false<br/>";
+					// echo "\$new_imagePath == false<br/>";
 					$new_image = $user->getImage();
 				}else{
 					$new_image = new Image($new_imagePath, "immagine utente");

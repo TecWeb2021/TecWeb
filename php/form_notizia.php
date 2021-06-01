@@ -45,7 +45,7 @@ if($allOk){
 
 	// verifico che uno qualsiasi dei campi di testo sia stato passato. Se sì vuol dire che l'utente è tornato sulla pagina per inviare i dati, e non è appena arrivato da un altra pagina
 	if( isset($_REQUEST['titolo']) ){
-		echo "almeno uno dei valori è stato rilevato<br/>";
+		// echo "almeno uno dei valori è stato rilevato<br/>";
 		
 		$new_newsTitle =  getSafeInput('titolo', 'string');
 		$new_newsCategory = getSafeInput('tipologia', 'string');
@@ -81,7 +81,7 @@ if($allOk){
 			array_push($validation_error_messages, getValidationError("immagine"));
 		}
 		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_notizia_ratio") === false){
-			echo "validating imagePath1 <br/>";
+			// echo "validating imagePath1 <br/>";
 			array_push($validation_error_messages, getValidationError("immagine1_notizia_ratio"));
 		}
 
@@ -196,12 +196,12 @@ if($allOk){
 		}
 
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		// echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Se l'utente non ha modificato i valori sovrascrivo quelli vecchi con altri identici
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		// echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 		//un valore testuale di input non è stato rilevato. Ritengo quindi che l'utente sia arrivato da un altra pagina
 
 
@@ -224,7 +224,7 @@ if($allOk){
 		$replacements['<checked_hardware_ph/>'] = "";
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements di rimozione placeholder completati<br/>";
+		// echo "replacements di rimozione placeholder completati<br/>";
 	}
 
 }

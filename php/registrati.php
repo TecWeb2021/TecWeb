@@ -57,7 +57,7 @@ if($user){
 			array_push($validation_error_messages, getValidationError("immagine"));
 		}
 		if( $imagePath !== null && validateValue($imagePath,"immagine_utente_ratio") === false){
-			echo "validating imagePath <br/>";
+			// echo "validating imagePath <br/>";
 			array_push($validation_error_messages, getValidationError("immagine_utente_ratio"));
 		}
 
@@ -75,7 +75,7 @@ if($user){
 		if(count($validation_error_messages) > 0){
 			unlink('../' . $imagePath);
 		}else{
-			echo "non ci sono stati errori" . "<br/>";
+			// echo "non ci sono stati errori" . "<br/>";
 			
 			if($imagePath !== null){
 				$image=new Image($imagePath, "immagine utente");

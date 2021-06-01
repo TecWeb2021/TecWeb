@@ -467,7 +467,7 @@ function validateValue($input, $type, $dbAccess = null){
 		}elseif($type === "immagine2_gioco_ratio"){
 			return checkImageRatio("../" . $input, Game::$img2MinRatio, Game::$img2MaxRatio);
 		}elseif($type === "immagine1_notizia_ratio"){
-			echo "checkgin immagine1 notizia ratio<br/>";
+			// echo "checkgin immagine1 notizia ratio<br/>";
 			return checkImageRatio("../" . $input, News::$img1MinRatio, News::$img1MaxRatio);
 		}elseif($type === "immagine2_notizia_ratio"){
 			return checkImageRatio("../" . $input, News::$img2MinRatio, News::$img2MaxRatio);
@@ -475,7 +475,7 @@ function validateValue($input, $type, $dbAccess = null){
 			return checkImageRatio("../" . $input, User::$imgMinRatio, User::$imgMaxRatio);
 		}else{
 			// se non appartiene a nessun tipo validabile lo ritengo non valido
-			echo "type $type not matched<br/>";
+			// echo "type $type not matched<br/>";
 			return false;
 		}
 	}
@@ -484,7 +484,7 @@ function validateValue($input, $type, $dbAccess = null){
 function getValidationError($type){
 	global $errors_messages;
 	if(!array_key_exists($type, $errors_messages)){
-		echo "message for type $type not matched<br/>";
+		// echo "message for type $type not matched<br/>";
 		return null;
 	}else{
 		return $errors_messages[$type];
@@ -594,13 +594,13 @@ function getSafeInput($name, $type='other', $dbAccess = null, $offset = 0){
 }
 
 function checkImageRatio($imgPath, $minResolutionRatio = 0, $maxResolutionRateo = INF){
-	echo "checkImageRatio<br/>";
+	// echo "checkImageRatio<br/>";
 	$details = getimagesize($imgPath);
 	$xSize = $details[0];
 	$ySize = $details[1];
 	
 	$resRateo = $ySize / $xSize;
-	echo "checkImageRatio : $xSize : $ySize : $resRateo<br/>";
+	// echo "checkImageRatio : $xSize : $ySize : $resRateo<br/>";
 	if(($resRateo < $minResolutionRatio) || ($resRateo > $maxResolutionRateo)){
 		return false;
 	}else{
@@ -609,19 +609,19 @@ function checkImageRatio($imgPath, $minResolutionRatio = 0, $maxResolutionRateo 
 }
 
 function moveImageToStorage($dbAccess, $srcPath, $offset = 0, $destDir = '../images/', $basePath = 'images/'){
-	echo "srcPath: $srcPath<br/>";
+	// echo "srcPath: $srcPath<br/>";
 	$newName = getGreatestDBImageNumber($dbAccess) + 1 + $offset;
-	echo "newName $newName";
+	// echo "newName $newName";
 	$extension = getImageExtension($srcPath);
 	$destPath = $destDir . $newName . '.' . $extension;
 	$res = move_uploaded_file($srcPath, $destPath);
-	echo "destPath : $destPath<br/>";
+	// echo "destPath : $destPath<br/>";
 	if($res){
-		echo "moved<br/>";
+		// echo "moved<br/>";
 
 		return $basePath . $newName . '.' . $extension;
 	}else{
-		echo "not moved<br/>";
+		// echo "not moved<br/>";
 		return false;
 	}
 

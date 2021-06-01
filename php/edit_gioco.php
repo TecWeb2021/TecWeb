@@ -31,7 +31,7 @@ $homePage=file_get_contents("../html/templates/editGiocoTemplate.html");
 
 
 $originPage = getOriginPage();
-echo "originPage: ".$originPage;
+// echo "originPage: ".$originPage;
 
 // verifico che l'utente abbia l'autorizzazione per modificare un gioco
 $user=getLoggedUser($dbAccess);
@@ -104,7 +104,7 @@ if($allOk){
 	//verifico che tutti i valori siano settati
 	//devo ancora implementare la gestione dell'alt dell'immagine
 	if(isset($_REQUEST['nome']) || isset($_REQUEST['data']) || isset($_REQUEST['pegi']) || isset($_REQUEST['descrizione']) || isset($_REQUEST['recensione']) || isset($_REQUEST['alternativo1']) || isset($_REQUEST['alternativo2']) || isset($_REQUEST['voto']) || isset($_REQUEST['prequel']) || isset($_REQUEST['sequel']) || isset($_REQUEST['sviluppo'])){
-		echo "almeno un valore è stato rilevato<br/>";
+		// echo "almeno un valore è stato rilevato<br/>";
 		
 		$new_gameName = getSafeInput('nome', 'string');
 		$new_gamePublicationDate = getSafeInput('data');
@@ -182,23 +182,23 @@ if($allOk){
 			$new_gameImage2 = null;
 			
 			if($imagePath1){
-				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
+				// echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
 				$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
 				$dbAccess->addImage($new_gameImage1);
 			}
 			if($new_gameImage1 === null){
-				echo "campo immagine1 non rilevato"."<br/>";
+				// echo "campo immagine1 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
 				$new_gameImage1 = $oldGame->getImage1();
 			}
 
 			if($imagePath2){
-				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
+				// echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
 				$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
 				$dbAccess->addImage($new_gameImage2);
 			}
 			if($new_gameImage2 === null){
-				echo "campo immagine2 non rilevato"."<br/>";
+				// echo "campo immagine2 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
 				$new_gameImage2 = $oldGame->getImage2();
 			}
@@ -208,7 +208,7 @@ if($allOk){
 			$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 			
 			$opResult1 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-			echo "risultato overwrite gioco false? ".($opResult1===false ? "yes" : "no")."<br/>";
+			// echo "risultato overwrite gioco false? ".($opResult1===false ? "yes" : "no")."<br/>";
 
 			
 
@@ -217,7 +217,7 @@ if($allOk){
 				$newGameReviewObj = null;
 				$opResult2 = null;
 				if($new_gameReview !== "" && $new_gameReview !== null){
-					echo "inserting non empty review<br/>";
+					// echo "inserting non empty review<br/>";
 					if($dbAccess->getReview($new_gameName) !== null){
 						$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
 						$opResult2 = $dbAccess->overwriteReview($new_gameName, $newGameReviewObj);
@@ -227,11 +227,11 @@ if($allOk){
 					}
 					
 				}else{
-					echo "inserting empty review<br/>";
+					// echo "inserting empty review<br/>";
 					$opResult2 = $dbAccess->deleteReview($new_gameName, $oldGame->getName());
 					$newGameReviewObj = null;
 				}
-				echo "review overwrite result is null? " . ($opResult2 === null ? "yes" :  "no") . "<br/>";
+				// echo "review overwrite result is null? " . ($opResult2 === null ? "yes" :  "no") . "<br/>";
 				if($opResult2 === true || $opResult2 === null){
 					// header("Location: giochi.php");	
 					array_push($success_messages, "Modifica recensione riuscita");
@@ -316,12 +316,12 @@ if($allOk){
 		}
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		// echo "replacements completati<br/>";
 
 		//lo script per ora è fatto male: ogni volta che la pagina è stata caricata sovrascrivo il gioco sul database
 		//Non controllo che l'utente abbia inserito valori diversi da quelli preesistenti
 	}else{
-		echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
+		// echo "nessun valore è stato rilevato, probabilmente arrivo da un'altra pagina<br/>";
 
 
 		$old_gameConsoles = $oldGame->getConsoles();
@@ -382,7 +382,7 @@ if($allOk){
 		}
 		
 		$homePage = str_replace(array_keys($replacements), array_values($replacements), $homePage);
-		echo "replacements completati<br/>";
+		// echo "replacements completati<br/>";
 	}
 
 }
