@@ -404,6 +404,7 @@ $errors_messages = array(
 // valida il valore passato in base al tipo indicato
 // per validare utilizza i pattern presenti in $patterns se ve ne è uno corrispondente al tipo, altrimenti usa degli altri controlli specificati nel metodo stesso
 function validateValue($input, $type, $dbAccess = null){
+	echo "validateValue : $input : $type <br/>";
 	global $patterns;
 
 	if(array_key_exists($type, $patterns)){
@@ -451,6 +452,7 @@ function validateValue($input, $type, $dbAccess = null){
 		}elseif($type === "immagine2_gioco_ratio"){
 			return checkImageRatio("../" . $input, Game::$img2MinRatio, Game::$img2MaxRatio);
 		}elseif($type === "immagine1_notizia_ratio"){
+			echo "checkgin immagine1 notizia ratio<br/>";
 			return checkImageRatio("../" . $input, News::$img1MinRatio, News::$img1MaxRatio);
 		}elseif($type === "immagine2_notizia_ratio"){
 			return checkImageRatio("../" . $input, News::$img2MinRatio, News::$img2MaxRatio);
@@ -483,54 +485,8 @@ function getOriginPage(){
 	}
 }
 
-function dateToText($date){
-	$parts = explode("-", $date);
-	$monthString = "";
-	switch($parts[1]){
-		case "01":
-			$monthString = "gennaio";
-			break;
-		case "02":
-			$monthString = "febbraio";
-			break;
-		case "03":
-			$monthString = "marzo";
-			break;
-		case "04":
-			$monthString = "aprile";
-			break;
-		case "05":
-			$monthString = "maggio";
-			break;
-		case "06":
-			$monthString = "giugno";
-			break;
-		case "07":
-			$monthString = "luglio";
-			break;
-		case "08":
-			$monthString = "agosto";
-			break;
-		case "09":
-			$monthString = "settembre";
-			break;
-		case "10":
-			$monthString = "ottobre";
-			break;
-		case "11":
-			$monthString = "novembre";
-			break;
-		case "12":
-			$monthString = "dicembre";
-			break;
-	}
-	return $parts[2] . " " . $monthString . " " . $parts[0];
-}
 
-function dateTimeToText($dateTime){
-	$parts = explode(" ", $dateTime);
-	return dateToText($parts[0]) . " " . $parts[1];
-}
+
 
 $errorsBasePath = "../html/templates/errors/";
 $errorsFileNames = array(
@@ -576,7 +532,7 @@ function getStringExtract($string, $length = 500, $redirectTarget){
 }
 
 // serve per fare il sanitize di un valore
-function getSafeInput($name, $type='other', $dbAccess = null){
+function getSafeInput($name, $type='other', $dbAccess = null, $offset = 0){
 	if(isset($_REQUEST["$name"])){
 		$input = $_REQUEST["$name"];
 
@@ -603,7 +559,7 @@ function getSafeInput($name, $type='other', $dbAccess = null){
 				}else{
 					if($dbAccess){
 						$tmpPath = $data['tmp_name'];
-						$res = moveImageToStorage($dbAccess, $tmpPath);
+						$res = moveImageToStorage($dbAccess, $tmpPath, $offset);
 						if($res === false){
 							return null;
 						}else{
@@ -623,11 +579,13 @@ function getSafeInput($name, $type='other', $dbAccess = null){
 }
 
 function checkImageRatio($imgPath, $minResolutionRatio = 0, $maxResolutionRateo = INF){
+	echo "checkImageRatio<br/>";
 	$details = getimagesize($imgPath);
 	$xSize = $details[0];
 	$ySize = $details[1];
-	echo "checkImageRatio : $xSize : $ySize <br/>";
+	
 	$resRateo = $ySize / $xSize;
+	echo "checkImageRatio : $xSize : $ySize : $resRateo<br/>";
 	if(($resRateo < $minResolutionRatio) || ($resRateo > $maxResolutionRateo)){
 		return false;
 	}else{
@@ -635,23 +593,42 @@ function checkImageRatio($imgPath, $minResolutionRatio = 0, $maxResolutionRateo 
 	}
 }
 
-function moveImageToStorage($dbAccess, $srcPath, $destDir = '../images/', $basePath = 'images/'){
-	$newName = getGreatestDBImageNumber($dbAccess) + 1;
+function moveImageToStorage($dbAccess, $srcPath, $offset = 0, $destDir = '../images/', $basePath = 'images/'){
+	echo "srcPath: $srcPath<br/>";
+	$newName = getGreatestDBImageNumber($dbAccess) + 1 + $offset;
 	echo "newName $newName";
 	$extension = getImageExtension($srcPath);
 	$destPath = $destDir . $newName . '.' . $extension;
 	$res = move_uploaded_file($srcPath, $destPath);
+	echo "destPath : $destPath<br/>";
 	if($res){
+		echo "moved<br/>";
+
 		return $basePath . $newName . '.' . $extension;
 	}else{
+		echo "not moved<br/>";
 		return false;
 	}
 
 }
 
 function getImageExtension($srcPath){
-	$parts = explode('.',$srcPath);
-	return end($parts);
+	$details = getimagesize($srcPath);
+	$ext = "";
+	switch ($details[2]) {
+		case 'image/jpeg':
+			$ext = "jpg";
+			break;
+		case 'image/png' :
+			$ext = "png";
+			break;
+		default:
+			$ext = "png";
+			break;
+	}
+	// $parts = explode('.',$srcPath);
+	// return end($parts);
+	return $ext;
 }
 
 /*
@@ -713,7 +690,54 @@ function getFailureMessagesHtml($messages){
 	return "<div style=\"color: red\">" . implode("<br>", $messages) . "</div>";
 }
 
+function dateToText($date){
+	$parts = explode("-", $date);
+	$monthString = "";
+	switch($parts[1]){
+		case "01":
+			$monthString = "gennaio";
+			break;
+		case "02":
+			$monthString = "febbraio";
+			break;
+		case "03":
+			$monthString = "marzo";
+			break;
+		case "04":
+			$monthString = "aprile";
+			break;
+		case "05":
+			$monthString = "maggio";
+			break;
+		case "06":
+			$monthString = "giugno";
+			break;
+		case "07":
+			$monthString = "luglio";
+			break;
+		case "08":
+			$monthString = "agosto";
+			break;
+		case "09":
+			$monthString = "settembre";
+			break;
+		case "10":
+			$monthString = "ottobre";
+			break;
+		case "11":
+			$monthString = "novembre";
+			break;
+		case "12":
+			$monthString = "dicembre";
+			break;
+	}
+	return $parts[2] . " " . $monthString . " " . $parts[0];
+}
 
+function dateTimeToText($dateTime){
+	$parts = explode(" ", $dateTime);
+	return dateToText($parts[0]) . " " . $parts[1];
+}
 
 
 

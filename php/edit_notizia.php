@@ -124,53 +124,22 @@ if($allOk){
 		}
 	
 		// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
-		$new_newsImage1 = null;
-		$image1Ok = false;
+		
 
-		$new_newsImage2 = null;
-		$image2Ok = false;
-
-		//errore 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error']!=4 ){
-			//echo "l'utente ha inserito una nuova immagine1"."<br/>";
-			
-
-			$imagePath=saveImageFromFILES($dbAccess,'immagine1', News::$img1MinRatio, News::$img1MaxRatio);
-			if($imagePath){
-				$new_newsImage1=new Image($imagePath,$new_newsAlt1);
-				$dbAccess->addImage($new_newsImage1);
-				$image1Ok=true;
-			}else{
-				//echo "salvataggio dell'immagine1 fallito"."<br/>";
-
-			}
-		}
-
-		//errore 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error']!=4 ){
-			//echo "l'utente ha inserito una nuova immagine2"."<br/>";
-			
-
-			$imagePath=saveImageFromFILES($dbAccess,'immagine2', News::$img2MinRatio, News::$img2MaxRatio);
-			if($imagePath){
-				$new_newsImage2=new Image($imagePath,$new_newsAlt2);
-				$dbAccess->addImage($new_newsImage2);
-				$image2Ok=true;
-			}else{
-				//echo "salvataggio dell'immagine2 fallito"."<br/>";
-			}
-		}
+		$imagePath1 = getSafeInput('immagine1', 'image', $dbAccess);
+		$imagePath2 = getSafeInput('immagine2', 'image', $dbAccess, 1);
 
 		//controllo i campi obbligatori
 
-		if( $new_newsTitle === null || validateValue($new_newsTitle, 'titolo') === false){
-			array_push($validation_error_messages, getValidationError('titolo'));
-		}
-		if( $new_newsText === null || validateValue($new_newsText, 'testo') === false){
-			array_push($validation_error_messages, getValidationError('testo'));
-		}
-		if($new_newsCategory === null || validateValue($new_newsCategory, 'tipologia') === false){
-			array_push($validation_error_messages, getValidationError('tipologia'));
+		$mandatory_fields = array(
+			[$new_newsTitle, 'titolo'],
+			[$new_newsText, 'testo'],
+			[$new_newsCategory, 'tipologia']
+		);
+		foreach ($mandatory_fields as $value) {
+			if( $value[0] === null || validateValue($value[0], $value[1]) === false){
+				array_push($validation_error_messages, getValidationError($value[1]));
+			}
 		}
 
 		// controllo i campi obbligatori derivati
@@ -181,12 +150,19 @@ if($allOk){
 
 		// controllo i campi opzionali
 
-		if( $new_newsImage1 !== null && $image1Ok === false){
-			array_push($validation_error_messages, getValidationError('immagine'));
+		if( $imagePath1 === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
+		}
+		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_notizia_ratio") === false){
+			// echo "validating imagePath1 <br/>";
+			array_push($validation_error_messages, getValidationError("immagine1_notizia_ratio"));
 		}
 
-		if( $new_newsImage2 !== null && $image2Ok === false){
-			array_push($validation_error_messages, getValidationError('immagine'));
+		if( $imagePath2 === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
+		}
+		if( $imagePath2 !== null && validateValue($imagePath2,"immagine2_notizia_ratio") === false){
+			array_push($validation_error_messages, getValidationError("immagine2_notizia_ratio"));
 		}
 
 		if( $new_newsAlt1 !== null && validateValue($new_newsAlt1, 'alternativo') === false){
@@ -199,18 +175,33 @@ if($allOk){
 
 
 		if(count($validation_error_messages) > 0){
-			
+			if($imagePath1 !== null){
+				unlink('../' . $imagePath1);
+			}
+			if($imagePath2 !== null){
+				unlink('../' . $imagePath2);
+			}
 		}else{
 
+			$new_newsImage1 = null;
+
+			$new_newsImage2 = null;
+
+			if($imagePath1){
+				$new_newsImage1=new Image($imagePath1,$new_newsAlt1);
+				$dbAccess->addImage($new_newsImage1);
+			}
 			if($new_newsImage1 == null){
-				//echo "l'utente non ha inserito una nuova immagine1"."<br/>";
 				//prendo la vecchia immagine
 				$new_newsImage1=$oldNews->getImage1();
-				$image1Ok=true;
 			}
 
+			if($imagePath2){
+				$new_newsImage2=new Image($imagePath2,$new_newsAlt2);
+				$dbAccess->addImage($new_newsImage2);
+				$image2Ok=true;
+			}
 			if($new_newsImage2 == null){
-				//echo "l'utente non ha inserito una nuova immagine2"."<br/>";
 				//prendo la vecchia immagine
 				$new_newsImage2=$oldNews->getImage2();
 				$image2Ok=true;
@@ -222,6 +213,12 @@ if($allOk){
 				array_push($success_messages, "overwrite su db riuscito");
 			}else{
 				//echo "overwrite su db fallito" . "<br/>";
+				if($imagePath1 !== null){
+					unlink('../' . $imagePath1);
+				}
+				if($imagePath2 !== null){
+					unlink('../' . $imagePath2);
+				}
 			}
 		}
 

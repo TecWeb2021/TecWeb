@@ -60,7 +60,7 @@ if($allOk){
 		$new_newsEditDateTime = date("Y-m-d");
 
 		$imagePath1 = getSafeInput('immagine1', 'image', $dbAccess);
-		$imagePath2 = getSafeInput('immagine1', 'image', $dbAccess);
+		$imagePath2 = getSafeInput('immagine2', 'image', $dbAccess, 1);
 
 		
 
@@ -70,13 +70,26 @@ if($allOk){
 			[$new_newsTitle, 'titolo'],
 			[$new_newsCategory, 'tipologia'],
 			[$new_newsText, 'testo'],
-			[$imagePath1, 'immagine1_notizia_ratio'],
-			[$imagePath2, 'immagine2_notizia_ratio'],
 		);
 		foreach ($mandatory_fields as $value) {
 			if( $value[0] === null || validateValue($value[0], $value[1]) === false){
 				array_push($validation_error_messages, getValidationError($value[1]));
 			}
+		}
+
+		if( $imagePath1 === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
+		}
+		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_notizia_ratio") === false){
+			echo "validating imagePath1 <br/>";
+			array_push($validation_error_messages, getValidationError("immagine1_notizia_ratio"));
+		}
+
+		if( $imagePath2 === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
+		}
+		if( $imagePath2 !== null && validateValue($imagePath2,"immagine2_notizia_ratio") === false){
+			array_push($validation_error_messages, getValidationError("immagine2_notizia_ratio"));
 		}
 
 		// controllo i campi obbligatori derivati
@@ -105,6 +118,7 @@ if($allOk){
 
 		//controllo se c'è stato almeno un errore
 		if(count($validation_error_messages) > 0){
+			
 			if($imagePath1 !== null){
 				unlink('../' . $imagePath1);
 			}
@@ -134,6 +148,7 @@ if($allOk){
 				header("Location: notizie.php");
 			}else{
 				array_push($failure_messages, "Aggiunta notizia fallita");
+				
 				if($imagePath1 !== null){
 					unlink('../' . $imagePath1);
 				}
