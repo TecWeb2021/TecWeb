@@ -556,7 +556,8 @@ function getSafeInput($name, $type='other', $dbAccess = null, $offset = 0){
 			if($input === ""){
 				return null;
 			}else{
-				return filter_var($input, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+				$filtered = filter_var($input, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+				return htmlspecialchars($input);
 			}
 		}else{
 			// bisognerebbe aggiungere un sanitize specifico per gli array
