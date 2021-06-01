@@ -124,44 +124,9 @@ if($allOk){
 		$new_gameSequel = getSafeInput('sequel', 'string');
 		$new_gameDeveloper = getSafeInput('sviluppo', 'string');
 
-		$new_gameImage1 = null;
-		$new_gameImage2 = null;
 
-		$image1Ok = false;
-		$image2Ok = false;
-		//error 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine1']) && $_FILES['immagine1']['error'] != 4){
-			echo "rilevato campo immagine1"."<br/>";
-			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine1", Game::$img1MinRatio, Game::$img1MaxRatio);
-			if($imagePath){
-				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath."<br/>";
-				$new_gameImage1 = new Image($imagePath,$new_gameAlt1);
-				$dbAccess->addImage($new_gameImage1);
-				$image1Ok=true;
-				
-			}else{
-				echo "Salvataggio immagine fallito"."<br/>";
-			}
-		}
-
-		//error 4: non è stata caricata alcuna immagine
-		if(isset($_FILES['immagine2']) && $_FILES['immagine2']['error'] != 4){
-			echo "rilevato campo immagine2"."<br/>";
-			//prendo l'immagine inserita dall'utente
-			$imagePath = saveImageFromFILES($dbAccess, "immagine2", Game::$img2MinRatio, Game::$img2MaxRatio);
-			if($imagePath){
-				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath."<br/>";
-				$new_gameImage2 = new Image($imagePath,$new_gameAlt2);
-				$dbAccess->addImage($new_gameImage2);
-				$image2Ok=true;
-				
-			}else{
-				echo "Salvataggio immagine fallito"."<br/>";
-			}
-		}
-		
-
+		$imagePath1 = getSafeInput('immagine1', 'image', $dbAccess);
+		$imagePath2 = getSafeInput('immagine2', 'image', $dbAccess, 1);
 
 		// controllo i campi obbligatori
 
@@ -185,14 +150,6 @@ if($allOk){
 
 		// controllo i campi opzionali
 
-		/*
-		if($new_gameImage1 !== null && $image1Ok === false){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}
-		if($new_gameImage2 !== null && $image2Ok === false){
-			$error_message = $error_message . $error_messages['immagine'] . "<br/>";
-		}*/
-
 		$optional_fields = array(
 			[$new_gamePrequel, 'prequel'],
 			[$new_gamePrequel, 'gioco_esistente'],
@@ -200,7 +157,9 @@ if($allOk){
 			[$new_gameSequel, 'gioco_esistente'],
 			[$new_gameReview, 'recensione'],
 			[$new_gameAlt1, 'alternativo'],
-			[$new_gameAlt2, 'alternativo']
+			[$new_gameAlt2, 'alternativo'],
+			[$imagePath1,'immagine1_notizia_ratio'],
+			[$imagePath2,'immagine1_notizia_ratio']
 		);
 		foreach ($optional_fields as $value) {
 			if($value[0] !== null && validateValue($value[0], $value[1], $dbAccess) === false ){
@@ -210,70 +169,89 @@ if($allOk){
 		
 
 		if(count($validation_error_messages) > 0){// sono presenti errori
-			
+			if($imagePath1 !== null){
+				unlink('../' . $imagePath1);
+			}
+			if($imagePath2 !== null){
+				unlink('../' . $imagePath2);
+			}
 		}else{
 			// l'immagine è un caso particolare: se l'utente ne inserisce una 	devo creare un oggetto che la rappresenti, altrimenti, visto che 	non è stata messa nell'html durante le sostituzioni, devo 	prendermi l'oggetto immagine di $oldGame
 			
+			$new_gameImage1 = null;
+			$new_gameImage2 = null;
 			
-			
+			if($imagePath1){
+				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
+				$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
+				$dbAccess->addImage($new_gameImage1);
+			}
 			if($new_gameImage1 === null){
 				echo "campo immagine1 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
 				$new_gameImage1 = $oldGame->getImage1();
-				$image1Ok = true;
+			}
+
+			if($imagePath2){
+				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
+				$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
+				$dbAccess->addImage($new_gameImage2);
 			}
 			if($new_gameImage2 === null){
 				echo "campo immagine2 non rilevato"."<br/>";
 				//prendo l'immagine già presente per il gioco prima delle modifiche
 				$new_gameImage2 = $oldGame->getImage2();
-				$image2Ok = true;
 			}
 			
-			if($image1Ok && $image2Ok){
 
-				
-
-				$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
-				
-				$opResult1 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
-				echo "risultato overwrite gioco false? ".($opResult1===false ? "yes" : "no")."<br/>";
-
-				
-
-				if($opResult1 === true || $opResult1 === null){
-					array_push($success_messages, "Modifica gioco riuscita");
-					$newGameReviewObj = null;
-					$opResult2 = null;
-					if($new_gameReview !== "" && $new_gameReview !== null){
-						echo "inserting non empty review<br/>";
-						if($dbAccess->getReview($new_gameName) !== null){
-							$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
-							$opResult2 = $dbAccess->overwriteReview($new_gameName, $newGameReviewObj);
-						}else{
-							$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
-							$opResult2 = $dbAccess->addReview($newGameReviewObj);
-						}
-						
-					}else{
-						echo "inserting empty review<br/>";
-						$opResult2 = $dbAccess->deleteReview($new_gameName, $oldGame->getName());
-						$newGameReviewObj = null;
-					}
-					echo "review overwrite result is null? " . ($opResult2 === null ? "yes" :  "no") . "<br/>";
-					if($opResult2 === true || $opResult2 === null){
-						// header("Location: giochi.php");	
-						array_push($success_messages, "Modifica recensione riuscita");
-					}else{
-						array_push($failure_messages, "Modifica recensione fallita");
-					}
-				}else{
-					array_push($failure_messages, "Modifica gioco fallita");
-				}
-					
 			
-				
-	
-				
+			$newGame = new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
+			
+			$opResult1 = $dbAccess->overwriteGame($gameToBeModifiedName, $newGame);
+			echo "risultato overwrite gioco false? ".($opResult1===false ? "yes" : "no")."<br/>";
+
+			
+
+			if($opResult1 === true || $opResult1 === null){
+				array_push($success_messages, "Modifica gioco riuscita");
+				$newGameReviewObj = null;
+				$opResult2 = null;
+				if($new_gameReview !== "" && $new_gameReview !== null){
+					echo "inserting non empty review<br/>";
+					if($dbAccess->getReview($new_gameName) !== null){
+						$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
+						$opResult2 = $dbAccess->overwriteReview($new_gameName, $newGameReviewObj);
+					}else{
+						$newGameReviewObj = new Review($new_gameName, $new_gameReview_author->getUsername(), $new_gameLast_review_date, $new_gameReview);
+						$opResult2 = $dbAccess->addReview($newGameReviewObj);
+					}
+					
+				}else{
+					echo "inserting empty review<br/>";
+					$opResult2 = $dbAccess->deleteReview($new_gameName, $oldGame->getName());
+					$newGameReviewObj = null;
+				}
+				echo "review overwrite result is null? " . ($opResult2 === null ? "yes" :  "no") . "<br/>";
+				if($opResult2 === true || $opResult2 === null){
+					// header("Location: giochi.php");	
+					array_push($success_messages, "Modifica recensione riuscita");
+				}else{
+					array_push($failure_messages, "Modifica recensione fallita");
+					if($imagePath1 !== null){
+						unlink('../' . $imagePath1);
+					}
+					if($imagePath2 !== null){
+						unlink('../' . $imagePath2);
+					}
+				}
+			}else{
+				array_push($failure_messages, "Modifica gioco fallita");
+				if($imagePath1 !== null){
+					unlink('../' . $imagePath1);
+				}
+				if($imagePath2 !== null){
+					unlink('../' . $imagePath2);
+				}
 			}
 		}
 	

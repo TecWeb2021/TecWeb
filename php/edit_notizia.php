@@ -149,18 +149,11 @@ if($allOk){
 		}
 
 		// controllo i campi opzionali
-
-		if( $imagePath1 === null){
-			array_push($validation_error_messages, getValidationError("immagine"));
-		}
 		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_notizia_ratio") === false){
 			// echo "validating imagePath1 <br/>";
 			array_push($validation_error_messages, getValidationError("immagine1_notizia_ratio"));
 		}
 
-		if( $imagePath2 === null){
-			array_push($validation_error_messages, getValidationError("immagine"));
-		}
 		if( $imagePath2 !== null && validateValue($imagePath2,"immagine2_notizia_ratio") === false){
 			array_push($validation_error_messages, getValidationError("immagine2_notizia_ratio"));
 		}

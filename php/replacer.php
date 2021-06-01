@@ -404,7 +404,7 @@ $errors_messages = array(
 // valida il valore passato in base al tipo indicato
 // per validare utilizza i pattern presenti in $patterns se ve ne è uno corrispondente al tipo, altrimenti usa degli altri controlli specificati nel metodo stesso
 function validateValue($input, $type, $dbAccess = null){
-	echo "validateValue : $input : $type <br/>";
+	// echo "validateValue : $input : $type <br/>";
 	global $patterns;
 
 	if(array_key_exists($type, $patterns)){

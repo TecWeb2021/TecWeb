@@ -66,40 +66,8 @@ if($allOk){
 		$new_gameReview_author = $user->getUsername();
 
 
-
-		$new_gameImage1=null;
-		$image1Ok=false;
-
-		$new_gameImage2=null;
-		$image2Ok=false;
-		
-		echo "rilevato campo immagine"."<br/>";
-		//prendo l'immagine inserita dall'utente
-		$imagePath1 = saveImageFromFILES($dbAccess, "immagine1", Game::$img1MinRatio, Game::$img1MaxRatio);
-		if($imagePath1){
-			echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
-			$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
-			$dbAccess->addImage($new_gameImage1);
-			$image1Ok=true;
-			
-		}else{
-			echo "Salvataggio immagine1 fallito"."<br/>";
-		}
-
-		echo "images: <br/>";
-		print_r($dbAccess->getImages());
-		echo "<br/>";
-
-		$imagePath2 = saveImageFromFILES($dbAccess, "immagine2", Game::$img2MinRatio, Game::$img2MaxRatio);
-		if($imagePath2){
-			echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
-			$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
-			$dbAccess->addImage($new_gameImage2);
-			$image2Ok=true;
-			
-		}else{
-			echo "Salvataggio immagine2 fallito"."<br/>";
-		}
+		$imagePath1 = getSafeInput('immagine1', 'image', $dbAccess);
+		$imagePath2 = getSafeInput('immagine2', 'image', $dbAccess, 1);
 
 
 		// controllo i campi obbligatori
@@ -121,11 +89,19 @@ if($allOk){
 			}
 		}
 
-		if($new_gameImage1 === null){
-			array_push($validation_error_messages, getValidationError('immagine'));
+		if( $imagePath1 === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
 		}
-		if($new_gameImage2 === null){
-			array_push($validation_error_messages, getValidationError('immagine'));
+		if( $imagePath1 !== null && validateValue($imagePath1,"immagine1_gioco_ratio") === false){
+			echo "validating imagePath1 <br/>";
+			array_push($validation_error_messages, getValidationError("immagine1_gioco_ratio"));
+		}
+
+		if( $imagePath2 === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
+		}
+		if( $imagePath2 !== null && validateValue($imagePath2,"immagine2_gioco_ratio") === false){
+			array_push($validation_error_messages, getValidationError("immagine2_gioco_ratio"));
 		}
 
 		// controllo i campi obbligatori derivati
@@ -177,14 +153,37 @@ if($allOk){
 
 
 		if(count($validation_error_messages) > 0){
-			
+			if($imagePath1 !== null){
+				unlink('../' . $imagePath1);
+			}
+			if($imagePath2 !== null){
+				unlink('../' . $imagePath2);
+			}
 		}else{
+
+			$new_gameImage1 = null;
+			if($imagePath1){
+				echo "Salvataggio immagine1 riuscito nel percorso:".$imagePath1."<br/>";
+				$new_gameImage1 = new Image($imagePath1,$new_gameAlt1);
+				$dbAccess->addImage($new_gameImage1);
+				
+			}
+
+			$new_gameImage2 = null;
+			if($imagePath2){
+				echo "Salvataggio immagine2 riuscito nel percorso:".$imagePath2."<br/>";
+				$new_gameImage2 = new Image($imagePath2,$new_gameAlt2);
+				$dbAccess->addImage($new_gameImage2);
+				$image2Ok=true;
+				
+			}
+
 			$newGame=new Game($new_gameName, $new_gamePublicationDate, $new_gameVote, $new_gameSinopsis, $new_gameAgeRange, $new_gameImage1, $new_gameImage2, $new_gameConsoles, $new_gameGenres, $new_gamePrequel, $new_gameSequel, $new_gameDeveloper);
 				
 			$opResult1 = $dbAccess->addGame($newGame);
-			echo "risultato salvataggio gioco su db: ".($opResult1==null ? "null" : $opResult1)."<br/>";
-
-			
+			if($opResult1){
+				array_push($success_messages, "Caricamento gioco riuscito");
+			}
 			
 			if($opResult1 === true){
 				$opResult2 = null;
@@ -198,13 +197,25 @@ if($allOk){
 				}
 				
 				if($opResult2 === true){
-					echo "Caricamento review riuscito<br/>";
+					array_push($success_messages, "Caricamento recensione riuscito");
 					header("Location: giochi.php");	
 				}else{
-					echo "Caricamento review fallito<br/>";
+					array_push($failure_messages, "Caricamento recensione fallito");
+					if($imagePath1 !== null){
+						unlink('../' . $imagePath1);
+					}
+					if($imagePath2 !== null){
+						unlink('../' . $imagePath2);
+					}
 				}
 			}else{
-				echo "Caricamento gioco fallito<br/>";
+				array_push($failure_messages, "Caricamento gioco fallito");
+				if($imagePath1 !== null){
+					unlink('../' . $imagePath1);
+				}
+				if($imagePath2 !== null){
+					unlink('../' . $imagePath2);
+				}
 			}
 
 			

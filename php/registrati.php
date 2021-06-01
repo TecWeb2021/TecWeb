@@ -45,13 +45,20 @@ if($user){
 			[$username, "nomeUtente"],
 			[$email, "email"],
 			[$password, "password"],
-			[$imagePath, "immagine_utente_ratio"]
 
 		);
 		foreach ($mandatory_fields as $value) {
 			if($value[0] === null || validateValue($value[0], $value[1]) === false ){
 				array_push($validation_error_messages, getValidationError($value[1]));
 			}
+		}
+
+		if( $imagePath === null){
+			array_push($validation_error_messages, getValidationError("immagine"));
+		}
+		if( $imagePath !== null && validateValue($imagePath,"immagine_utente_ratio") === false){
+			echo "validating imagePath <br/>";
+			array_push($validation_error_messages, getValidationError("immagine_utente_ratio"));
 		}
 
 		if($password !== $repeatPassword){

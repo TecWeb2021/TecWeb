@@ -67,7 +67,7 @@ if($user){
 			}
 				
 			if(count($validation_error_messages) > 0){
-				if$new_imagePath !== null){
+				if ($new_imagePath !== null){
 					unlink('../' . $new_imagePath);
 				}
 				//se c'è stato almeno un errore ...
@@ -100,7 +100,7 @@ if($user){
 					setcookie('login',$new_hashValue);
 				}else{
 					array_push($failure_messages, "Modifica fallita");
-					if$new_imagePath !== null){
+					if ($new_imagePath !== null){
 						unlink('../' . $new_imagePath);
 					}
 					$allOk = false;
