@@ -1,1 +1,0 @@
-lo script sql contenuto in questa cartella può essere importato nel database dell'università per ricreare velocemente il database usato per il testing
