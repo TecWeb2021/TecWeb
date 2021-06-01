@@ -14,6 +14,8 @@ Di seguito riportiamo le funzioni con una breve spiegazione:
 
 	\item \textbf{showMessage(input, stato): } crea un messaggio che comunica all'utente se l'input inserito è corretto o meno. Abbiamo deciso di fornire 2 meccanismi di feedback all'utente, presentando sia un messaggio testuale che una colorazione del bordo del campo input, in questo modo possiamo facilitare la compilazione delle form a tutte le classi di utenti. \\
 
+	\item \textbf{checkDatalist(input, text): } controlla che il campo input di tipo list con value text sia o vuoto o corrispondente a una delle opzioni presenti nella datalist e invoca opportunamente \texttt{showMessage(input,stato)}; \\
+
 	\item \textbf{checkPassword(): } controlla che gli input in \texttt{password} e in \texttt{repetedpassword} siano uguali e invoca opportunamente \texttt{showMessage(input,stato)}; \\
 
 	\item \textbf{checkChecked(): } effettua un controllo dei campi checkbox e radio sfruttando l'array di supporto \texttt{spuntabili} in modo analogo a \texttt{validateForm()}. Crea un array contenente coppie chiave-valore nella forma: id del campo input, valore booleano (che indica se il rispettivo campo input è stato spuntato). Tale array viene poi fornito come parametro a \texttt{showMessageCheckbox(sezioni)}; \\
